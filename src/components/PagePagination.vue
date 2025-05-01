@@ -1,0 +1,27 @@
+<template>
+  <div class="flex items-center justify-between border-t border-gray-200 pt-6">
+    <div class="flex w-0 flex-1 justify-start">
+      <a href="#" class="inline-flex items-center px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50">
+        <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
+        </svg>
+        Previous
+      </a>
+    </div>
+    <div class="hidden md:flex">
+      <a href="#" class="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-l-md hover:bg-gray-50">1</a>
+      <a href="#" class="px-4 py-2 text-sm font-medium text-white bg-gray-800 border border-gray-300 hover:bg-gray-700">2</a>
+      <a href="#" class="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 hover:bg-gray-50">3</a>
+      <span class="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300">...</span>
+      <a href="#" class="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-r-md hover:bg-gray-50">8</a>
+    </div>
+    <div class="flex w-0 flex-1 justify-end">
+      <a href="#" class="inline-flex items-center px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50">
+        Next
+        <svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+        </svg>
+      </a>
+    </div>
+  </div>
+</template>

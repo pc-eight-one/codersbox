@@ -1,0 +1,10 @@
+<template>
+  <div class="absolute inset-0 z-0 opacity-10">
+    <svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
+      <pattern id="dots" width="20" height="20" patternUnits="userSpaceOnUse">
+        <circle cx="2" cy="2" r="1" fill="currentColor"/>
+      </pattern>
+      <rect width="100%" height="100%" fill="url(#dots)"/>
+    </svg>
+  </div>
+</template>
