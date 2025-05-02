@@ -11,8 +11,8 @@
     <header class="bg-white border-b border-gray-200 py-16">
       <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row items-center gap-10">
         <div class="w-full md:w-1/3 flex justify-center">
-          <div class="relative w-64 h-64 rounded-full overflow-hidden border-4 border-gray-200 shadow-lg">
-            <img src="" alt="Profile Photo" class="object-cover w-full h-full">
+          <div class="relative w-64 h-64 rounded-full overflow-hidden border-4 border-gray-200">
+            <img src="/assets/images/pc.jpg" alt="Profile Photo" class="object-cover w-full h-full">
           </div>
         </div>
         <div class="w-full md:w-2/3">
