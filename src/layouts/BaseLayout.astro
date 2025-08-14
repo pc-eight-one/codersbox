@@ -1,0 +1,49 @@
+---
+import Navigation from '@/components/Navigation.astro';
+import Footer from '@/components/Footer.astro';
+import type NavItem from '@/types/NavItem';
+
+interface Props {
+  title?: string;
+  description?: string;
+}
+
+const { title = 'codersbox', description = 'A blog about programming, technology, and software development.' } = Astro.props;
+
+const navItems: NavItem[] = [
+  {name: 'Home', link: '/'},
+  {name: 'Articles', link: '/articles'},
+  {name: 'Tutorials', link: '/tutorials'},
+  {name: 'Projects', link: '/projects'},
+  {name: 'About', link: '/about'},
+];
+---
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{title}</title>
+  <meta name="description" content={description}>
+  <link rel="icon" type="image/x-icon" href="/favicon.ico">
+  <script>
+    try {
+      const stored = localStorage.getItem('theme');
+      const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      if (stored === 'dark' || (!stored && prefersDark)) {
+        document.documentElement.classList.add('dark');
+      } else {
+        document.documentElement.classList.remove('dark');
+      }
+    } catch (e) {
+      // fail safe: do nothing
+    }
+  </script>
+</head>
+<body class="bg-gray-100 text-gray-900 dark:bg-gray-900 dark:text-gray-100 min-h-screen">
+  <Navigation title="codersbox" nav={navItems} />
+  <slot />
+  <Footer />
+</body>
+</html>

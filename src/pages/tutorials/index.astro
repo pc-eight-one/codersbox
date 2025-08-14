@@ -1,0 +1,175 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import HeroBackground from '@/components/HeroBackground.astro';
+import Newsletter from '@/components/Newsletter.astro';
+import PagePagination from '@/components/PagePagination.astro';
+
+// Get all tutorials, sorted by series and order
+const tutorials = await getCollection('tutorials', ({ data }) => {
+  return data.draft !== true;
+});
+
+// Group tutorials by series
+const seriesMap = new Map();
+
+tutorials.forEach(tutorial => {
+  const seriesName = tutorial.data.series;
+  if (!seriesMap.has(seriesName)) {
+    seriesMap.set(seriesName, {
+      name: seriesName,
+      parts: [],
+      totalParts: tutorial.data.totalParts || 1,
+      description: '',
+      difficulty: tutorial.data.difficulty,
+      tags: tutorial.data.tags || [],
+      firstPartSlug: '',
+      latestPublishDate: tutorial.data.publishDate
+    });
+  }
+  
+  const series = seriesMap.get(seriesName);
+  series.parts.push(tutorial);
+  
+  // Use the first part's description and slug
+  if (tutorial.data.part === 1) {
+    series.description = tutorial.data.description;
+    series.firstPartSlug = tutorial.slug;
+  }
+  
+  // Update latest publish date
+  if (new Date(tutorial.data.publishDate) > new Date(series.latestPublishDate)) {
+    series.latestPublishDate = tutorial.data.publishDate;
+  }
+});
+
+// Convert to array and sort by latest publish date
+const tutorialSeries = Array.from(seriesMap.values()).sort((a, b) => 
+  new Date(b.latestPublishDate).getTime() - new Date(a.latestPublishDate).getTime()
+);
+
+// Sort parts within each series
+tutorialSeries.forEach(series => {
+  series.parts.sort((a, b) => a.data.part - b.data.part);
+});
+
+// Pagination logic for series
+const seriesPerPage = 6;
+const totalPages = Math.ceil(tutorialSeries.length / seriesPerPage);
+const currentPage = 1;
+const startIndex = (currentPage - 1) * seriesPerPage;
+const paginatedSeries = tutorialSeries.slice(startIndex, startIndex + seriesPerPage);
+---
+
+<BaseLayout title="Tutorials - codersbox" description="Step-by-step tutorials for web development and programming.">
+  <!-- Hero Section -->
+  <header class="bg-white border-b border-gray-200 py-20 relative">
+    <HeroBackground />
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <h1 class="text-4xl font-bold mb-6 tracking-tight">Tutorials</h1>
+      <p class="text-gray-600 text-lg mb-8 max-w-3xl leading-relaxed">Step-by-step tutorials to help you learn new technologies and build amazing projects.</p>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main class="py-12">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      {paginatedSeries.length > 0 ? (
+        <>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-12">
+            {paginatedSeries.map((series) => (
+              <article class="bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 overflow-hidden shadow-sm hover:shadow-md transition-all duration-300 h-full flex">
+                <div class="w-2 bg-gray-900 dark:bg-gray-600"></div>
+                <div class="p-6 flex-grow flex flex-col">
+                  <div class="flex items-center justify-between mb-4">
+                    <div class="flex items-center gap-3">
+                      <span class={`inline-block text-xs px-3 py-1 rounded-full font-medium uppercase tracking-wide ${
+                        series.difficulty === 'beginner' ? 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200' :
+                        series.difficulty === 'intermediate' ? 'bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-200' :
+                        'bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-200'
+                      }`}>
+                        {series.difficulty}
+                      </span>
+                      <span class="bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 text-xs px-2 py-1 rounded-full font-medium">
+                        {series.totalParts} parts
+                      </span>
+                    </div>
+                    <time class="text-xs text-gray-500 dark:text-gray-400">
+                      {new Date(series.latestPublishDate).toLocaleDateString('en-US', { 
+                        year: 'numeric', 
+                        month: 'short', 
+                        day: 'numeric' 
+                      })}
+                    </time>
+                  </div>
+                  
+                  <h3 class="font-bold text-lg mb-2 text-gray-900 dark:text-gray-100 leading-tight line-clamp-2">
+                    <a href={`/tutorials/series/${series.name.toLowerCase().replace(/\s+/g, '-')}`} class="hover:underline">
+                      {series.name}
+                    </a>
+                  </h3>
+                  <p class="text-gray-600 dark:text-gray-400 text-sm mb-4 leading-relaxed line-clamp-3 flex-grow">
+                    {series.description}
+                  </p>
+                  
+                  <div class="flex flex-wrap gap-2 mb-4">
+                    {series.tags.map((tag) => (
+                      <span class="bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-200 rounded-full px-3 py-1 text-xs font-medium">
+                        {tag}
+                      </span>
+                    ))}
+                  </div>
+                  
+                  <div class="flex items-center justify-between mt-auto">
+                    <div class="flex flex-col gap-1">
+                      <div class="flex items-center gap-3 text-xs text-gray-500 dark:text-gray-400">
+                        <a 
+                          href={`/tutorials/series/${series.name.toLowerCase().replace(/\s+/g, '-')}`}
+                          class="text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 text-sm font-medium inline-flex items-center transition-colors"
+                        >
+                          View Series
+                          <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                          </svg>
+                        </a>
+                      </div>
+                    </div>
+                    {series.firstPartSlug && (
+                      <a 
+                        href={`/tutorials/${series.firstPartSlug}`}
+                        class="bg-black hover:bg-gray-900 text-white px-4 py-2 rounded-lg text-sm font-medium inline-flex items-center transition-colors"
+                      >
+                        Start Reading
+                        <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                        </svg>
+                      </a>
+                    )}
+                  </div>
+                </div>
+              </article>
+            ))}
+          </div>
+          
+          <!-- Pagination -->
+          {totalPages > 1 && (
+            <PagePagination 
+              currentPage={currentPage}
+              totalPages={totalPages}
+              prevUrl={currentPage > 1 ? `/tutorials/page/${currentPage - 1}` : null}
+              nextUrl={currentPage < totalPages ? `/tutorials/page/${currentPage + 1}` : null}
+            />
+          )}
+        </>
+      ) : (
+        <div class="text-center py-12">
+          <h3 class="text-xl font-semibold text-gray-900 dark:text-gray-100 mb-2">No tutorial series found</h3>
+          <p class="text-gray-600 dark:text-gray-400">Check back later for new tutorial series!</p>
+        </div>
+      )}
+    </div>
+  </main>
+
+  <!-- Newsletter Section -->
+  <Newsletter />
+</BaseLayout>

@@ -1,0 +1,135 @@
+---
+import { getCollection } from 'astro:content';
+import HomeLayout from '@/layouts/HomeLayout.astro';
+import ArticleCard from '@/components/ArticleCard.astro';
+import TutorialCard from '@/components/TutorialCard.astro';
+import ProjectCard from '@/components/ProjectCard.astro';
+import HeroBackground from '@/components/HeroBackground.astro';
+import Newsletter from '@/components/Newsletter.astro';
+
+// Get featured content from all collections
+const featuredArticles = await getCollection('articles', ({ data }) => {
+  return data.featured === true && data.draft !== true;
+});
+
+const featuredTutorials = await getCollection('tutorials', ({ data }) => {
+  return data.featured === true && data.draft !== true;
+});
+
+const featuredProjects = await getCollection('projects', ({ data }) => {
+  return data.featured === true && data.draft !== true;
+});
+
+// Get recent content (limit 3 each)
+const recentArticles = await getCollection('articles', ({ data }) => {
+  return data.draft !== true;
+}).then(articles => 
+  articles.sort((a, b) => new Date(b.data.publishDate).getTime() - new Date(a.data.publishDate).getTime()).slice(0, 3)
+);
+
+const recentTutorials = await getCollection('tutorials', ({ data }) => {
+  return data.draft !== true;
+}).then(tutorials => 
+  tutorials
+    .filter(t => t.data.series && t.data.part === 1)
+    .sort((a, b) => new Date(b.data.publishDate).getTime() - new Date(a.data.publishDate).getTime())
+    .slice(0, 3)
+);
+
+const recentProjects = await getCollection('projects', ({ data }) => {
+  return data.draft !== true;
+}).then(projects => 
+  projects.sort((a, b) => new Date(b.data.publishDate).getTime() - new Date(a.data.publishDate).getTime()).slice(0, 3)
+);
+---
+
+<HomeLayout title="codersbox - Developer Resources & Tutorials" description="Learn web development through practical tutorials, in-depth articles, and real-world project examples. Master modern technologies like React, TypeScript, and more.">
+  <!-- Hero Section -->
+  <section class="bg-white border-b border-gray-200 pt-20 pb-12 relative">
+    <HeroBackground />
+  </section>
+
+
+  <!-- Recent Content -->
+  <section class="py-16">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <div class="space-y-12">
+        {recentArticles.length > 0 && (
+          <div>
+            <div class="flex items-center justify-between mb-6">
+              <h3 class="text-2xl font-semibold text-gray-900">Latest Articles</h3>
+              <a href="/articles" class="text-blue-600 hover:text-blue-700 font-medium">View all →</a>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {recentArticles.map((article) => (
+                <ArticleCard 
+                  title={article.data.title}
+                  description={article.data.description}
+                  date={article.data.publishDate.toLocaleDateString('en-US', { 
+                    year: 'numeric', 
+                    month: 'long', 
+                    day: 'numeric' 
+                  })}
+                  readTime={article.data.readTime}
+                  tags={article.data.tags}
+                  slug={article.slug}
+                  featured={article.data.featured}
+                />
+              ))}
+            </div>
+          </div>
+        )}
+
+        {recentTutorials.length > 0 && (
+          <div>
+            <div class="flex items-center justify-between mb-6">
+              <h3 class="text-2xl font-semibold text-gray-900">Latest Tutorials</h3>
+              <a href="/tutorials" class="text-blue-600 hover:text-blue-700 font-medium">View all →</a>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+              {recentTutorials.map((tutorial) => (
+                <TutorialCard 
+                  title={tutorial.data.title}
+                  description={tutorial.data.description}
+                  difficulty={tutorial.data.difficulty}
+                  tags={tutorial.data.tags}
+                  slug={tutorial.slug}
+                  series={tutorial.data.series}
+                  seriesPartsCount={tutorial.data.totalParts || 1}
+                  featured={tutorial.data.featured}
+                />
+              ))}
+            </div>
+          </div>
+        )}
+
+        {recentProjects.length > 0 && (
+          <div>
+            <div class="flex items-center justify-between mb-6">
+              <h3 class="text-2xl font-semibold text-gray-900">Latest Projects</h3>
+              <a href="/projects" class="text-blue-600 hover:text-blue-700 font-medium">View all →</a>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {recentProjects.map((project) => (
+                <ProjectCard 
+                  title={project.data.title}
+                  description={project.data.description}
+                  tech={project.data.tech}
+                  slug={project.slug}
+                  featured={project.data.featured}
+                  github={project.data.github}
+                  demo={project.data.demo}
+                  status={project.data.status}
+                />
+              ))}
+            </div>
+          </div>
+        )}
+      </div>
+    </div>
+  </section>
+
+  <!-- Newsletter Section -->
+  <Newsletter />
+</HomeLayout>

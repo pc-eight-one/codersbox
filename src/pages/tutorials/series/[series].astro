@@ -1,0 +1,218 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import TutorialCard from '@/components/TutorialCard.astro';
+import HeroBackground from '@/components/HeroBackground.astro';
+
+export async function getStaticPaths() {
+  const tutorials = await getCollection('tutorials', ({ data }) => {
+    return data.draft !== true;
+  });
+
+  // Group tutorials by series
+  const seriesMap = new Map();
+  
+  tutorials.forEach(tutorial => {
+    const seriesName = tutorial.data.series;
+    if (!seriesMap.has(seriesName)) {
+      seriesMap.set(seriesName, []);
+    }
+    seriesMap.get(seriesName).push(tutorial);
+  });
+
+  // Generate paths for each series
+  return Array.from(seriesMap.keys()).map(seriesName => ({
+    params: { 
+      series: seriesName.toLowerCase().replace(/\s+/g, '-')
+    },
+    props: { 
+      seriesName,
+      tutorials: seriesMap.get(seriesName)
+    }
+  }));
+}
+
+const { seriesName, tutorials } = Astro.props;
+
+// Sort tutorials by part number
+const sortedTutorials = tutorials.sort((a, b) => a.data.part - b.data.part);
+
+// Get series metadata from first tutorial
+const firstTutorial = sortedTutorials[0];
+const seriesInfo = {
+  name: seriesName,
+  description: firstTutorial.data.description,
+  difficulty: firstTutorial.data.difficulty,
+  totalParts: firstTutorial.data.totalParts || tutorials.length,
+  tags: firstTutorial.data.tags || [],
+  estimatedTime: sortedTutorials.reduce((total, tutorial) => {
+    const time = tutorial.data.estimatedTime || '30 minutes';
+    const minutes = parseInt(time.match(/\d+/)?.[0] || '30');
+    return total + minutes;
+  }, 0)
+};
+
+const completedParts = sortedTutorials.length;
+const progressPercentage = Math.round((completedParts / seriesInfo.totalParts) * 100);
+---
+
+<BaseLayout title={`${seriesName} Tutorial Series - codersbox`} description={`Complete tutorial series: ${seriesName}. Learn step by step with ${seriesInfo.totalParts} comprehensive parts.`}>
+  <!-- Hero Section -->
+  <header class="bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700 py-20 relative">
+    <HeroBackground />
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center">
+        <div class="mb-4">
+          <a 
+            href="/tutorials" 
+            class="inline-flex items-center text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 text-sm font-medium transition-colors"
+          >
+            <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
+            </svg>
+            Back to Tutorials
+          </a>
+        </div>
+        
+        <h1 class="text-4xl md:text-5xl font-bold mb-6 text-gray-900 dark:text-gray-100 leading-tight tracking-tight">
+          {seriesName}
+        </h1>
+        
+        <p class="text-xl text-gray-600 dark:text-gray-400 mb-8 max-w-3xl mx-auto leading-relaxed">
+          A comprehensive tutorial series to master {seriesName.toLowerCase()}. Follow along step by step.
+        </p>
+        
+        <div class="flex flex-wrap justify-center items-center gap-6 text-sm text-gray-500 dark:text-gray-400 mb-6">
+          <div class="flex items-center gap-2">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+            </svg>
+            <span>~{Math.floor(seriesInfo.estimatedTime / 60)}h {seriesInfo.estimatedTime % 60}m total</span>
+          </div>
+          <div class="flex items-center gap-2">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+            </svg>
+            <span>{completedParts} of {seriesInfo.totalParts} parts</span>
+          </div>
+          <div class="flex items-center gap-2">
+            <span class={`inline-block text-xs px-3 py-1 rounded-full font-medium uppercase tracking-wide ${
+              seriesInfo.difficulty === 'beginner' ? 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200' :
+              seriesInfo.difficulty === 'intermediate' ? 'bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-200' :
+              'bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-200'
+            }`}>
+              {seriesInfo.difficulty}
+            </span>
+          </div>
+        </div>
+        
+        <!-- Progress Bar -->
+        <div class="max-w-md mx-auto mb-6">
+          <div class="flex items-center justify-between text-sm text-gray-600 dark:text-gray-400 mb-2">
+            <span>Series Progress</span>
+            <span>{progressPercentage}% Complete</span>
+          </div>
+          <div class="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2">
+            <div 
+              class="bg-blue-600 h-2 rounded-full transition-all duration-300" 
+              style={`width: ${progressPercentage}%`}
+            ></div>
+          </div>
+        </div>
+        
+        <!-- Tags -->
+        <div class="flex flex-wrap justify-center gap-2">
+          {seriesInfo.tags.map((tag) => (
+            <span class="bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 px-4 py-2 rounded-full text-sm font-medium hover:bg-blue-200 dark:hover:bg-blue-800 transition-colors">
+              {tag}
+            </span>
+          ))}
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main class="py-12">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="mb-8">
+        <h2 class="text-2xl font-bold text-gray-900 dark:text-gray-100 mb-4">Tutorial Parts</h2>
+        <p class="text-gray-600 dark:text-gray-400">
+          Follow the tutorials in order for the best learning experience. Each part builds on the previous one.
+        </p>
+      </div>
+      
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        {sortedTutorials.map((tutorial, index) => (
+          <div class="relative">
+            <TutorialCard 
+              title={tutorial.data.title}
+              description={tutorial.data.description}
+              difficulty={tutorial.data.difficulty}
+              tags={tutorial.data.tags}
+              slug={tutorial.slug}
+              series={tutorial.data.series}
+              seriesPartsCount={tutorial.data.totalParts || 1}
+              featured={tutorial.data.featured}
+              part={tutorial.data.part}
+              estimatedTime={tutorial.data.estimatedTime}
+              publishDate={tutorial.data.publishDate}
+            />
+            
+            <!-- Part Number Indicator -->
+            <div class="absolute -top-3 -left-3 w-8 h-8 bg-blue-600 text-white rounded-full flex items-center justify-center text-sm font-bold shadow-lg z-10">
+              {tutorial.data.part}
+            </div>
+          </div>
+        ))}
+        
+        <!-- Placeholder for upcoming parts -->
+        {Array.from({ length: seriesInfo.totalParts - completedParts }, (_, index) => {
+          const partNumber = completedParts + index + 1;
+          return (
+            <div class="relative">
+              <div class="bg-gray-100 dark:bg-gray-800 rounded-xl border-2 border-dashed border-gray-300 dark:border-gray-600 p-6 text-center">
+                <div class="text-gray-400 dark:text-gray-500 mb-4">
+                  <svg class="w-12 h-12 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                  </svg>
+                </div>
+                <h3 class="text-lg font-semibold text-gray-500 dark:text-gray-400 mb-2">
+                  Part {partNumber}
+                </h3>
+                <p class="text-sm text-gray-400 dark:text-gray-500">
+                  Coming Soon
+                </p>
+              </div>
+              
+              <!-- Part Number Indicator -->
+              <div class="absolute -top-3 -left-3 w-8 h-8 bg-gray-400 text-white rounded-full flex items-center justify-center text-sm font-bold shadow-lg z-10">
+                {partNumber}
+              </div>
+            </div>
+          );
+        })}
+      </div>
+      
+      <!-- Series Navigation -->
+      <div class="mt-12 bg-gray-50 dark:bg-gray-800 rounded-xl p-6">
+        <h3 class="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-4">Quick Navigation</h3>
+        <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
+          {sortedTutorials.map((tutorial) => (
+            <a 
+              href={`/tutorials/${tutorial.slug}`}
+              class="flex items-center gap-2 p-3 bg-white dark:bg-gray-700 rounded-lg hover:bg-blue-50 dark:hover:bg-gray-600 transition-colors group"
+            >
+              <div class="w-6 h-6 bg-blue-600 text-white rounded-full flex items-center justify-center text-xs font-bold">
+                {tutorial.data.part}
+              </div>
+              <span class="text-sm text-gray-700 dark:text-gray-300 group-hover:text-blue-600 dark:group-hover:text-blue-400 truncate">
+                Part {tutorial.data.part}
+              </span>
+            </a>
+          ))}
+        </div>
+      </div>
+    </div>
+  </main>
+</BaseLayout>

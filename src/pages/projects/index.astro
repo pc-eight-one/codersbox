@@ -1,0 +1,76 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import ProjectCard from '@/components/ProjectCard.astro';
+import HeroBackground from '@/components/HeroBackground.astro';
+import Newsletter from '@/components/Newsletter.astro';
+import PagePagination from '@/components/PagePagination.astro';
+
+// Get all projects, sorted by publish date
+const projects = await getCollection('projects', ({ data }) => {
+  return data.draft !== true;
+});
+
+// Sort projects by publish date (newest first)
+projects.sort((a, b) => new Date(b.data.publishDate).getTime() - new Date(a.data.publishDate).getTime());
+
+// Pagination logic
+const projectsPerPage = 6;
+const totalPages = Math.ceil(projects.length / projectsPerPage);
+const currentPage = 1;
+const startIndex = (currentPage - 1) * projectsPerPage;
+const paginatedProjects = projects.slice(startIndex, startIndex + projectsPerPage);
+---
+
+<BaseLayout title="Projects - codersbox" description="Showcase of web development projects and open source contributions.">
+  <!-- Hero Section -->
+  <header class="bg-white border-b border-gray-200 py-20 relative">
+    <HeroBackground />
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <h1 class="text-4xl font-bold mb-6 tracking-tight">Projects</h1>
+      <p class="text-gray-600 text-lg mb-8 max-w-3xl leading-relaxed">A showcase of my web development projects and open source contributions.</p>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main class="py-12">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      {paginatedProjects.length > 0 ? (
+        <>
+          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
+            {paginatedProjects.map((project) => (
+              <ProjectCard 
+                title={project.data.title}
+                description={project.data.description}
+                tech={project.data.tech}
+                slug={project.slug}
+                featured={project.data.featured}
+                github={project.data.github}
+                demo={project.data.demo}
+                status={project.data.status}
+              />
+            ))}
+          </div>
+          
+          <!-- Pagination -->
+          {totalPages > 1 && (
+            <PagePagination 
+              currentPage={currentPage}
+              totalPages={totalPages}
+              prevUrl={currentPage > 1 ? `/projects/page/${currentPage - 1}` : null}
+              nextUrl={currentPage < totalPages ? `/projects/page/${currentPage + 1}` : null}
+            />
+          )}
+        </>
+      ) : (
+        <div class="text-center py-12">
+          <h3 class="text-xl font-semibold text-gray-900 dark:text-gray-100 mb-2">No projects found</h3>
+          <p class="text-gray-600 dark:text-gray-400">Check back later for new projects!</p>
+        </div>
+      )}
+    </div>
+  </main>
+
+  <!-- Newsletter Section -->
+  <Newsletter />
+</BaseLayout>

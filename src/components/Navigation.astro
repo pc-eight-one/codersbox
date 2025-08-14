@@ -1,0 +1,101 @@
+---
+import { Icon } from 'astro-icon/components';
+import Logo from './Logo.astro';
+import type NavItem from '@/types/NavItem';
+
+interface Props {
+  title?: string;
+  nav: NavItem[];
+}
+
+const { title = 'codersbox', nav } = Astro.props;
+---
+
+<nav class="bg-white/95 dark:bg-gray-900/80 backdrop-blur-lg border-b border-gray-200 dark:border-gray-800 shadow-sm sticky top-0 z-50">
+  <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="flex justify-between items-center h-16">
+      <div class="flex items-center">
+        <div class="flex-shrink-0 font-extrabold text-2xl tracking-[-.1em]">
+          <a href="/" class="flex items-center">
+            <Logo titleClass="text-3xl" />
+          </a>
+        </div>
+        <div class="hidden md:flex ml-10 space-x-8">
+          {nav.map((item) => (
+            <a 
+              href={item.link}
+              class="text-gray-500 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white transition-colors text-sm font-medium"
+            >
+              {item.name}
+            </a>
+          ))}
+        </div>
+      </div>
+      <div class="flex items-center">
+        <button id="theme-toggle" class="p-2 text-gray-600 dark:text-gray-300 hover:text-black dark:hover:text-white transition-colors" aria-label="Toggle dark mode">
+          <span id="icon-sun" aria-hidden="true" class="block dark:hidden">
+            <Icon name="fa6-solid:sun" class="text-xl" />
+          </span>
+          <span id="icon-moon" aria-hidden="true" class="hidden dark:block">
+            <Icon name="fa6-solid:moon" class="text-xl" />
+          </span>
+        </button>
+        <button id="mobile-menu-toggle" class="md:hidden ml-2 p-2 text-gray-600 dark:text-gray-300 hover:text-black dark:hover:text-white transition-colors" aria-label="Toggle menu">
+          <Icon name="fa6-solid:ellipsis-vertical" class="text-xl" />
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Mobile menu -->
+  <div id="mobile-menu" class="hidden md:hidden">
+    <div class="px-2 pt-2 pb-3 space-y-1 bg-white dark:bg-gray-900 border-b border-gray-200 dark:border-gray-800">
+      {nav.map((item) => (
+        <a 
+          href={item.link}
+          class="block px-3 py-2 rounded-md text-base font-medium text-gray-500 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-800/60"
+        >
+          {item.name}
+        </a>
+      ))}
+    </div>
+  </div>
+</nav>
+
+<script>
+  const toggleButton = document.getElementById('mobile-menu-toggle');
+  const mobileMenu = document.getElementById('mobile-menu');
+  const themeToggle = document.getElementById('theme-toggle');
+
+  toggleButton?.addEventListener('click', () => {
+    mobileMenu?.classList.toggle('hidden');
+  });
+
+  // Theme toggle logic
+  function setTheme(mode) {
+    try {
+      if (mode === 'dark') {
+        document.documentElement.classList.add('dark');
+      } else {
+        document.documentElement.classList.remove('dark');
+      }
+      localStorage.setItem('theme', mode);
+    } catch (e) {}
+  }
+
+  function getTheme() {
+    try {
+      const stored = localStorage.getItem('theme');
+      if (stored) return stored;
+      return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+    } catch (e) {
+      return 'light';
+    }
+  }
+
+  themeToggle?.addEventListener('click', () => {
+    const current = getTheme();
+    const next = current === 'dark' ? 'light' : 'dark';
+    setTheme(next);
+  });
+</script>

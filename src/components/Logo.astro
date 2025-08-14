@@ -1,0 +1,18 @@
+---
+interface Props {
+  title?: string;
+  titleClass?: string;
+  logoClass?: string;
+}
+
+const { 
+  title = 'codersbox',
+  titleClass = 'text-2xl',
+  logoClass = 'text-2xl'
+} = Astro.props;
+---
+
+<div>
+  <!-- <span class={logoClass}>&gt;&nbsp;</span> -->
+  <span class={titleClass}>{title}</span>
+</div>

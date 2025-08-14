@@ -1,0 +1,65 @@
+---
+import { getCollection } from 'astro:content';
+import ArticlesLayout from '@/layouts/ArticlesLayout.astro';
+import ArticleCard from '@/components/ArticleCard.astro';
+import PagePagination from '@/components/PagePagination.astro';
+
+// Get all articles, sorted by publish date
+const articles = await getCollection('articles', ({ data }) => {
+  return data.draft !== true;
+});
+
+// Sort articles by publish date (newest first)
+articles.sort((a, b) => new Date(b.data.publishDate).getTime() - new Date(a.data.publishDate).getTime());
+
+// Pagination logic
+const articlesPerPage = 9;
+const totalPages = Math.ceil(articles.length / articlesPerPage);
+const currentPage = 1;
+const startIndex = (currentPage - 1) * articlesPerPage;
+const paginatedArticles = articles.slice(startIndex, startIndex + articlesPerPage);
+---
+
+<ArticlesLayout title="Articles - codersbox" description="In-depth technical articles about web development, software engineering, and programming concepts.">
+  <!-- Main Content -->
+  <main class="py-12">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      {paginatedArticles.length > 0 ? (
+        <>
+          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
+            {paginatedArticles.map((article) => (
+              <ArticleCard 
+                title={article.data.title}
+                description={article.data.description}
+                date={article.data.publishDate.toLocaleDateString('en-US', { 
+                  year: 'numeric', 
+                  month: 'long', 
+                  day: 'numeric' 
+                })}
+                readTime={article.data.readTime}
+                tags={article.data.tags}
+                slug={article.slug}
+                featured={article.data.featured}
+              />
+            ))}
+          </div>
+          
+          <!-- Pagination -->
+          {totalPages > 1 && (
+            <PagePagination 
+              currentPage={currentPage}
+              totalPages={totalPages}
+              prevUrl={currentPage > 1 ? `/articles/page/${currentPage - 1}` : null}
+              nextUrl={currentPage < totalPages ? `/articles/page/${currentPage + 1}` : null}
+            />
+          )}
+        </>
+      ) : (
+        <div class="text-center py-12">
+          <h3 class="text-xl font-semibold text-gray-900 dark:text-gray-100 mb-2">No articles found</h3>
+          <p class="text-gray-600 dark:text-gray-400">Check back later for new content!</p>
+        </div>
+      )}
+    </div>
+  </main>
+</ArticlesLayout>

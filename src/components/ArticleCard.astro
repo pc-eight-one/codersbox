@@ -1,0 +1,60 @@
+---
+interface Props {
+  title?: string;
+  description?: string;
+  date?: string;
+  readTime?: string;
+  tags?: string[];
+  slug?: string;
+  featured?: boolean;
+}
+
+const { 
+  title = 'Understanding JavaScript Promises and Async/Await',
+  description = 'A deep dive into asynchronous programming in JavaScript, covering promises, async/await, and best practices for error handling.',
+  date = 'April 25, 2025',
+  readTime = '12 min read',
+  tags = ['JavaScript', 'WebDev'],
+  slug = '#',
+  featured = false
+} = Astro.props;
+---
+
+<article class="bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 overflow-hidden shadow-sm hover:shadow-md transition-all duration-300 h-full">
+  <div class={`h-2 ${featured ? 'bg-gradient-to-r from-yellow-400 to-orange-500' : 'bg-gray-800 dark:bg-gray-600'}`}></div>
+  <div class="p-6 flex flex-col h-full">
+    <div class="flex items-center gap-2 mb-4">
+      <span class="text-xs text-gray-500 dark:text-gray-400 font-medium">{date}</span>
+      <span class="text-gray-300 dark:text-gray-600">•</span>
+      <span class="text-xs text-gray-500 dark:text-gray-400 font-medium">{readTime}</span>
+      {featured && (
+        <>
+          <span class="text-gray-300 dark:text-gray-600">•</span>
+          <span class="bg-yellow-100 dark:bg-yellow-900 text-yellow-800 dark:text-yellow-200 text-xs px-2 py-1 rounded-full font-medium">
+            Featured
+          </span>
+        </>
+      )}
+    </div>
+    
+    <h3 class="font-bold text-lg mb-2 line-clamp-2 text-gray-900 dark:text-gray-100 leading-tight">{title}</h3>
+    <p class="text-gray-600 dark:text-gray-400 text-sm mb-4 line-clamp-3 leading-relaxed flex-grow">{description}</p>
+    
+    <div class="flex flex-wrap gap-2 mb-4">
+      {tags.map((tag) => (
+        <span class="bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-200 rounded-full px-3 py-1 text-xs font-medium">
+          {tag}
+        </span>
+      ))}
+    </div>
+    
+    <div class="mt-auto">
+      <a href={`/articles/${slug}`} class="text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 text-sm font-medium inline-flex items-center">
+        Read Article
+        <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+        </svg>
+      </a>
+    </div>
+  </div>
+</article>

@@ -1,0 +1,51 @@
+---
+interface Props {
+  imageSrc: string;
+  isVisible: boolean;
+}
+
+const { imageSrc, isVisible } = Astro.props;
+---
+
+{isVisible && (
+  <div id="image-viewer" class="fixed inset-0 bg-black bg-opacity-80 flex items-center justify-center z-50 opacity-0 transition-opacity duration-300">
+    <div class="relative">
+      <img 
+        src={imageSrc} 
+        alt="Expanded Image" 
+        class="max-w-full max-h-full object-contain transform scale-80 transition-transform duration-300"
+        id="viewer-image"
+      />
+      <button
+        id="close-viewer"
+        class="absolute top-4 right-4 bg-white text-black px-4 py-2 rounded shadow hover:bg-gray-200"
+      >
+        Close
+      </button>
+    </div>
+  </div>
+)}
+
+<script>
+  const imageViewer = document.getElementById('image-viewer');
+  const viewerImage = document.getElementById('viewer-image');
+  const closeButton = document.getElementById('close-viewer');
+  
+  if (imageViewer && viewerImage) {
+    // Show with animation
+    setTimeout(() => {
+      imageViewer.classList.remove('opacity-0');
+      viewerImage.classList.remove('scale-80');
+    }, 10);
+  }
+  
+  closeButton?.addEventListener('click', () => {
+    if (imageViewer && viewerImage) {
+      imageViewer.classList.add('opacity-0');
+      viewerImage.classList.add('scale-80');
+      setTimeout(() => {
+        imageViewer.style.display = 'none';
+      }, 300);
+    }
+  });
+</script>
