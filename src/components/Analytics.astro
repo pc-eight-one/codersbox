@@ -1,0 +1,80 @@
+---
+// Analytics and performance monitoring component
+---
+
+<!-- Google Analytics (replace with your tracking ID) -->
+<!-- <script async src="https://www.googletagmanager.com/gtag/js?id=GA_TRACKING_ID"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'GA_TRACKING_ID');
+</script> -->
+
+<!-- Core Web Vitals monitoring -->
+<script>
+  // Performance monitoring
+  function measurePerformance() {
+    if ('PerformanceObserver' in window) {
+      // Measure Largest Contentful Paint (LCP)
+      const lcpObserver = new PerformanceObserver((list) => {
+        const entries = list.getEntries();
+        const lastEntry = entries[entries.length - 1];
+        console.log('LCP:', lastEntry.startTime);
+      });
+      lcpObserver.observe({ entryTypes: ['largest-contentful-paint'] });
+
+      // Measure First Input Delay (FID)
+      const fidObserver = new PerformanceObserver((list) => {
+        for (const entry of list.getEntries()) {
+          console.log('FID:', entry.processingStart - entry.startTime);
+        }
+      });
+      fidObserver.observe({ entryTypes: ['first-input'] });
+
+      // Measure Cumulative Layout Shift (CLS)
+      const clsObserver = new PerformanceObserver((list) => {
+        let cls = 0;
+        for (const entry of list.getEntries()) {
+          if (!entry.hadRecentInput) {
+            cls += entry.value;
+          }
+        }
+        console.log('CLS:', cls);
+      });
+      clsObserver.observe({ entryTypes: ['layout-shift'] });
+    }
+
+    // Navigation timing
+    window.addEventListener('load', () => {
+      setTimeout(() => {
+        const navigation = performance.getEntriesByType('navigation')[0];
+        console.log('Page Load Time:', navigation.loadEventEnd - navigation.fetchStart);
+        console.log('DOM Content Loaded:', navigation.domContentLoadedEventEnd - navigation.fetchStart);
+        console.log('Time to Interactive:', navigation.domInteractive - navigation.fetchStart);
+      }, 0);
+    });
+  }
+
+  // Initialize performance monitoring
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', measurePerformance);
+  } else {
+    measurePerformance();
+  }
+</script>
+
+<!-- Service Worker for caching (optional) -->
+<script>
+  if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+      navigator.serviceWorker.register('/sw.js')
+        .then((registration) => {
+          console.log('SW registered: ', registration);
+        })
+        .catch((registrationError) => {
+          console.log('SW registration failed: ', registrationError);
+        });
+    });
+  }
+</script>

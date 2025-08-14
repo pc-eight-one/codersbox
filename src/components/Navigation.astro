@@ -11,20 +11,20 @@ interface Props {
 const { title = 'codersbox', nav } = Astro.props;
 ---
 
-<nav class="bg-white/95 dark:bg-gray-900/80 backdrop-blur-lg border-b border-gray-200 dark:border-gray-800 shadow-sm sticky top-0 z-50">
-  <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+<nav id="main-navigation" class="bg-white/70 dark:bg-gray-900/70 backdrop-blur-xl border-b border-white/20 dark:border-gray-700/50 shadow-lg shadow-black/5 dark:shadow-black/20 sticky top-0 z-50 transition-all duration-300">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
     <div class="flex justify-between items-center h-16">
       <div class="flex items-center">
         <div class="flex-shrink-0 font-extrabold text-2xl tracking-[-.1em]">
-          <a href="/" class="flex items-center">
+          <a href="/" class="flex items-center nav-logo-link">
             <Logo titleClass="text-3xl" />
           </a>
         </div>
-        <div class="hidden md:flex ml-10 space-x-8">
+        <div class="hidden md:flex ml-10 space-x-1">
           {nav.map((item) => (
             <a 
               href={item.link}
-              class="text-gray-500 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white transition-colors text-sm font-medium"
+              class="nav-link relative px-4 py-2 text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white text-sm font-medium rounded-lg transition-all duration-200"
             >
               {item.name}
             </a>
@@ -32,7 +32,7 @@ const { title = 'codersbox', nav } = Astro.props;
         </div>
       </div>
       <div class="flex items-center">
-        <button id="mobile-menu-toggle" class="md:hidden ml-2 p-2 text-gray-600 dark:text-gray-300 hover:text-black dark:hover:text-white transition-colors" aria-label="Toggle menu">
+        <button id="mobile-menu-toggle" class="md:hidden ml-2 p-2 text-gray-600 dark:text-gray-300 hover:text-black dark:hover:text-white transition-all duration-200 rounded-lg hover:bg-gray-100/50 dark:hover:bg-gray-800/50" aria-label="Toggle menu">
           <Icon name="fa6-solid:ellipsis-vertical" class="text-xl" />
         </button>
       </div>
@@ -40,12 +40,12 @@ const { title = 'codersbox', nav } = Astro.props;
   </div>
 
   <!-- Mobile menu -->
-  <div id="mobile-menu" class="hidden md:hidden">
-    <div class="px-2 pt-2 pb-3 space-y-1 bg-white dark:bg-gray-900 border-b border-gray-200 dark:border-gray-800">
+  <div id="mobile-menu" class="hidden md:hidden mobile-menu-panel">
+    <div class="px-2 pt-2 pb-3 space-y-1 bg-white/80 dark:bg-gray-900/80 backdrop-blur-xl border-b border-white/20 dark:border-gray-700/50">
       {nav.map((item) => (
         <a 
           href={item.link}
-          class="block px-3 py-2 rounded-md text-base font-medium text-gray-500 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-800/60"
+          class="mobile-nav-link block px-3 py-2 rounded-lg text-base font-medium text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white hover:bg-white/60 dark:hover:bg-gray-800/60 transition-all duration-200"
         >
           {item.name}
         </a>
@@ -55,10 +55,201 @@ const { title = 'codersbox', nav } = Astro.props;
 </nav>
 
 <script>
+  // Mobile menu toggle
   const toggleButton = document.getElementById('mobile-menu-toggle');
   const mobileMenu = document.getElementById('mobile-menu');
 
   toggleButton?.addEventListener('click', () => {
     mobileMenu?.classList.toggle('hidden');
+    
+    // Add animation class for smooth dropdown
+    if (!mobileMenu?.classList.contains('hidden')) {
+      mobileMenu?.classList.add('mobile-menu-show');
+    }
   });
+
+  // Enhanced navigation scroll effects (no hiding)
+  let ticking = false;
+
+  function updateNavigation() {
+    const nav = document.getElementById('main-navigation');
+    const currentScrollY = window.scrollY;
+    
+    if (!nav) return;
+    
+    // Enhanced blur and background opacity on scroll
+    if (currentScrollY > 20) {
+      nav.classList.add('nav-scrolled');
+    } else {
+      nav.classList.remove('nav-scrolled');
+    }
+    
+    ticking = false;
+  }
+
+  function requestNavUpdate() {
+    if (!ticking) {
+      requestAnimationFrame(updateNavigation);
+      ticking = true;
+    }
+  }
+
+  // Initialize navigation effects
+  document.addEventListener('DOMContentLoaded', () => {
+    window.addEventListener('scroll', requestNavUpdate, { passive: true });
+    updateNavigation(); // Initial call
+  });
+
+  // Reinitialize if script runs after DOM loaded
+  if (document.readyState !== 'loading') {
+    window.addEventListener('scroll', requestNavUpdate, { passive: true });
+    updateNavigation();
+  }
 </script>
+
+<style>
+  /* Enhanced blur glass navigation */
+  #main-navigation {
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    background: rgba(255, 255, 255, 0.7);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+  }
+  
+  .dark #main-navigation {
+    background: rgba(17, 24, 39, 0.7);
+    border-bottom: 1px solid rgba(75, 85, 99, 0.5);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+  }
+
+  /* Scrolled state - enhanced blur */
+  #main-navigation.nav-scrolled {
+    background: rgba(255, 255, 255, 0.85);
+    backdrop-filter: blur(25px);
+    -webkit-backdrop-filter: blur(25px);
+    box-shadow: 0 8px 40px rgba(0, 0, 0, 0.15);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+  }
+  
+  .dark #main-navigation.nav-scrolled {
+    background: rgba(17, 24, 39, 0.85);
+    box-shadow: 0 8px 40px rgba(0, 0, 0, 0.4);
+    border-bottom: 1px solid rgba(75, 85, 99, 0.6);
+  }
+
+
+  /* Navigation link hover effects */
+  .nav-link {
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .nav-link::before {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    width: 0;
+    height: 2px;
+    background: linear-gradient(90deg, #3b82f6, #1d4ed8);
+    transform: translateX(-50%);
+    transition: width 0.3s ease;
+  }
+  
+  .nav-link:hover::before {
+    width: 80%;
+  }
+  
+  .nav-link:hover {
+    background: rgba(59, 130, 246, 0.05);
+    transform: translateY(-1px);
+  }
+  
+  .dark .nav-link:hover {
+    background: rgba(59, 130, 246, 0.1);
+  }
+
+  /* Logo hover animation */
+  .nav-logo-link {
+    transition: transform 0.3s ease;
+  }
+  
+  .nav-logo-link:hover {
+    transform: scale(1.05);
+  }
+
+  /* Mobile menu animations */
+  .mobile-menu-panel {
+    opacity: 0;
+    transform: translateY(-10px);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  
+  .mobile-menu-panel:not(.hidden) {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  
+  .mobile-menu-panel.mobile-menu-show {
+    animation: slideDown 0.3s ease-out;
+  }
+  
+  @keyframes slideDown {
+    from {
+      opacity: 0;
+      transform: translateY(-10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  /* Mobile nav link stagger animation */
+  .mobile-nav-link {
+    opacity: 0;
+    transform: translateX(-20px);
+    animation: slideInLeft 0.3s ease-out forwards;
+  }
+  
+  .mobile-nav-link:nth-child(1) { animation-delay: 0.1s; }
+  .mobile-nav-link:nth-child(2) { animation-delay: 0.15s; }
+  .mobile-nav-link:nth-child(3) { animation-delay: 0.2s; }
+  .mobile-nav-link:nth-child(4) { animation-delay: 0.25s; }
+  .mobile-nav-link:nth-child(5) { animation-delay: 0.3s; }
+  
+  @keyframes slideInLeft {
+    to {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
+
+  /* Enhanced mobile button hover */
+  #mobile-menu-toggle {
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+  }
+  
+  #mobile-menu-toggle:hover {
+    transform: scale(1.1);
+    background: rgba(59, 130, 246, 0.1);
+  }
+
+  /* Glass morphism effect for better visual hierarchy */
+  #main-navigation::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0));
+    pointer-events: none;
+  }
+  
+  .dark #main-navigation::before {
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0));
+  }
+</style>

@@ -1,0 +1,112 @@
+---
+interface Props {
+  headings: {
+    depth: number;
+    text: string;
+    slug?: string;
+  }[];
+}
+
+const { headings } = Astro.props;
+const toc = headings.filter((h) => h.depth >= 2 && h.depth <= 4);
+---
+
+{toc.length > 0 && (
+  <nav class="sticky top-20 max-h-[calc(100vh-6rem)] overflow-y-auto scrollbar-hide">
+    <div class="p-0">
+      <h2 class="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-4 flex items-center gap-2">
+        <svg class="w-5 h-5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 10h16M4 14h16M4 18h16"></path>
+        </svg>
+        <span>Contents</span>
+      </h2>
+      <ul class="space-y-2 text-sm toc-links">
+        {toc.map((h) => (
+          <li>
+            <a 
+              href={`#${h.slug ?? ''}`}
+              data-toc-link
+              class={`block text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors leading-relaxed ${
+                h.depth === 2 
+                  ? 'font-medium' 
+                  : h.depth === 3 
+                    ? 'pl-4 text-sm' 
+                    : 'pl-8 text-xs'
+              }`}
+            >
+              {h.text}
+            </a>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </nav>
+)}
+
+<script>
+  // Smooth scroll navigation for TOC links
+  function initTOCNavigation() {
+    const tocLinks = document.querySelectorAll('[data-toc-link]');
+    
+    tocLinks.forEach(link => {
+      link.addEventListener('click', (e) => {
+        e.preventDefault();
+        
+        const targetId = link.getAttribute('href')?.substring(1);
+        if (!targetId) return;
+        
+        const targetElement = document.getElementById(targetId);
+        if (!targetElement) return;
+        
+        // Add animation class to link
+        link.classList.add('toc-navigating');
+        
+        // Smooth scroll with offset for sticky header
+        const headerHeight = 100; // Adjust based on your header height
+        const elementPosition = targetElement.getBoundingClientRect().top + window.pageYOffset;
+        const offsetPosition = elementPosition - headerHeight;
+        
+        window.scrollTo({
+          top: offsetPosition,
+          behavior: 'smooth'
+        });
+        
+        // Update URL hash
+        history.replaceState(null, '', `#${targetId}`);
+        
+        // Remove animation class after scroll completes
+        setTimeout(() => {
+          link.classList.remove('toc-navigating');
+        }, 800);
+      });
+    });
+  }
+  
+  // Initialize on page load
+  document.addEventListener('DOMContentLoaded', initTOCNavigation);
+  
+  // Reinitialize if the script runs after DOM is already loaded
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initTOCNavigation);
+  } else {
+    initTOCNavigation();
+  }
+</script>
+
+<style>
+  .toc-navigating {
+    @apply text-blue-600 dark:text-blue-400 bg-blue-50 dark:bg-blue-900/20 rounded px-2 py-1 -mx-2 -my-1;
+    transform: scale(1.02);
+    transition: all 0.2s ease-in-out;
+  }
+
+  /* Hide scrollbars while maintaining scroll functionality */
+  .scrollbar-hide {
+    -ms-overflow-style: none;  /* Internet Explorer 10+ */
+    scrollbar-width: none;  /* Firefox */
+  }
+  
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;  /* Safari and Chrome */
+  }
+</style>

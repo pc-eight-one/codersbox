@@ -1,6 +1,7 @@
 ---
 import { getCollection } from 'astro:content';
 import BaseLayout from '@/layouts/BaseLayout.astro';
+import TutorialSidebar from '@/components/TutorialSidebar.astro';
 
 export async function getStaticPaths() {
   const tutorials = await getCollection('tutorials');
@@ -12,7 +13,21 @@ export async function getStaticPaths() {
 
 const { tutorial } = Astro.props;
 const { Content, headings } = await tutorial.render();
-const toc = (headings ?? []).filter((h) => h.depth >= 2 && h.depth <= 4);
+
+// Get all tutorials in the same series
+let seriesTutorials = [];
+if (tutorial.data.series) {
+  const allTutorials = await getCollection('tutorials', ({ data }) => {
+    return data.draft !== true && data.series === tutorial.data.series;
+  });
+  seriesTutorials = allTutorials.map(t => ({
+    data: {
+      title: t.data.title,
+      part: t.data.part,
+    },
+    slug: t.slug,
+  }));
+}
 
 const difficultyColors = {
   beginner: 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200',
@@ -21,11 +36,20 @@ const difficultyColors = {
 };
 ---
 
-<BaseLayout title={`${tutorial.data.title} - codersbox`} description={tutorial.data.description}>
+<BaseLayout 
+  title={`${tutorial.data.title} - codersbox`} 
+  description={tutorial.data.description}
+  type="article"
+  publishDate={tutorial.data.publishDate}
+  author={tutorial.data.author}
+  tags={tutorial.data.tags}
+  canonical={`https://codersbox.dev/tutorials/${tutorial.slug}/`}
+  image={tutorial.data.image || '/og-image.jpg'}
+>
   <main class="min-h-screen bg-gray-50 dark:bg-gray-900">
     <!-- Tutorial Hero Section -->
     <header class="bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700">
-      <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <div class="text-center">
           <h1 class="text-4xl md:text-5xl font-bold mb-6 text-gray-900 dark:text-gray-100 leading-tight tracking-tight">
             {tutorial.data.title}
@@ -73,54 +97,57 @@ const difficultyColors = {
     </header>
 
     <!-- Tutorial Content -->
-    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
-      <article class="bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700 overflow-hidden">
-        <div class="p-8">
-          <!-- Table of Contents (auto-generated from headings) -->
-          {toc.length > 0 && (
-            <nav class="mb-12 p-6 bg-gray-50 dark:bg-gray-700/50 rounded-lg border border-gray-200 dark:border-gray-600">
-              <h2 class="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-4 flex items-center gap-2">
-                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 10h16M4 14h16M4 18h16"></path>
-                </svg>
-                Table of Contents
-              </h2>
-              <ul class="space-y-2 text-sm">
-                {toc.map((h) => (
-                  <li>
-                    <a href={`#${h.slug ?? ''}`} class={`block text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors ${h.depth === 2 ? '' : h.depth === 3 ? 'pl-4' : 'pl-8'}`}>
-                      {h.text}
-                    </a>
-                  </li>
-                ))}
-              </ul>
-            </nav>
-          )}
-
-          <!-- Tutorial Content -->
-          <div class="prose prose-lg dark:prose-invert max-w-none tutorial-content">
-            <Content />
-          </div>
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+      {((headings ?? []).filter((h) => h.depth >= 2 && h.depth <= 4).length > 0 || seriesTutorials.length > 0) ? (
+        <div class="grid grid-cols-1 lg:grid-cols-4 gap-8">
+          <!-- Left Sidebar - Tutorial Navigation & TOC -->
+          <aside class="lg:col-span-1 lg:border-r lg:border-gray-200 lg:dark:border-gray-700 lg:pr-8">
+            <TutorialSidebar 
+              headings={headings ?? []} 
+              currentTutorial={tutorial}
+              seriesTutorials={seriesTutorials}
+            />
+          </aside>
           
-          <!-- Tutorial Footer -->
-          <footer class="mt-12 pt-8 border-t border-gray-200 dark:border-gray-700">
-            <div class="flex items-center justify-between">
-              <div class="text-sm text-gray-500 dark:text-gray-400">
-                Published on {tutorial.data.publishDate.toLocaleDateString('en-US', { 
-                  year: 'numeric', 
-                  month: 'long', 
-                  day: 'numeric' 
-                })}
-              </div>
-              <div class="flex items-center space-x-4">
-                <a href="/tutorials" class="text-blue-600 dark:text-blue-400 hover:underline text-sm font-medium">
-                  ← Back to Tutorials
-                </a>
+          <!-- Main Content -->
+          <article class="lg:col-span-3">
+            <div class="px-0 py-0">
+              <!-- Tutorial Content -->
+              <div class="prose prose-lg dark:prose-invert max-w-none tutorial-content">
+                <Content />
               </div>
             </div>
-          </footer>
+          </article>
         </div>
-      </article>
+      ) : (
+        <!-- Single Column Layout - No TOC or Series -->
+        <article class="max-w-4xl mx-auto">
+          <div class="px-0 py-0">
+            <!-- Tutorial Content -->
+            <div class="prose prose-lg dark:prose-invert max-w-none tutorial-content">
+              <Content />
+            </div>
+          </div>
+        </article>
+      )}
+      
+      <!-- Tutorial Footer -->
+      <footer class="mt-12 bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700 p-8">
+        <div class="flex items-center justify-between">
+          <div class="text-sm text-gray-500 dark:text-gray-400">
+            Published on {tutorial.data.publishDate.toLocaleDateString('en-US', { 
+              year: 'numeric', 
+              month: 'long', 
+              day: 'numeric' 
+            })}
+          </div>
+          <div class="flex items-center space-x-4">
+            <a href="/tutorials" class="text-blue-600 dark:text-blue-400 hover:underline text-sm font-medium">
+              ← Back to Tutorials
+            </a>
+          </div>
+        </div>
+      </footer>
     </div>
   </main>
   <!-- Back to Top Button -->

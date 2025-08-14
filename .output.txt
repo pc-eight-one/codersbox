@@ -1,0 +1,218 @@
+diff --git a/src/pages/projects/[slug].astro b/src/pages/projects/[slug].astro
+index 0557ab5..55a3ad8 100644
+--- a/src/pages/projects/[slug].astro
++++ b/src/pages/projects/[slug].astro
+@@ -2,6 +2,7 @@
+ import { getCollection } from 'astro:content';
+ import BaseLayout from '@/layouts/BaseLayout.astro';
+ import { Icon } from 'astro-icon/components';
++import TableOfContents from '@/components/TableOfContents.astro';
+
+ export async function getStaticPaths() {
+   const projects = await getCollection('projects');
+@@ -13,7 +14,6 @@ export async function getStaticPaths() {
+
+ const { project } = Astro.props;
+ const { Content, headings } = await project.render();
+-const toc = (headings ?? []).filter((h) => h.depth >= 2 && h.depth <= 4);
+
+ const statusColors = {
+   completed: 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200',
+@@ -23,103 +23,115 @@ const statusColors = {
+ ---
+
+ <BaseLayout title={`${project.data.title} - codersbox`} description={project.data.description}>
+-  <main class="py-12">
+-    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+-      <article class="bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700 overflow-hidden">
++  <main class="min-h-screen bg-gray-50 dark:bg-gray-900 py-12">
++    <!-- Project Hero Section -->
++    <header class="bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700 mb-16">
++      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+         {project.data.image && (
+-          <div class="bg-gray-900 h-64 flex items-center justify-center">
++          <div class="bg-gray-900 h-64 flex items-center justify-center rounded-lg mb-8">
+             <img src={project.data.image} alt={`${project.data.title} Screenshot`} class="max-w-full max-h-full object-contain" />
+           </div>
+         )}
+-        <div class="p-8">
+-          <!-- Project Header -->
+-          <header class="mb-8">
+-            <div class="flex items-center justify-between mb-4">
+-              <h1 class="text-4xl md:text-5xl font-bold mb-6 text-gray-900 dark:text-gray-100 leading-tight tracking-tight">{project.data.title}</h1>
+-              <div class="flex items-center space-x-3">
+-                {project.data.github && (
+-                  <a href={project.data.github} target="_blank" rel="noopener noreferrer" class="text-gray-700 dark:text-gray-300 hover:text-black dark:hover:text-white transition-colors">
+-                    <Icon name="fa6-brands:github" class="text-2xl" />
+-                  </a>
+-                )}
+-                {project.data.demo && (
+-                  <a href={project.data.demo} target="_blank" rel="noopener noreferrer" class="text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 transition-colors">
+-                    <Icon name="fa6-solid:link" class="text-xl" />
+-                  </a>
+-                )}
+-              </div>
+-            </div>
+-
+-            <div class="flex items-center gap-4 mb-6">
++
++        <div class="text-center">
++          <h1 class="text-4xl md:text-5xl font-bold mb-6 text-gray-900 dark:text-gray-100 leading-tight tracking-tight">
++            {project.data.title}
++          </h1>
++
++          <p class="text-xl text-gray-600 dark:text-gray-400 mb-8 max-w-3xl mx-auto leading-relaxed">
++            {project.data.description}
++          </p>
++
++          <div class="flex flex-wrap justify-center items-center gap-6 text-sm text-gray-500 dark:text-gray-400 mb-6">
++            <div class="flex items-center gap-2">
+               <span class={`inline-block text-xs px-3 py-1 rounded-full font-medium uppercase tracking-wide ${statusColors[project.data.status]}`}>
+                 {project.data.status.replace('-', ' ')}
+               </span>
+-              <span class="text-sm text-gray-500 dark:text-gray-400">
+-                {project.data.publishDate.toLocaleDateString('en-US', {
+-                  year: 'numeric',
+-                  month: 'long',
+-                  day: 'numeric'
+-                })}
+-              </span>
+             </div>
+-
+-            <!-- Tech Stack -->
+-            <div class="flex flex-wrap gap-2 mb-6">
+-              {project.data.tech.map((tech) => (
+-                <span class="bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-200 text-sm font-medium px-3 py-1 rounded">
+-                  {tech}
+-                </span>
+-              ))}
++            <div class="flex items-center gap-2">
++              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
++                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
++              </svg>
++              <span>{project.data.publishDate.toLocaleDateString('en-US', {
++                year: 'numeric',
++                month: 'long',
++                day: 'numeric'
++              })}</span>
+             </div>
+-
+-            <p class="text-lg text-gray-700 dark:text-gray-300 leading-relaxed">{project.data.description}</p>
+-          </header>
++            {project.data.github && (
++              <a href={project.data.github} target="_blank" rel="noopener noreferrer" class="text-gray-700 dark:text-gray-300 hover:text-black dark:hover:text-white transition-colors flex items-center gap-2">
++                <Icon name="fa6-brands:github" class="text-lg" />
++                <span>GitHub</span>
++              </a>
++            )}
++            {project.data.demo && (
++              <a href={project.data.demo} target="_blank" rel="noopener noreferrer" class="text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 transition-colors flex items-center gap-2">
++                <Icon name="fa6-solid:link" class="text-lg" />
++                <span>Live Demo</span>
++              </a>
++            )}
++          </div>
+
+-          <!-- Table of Contents (auto-generated from headings) -->
+-          {toc.length > 0 && (
+-            <nav class="mb-12 p-6 bg-gray-50 dark:bg-gray-700/50 rounded-lg border border-gray-200 dark:border-gray-600">
+-              <h2 class="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-4 flex items-center gap-2">
+-                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 10h16M4 14h16M4 18h16"></path>
+-                </svg>
+-                Table of Contents
+-              </h2>
+-              <ul class="space-y-2 text-sm">
+-                {toc.map((h) => (
+-                  <li>
+-                    <a href={`#${h.slug ?? ''}`} class={`block text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors ${h.depth === 2 ? '' : h.depth === 3 ? 'pl-4' : 'pl-8'}`}>
+-                      {h.text}
+-                    </a>
+-                  </li>
+-                ))}
+-              </ul>
+-            </nav>
+-          )}
+-
+-          <!-- Project Content -->
+-          <div class="prose prose-lg dark:prose-invert max-w-none project-content">
+-            <Content />
++          <!-- Tech Stack -->
++          <div class="flex flex-wrap justify-center gap-2">
++            {project.data.tech.map((tech) => (
++              <span class="bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 px-4 py-2 rounded-full text-sm font-medium hover:bg-blue-200 dark:hover:bg-blue-800 transition-colors">
++                {tech}
++              </span>
++            ))}
+           </div>
++        </div>
++      </div>
++    </header>
++
++    <!-- Project Content -->
++    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
++      {(headings ?? []).filter((h) => h.depth >= 2 && h.depth <= 4).length > 0 ? (
++        <div class="grid grid-cols-1 lg:grid-cols-4 gap-8">
++          <!-- Left Sidebar - Table of Contents -->
++          <aside class="lg:col-span-1 lg:border-r lg:border-gray-200 lg:dark:border-gray-700 lg:pr-8">
++            <TableOfContents headings={headings ?? []} />
++          </aside>
+
+-          <!-- Project Footer -->
+-          <footer class="mt-12 pt-8 border-t border-gray-200 dark:border-gray-700">
+-            <div class="flex items-center justify-between">
+-              <div class="text-sm text-gray-500 dark:text-gray-400">
+-                Published on {project.data.publishDate.toLocaleDateString('en-US', {
+-                  year: 'numeric',
+-                  month: 'long',
+-                  day: 'numeric'
+-                })}
+-              </div>
+-              <div class="flex items-center space-x-4">
+-                <a href="/projects" class="text-blue-600 dark:text-blue-400 hover:underline text-sm font-medium">
+-                  ← Back to Projects
+-                </a>
++          <!-- Main Content -->
++          <article class="lg:col-span-3">
++            <div class="px-0 py-0">
++              <!-- Project Content -->
++              <div class="prose prose-lg dark:prose-invert max-w-none project-content">
++                <Content />
+               </div>
+             </div>
+-          </footer>
++          </article>
++        </div>
++      ) : (
++        <!-- Single Column Layout - No TOC -->
++        <article class="max-w-4xl mx-auto">
++          <div class="px-0 py-0">
++            <!-- Project Content -->
++            <div class="prose prose-lg dark:prose-invert max-w-none project-content">
++              <Content />
++            </div>
++          </div>
++        </article>
++      )}
++
++      <!-- Project Footer -->
++      <footer class="mt-12 bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700 p-8">
++        <div class="flex items-center justify-between">
++          <div class="text-sm text-gray-500 dark:text-gray-400">
++            Published on {project.data.publishDate.toLocaleDateString('en-US', {
++              year: 'numeric',
++              month: 'long',
++              day: 'numeric'
++            })}
++          </div>
++          <div class="flex items-center space-x-4">
++            <a href="/projects" class="text-blue-600 dark:text-blue-400 hover:underline text-sm font-medium">
++              ← Back to Projects
++            </a>
++          </div>
+         </div>
+-      </article>
++      </footer>
+     </div>
+   <!-- Back to Top Button -->
+   <button id="back-to-top" aria-label="Back to top"

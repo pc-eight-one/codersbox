@@ -1,0 +1,173 @@
+---
+interface Props {
+  headings: {
+    depth: number;
+    text: string;
+    slug?: string;
+  }[];
+  currentTutorial?: {
+    data: {
+      series?: string;
+      part?: number;
+      totalParts?: number;
+    };
+    slug: string;
+  };
+  seriesTutorials?: Array<{
+    data: {
+      title: string;
+      part: number;
+    };
+    slug: string;
+  }>;
+}
+
+const { headings, currentTutorial, seriesTutorials = [] } = Astro.props;
+const toc = headings.filter((h) => h.depth >= 2 && h.depth <= 4);
+const hasToc = toc.length > 0;
+const hasSeries = seriesTutorials.length > 0;
+const showSidebar = hasToc || hasSeries;
+
+// Sort series tutorials by part
+const sortedSeriesTutorials = seriesTutorials.sort((a, b) => a.data.part - b.data.part);
+---
+
+{showSidebar && (
+  <nav class="sticky top-20 max-h-[calc(100vh-6rem)] overflow-y-auto scrollbar-hide">
+    <div class="space-y-8">
+      <!-- Series Navigation -->
+      {hasSeries && (
+        <div>
+          <h2 class="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-4 flex items-center gap-2">
+            <svg class="w-5 h-5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"></path>
+            </svg>
+            <span>{currentTutorial?.data.series || 'Series'}</span>
+          </h2>
+          <ul class="space-y-1 text-sm">
+            {sortedSeriesTutorials.map((tutorial) => (
+              <li>
+                <a 
+                  href={`/tutorials/${tutorial.slug}`}
+                  class={`flex items-center gap-3 p-2 rounded-lg transition-colors ${
+                    currentTutorial?.slug === tutorial.slug
+                      ? 'bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300'
+                      : 'text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 hover:bg-gray-100 dark:hover:bg-gray-700/50'
+                  }`}
+                >
+                  <div class={`w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold flex-shrink-0 ${
+                    currentTutorial?.slug === tutorial.slug
+                      ? 'bg-blue-600 text-white'
+                      : 'bg-gray-300 dark:bg-gray-600 text-gray-700 dark:text-gray-300'
+                  }`}>
+                    {tutorial.data.part}
+                  </div>
+                  <span class="truncate">{tutorial.data.title.replace(/^.*Part \d+:\s*/, '')}</span>
+                </a>
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
+      
+      <!-- Table of Contents -->
+      {hasToc && (
+        <div>
+          <h2 class="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-4 flex items-center gap-2">
+            <svg class="w-5 h-5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 10h16M4 14h16M4 18h16"></path>
+            </svg>
+            <span>Contents</span>
+          </h2>
+          <ul class="space-y-2 text-sm">
+            {toc.map((h) => (
+              <li>
+                <a 
+                  href={`#${h.slug ?? ''}`}
+                  data-toc-link
+                  class={`block text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors leading-relaxed ${
+                    h.depth === 2 
+                      ? 'font-medium' 
+                      : h.depth === 3 
+                        ? 'pl-4 text-sm' 
+                        : 'pl-8 text-xs'
+                  }`}
+                >
+                  {h.text}
+                </a>
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
+    </div>
+  </nav>
+)}
+
+<script>
+  // Smooth scroll navigation for TOC links
+  function initTutorialTOCNavigation() {
+    const tocLinks = document.querySelectorAll('[data-toc-link]');
+    
+    tocLinks.forEach(link => {
+      link.addEventListener('click', (e) => {
+        e.preventDefault();
+        
+        const targetId = link.getAttribute('href')?.substring(1);
+        if (!targetId) return;
+        
+        const targetElement = document.getElementById(targetId);
+        if (!targetElement) return;
+        
+        // Add animation class to link
+        link.classList.add('toc-navigating');
+        
+        // Smooth scroll with offset for sticky header
+        const headerHeight = 100; // Adjust based on your header height
+        const elementPosition = targetElement.getBoundingClientRect().top + window.pageYOffset;
+        const offsetPosition = elementPosition - headerHeight;
+        
+        window.scrollTo({
+          top: offsetPosition,
+          behavior: 'smooth'
+        });
+        
+        // Update URL hash
+        history.replaceState(null, '', `#${targetId}`);
+        
+        // Remove animation class after scroll completes
+        setTimeout(() => {
+          link.classList.remove('toc-navigating');
+        }, 800);
+      });
+    });
+  }
+  
+  // Initialize on page load
+  document.addEventListener('DOMContentLoaded', initTutorialTOCNavigation);
+  
+  // Reinitialize if the script runs after DOM is already loaded
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initTutorialTOCNavigation);
+  } else {
+    initTutorialTOCNavigation();
+  }
+</script>
+
+<style>
+  .toc-navigating {
+    @apply text-blue-600 dark:text-blue-400 bg-blue-50 dark:bg-blue-900/20 rounded px-2 py-1 -mx-2 -my-1;
+    transform: scale(1.02);
+    transition: all 0.2s ease-in-out;
+  }
+
+  /* Hide scrollbars while maintaining scroll functionality */
+  .scrollbar-hide {
+    -ms-overflow-style: none;  /* Internet Explorer 10+ */
+    scrollbar-width: none;  /* Firefox */
+  }
+  
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;  /* Safari and Chrome */
+  }
+</style>

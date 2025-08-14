@@ -2,6 +2,7 @@
 import { getCollection } from 'astro:content';
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import ShareButton from '@/components/ShareButton.astro';
+import TableOfContents from '@/components/TableOfContents.astro';
 
 export async function getStaticPaths() {
   const articles = await getCollection('articles');
@@ -13,14 +14,22 @@ export async function getStaticPaths() {
 
 const { article } = Astro.props;
 const { Content, headings } = await article.render();
-const toc = (headings ?? []).filter((h) => h.depth >= 2 && h.depth <= 4);
 ---
 
-<BaseLayout title={`${article.data.title} - codersbox`} description={article.data.description}>
+<BaseLayout 
+  title={`${article.data.title} - codersbox`} 
+  description={article.data.description}
+  type="article"
+  publishDate={article.data.publishDate}
+  author={article.data.author}
+  tags={article.data.tags}
+  canonical={`https://codersbox.dev/articles/${article.slug}/`}
+  image={article.data.image || '/og-image.jpg'}
+>
   <main class="min-h-screen bg-gray-50 dark:bg-gray-900">
     <!-- Article Hero Section -->
     <header class="bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700">
-      <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <div class="text-center">
           <h1 class="text-4xl md:text-5xl font-bold mb-6 text-gray-900 dark:text-gray-100 leading-tight tracking-tight">
             {article.data.title}
@@ -68,37 +77,36 @@ const toc = (headings ?? []).filter((h) => h.depth >= 2 && h.depth <= 4);
     </header>
 
     <!-- Article Content -->
-    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
-      <article class="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700 overflow-hidden">
-        <div class="px-8 py-12 md:px-12 md:py-16">
-          <!-- Table of Contents (auto-generated from headings) -->
-          {toc.length > 0 && (
-            <nav class="mb-12 p-6 bg-gray-50 dark:bg-gray-700/50 rounded-lg border border-gray-200 dark:border-gray-600">
-              <h2 class="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-4 flex items-center gap-2">
-                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 10h16M4 14h16M4 18h16"></path>
-                </svg>
-                Table of Contents
-              </h2>
-              <ul class="space-y-2 text-sm">
-                {toc.map((h) => (
-                  <li>
-                    <a href={`#${h.slug ?? ''}`} class={`block text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors ${h.depth === 2 ? '' : h.depth === 3 ? 'pl-4' : 'pl-8'}`}>
-                      {h.text}
-                    </a>
-                  </li>
-                ))}
-              </ul>
-            </nav>
-          )}
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+      {(headings ?? []).filter((h) => h.depth >= 2 && h.depth <= 4).length > 0 ? (
+        <div class="grid grid-cols-1 lg:grid-cols-4 gap-8">
+          <!-- Left Sidebar - Table of Contents -->
+          <aside class="lg:col-span-1 lg:border-r lg:border-gray-200 lg:dark:border-gray-700 lg:pr-8">
+            <TableOfContents headings={headings ?? []} />
+          </aside>
           
-          <!-- Enhanced Article Content with Custom Typography -->
-          <div class="prose prose-lg dark:prose-invert max-w-none article-content">
-            <Content />
-          </div>
+          <!-- Main Content -->
+          <article class="lg:col-span-3">
+            <div class="px-0 py-0">
+              <!-- Enhanced Article Content with Custom Typography -->
+              <div class="prose prose-lg dark:prose-invert max-w-none article-content">
+                <Content />
+              </div>
+            </div>
+          </article>
         </div>
-      </article>
-
+      ) : (
+        <!-- Single Column Layout - No TOC -->
+        <article class="max-w-4xl mx-auto">
+          <div class="px-0 py-0">
+            <!-- Enhanced Article Content with Custom Typography -->
+            <div class="prose prose-lg dark:prose-invert max-w-none article-content">
+              <Content />
+            </div>
+          </div>
+        </article>
+      )}
+      
       <!-- Article Navigation/Footer -->
       <footer class="mt-12 bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700 p-8">
         <div class="flex flex-col md:flex-row items-center justify-between gap-6">
