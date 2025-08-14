@@ -7,8 +7,8 @@ import mdx from '@astrojs/mdx';
 export default defineConfig({
   integrations: [
     tailwind({
-      // Optimize Tailwind CSS
-      applyBaseStyles: false,
+      // Keep Tailwind base styles
+      applyBaseStyles: true,
     }),
     icon({
       // Optimize icon loading
@@ -31,8 +31,6 @@ export default defineConfig({
   
   // Performance optimizations
   build: {
-    // Inline CSS for critical styles
-    inlineStylesheets: 'auto',
     // Split chunks for better caching
     split: true,
   },
