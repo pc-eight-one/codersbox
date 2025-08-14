@@ -1,9 +1,7 @@
 ---
 import { getCollection } from 'astro:content';
-import BaseLayout from '@/layouts/BaseLayout.astro';
+import ProjectsLayout from '@/layouts/ProjectsLayout.astro';
 import ProjectCard from '@/components/ProjectCard.astro';
-import HeroBackground from '@/components/HeroBackground.astro';
-import Newsletter from '@/components/Newsletter.astro';
 import PagePagination from '@/components/PagePagination.astro';
 
 // Get all projects, sorted by publish date
@@ -14,6 +12,23 @@ const projects = await getCollection('projects', ({ data }) => {
 // Sort projects by publish date (newest first)
 projects.sort((a, b) => new Date(b.data.publishDate).getTime() - new Date(a.data.publishDate).getTime());
 
+// Calculate tag popularity (top 3 most used technologies)
+const tagCounts = new Map();
+projects.forEach(project => {
+  project.data.tech?.forEach(tech => {
+    tagCounts.set(tech, (tagCounts.get(tech) || 0) + 1);
+  });
+});
+
+// Get top 3 most popular technologies
+const popularTags = Array.from(tagCounts.entries())
+  .sort((a, b) => b[1] - a[1])
+  .slice(0, 3)
+  .map(([tag, count]) => ({ tag, count }));
+
+// Get all unique technologies for filtering
+const allTags = Array.from(tagCounts.keys()).sort();
+
 // Pagination logic
 const projectsPerPage = 6;
 const totalPages = Math.ceil(projects.length / projectsPerPage);
@@ -22,45 +37,68 @@ const startIndex = (currentPage - 1) * projectsPerPage;
 const paginatedProjects = projects.slice(startIndex, startIndex + projectsPerPage);
 ---
 
-<BaseLayout title="Projects - codersbox" description="Showcase of web development projects and open source contributions.">
-  <!-- Hero Section -->
-  <header class="bg-white border-b border-gray-200 py-20 relative">
-    <HeroBackground />
-    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-      <h1 class="text-4xl font-bold mb-6 tracking-tight">Projects</h1>
-      <p class="text-gray-600 text-lg mb-8 max-w-3xl leading-relaxed">A showcase of my web development projects and open source contributions.</p>
-    </div>
-  </header>
-
+<ProjectsLayout 
+  title="Projects - codersbox" 
+  description="Showcase of web development projects and open source contributions."
+  popularTags={popularTags}
+  allTags={allTags}
+>
   <!-- Main Content -->
   <main class="py-12">
     <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
       {paginatedProjects.length > 0 ? (
         <>
-          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
-            {paginatedProjects.map((project) => (
-              <ProjectCard 
-                title={project.data.title}
-                description={project.data.description}
-                tech={project.data.tech}
-                slug={project.slug}
-                featured={project.data.featured}
-                github={project.data.github}
-                demo={project.data.demo}
-                status={project.data.status}
-              />
-            ))}
+          <div id="projects-container">
+            <div id="projects-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
+              {paginatedProjects.map((project) => (
+                <div 
+                  class="project-item"
+                  data-title={project.data.title.toLowerCase()}
+                  data-description={project.data.description.toLowerCase()}
+                  data-tech={JSON.stringify(project.data.tech || [])}
+                  data-date={project.data.publishDate.getTime()}
+                  data-status={project.data.status}
+                >
+                  <ProjectCard 
+                    title={project.data.title}
+                    description={project.data.description}
+                    tech={project.data.tech}
+                    slug={project.slug}
+                    featured={project.data.featured}
+                    github={project.data.github}
+                    demo={project.data.demo}
+                    status={project.data.status}
+                  />
+                </div>
+              ))}
+            </div>
+            
+            <!-- No Results Message -->
+            <div id="no-results" class="text-center py-12 hidden">
+              <div class="text-gray-400 dark:text-gray-500 mb-4">
+                <svg class="w-16 h-16 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"></path>
+                </svg>
+              </div>
+              <h3 class="text-xl font-semibold text-gray-900 dark:text-gray-100 mb-2">No projects found</h3>
+              <p class="text-gray-600 dark:text-gray-400 mb-4">Try adjusting your search or filters to find what you're looking for.</p>
+              <button id="clear-all-filters" class="text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 font-medium">
+                Clear all filters
+              </button>
+            </div>
           </div>
           
           <!-- Pagination -->
-          {totalPages > 1 && (
-            <PagePagination 
-              currentPage={currentPage}
-              totalPages={totalPages}
-              prevUrl={currentPage > 1 ? `/projects/page/${currentPage - 1}` : null}
-              nextUrl={currentPage < totalPages ? `/projects/page/${currentPage + 1}` : null}
-            />
-          )}
+          <div id="pagination-container">
+            {totalPages > 1 && (
+              <PagePagination 
+                currentPage={currentPage}
+                totalPages={totalPages}
+                prevUrl={currentPage > 1 ? `/projects/page/${currentPage - 1}` : null}
+                nextUrl={currentPage < totalPages ? `/projects/page/${currentPage + 1}` : null}
+              />
+            )}
+          </div>
         </>
       ) : (
         <div class="text-center py-12">
@@ -70,7 +108,397 @@ const paginatedProjects = projects.slice(startIndex, startIndex + projectsPerPag
       )}
     </div>
   </main>
+</ProjectsLayout>
 
-  <!-- Newsletter Section -->
-  <Newsletter />
-</BaseLayout>
+<script is:inline>
+  // Enhanced search functionality for projects with type-ahead
+  document.addEventListener('DOMContentLoaded', function() {
+    const projects = Array.from(document.querySelectorAll('.project-item'));
+    const noResults = document.getElementById('no-results');
+    const projectsGrid = document.getElementById('projects-grid');
+    const popularTags = document.querySelectorAll('.popular-tag');
+    const clearAllFilters = document.getElementById('clear-all-filters');
+    const heroSearch = document.getElementById('hero-search');
+    const searchSuggestions = document.getElementById('search-suggestions');
+    const suggestionsList = document.getElementById('suggestions-list');
+    
+    // Build search index for type-ahead
+    const searchIndex = new Set();
+    let projectTitles = [];
+    let projectTech = new Set();
+    let projectStatuses = new Set();
+    
+    function buildSearchIndex() {
+      projects.forEach(project => {
+        const title = project.dataset.title || '';
+        const description = project.dataset.description || '';
+        const tech = JSON.parse(project.dataset.tech || '[]');
+        const status = project.dataset.status || '';
+        
+        // Add title to projects list
+        if (title) {
+          projectTitles.push({
+            title: title.split(' ').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' '),
+            search: title.toLowerCase()
+          });
+        }
+        
+        // Add tech and statuses to sets
+        tech.forEach(t => projectTech.add(t));
+        if (status) projectStatuses.add(status);
+        
+        // Add individual words to search index
+        const words = (title + ' ' + description + ' ' + tech.join(' ') + ' ' + status).toLowerCase().split(/\s+/);
+        words.forEach(word => {
+          if (word.length > 2) {
+            searchIndex.add(word);
+          }
+        });
+      });
+    }
+    
+    buildSearchIndex();
+    
+    let selectedSuggestionIndex = -1;
+    let currentSuggestions = [];
+    
+    function generateSuggestions(query) {
+      if (!query || query.length < 2) return [];
+      
+      const queryLower = query.toLowerCase();
+      const suggestions = [];
+      
+      // Add matching project titles
+      const matchingTitles = projectTitles
+        .filter(item => item.search.includes(queryLower))
+        .slice(0, 2);
+      
+      suggestions.push(...matchingTitles.map(item => ({
+        text: item.title,
+        type: 'project',
+        query: item.search
+      })));
+      
+      // Add matching technologies
+      const matchingTech = Array.from(projectTech)
+        .filter(tech => tech.toLowerCase().includes(queryLower))
+        .slice(0, 3);
+      
+      suggestions.push(...matchingTech.map(tech => ({
+        text: tech,
+        type: 'technology',
+        query: tech.toLowerCase()
+      })));
+      
+      // Add matching statuses
+      const matchingStatuses = Array.from(projectStatuses)
+        .filter(status => status.toLowerCase().includes(queryLower))
+        .slice(0, 2);
+      
+      suggestions.push(...matchingStatuses.map(status => ({
+        text: status.charAt(0).toUpperCase() + status.slice(1),
+        type: 'status',
+        query: status.toLowerCase()
+      })));
+      
+      return suggestions.slice(0, 8);
+    }
+    
+    function showSuggestions(suggestions) {
+      if (suggestions.length === 0) {
+        hideSuggestions();
+        return;
+      }
+      
+      currentSuggestions = suggestions;
+      selectedSuggestionIndex = -1;
+      
+      const html = suggestions.map((suggestion, index) => {
+        const typeIcon = suggestion.type === 'project' ? '📁' : 
+                        suggestion.type === 'technology' ? '🔧' :
+                        suggestion.type === 'status' ? '📊' : '🔍';
+        
+        return `
+          <div class="suggestion-item flex items-center px-4 py-3 hover:bg-gray-100 dark:hover:bg-gray-700 cursor-pointer border-b border-gray-100 dark:border-gray-700 last:border-b-0" data-index="${index}">
+            <span class="mr-3 text-sm">${typeIcon}</span>
+            <div class="flex-grow">
+              <div class="text-sm font-medium text-gray-900 dark:text-gray-100">${suggestion.text}</div>
+              <div class="text-xs text-gray-500 dark:text-gray-400 capitalize">${suggestion.type}</div>
+            </div>
+          </div>
+        `;
+      }).join('');
+      
+      suggestionsList.innerHTML = html;
+      searchSuggestions.classList.remove('hidden');
+      
+      // Add click handlers
+      document.querySelectorAll('.suggestion-item').forEach((item, index) => {
+        item.addEventListener('click', () => selectSuggestion(index));
+      });
+    }
+    
+    function hideSuggestions() {
+      searchSuggestions.classList.add('hidden');
+      selectedSuggestionIndex = -1;
+      currentSuggestions = [];
+    }
+    
+    function selectSuggestion(index) {
+      if (index >= 0 && index < currentSuggestions.length) {
+        const suggestion = currentSuggestions[index];
+        heroSearch.value = suggestion.query;
+        hideSuggestions();
+        searchProjects();
+        heroSearch.focus();
+      }
+    }
+    
+    function highlightSuggestion(index) {
+      document.querySelectorAll('.suggestion-item').forEach((item, i) => {
+        if (i === index) {
+          item.classList.add('bg-gray-100', 'dark:bg-gray-700');
+        } else {
+          item.classList.remove('bg-gray-100', 'dark:bg-gray-700');
+        }
+      });
+    }
+    
+    // Debounce function to avoid excessive filtering
+    function debounce(func, delay) {
+      let timeoutId;
+      return function(...args) {
+        clearTimeout(timeoutId);
+        timeoutId = setTimeout(() => func.apply(this, args), delay);
+      };
+    }
+    
+    function searchProjects() {
+      const searchTerm = heroSearch ? heroSearch.value.toLowerCase().trim() : '';
+      
+      if (!searchTerm) {
+        // Show all projects when search is empty
+        projects.forEach(function(project) {
+          project.style.display = 'block';
+        });
+        noResults.classList.add('hidden');
+        projectsGrid.classList.remove('hidden');
+        return;
+      }
+      
+      // Search through multiple fields with different weights
+      let searchResults = projects.map(function(project) {
+        const title = (project.dataset.title || '').toLowerCase();
+        const description = (project.dataset.description || '').toLowerCase();
+        const tech = JSON.parse(project.dataset.tech || '[]');
+        const techString = tech.map(t => t.toLowerCase()).join(' ');
+        const status = (project.dataset.status || '').toLowerCase();
+        
+        let score = 0;
+        
+        // Title matches get highest score
+        if (title.includes(searchTerm)) {
+          score += title.indexOf(searchTerm) === 0 ? 10 : 5; // Boost if starts with search term
+        }
+        
+        // Description matches get medium score
+        if (description.includes(searchTerm)) {
+          score += 3;
+        }
+        
+        // Tech matches get lower score
+        if (techString.includes(searchTerm)) {
+          score += 2;
+        }
+        
+        // Status matches
+        if (status.includes(searchTerm)) {
+          score += 2;
+        }
+        
+        // Check for partial word matches
+        const searchWords = searchTerm.split(' ').filter(word => word.length > 0);
+        searchWords.forEach(function(word) {
+          if (title.includes(word)) score += 1;
+          if (description.includes(word)) score += 0.5;
+          if (status.includes(word)) score += 1;
+        });
+        
+        return { project: project, score: score };
+      });
+      
+      // Filter projects with score > 0 and sort by score
+      const filteredProjects = searchResults
+        .filter(result => result.score > 0)
+        .sort((a, b) => b.score - a.score)
+        .map(result => result.project);
+      
+      // Update display
+      projects.forEach(function(project) {
+        project.style.display = 'none';
+      });
+      
+      if (filteredProjects.length > 0) {
+        filteredProjects.forEach(function(project) {
+          project.style.display = 'block';
+        });
+        noResults.classList.add('hidden');
+        projectsGrid.classList.remove('hidden');
+        
+        // Update no results message with search term
+        updateNoResultsMessage(searchTerm, filteredProjects.length);
+      } else {
+        projectsGrid.classList.add('hidden');
+        noResults.classList.remove('hidden');
+        updateNoResultsMessage(searchTerm, 0);
+      }
+    }
+    
+    function updateNoResultsMessage(searchTerm, resultCount) {
+      const noResultsTitle = document.querySelector('#no-results h3');
+      const noResultsText = document.querySelector('#no-results p');
+      
+      if (resultCount === 0 && searchTerm) {
+        if (noResultsTitle) noResultsTitle.textContent = `No projects found for "${searchTerm}"`;
+        if (noResultsText) noResultsText.textContent = 'Try a different search term or browse our popular technologies above.';
+      } else {
+        if (noResultsTitle) noResultsTitle.textContent = 'No projects found';
+        if (noResultsText) noResultsText.textContent = 'Try adjusting your search or browse our popular technologies above.';
+      }
+    }
+    
+    function clearSearch() {
+      if (heroSearch) {
+        heroSearch.value = '';
+        heroSearch.focus();
+      }
+      hideSuggestions();
+      searchProjects();
+    }
+    
+    function handleTagClick(tagName) {
+      if (heroSearch) {
+        heroSearch.value = tagName;
+        heroSearch.focus();
+        hideSuggestions();
+        searchProjects();
+      }
+    }
+    
+    // Create debounced versions
+    const debouncedSearch = debounce(searchProjects, 300);
+    const debouncedTypeAhead = debounce(function(query) {
+      const suggestions = generateSuggestions(query);
+      showSuggestions(suggestions);
+    }, 150);
+    
+    // Event listeners
+    if (heroSearch) {
+      heroSearch.addEventListener('input', function(e) {
+        const query = e.target.value;
+        
+        // Show type-ahead suggestions
+        if (query.length >= 2) {
+          debouncedTypeAhead(query);
+        } else {
+          hideSuggestions();
+        }
+        
+        // Trigger search
+        debouncedSearch();
+      });
+      
+      // Handle keyboard navigation
+      heroSearch.addEventListener('keydown', function(e) {
+        if (e.key === 'ArrowDown') {
+          e.preventDefault();
+          if (currentSuggestions.length > 0) {
+            selectedSuggestionIndex = Math.min(selectedSuggestionIndex + 1, currentSuggestions.length - 1);
+            highlightSuggestion(selectedSuggestionIndex);
+          }
+        } else if (e.key === 'ArrowUp') {
+          e.preventDefault();
+          if (currentSuggestions.length > 0) {
+            selectedSuggestionIndex = Math.max(selectedSuggestionIndex - 1, -1);
+            highlightSuggestion(selectedSuggestionIndex);
+          }
+        } else if (e.key === 'Enter') {
+          e.preventDefault();
+          if (selectedSuggestionIndex >= 0 && currentSuggestions.length > 0) {
+            selectSuggestion(selectedSuggestionIndex);
+          } else {
+            hideSuggestions();
+            searchProjects();
+          }
+        } else if (e.key === 'Escape') {
+          if (searchSuggestions.classList.contains('hidden')) {
+            clearSearch();
+          } else {
+            hideSuggestions();
+          }
+        } else if (e.key === 'Tab') {
+          hideSuggestions();
+        }
+      });
+      
+      // Hide suggestions when clicking outside
+      heroSearch.addEventListener('blur', function(e) {
+        setTimeout(() => {
+          if (!searchSuggestions.contains(document.activeElement)) {
+            hideSuggestions();
+          }
+        }, 150);
+      });
+      
+      // Show suggestions when focusing if there's text
+      heroSearch.addEventListener('focus', function() {
+        if (heroSearch.value.length >= 2) {
+          const suggestions = generateSuggestions(heroSearch.value);
+          showSuggestions(suggestions);
+        }
+      });
+      
+      // Add search icon functionality
+      const searchIcon = heroSearch.parentElement.querySelector('svg');
+      if (searchIcon) {
+        searchIcon.style.cursor = 'pointer';
+        searchIcon.addEventListener('click', function() {
+          hideSuggestions();
+          searchProjects();
+        });
+      }
+    }
+    
+    if (clearAllFilters) {
+      clearAllFilters.addEventListener('click', clearSearch);
+    }
+    
+    // Popular tag functionality
+    popularTags.forEach(function(tag) {
+      tag.addEventListener('click', function() {
+        const tagName = tag.dataset.tag;
+        if (tagName) {
+          handleTagClick(tagName);
+        }
+      });
+    });
+    
+    // Initial load - show all projects
+    searchProjects();
+    
+    // Auto-focus search on page load (optional)
+    if (heroSearch && window.innerWidth > 768) { // Only on desktop
+      setTimeout(() => heroSearch.focus(), 100);
+    }
+  });
+</script>
+
+<style>
+  .project-item {
+    transition: opacity 0.3s ease;
+  }
+  
+  .popular-tag:hover {
+    transform: translateY(-1px);
+  }
+</style>

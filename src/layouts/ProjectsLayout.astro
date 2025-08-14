@@ -1,0 +1,73 @@
+---
+import BaseLayout from './BaseLayout.astro';
+import HeroBackground from '@/components/HeroBackground.astro';
+import Newsletter from '@/components/Newsletter.astro';
+
+interface Props {
+  title?: string;
+  description?: string;
+  popularTags?: Array<{ tag: string; count: number }>;
+  allTags?: string[];
+}
+
+const { title, description, popularTags = [], allTags = [] } = Astro.props;
+---
+
+<BaseLayout title={title} description={description}>
+  <!-- Hero Section -->
+  <header class="bg-white dark:bg-gray-900 border-b border-gray-200 dark:border-gray-800 py-20 relative">
+    <!-- Subtle Dotted Background Pattern -->
+    <HeroBackground />
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <h1 class="text-4xl font-bold mb-6 tracking-tight">Projects</h1>
+      <p class="text-gray-600 dark:text-gray-300 text-lg mb-8 max-w-3xl leading-relaxed">A showcase of my web development projects and open source contributions.</p>
+
+      <!-- Search Bar with Type-ahead -->
+      <div class="relative max-w-3xl mb-8">
+        <input
+          type="text"
+          id="hero-search"
+          placeholder="Search projects..."
+          class="w-full py-4 pl-5 pr-10 rounded-md border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors"
+          autocomplete="off"
+        />
+        <div class="absolute inset-y-0 right-0 flex items-center pr-4">
+          <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+          </svg>
+        </div>
+        
+        <!-- Type-ahead Suggestions -->
+        <div id="search-suggestions" class="absolute top-full left-0 right-0 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded-md shadow-lg mt-1 max-h-64 overflow-y-auto z-50 hidden">
+          <div id="suggestions-list"></div>
+        </div>
+      </div>
+      
+      <!-- Popular Tags -->
+      {popularTags.length > 0 && (
+        <div class="mb-6">
+          <h3 class="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-3">Popular Technologies</h3>
+          <div class="flex flex-wrap gap-2">
+            {popularTags.map(({ tag, count }) => (
+              <button 
+                class="popular-tag inline-flex items-center gap-2 bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 px-3 py-1 rounded-full text-sm font-medium hover:bg-blue-200 dark:hover:bg-blue-800 transition-colors cursor-pointer"
+                data-tag={tag}
+              >
+                {tag}
+                <span class="bg-blue-200 dark:bg-blue-800 text-blue-700 dark:text-blue-300 px-1.5 py-0.5 rounded-full text-xs">
+                  {count}
+                </span>
+              </button>
+            ))}
+          </div>
+        </div>
+      )}
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <slot />
+
+  <!-- Newsletter Section -->
+  <Newsletter />
+</BaseLayout>
