@@ -54,74 +54,141 @@ const recentProjects = await getCollection('projects', ({ data }) => {
   <section class="py-16">
     <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
       
-      <div class="space-y-12">
+      <!-- Search Results and No Results Message -->
+      <div id="search-results" class="hidden">
+        <div class="mb-6">
+          <h3 class="text-2xl font-semibold text-gray-900 dark:text-gray-100">Search Results</h3>
+          <p id="search-summary" class="text-gray-600 dark:text-gray-400 mt-1"></p>
+        </div>
+        
+        <!-- Articles Results -->
+        <div id="search-articles-section" class="mb-8 hidden">
+          <h4 class="text-lg font-medium text-gray-900 dark:text-gray-100 mb-4">Articles</h4>
+          <div id="search-articles-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"></div>
+        </div>
+        
+        <!-- Tutorials Results -->
+        <div id="search-tutorials-section" class="mb-8 hidden">
+          <h4 class="text-lg font-medium text-gray-900 dark:text-gray-100 mb-4">Tutorials</h4>
+          <div id="search-tutorials-grid" class="grid grid-cols-1 md:grid-cols-2 gap-6"></div>
+        </div>
+        
+        <!-- Projects Results -->
+        <div id="search-projects-section" class="mb-8 hidden">
+          <h4 class="text-lg font-medium text-gray-900 dark:text-gray-100 mb-4">Projects</h4>
+          <div id="search-projects-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"></div>
+        </div>
+        
+        <!-- No Results -->
+        <div id="no-search-results" class="text-center py-12 hidden">
+          <div class="text-gray-400 dark:text-gray-500 mb-4">
+            <svg class="w-16 h-16 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+            </svg>
+          </div>
+          <h3 class="text-xl font-semibold text-gray-900 dark:text-gray-100 mb-2">No results found</h3>
+          <p class="text-gray-600 dark:text-gray-400 mb-4">Try a different search term or browse the latest content below.</p>
+          <button id="clear-search" class="text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 font-medium">
+            Clear search
+          </button>
+        </div>
+      </div>
+
+      <div id="default-content" class="space-y-12">
         {recentArticles.length > 0 && (
-          <div>
+          <div id="articles-section">
             <div class="flex items-center justify-between mb-6">
-              <h3 class="text-2xl font-semibold text-gray-900">Latest Articles</h3>
-              <a href="/articles" class="text-blue-600 hover:text-blue-700 font-medium">View all →</a>
+              <h3 class="text-2xl font-semibold text-gray-900 dark:text-gray-100">Latest Articles</h3>
+              <a href="/articles" class="text-blue-600 hover:text-blue-700 dark:text-blue-400 dark:hover:text-blue-300 font-medium">View all →</a>
             </div>
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div id="articles-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {recentArticles.map((article) => (
-                <ArticleCard 
-                  title={article.data.title}
-                  description={article.data.description}
-                  date={article.data.publishDate.toLocaleDateString('en-US', { 
-                    year: 'numeric', 
-                    month: 'long', 
-                    day: 'numeric' 
-                  })}
-                  readTime={article.data.readTime}
-                  tags={article.data.tags}
-                  slug={article.slug}
-                  featured={article.data.featured}
-                />
+                <div 
+                  class="article-item"
+                  data-type="article"
+                  data-title={article.data.title.toLowerCase()}
+                  data-description={article.data.description.toLowerCase()}
+                  data-tags={JSON.stringify(article.data.tags || [])}
+                >
+                  <ArticleCard 
+                    title={article.data.title}
+                    description={article.data.description}
+                    date={article.data.publishDate.toLocaleDateString('en-US', { 
+                      year: 'numeric', 
+                      month: 'long', 
+                      day: 'numeric' 
+                    })}
+                    readTime={article.data.readTime}
+                    tags={article.data.tags}
+                    slug={article.slug}
+                    featured={article.data.featured}
+                  />
+                </div>
               ))}
             </div>
           </div>
         )}
 
         {recentTutorials.length > 0 && (
-          <div>
+          <div id="tutorials-section">
             <div class="flex items-center justify-between mb-6">
-              <h3 class="text-2xl font-semibold text-gray-900">Latest Tutorials</h3>
-              <a href="/tutorials" class="text-blue-600 hover:text-blue-700 font-medium">View all →</a>
+              <h3 class="text-2xl font-semibold text-gray-900 dark:text-gray-100">Latest Tutorials</h3>
+              <a href="/tutorials" class="text-blue-600 hover:text-blue-700 dark:text-blue-400 dark:hover:text-blue-300 font-medium">View all →</a>
             </div>
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div id="tutorials-grid" class="grid grid-cols-1 md:grid-cols-2 gap-6">
               {recentTutorials.map((tutorial) => (
-                <TutorialCard 
-                  title={tutorial.data.title}
-                  description={tutorial.data.description}
-                  difficulty={tutorial.data.difficulty}
-                  tags={tutorial.data.tags}
-                  slug={tutorial.slug}
-                  series={tutorial.data.series}
-                  seriesPartsCount={tutorial.data.totalParts || 1}
-                  featured={tutorial.data.featured}
-                />
+                <div 
+                  class="tutorial-item"
+                  data-type="tutorial"
+                  data-title={tutorial.data.title.toLowerCase()}
+                  data-description={tutorial.data.description.toLowerCase()}
+                  data-tags={JSON.stringify(tutorial.data.tags || [])}
+                  data-difficulty={tutorial.data.difficulty}
+                  data-series={tutorial.data.series.toLowerCase()}
+                >
+                  <TutorialCard 
+                    title={tutorial.data.title}
+                    description={tutorial.data.description}
+                    difficulty={tutorial.data.difficulty}
+                    tags={tutorial.data.tags}
+                    slug={tutorial.slug}
+                    series={tutorial.data.series}
+                    seriesPartsCount={tutorial.data.totalParts || 1}
+                    featured={tutorial.data.featured}
+                  />
+                </div>
               ))}
             </div>
           </div>
         )}
 
         {recentProjects.length > 0 && (
-          <div>
+          <div id="projects-section">
             <div class="flex items-center justify-between mb-6">
-              <h3 class="text-2xl font-semibold text-gray-900">Latest Projects</h3>
-              <a href="/projects" class="text-blue-600 hover:text-blue-700 font-medium">View all →</a>
+              <h3 class="text-2xl font-semibold text-gray-900 dark:text-gray-100">Latest Projects</h3>
+              <a href="/projects" class="text-blue-600 hover:text-blue-700 dark:text-blue-400 dark:hover:text-blue-300 font-medium">View all →</a>
             </div>
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div id="projects-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {recentProjects.map((project) => (
-                <ProjectCard 
-                  title={project.data.title}
-                  description={project.data.description}
-                  tech={project.data.tech}
-                  slug={project.slug}
-                  featured={project.data.featured}
-                  github={project.data.github}
-                  demo={project.data.demo}
-                  status={project.data.status}
-                />
+                <div 
+                  class="project-item"
+                  data-type="project"
+                  data-title={project.data.title.toLowerCase()}
+                  data-description={project.data.description.toLowerCase()}
+                  data-tech={JSON.stringify(project.data.tech || [])}
+                  data-status={project.data.status}
+                >
+                  <ProjectCard 
+                    title={project.data.title}
+                    description={project.data.description}
+                    tech={project.data.tech}
+                    slug={project.slug}
+                    featured={project.data.featured}
+                    github={project.data.github}
+                    demo={project.data.demo}
+                    status={project.data.status}
+                  />
+                </div>
               ))}
             </div>
           </div>
@@ -133,3 +200,418 @@ const recentProjects = await getCollection('projects', ({ data }) => {
   <!-- Newsletter Section -->
   <Newsletter />
 </HomeLayout>
+
+<script is:inline>
+  // Enhanced universal search functionality for home page with type-ahead
+  document.addEventListener('DOMContentLoaded', function() {
+    const heroSearch = document.getElementById('hero-search');
+    const searchResults = document.getElementById('search-results');
+    const defaultContent = document.getElementById('default-content');
+    const noSearchResults = document.getElementById('no-search-results');
+    const clearSearchBtn = document.getElementById('clear-search');
+    const searchSummary = document.getElementById('search-summary');
+    const searchSuggestions = document.getElementById('search-suggestions');
+    const suggestionsList = document.getElementById('suggestions-list');
+    
+    // Get all content items
+    const allItems = {
+      articles: Array.from(document.querySelectorAll('.article-item')),
+      tutorials: Array.from(document.querySelectorAll('.tutorial-item')),
+      projects: Array.from(document.querySelectorAll('.project-item'))
+    };
+    
+    // Build search index for type-ahead
+    const searchIndex = new Set();
+    let contentTitles = [];
+    
+    function buildSearchIndex() {
+      Object.keys(allItems).forEach(contentType => {
+        allItems[contentType].forEach(item => {
+          const title = item.dataset.title || '';
+          const description = item.dataset.description || '';
+          
+          // Add titles to content titles array
+          if (title) {
+            contentTitles.push({
+              title: title.split(' ').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' '),
+              type: contentType.slice(0, -1), // Remove 's' from 'articles', 'tutorials', 'projects'
+              search: title.toLowerCase()
+            });
+          }
+          
+          // Add individual words to search index
+          const words = (title + ' ' + description).toLowerCase().split(/\s+/);
+          words.forEach(word => {
+            if (word.length > 2) { // Only add words longer than 2 characters
+              searchIndex.add(word);
+            }
+          });
+          
+          // Add type-specific terms
+          if (contentType === 'articles') {
+            const tags = JSON.parse(item.dataset.tags || '[]');
+            tags.forEach(tag => {
+              searchIndex.add(tag.toLowerCase());
+            });
+          } else if (contentType === 'tutorials') {
+            const tags = JSON.parse(item.dataset.tags || '[]');
+            const difficulty = item.dataset.difficulty || '';
+            const series = item.dataset.series || '';
+            
+            tags.forEach(tag => searchIndex.add(tag.toLowerCase()));
+            if (difficulty) searchIndex.add(difficulty.toLowerCase());
+            if (series) searchIndex.add(series.toLowerCase());
+          } else if (contentType === 'projects') {
+            const tech = JSON.parse(item.dataset.tech || '[]');
+            const status = item.dataset.status || '';
+            
+            tech.forEach(t => searchIndex.add(t.toLowerCase()));
+            if (status) searchIndex.add(status.toLowerCase());
+          }
+        });
+      });
+    }
+    
+    buildSearchIndex();
+    
+    let selectedSuggestionIndex = -1;
+    let currentSuggestions = [];
+    
+    function generateSuggestions(query) {
+      if (!query || query.length < 2) return [];
+      
+      const queryLower = query.toLowerCase();
+      const suggestions = [];
+      
+      // Add matching content titles
+      const matchingTitles = contentTitles
+        .filter(item => item.search.includes(queryLower))
+        .slice(0, 3);
+      
+      suggestions.push(...matchingTitles.map(item => ({
+        text: item.title,
+        type: 'content',
+        contentType: item.type,
+        query: item.search
+      })));
+      
+      // Add matching keywords
+      const matchingKeywords = Array.from(searchIndex)
+        .filter(word => word.startsWith(queryLower) && word !== queryLower)
+        .sort()
+        .slice(0, 5);
+      
+      suggestions.push(...matchingKeywords.map(word => ({
+        text: word.charAt(0).toUpperCase() + word.slice(1),
+        type: 'keyword',
+        query: word
+      })));
+      
+      return suggestions.slice(0, 8); // Limit to 8 suggestions
+    }
+    
+    function showSuggestions(suggestions) {
+      if (suggestions.length === 0) {
+        hideSuggestions();
+        return;
+      }
+      
+      currentSuggestions = suggestions;
+      selectedSuggestionIndex = -1;
+      
+      const html = suggestions.map((suggestion, index) => {
+        const typeIcon = suggestion.type === 'content' ? 
+          (suggestion.contentType === 'article' ? '📄' : 
+           suggestion.contentType === 'tutorial' ? '🎓' : '🔧') : '🔍';
+        
+        const typeLabel = suggestion.type === 'content' ? suggestion.contentType : 'search';
+        
+        return `
+          <div class="suggestion-item flex items-center px-4 py-3 hover:bg-gray-100 dark:hover:bg-gray-700 cursor-pointer border-b border-gray-100 dark:border-gray-700 last:border-b-0" data-index="${index}">
+            <span class="mr-3 text-sm">${typeIcon}</span>
+            <div class="flex-grow">
+              <div class="text-sm font-medium text-gray-900 dark:text-gray-100">${suggestion.text}</div>
+              <div class="text-xs text-gray-500 dark:text-gray-400 capitalize">${typeLabel}</div>
+            </div>
+          </div>
+        `;
+      }).join('');
+      
+      suggestionsList.innerHTML = html;
+      searchSuggestions.classList.remove('hidden');
+      
+      // Add click handlers
+      document.querySelectorAll('.suggestion-item').forEach((item, index) => {
+        item.addEventListener('click', () => selectSuggestion(index));
+      });
+    }
+    
+    function hideSuggestions() {
+      searchSuggestions.classList.add('hidden');
+      selectedSuggestionIndex = -1;
+      currentSuggestions = [];
+    }
+    
+    function selectSuggestion(index) {
+      if (index >= 0 && index < currentSuggestions.length) {
+        const suggestion = currentSuggestions[index];
+        heroSearch.value = suggestion.query;
+        hideSuggestions();
+        searchContent();
+        heroSearch.focus();
+      }
+    }
+    
+    function highlightSuggestion(index) {
+      document.querySelectorAll('.suggestion-item').forEach((item, i) => {
+        if (i === index) {
+          item.classList.add('bg-gray-100', 'dark:bg-gray-700');
+        } else {
+          item.classList.remove('bg-gray-100', 'dark:bg-gray-700');
+        }
+      });
+    }
+    
+    // Search result containers
+    const searchContainers = {
+      articles: {
+        section: document.getElementById('search-articles-section'),
+        grid: document.getElementById('search-articles-grid')
+      },
+      tutorials: {
+        section: document.getElementById('search-tutorials-section'),
+        grid: document.getElementById('search-tutorials-grid')
+      },
+      projects: {
+        section: document.getElementById('search-projects-section'),
+        grid: document.getElementById('search-projects-grid')
+      }
+    };
+    
+    // Debounce function
+    function debounce(func, delay) {
+      let timeoutId;
+      return function(...args) {
+        clearTimeout(timeoutId);
+        timeoutId = setTimeout(() => func.apply(this, args), delay);
+      };
+    }
+    
+    function searchContent() {
+      const searchTerm = heroSearch ? heroSearch.value.toLowerCase().trim() : '';
+      
+      if (!searchTerm) {
+        // Show default content when search is empty
+        searchResults.classList.add('hidden');
+        defaultContent.classList.remove('hidden');
+        return;
+      }
+      
+      // Hide default content and show search results
+      defaultContent.classList.add('hidden');
+      searchResults.classList.remove('hidden');
+      
+      let totalResults = 0;
+      const results = {};
+      
+      // Search through each content type
+      Object.keys(allItems).forEach(contentType => {
+        const items = allItems[contentType];
+        const searchResultsForType = [];
+        
+        items.forEach(item => {
+          const title = item.dataset.title || '';
+          const description = item.dataset.description || '';
+          let searchableText = title + ' ' + description;
+          
+          // Add type-specific searchable content
+          if (contentType === 'articles') {
+            const tags = JSON.parse(item.dataset.tags || '[]');
+            searchableText += ' ' + tags.join(' ').toLowerCase();
+          } else if (contentType === 'tutorials') {
+            const tags = JSON.parse(item.dataset.tags || '[]');
+            const difficulty = item.dataset.difficulty || '';
+            const series = item.dataset.series || '';
+            searchableText += ' ' + tags.join(' ').toLowerCase() + ' ' + difficulty + ' ' + series;
+          } else if (contentType === 'projects') {
+            const tech = JSON.parse(item.dataset.tech || '[]');
+            const status = item.dataset.status || '';
+            searchableText += ' ' + tech.join(' ').toLowerCase() + ' ' + status;
+          }
+          
+          // Calculate relevance score
+          let score = 0;
+          const searchWords = searchTerm.split(' ').filter(word => word.length > 0);
+          
+          searchWords.forEach(word => {
+            if (title.includes(word)) {
+              score += title.indexOf(word) === 0 ? 10 : 5; // Boost if title starts with search term
+            }
+            if (description.includes(word)) {
+              score += 3;
+            }
+            if (searchableText.includes(word)) {
+              score += 1;
+            }
+          });
+          
+          if (score > 0) {
+            searchResultsForType.push({ item, score });
+          }
+        });
+        
+        // Sort by score and store results
+        results[contentType] = searchResultsForType
+          .sort((a, b) => b.score - a.score)
+          .map(result => result.item);
+        
+        totalResults += results[contentType].length;
+      });
+      
+      // Update search summary
+      if (totalResults > 0) {
+        searchSummary.textContent = `Found ${totalResults} result${totalResults !== 1 ? 's' : ''} for "${searchTerm}"`;
+        noSearchResults.classList.add('hidden');
+        
+        // Display results for each content type
+        Object.keys(results).forEach(contentType => {
+          const container = searchContainers[contentType];
+          const items = results[contentType];
+          
+          if (items.length > 0) {
+            container.section.classList.remove('hidden');
+            container.grid.innerHTML = '';
+            
+            items.forEach(item => {
+              const clonedItem = item.cloneNode(true);
+              container.grid.appendChild(clonedItem);
+            });
+          } else {
+            container.section.classList.add('hidden');
+          }
+        });
+      } else {
+        // No results found
+        searchSummary.textContent = `No results found for "${searchTerm}"`;
+        noSearchResults.classList.remove('hidden');
+        
+        // Hide all result sections
+        Object.values(searchContainers).forEach(container => {
+          container.section.classList.add('hidden');
+        });
+      }
+    }
+    
+    function clearSearch() {
+      if (heroSearch) {
+        heroSearch.value = '';
+        heroSearch.focus();
+      }
+      hideSuggestions();
+      searchResults.classList.add('hidden');
+      defaultContent.classList.remove('hidden');
+    }
+    
+    // Create debounced version of search
+    const debouncedSearch = debounce(searchContent, 300);
+    
+    // Create debounced version for type-ahead
+    const debouncedTypeAhead = debounce(function(query) {
+      const suggestions = generateSuggestions(query);
+      showSuggestions(suggestions);
+    }, 150);
+    
+    // Event listeners
+    if (heroSearch) {
+      heroSearch.addEventListener('input', function(e) {
+        const query = e.target.value;
+        
+        // Show type-ahead suggestions
+        if (query.length >= 2) {
+          debouncedTypeAhead(query);
+        } else {
+          hideSuggestions();
+        }
+        
+        // Trigger search
+        debouncedSearch();
+      });
+      
+      // Handle keyboard navigation
+      heroSearch.addEventListener('keydown', function(e) {
+        if (e.key === 'ArrowDown') {
+          e.preventDefault();
+          if (currentSuggestions.length > 0) {
+            selectedSuggestionIndex = Math.min(selectedSuggestionIndex + 1, currentSuggestions.length - 1);
+            highlightSuggestion(selectedSuggestionIndex);
+          }
+        } else if (e.key === 'ArrowUp') {
+          e.preventDefault();
+          if (currentSuggestions.length > 0) {
+            selectedSuggestionIndex = Math.max(selectedSuggestionIndex - 1, -1);
+            highlightSuggestion(selectedSuggestionIndex);
+          }
+        } else if (e.key === 'Enter') {
+          e.preventDefault();
+          if (selectedSuggestionIndex >= 0 && currentSuggestions.length > 0) {
+            selectSuggestion(selectedSuggestionIndex);
+          } else {
+            hideSuggestions();
+            searchContent(); // Immediate search on Enter
+          }
+        } else if (e.key === 'Escape') {
+          if (searchSuggestions.classList.contains('hidden')) {
+            clearSearch();
+          } else {
+            hideSuggestions();
+          }
+        } else if (e.key === 'Tab') {
+          hideSuggestions();
+        }
+      });
+      
+      // Hide suggestions when clicking outside
+      heroSearch.addEventListener('blur', function(e) {
+        // Delay hiding to allow for click on suggestions
+        setTimeout(() => {
+          if (!searchSuggestions.contains(document.activeElement)) {
+            hideSuggestions();
+          }
+        }, 150);
+      });
+      
+      // Show suggestions when focusing if there's text
+      heroSearch.addEventListener('focus', function() {
+        if (heroSearch.value.length >= 2) {
+          const suggestions = generateSuggestions(heroSearch.value);
+          showSuggestions(suggestions);
+        }
+      });
+      
+      // Add search icon functionality
+      const searchIcon = heroSearch.parentElement.querySelector('svg');
+      if (searchIcon) {
+        searchIcon.style.cursor = 'pointer';
+        searchIcon.addEventListener('click', function() {
+          hideSuggestions();
+          searchContent();
+        });
+      }
+    }
+    
+    if (clearSearchBtn) {
+      clearSearchBtn.addEventListener('click', clearSearch);
+    }
+    
+    // Auto-focus search on page load (desktop only)
+    if (heroSearch && window.innerWidth > 768) {
+      setTimeout(() => heroSearch.focus(), 100);
+    }
+  });
+</script>
+
+<style>
+  .article-item, .tutorial-item, .project-item {
+    transition: opacity 0.3s ease;
+  }
+</style>

@@ -8,9 +8,10 @@ interface Props {
   description?: string;
   popularTags?: Array<{ tag: string; count: number }>;
   allTags?: string[];
+  difficulties?: string[];
 }
 
-const { title, description, popularTags = [], allTags = [] } = Astro.props;
+const { title, description, popularTags = [], allTags = [], difficulties = [] } = Astro.props;
 ---
 
 <BaseLayout title={title} description={description}>
@@ -19,15 +20,15 @@ const { title, description, popularTags = [], allTags = [] } = Astro.props;
     <!-- Subtle Dotted Background Pattern -->
     <HeroBackground />
     <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-      <h1 class="text-4xl font-bold mb-6 tracking-tight">Articles</h1>
-      <p class="text-gray-600 dark:text-gray-300 text-lg mb-8 max-w-3xl leading-relaxed">In-depth technical articles about web development, software engineering, and programming concepts.</p>
+      <h1 class="text-4xl font-bold mb-6 tracking-tight text-gray-900 dark:text-gray-100">Tutorials</h1>
+      <p class="text-gray-600 dark:text-gray-300 text-lg mb-8 max-w-3xl leading-relaxed">Step-by-step tutorials to help you learn new technologies and build amazing projects.</p>
 
       <!-- Search Bar with Type-ahead -->
       <div class="relative max-w-3xl mb-8">
         <input
           type="text"
           id="hero-search"
-          placeholder="Search articles..."
+          placeholder="Search tutorials..."
           class="w-full py-4 pl-5 pr-10 rounded-md border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors"
           autocomplete="off"
         />

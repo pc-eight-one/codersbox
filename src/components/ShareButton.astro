@@ -1,0 +1,467 @@
+---
+interface Props {
+  title: string;
+  description: string;
+  url?: string;
+  author?: string;
+  variant?: 'default' | 'floating' | 'minimal';
+  showLabel?: boolean;
+}
+
+const { 
+  title, 
+  description, 
+  url,
+  author = 'codersbox',
+  variant = 'default',
+  showLabel = true
+} = Astro.props;
+
+// Construct sharing URLs
+const currentUrl = url || Astro.url.href;
+const encodedUrl = encodeURIComponent(currentUrl);
+const encodedTitle = encodeURIComponent(title);
+const encodedDescription = encodeURIComponent(description);
+const encodedAuthor = encodeURIComponent(author);
+
+const shareUrls = {
+  twitter: `https://twitter.com/intent/tweet?text=${encodedTitle}&url=${encodedUrl}&via=${encodedAuthor}`,
+  linkedin: `https://www.linkedin.com/sharing/share-offsite/?url=${encodedUrl}&title=${encodedTitle}&summary=${encodedDescription}`,
+  facebook: `https://www.facebook.com/sharer/sharer.php?u=${encodedUrl}&t=${encodedTitle}`,
+  reddit: `https://reddit.com/submit?url=${encodedUrl}&title=${encodedTitle}`,
+  hackernews: `https://news.ycombinator.com/submitlink?u=${encodedUrl}&t=${encodedTitle}`
+};
+
+const buttonClasses = {
+  default: "inline-flex items-center gap-2 px-6 py-3 bg-black text-white rounded-lg hover:bg-gray-900 dark:hover:bg-gray-700 transition-all duration-200 font-medium focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-offset-2 focus:ring-offset-white dark:focus:ring-offset-gray-900 group",
+  floating: "fixed bottom-6 left-6 z-40 inline-flex items-center gap-2 px-4 py-3 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 rounded-full shadow-lg border border-gray-200 dark:border-gray-700 hover:shadow-xl transition-all duration-200 font-medium focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-offset-2 focus:ring-offset-white dark:focus:ring-offset-gray-900",
+  minimal: "inline-flex items-center gap-2 px-4 py-2 text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors font-medium focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-offset-2"
+};
+---
+
+<div class="share-button-container" data-title={title} data-description={description} data-url={currentUrl}>
+  <button 
+    id="share-trigger" 
+    class={buttonClasses[variant]}
+    aria-label="Share this article"
+    data-variant={variant}
+  >
+    <svg class="w-4 h-4 transition-transform group-hover:scale-110" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.367 2.684 3 3 0 00-5.367-2.684z"></path>
+    </svg>
+    {showLabel && <span>Share Article</span>}
+  </button>
+
+  <!-- Share Modal/Dropdown -->
+  <div 
+    id="share-modal" 
+    class="fixed inset-0 z-50 hidden"
+    role="dialog" 
+    aria-labelledby="share-modal-title" 
+    aria-hidden="true"
+  >
+    <!-- Backdrop -->
+    <div class="fixed inset-0 bg-black/50 backdrop-blur-sm transition-opacity" id="share-backdrop"></div>
+    
+    <!-- Modal Content -->
+    <div class="fixed inset-0 flex items-center justify-center p-4">
+      <div class="bg-white dark:bg-gray-800 rounded-xl shadow-2xl border border-gray-200 dark:border-gray-700 max-w-md w-full max-h-[90vh] overflow-hidden animate-modal-enter">
+        <!-- Header -->
+        <div class="flex items-center justify-between p-6 border-b border-gray-200 dark:border-gray-700">
+          <h3 id="share-modal-title" class="text-lg font-semibold text-gray-900 dark:text-gray-100">
+            Share Article
+          </h3>
+          <button 
+            id="close-share-modal" 
+            class="p-2 text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
+            aria-label="Close share modal"
+          >
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+            </svg>
+          </button>
+        </div>
+        
+        <!-- Share Options -->
+        <div class="p-6">
+          <!-- Copy Link -->
+          <div class="mb-6">
+            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+              Article URL
+            </label>
+            <div class="flex items-center gap-2">
+              <input 
+                id="article-url" 
+                type="text" 
+                readonly 
+                value={currentUrl}
+                class="flex-1 px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-gray-50 dark:bg-gray-700 text-gray-900 dark:text-gray-100 text-sm focus:outline-none focus:ring-2 focus:ring-blue-400"
+              />
+              <button 
+                id="copy-link" 
+                class="inline-flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors text-sm font-medium focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-offset-2 focus:ring-offset-white dark:focus:ring-offset-gray-800"
+                aria-label="Copy link to clipboard"
+              >
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"></path>
+                </svg>
+                Copy
+              </button>
+            </div>
+            <div id="copy-feedback" class="hidden mt-2 text-sm text-green-600 dark:text-green-400">
+              ✓ Link copied to clipboard!
+            </div>
+          </div>
+          
+          <!-- Social Share Buttons -->
+          <div class="space-y-3">
+            <h4 class="text-sm font-medium text-gray-700 dark:text-gray-300 mb-3">
+              Share on social media
+            </h4>
+            
+            <div class="grid grid-cols-1 gap-3">
+              <!-- Twitter -->
+              <a 
+                href={shareUrls.twitter}
+                target="_blank" 
+                rel="noopener noreferrer"
+                class="inline-flex items-center gap-3 px-4 py-3 border border-gray-200 dark:border-gray-600 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors group"
+              >
+                <div class="w-8 h-8 bg-[#1DA1F2] rounded-lg flex items-center justify-center group-hover:scale-110 transition-transform">
+                  <svg class="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M23.953 4.57a10 10 0 01-2.825.775 4.958 4.958 0 002.163-2.723c-.951.555-2.005.959-3.127 1.184a4.92 4.92 0 00-8.384 4.482C7.69 8.095 4.067 6.13 1.64 3.162a4.822 4.822 0 00-.666 2.475c0 1.71.87 3.213 2.188 4.096a4.904 4.904 0 01-2.228-.616v.06a4.923 4.923 0 003.946 4.827 4.996 4.996 0 01-2.212.085 4.936 4.936 0 004.604 3.417 9.867 9.867 0 01-6.102 2.105c-.39 0-.779-.023-1.17-.067a13.995 13.995 0 007.557 2.209c9.053 0 13.998-7.496 13.998-13.985 0-.21 0-.42-.015-.63A9.935 9.935 0 0024 4.59z"/>
+                  </svg>
+                </div>
+                <div class="flex-1">
+                  <div class="text-sm font-medium text-gray-900 dark:text-gray-100">Share on Twitter</div>
+                  <div class="text-xs text-gray-500 dark:text-gray-400">Share with your followers</div>
+                </div>
+              </a>
+              
+              <!-- LinkedIn -->
+              <a 
+                href={shareUrls.linkedin}
+                target="_blank" 
+                rel="noopener noreferrer"
+                class="inline-flex items-center gap-3 px-4 py-3 border border-gray-200 dark:border-gray-600 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors group"
+              >
+                <div class="w-8 h-8 bg-[#0077B5] rounded-lg flex items-center justify-center group-hover:scale-110 transition-transform">
+                  <svg class="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+                  </svg>
+                </div>
+                <div class="flex-1">
+                  <div class="text-sm font-medium text-gray-900 dark:text-gray-100">Share on LinkedIn</div>
+                  <div class="text-xs text-gray-500 dark:text-gray-400">Share with professionals</div>
+                </div>
+              </a>
+              
+              <!-- Facebook -->
+              <a 
+                href={shareUrls.facebook}
+                target="_blank" 
+                rel="noopener noreferrer"
+                class="inline-flex items-center gap-3 px-4 py-3 border border-gray-200 dark:border-gray-600 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors group"
+              >
+                <div class="w-8 h-8 bg-[#1877F2] rounded-lg flex items-center justify-center group-hover:scale-110 transition-transform">
+                  <svg class="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+                  </svg>
+                </div>
+                <div class="flex-1">
+                  <div class="text-sm font-medium text-gray-900 dark:text-gray-100">Share on Facebook</div>
+                  <div class="text-xs text-gray-500 dark:text-gray-400">Share with friends</div>
+                </div>
+              </a>
+              
+              <!-- Reddit -->
+              <a 
+                href={shareUrls.reddit}
+                target="_blank" 
+                rel="noopener noreferrer"
+                class="inline-flex items-center gap-3 px-4 py-3 border border-gray-200 dark:border-gray-600 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors group"
+              >
+                <div class="w-8 h-8 bg-[#FF4500] rounded-lg flex items-center justify-center group-hover:scale-110 transition-transform">
+                  <svg class="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M12 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0zm5.01 4.744c.688 0 1.25.561 1.25 1.249a1.25 1.25 0 0 1-2.498.056l-2.597-.547-.8 3.747c1.824.07 3.48.632 4.674 1.488.308-.309.73-.491 1.207-.491.968 0 1.754.786 1.754 1.754 0 .716-.435 1.333-1.01 1.614a3.111 3.111 0 0 1 .042.52c0 2.694-3.13 4.87-7.004 4.87-3.874 0-7.004-2.176-7.004-4.87 0-.183.015-.366.043-.534A1.748 1.748 0 0 1 4.028 12c0-.968.786-1.754 1.754-1.754.463 0 .898.196 1.207.49 1.207-.883 2.878-1.43 4.744-1.487l.885-4.182a.342.342 0 0 1 .14-.197.35.35 0 0 1 .238-.042l2.906.617a1.214 1.214 0 0 1 1.108-.701zM9.25 12C8.561 12 8 12.562 8 13.25c0 .687.561 1.248 1.25 1.248.687 0 1.248-.561 1.248-1.249 0-.688-.561-1.249-1.249-1.249zm5.5 0c-.687 0-1.248.561-1.248 1.25 0 .687.561 1.248 1.249 1.248.688 0 1.249-.561 1.249-1.249 0-.687-.562-1.249-1.25-1.249zm-5.466 3.99a.327.327 0 0 0-.231.094.33.33 0 0 0 0 .463c.842.842 2.484.913 2.961.913.477 0 2.105-.056 2.961-.913a.361.361 0 0 0 .029-.463.33.33 0 0 0-.464 0c-.547.533-1.684.73-2.512.73-.828 0-1.979-.196-2.512-.73a.326.326 0 0 0-.232-.095z"/>
+                  </svg>
+                </div>
+                <div class="flex-1">
+                  <div class="text-sm font-medium text-gray-900 dark:text-gray-100">Share on Reddit</div>
+                  <div class="text-xs text-gray-500 dark:text-gray-400">Share with the community</div>
+                </div>
+              </a>
+              
+              <!-- Hacker News -->
+              <a 
+                href={shareUrls.hackernews}
+                target="_blank" 
+                rel="noopener noreferrer"
+                class="inline-flex items-center gap-3 px-4 py-3 border border-gray-200 dark:border-gray-600 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors group"
+              >
+                <div class="w-8 h-8 bg-[#FF6600] rounded-lg flex items-center justify-center group-hover:scale-110 transition-transform">
+                  <svg class="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M0 24V0h24v24H0zM6.951 5.896l4.112 7.708v5.064h1.583v-4.972l4.148-7.799h-1.749l-2.457 4.875c-.372.745-.688 1.434-.688 1.434s-.297-.708-.651-1.434L8.831 5.896h-1.88z"/>
+                  </svg>
+                </div>
+                <div class="flex-1">
+                  <div class="text-sm font-medium text-gray-900 dark:text-gray-100">Share on Hacker News</div>
+                  <div class="text-xs text-gray-500 dark:text-gray-400">Share with developers</div>
+                </div>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script is:inline>
+  // Share Button functionality
+  document.addEventListener('DOMContentLoaded', function() {
+    const shareContainer = document.querySelector('.share-button-container');
+    const shareTrigger = document.getElementById('share-trigger');
+    const shareModal = document.getElementById('share-modal');
+    const shareBackdrop = document.getElementById('share-backdrop');
+    const closeModalBtn = document.getElementById('close-share-modal');
+    const copyLinkBtn = document.getElementById('copy-link');
+    const articleUrlInput = document.getElementById('article-url');
+    const copyFeedback = document.getElementById('copy-feedback');
+    
+    if (!shareContainer || !shareTrigger || !shareModal) return;
+    
+    const title = shareContainer.dataset.title;
+    const description = shareContainer.dataset.description;
+    const url = shareContainer.dataset.url;
+    
+    // Open share modal
+    function openShareModal() {
+      shareModal.classList.remove('hidden');
+      shareModal.setAttribute('aria-hidden', 'false');
+      document.body.style.overflow = 'hidden';
+      
+      // Focus management
+      setTimeout(() => {
+        const firstFocusable = shareModal.querySelector('button, input, a');
+        if (firstFocusable) firstFocusable.focus();
+      }, 100);
+      
+      // Track share modal open (optional analytics)
+      if (typeof gtag !== 'undefined') {
+        gtag('event', 'share_modal_open', {
+          article_title: title,
+          page_url: url
+        });
+      }
+    }
+    
+    // Close share modal
+    function closeShareModal() {
+      shareModal.classList.add('hidden');
+      shareModal.setAttribute('aria-hidden', 'true');
+      document.body.style.overflow = '';
+      shareTrigger.focus();
+    }
+    
+    // Copy link to clipboard
+    async function copyLinkToClipboard() {
+      const urlToCopy = url || window.location.href;
+      
+      try {
+        // Modern clipboard API
+        await navigator.clipboard.writeText(urlToCopy);
+        showCopyFeedback('Link copied to clipboard!');
+      } catch (err) {
+        // Fallback for older browsers
+        try {
+          articleUrlInput.select();
+          document.execCommand('copy');
+          showCopyFeedback('Link copied to clipboard!');
+        } catch (fallbackErr) {
+          showCopyFeedback('Unable to copy link', true);
+        }
+      }
+      
+      // Track copy event (optional analytics)
+      if (typeof gtag !== 'undefined') {
+        gtag('event', 'article_link_copied', {
+          article_title: title,
+          page_url: urlToCopy
+        });
+      }
+    }
+    
+    // Show copy feedback
+    function showCopyFeedback(message, isError = false) {
+      copyFeedback.textContent = isError ? '❌ ' + message : '✓ ' + message;
+      copyFeedback.className = isError ? 
+        'mt-2 text-sm text-red-600 dark:text-red-400' : 
+        'mt-2 text-sm text-green-600 dark:text-green-400';
+      copyFeedback.classList.remove('hidden');
+      
+      setTimeout(() => {
+        copyFeedback.classList.add('hidden');
+      }, 3000);
+    }
+    
+    // Check if Web Share API is supported
+    function checkWebShareAPI() {
+      if (navigator.share && navigator.canShare) {
+        const shareData = {
+          title: title,
+          text: description,
+          url: url || window.location.href
+        };
+        
+        if (navigator.canShare(shareData)) {
+          return shareData;
+        }
+      }
+      return null;
+    }
+    
+    // Use Web Share API if available (especially on mobile)
+    async function useWebShareAPI(shareData) {
+      try {
+        await navigator.share(shareData);
+        
+        // Track native share (optional analytics)
+        if (typeof gtag !== 'undefined') {
+          gtag('event', 'article_shared_native', {
+            article_title: title,
+            page_url: shareData.url
+          });
+        }
+        return true;
+      } catch (err) {
+        if (err.name !== 'AbortError') {
+          console.warn('Error sharing:', err);
+        }
+        return false;
+      }
+    }
+    
+    // Main share button click handler
+    shareTrigger.addEventListener('click', async function(e) {
+      e.preventDefault();
+      
+      // Try Web Share API first (mobile-friendly)
+      const webShareData = checkWebShareAPI();
+      if (webShareData) {
+        const shared = await useWebShareAPI(webShareData);
+        if (shared) return; // Successfully shared with native API
+      }
+      
+      // Fall back to custom modal
+      openShareModal();
+    });
+    
+    // Modal event listeners
+    closeModalBtn?.addEventListener('click', closeShareModal);
+    shareBackdrop?.addEventListener('click', closeShareModal);
+    copyLinkBtn?.addEventListener('click', copyLinkToClipboard);
+    
+    // Keyboard navigation
+    shareModal.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape') {
+        closeShareModal();
+      } else if (e.key === 'Tab') {
+        // Trap focus within modal
+        const focusableElements = shareModal.querySelectorAll(
+          'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
+        );
+        const firstElement = focusableElements[0];
+        const lastElement = focusableElements[focusableElements.length - 1];
+        
+        if (e.shiftKey) {
+          if (document.activeElement === firstElement) {
+            e.preventDefault();
+            lastElement.focus();
+          }
+        } else {
+          if (document.activeElement === lastElement) {
+            e.preventDefault();
+            firstElement.focus();
+          }
+        }
+      }
+    });
+    
+    // Track social share clicks (optional analytics)
+    shareModal.addEventListener('click', function(e) {
+      const socialLink = e.target.closest('a[href*="twitter.com"], a[href*="linkedin.com"], a[href*="facebook.com"], a[href*="reddit.com"], a[href*="news.ycombinator.com"]');
+      if (socialLink && typeof gtag !== 'undefined') {
+        const platform = socialLink.href.includes('twitter.com') ? 'twitter' :
+                         socialLink.href.includes('linkedin.com') ? 'linkedin' :
+                         socialLink.href.includes('facebook.com') ? 'facebook' :
+                         socialLink.href.includes('reddit.com') ? 'reddit' :
+                         socialLink.href.includes('news.ycombinator.com') ? 'hackernews' : 'unknown';
+        
+        gtag('event', 'article_shared', {
+          article_title: title,
+          platform: platform,
+          page_url: url
+        });
+      }
+    });
+    
+    // Auto-close modal when clicking social links
+    shareModal.addEventListener('click', function(e) {
+      if (e.target.closest('a[target="_blank"]')) {
+        setTimeout(() => {
+          closeShareModal();
+        }, 500); // Small delay to allow the click to register
+      }
+    });
+  });
+</script>
+
+<style>
+  @keyframes modal-enter {
+    from {
+      opacity: 0;
+      transform: scale(0.95) translateY(-10px);
+    }
+    to {
+      opacity: 1;
+      transform: scale(1) translateY(0);
+    }
+  }
+  
+  .animate-modal-enter {
+    animation: modal-enter 0.2s ease-out forwards;
+  }
+  
+  /* Improved focus styles */
+  .share-button-container button:focus-visible,
+  .share-button-container a:focus-visible {
+    outline: 2px solid rgb(59 130 246);
+    outline-offset: 2px;
+  }
+  
+  /* Hover effects for social buttons */
+  .share-button-container a:hover .w-8 {
+    transform: scale(1.1);
+  }
+  
+  /* Copy button loading state */
+  #copy-link:active {
+    transform: scale(0.95);
+  }
+  
+  /* Mobile optimizations */
+  @media (max-width: 640px) {
+    .share-button-container .fixed {
+      left: 1rem;
+      right: 1rem;
+      bottom: 1rem;
+      width: auto;
+    }
+    
+    .share-button-container .max-w-md {
+      margin: 1rem;
+      max-width: none;
+    }
+  }
+</style>

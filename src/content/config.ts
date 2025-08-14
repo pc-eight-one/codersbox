@@ -16,6 +16,8 @@ const articles = defineCollection({
 
 const tutorials = defineCollection({
   type: 'content',
+  // Ensure slugs remain single-segment even when files are nested in subdirectories
+  slug: ({ defaultSlug }) => defaultSlug.split('/').pop() || defaultSlug,
   schema: z.object({
     title: z.string(),
     description: z.string(),

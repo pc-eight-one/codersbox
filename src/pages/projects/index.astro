@@ -35,6 +35,10 @@ const totalPages = Math.ceil(projects.length / projectsPerPage);
 const currentPage = 1;
 const startIndex = (currentPage - 1) * projectsPerPage;
 const paginatedProjects = projects.slice(startIndex, startIndex + projectsPerPage);
+
+// Generate pagination URLs
+const prevUrl = null; // First page, no previous
+const nextUrl = totalPages > 1 ? '/projects/page/2' : null;
 ---
 
 <ProjectsLayout 
@@ -94,8 +98,8 @@ const paginatedProjects = projects.slice(startIndex, startIndex + projectsPerPag
               <PagePagination 
                 currentPage={currentPage}
                 totalPages={totalPages}
-                prevUrl={currentPage > 1 ? `/projects/page/${currentPage - 1}` : null}
-                nextUrl={currentPage < totalPages ? `/projects/page/${currentPage + 1}` : null}
+                prevUrl={prevUrl}
+                nextUrl={nextUrl}
               />
             )}
           </div>

@@ -3,6 +3,68 @@ import { getCollection } from 'astro:content';
 import TutorialsLayout from '@/layouts/TutorialsLayout.astro';
 import PagePagination from '@/components/PagePagination.astro';
 
+export async function getStaticPaths() {
+  // Get all tutorials for pagination calculation
+  const tutorials = await getCollection('tutorials', ({ data }) => {
+    return data.draft !== true;
+  });
+
+  // Group tutorials by series
+  const seriesMap = new Map();
+
+  tutorials.forEach(tutorial => {
+    const seriesName = tutorial.data.series;
+    if (!seriesMap.has(seriesName)) {
+      seriesMap.set(seriesName, {
+        name: seriesName,
+        parts: [],
+        totalParts: tutorial.data.totalParts || 1,
+        description: '',
+        difficulty: tutorial.data.difficulty,
+        tags: tutorial.data.tags || [],
+        firstPartSlug: '',
+        latestPublishDate: tutorial.data.publishDate
+      });
+    }
+    
+    const series = seriesMap.get(seriesName);
+    series.parts.push(tutorial);
+    
+    // Use the first part's description and slug
+    if (tutorial.data.part === 1) {
+      series.description = tutorial.data.description;
+      series.firstPartSlug = tutorial.slug;
+    }
+    
+    // Update latest publish date
+    if (new Date(tutorial.data.publishDate) > new Date(series.latestPublishDate)) {
+      series.latestPublishDate = tutorial.data.publishDate;
+    }
+  });
+
+  // Convert to array and sort by latest publish date
+  const tutorialSeries = Array.from(seriesMap.values()).sort((a, b) => 
+    new Date(b.latestPublishDate).getTime() - new Date(a.latestPublishDate).getTime()
+  );
+
+  const seriesPerPage = 6;
+  const totalPages = Math.ceil(tutorialSeries.length / seriesPerPage);
+
+  // Generate static paths for pages 2 and above
+  const paths = [];
+  for (let i = 2; i <= totalPages; i++) {
+    paths.push({
+      params: { page: i.toString() }
+    });
+  }
+
+  return paths;
+}
+
+// Get page number from URL params
+const { page } = Astro.params;
+const currentPage = parseInt(page || '2');
+
 // Get all tutorials, sorted by series and order
 const tutorials = await getCollection('tutorials', ({ data }) => {
   return data.draft !== true;
@@ -74,17 +136,18 @@ const difficulties = Array.from(new Set(tutorials.map(tutorial => tutorial.data.
 // Pagination logic for series
 const seriesPerPage = 6;
 const totalPages = Math.ceil(tutorialSeries.length / seriesPerPage);
-const currentPage = 1;
 const startIndex = (currentPage - 1) * seriesPerPage;
 const paginatedSeries = tutorialSeries.slice(startIndex, startIndex + seriesPerPage);
 
 // Generate pagination URLs
-const prevUrl = null; // First page, no previous
-const nextUrl = totalPages > 1 ? '/tutorials/page/2' : null;
+const prevUrl = currentPage > 1 ? 
+  (currentPage === 2 ? '/tutorials' : `/tutorials/page/${currentPage - 1}`) : 
+  null;
+const nextUrl = currentPage < totalPages ? `/tutorials/page/${currentPage + 1}` : null;
 ---
 
 <TutorialsLayout 
-  title="Tutorials - codersbox" 
+  title={`Tutorials - Page ${currentPage} - codersbox`}
   description="Step-by-step tutorials for web development and programming."
   popularTags={popularTags}
   allTags={allTags}

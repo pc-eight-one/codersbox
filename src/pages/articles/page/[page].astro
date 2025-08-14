@@ -4,6 +4,30 @@ import ArticlesLayout from '@/layouts/ArticlesLayout.astro';
 import ArticleCard from '@/components/ArticleCard.astro';
 import PagePagination from '@/components/PagePagination.astro';
 
+export async function getStaticPaths() {
+  // Get all articles for pagination calculation
+  const articles = await getCollection('articles', ({ data }) => {
+    return data.draft !== true;
+  });
+
+  const articlesPerPage = 9;
+  const totalPages = Math.ceil(articles.length / articlesPerPage);
+
+  // Generate static paths for pages 2 and above
+  const paths = [];
+  for (let i = 2; i <= totalPages; i++) {
+    paths.push({
+      params: { page: i.toString() }
+    });
+  }
+
+  return paths;
+}
+
+// Get page number from URL params
+const { page } = Astro.params;
+const currentPage = parseInt(page || '2');
+
 // Get all articles, sorted by publish date
 const articles = await getCollection('articles', ({ data }) => {
   return data.draft !== true;
@@ -32,17 +56,18 @@ const allTags = Array.from(tagCounts.keys()).sort();
 // Pagination logic
 const articlesPerPage = 9;
 const totalPages = Math.ceil(articles.length / articlesPerPage);
-const currentPage = 1;
 const startIndex = (currentPage - 1) * articlesPerPage;
 const paginatedArticles = articles.slice(startIndex, startIndex + articlesPerPage);
 
 // Generate pagination URLs
-const prevUrl = null; // First page, no previous
-const nextUrl = totalPages > 1 ? '/articles/page/2' : null;
+const prevUrl = currentPage > 1 ? 
+  (currentPage === 2 ? '/articles' : `/articles/page/${currentPage - 1}`) : 
+  null;
+const nextUrl = currentPage < totalPages ? `/articles/page/${currentPage + 1}` : null;
 ---
 
 <ArticlesLayout 
-  title="Articles - codersbox" 
+  title={`Articles - Page ${currentPage} - codersbox`}
   description="In-depth technical articles about web development, software engineering, and programming concepts."
   popularTags={popularTags}
   allTags={allTags}
@@ -50,8 +75,6 @@ const nextUrl = totalPages > 1 ? '/articles/page/2' : null;
   <!-- Main Content -->
   <main class="py-12">
     <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-      <!-- Articles stats or intro can go here if needed -->
-
       <!-- Articles Grid -->
       <div id="articles-container">
         <div id="articles-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
@@ -96,20 +119,17 @@ const nextUrl = totalPages > 1 ? '/articles/page/2' : null;
         </div>
       </div>
       
-      {paginatedArticles.length > 0 ? (
-        
-        <!-- Pagination -->
-        <div id="pagination-container">
-          {totalPages > 1 && (
-            <PagePagination 
-              currentPage={currentPage}
-              totalPages={totalPages}
-              prevUrl={prevUrl}
-              nextUrl={nextUrl}
-            />
-          )}
-        </div>
-      ) : null}
+      <!-- Pagination -->
+      <div id="pagination-container">
+        {totalPages > 1 && (
+          <PagePagination 
+            currentPage={currentPage}
+            totalPages={totalPages}
+            prevUrl={prevUrl}
+            nextUrl={nextUrl}
+          />
+        )}
+      </div>
     </div>
   </main>
 </ArticlesLayout>
