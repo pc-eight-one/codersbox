@@ -2,6 +2,7 @@ import { defineConfig } from 'astro/config';
 import tailwind from '@astrojs/tailwind';
 import icon from 'astro-icon';
 import mdx from '@astrojs/mdx';
+import sitemap from '@astrojs/sitemap';
 
 // https://astro.build/config
 export default defineConfig({
@@ -23,17 +24,29 @@ export default defineConfig({
       remarkPlugins: [],
       rehypePlugins: [],
     }),
+    sitemap({
+      // Generate comprehensive sitemap
+      changefreq: 'weekly',
+      priority: 0.7,
+      lastmod: new Date(),
+      filter: (page) => !page.includes('/api/'),
+    }),
   ],
   site: 'https://codersbox.dev',
   output: 'static',
   srcDir: './src',
   publicDir: './public',
   
-  // Performance optimizations
+  // Performance optimizations for Vercel
   build: {
     // Split chunks for better caching
     split: true,
+    // Inline small assets for better performance
+    assetsInlineLimit: 1024,
   },
+  
+  // Compression settings
+  compressHTML: true,
   
   // Image optimization
   image: {
