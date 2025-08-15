@@ -58,14 +58,14 @@ const progressPercentage = Math.round((completedParts / seriesInfo.totalParts) *
 
 <BaseLayout title={`${seriesName} Tutorial Series - codersbox`} description={`Complete tutorial series: ${seriesName}. Learn step by step with ${seriesInfo.totalParts} comprehensive parts.`}>
   <!-- Hero Section -->
-  <header class="bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700 py-20 relative">
+  <header class="bg-white border-b border-gray-200 py-20 relative">
     <HeroBackground />
     <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
       <div class="text-center">
         <div class="mb-4">
           <a 
             href="/tutorials" 
-            class="inline-flex items-center text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 text-sm font-medium transition-colors"
+            class="inline-flex items-center text-blue-600 hover:text-blue-700 text-sm font-medium transition-colors"
           >
             <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
@@ -74,15 +74,15 @@ const progressPercentage = Math.round((completedParts / seriesInfo.totalParts) *
           </a>
         </div>
         
-        <h1 class="text-4xl md:text-5xl font-bold mb-6 text-gray-900 dark:text-gray-100 leading-tight tracking-tight">
+        <h1 class="text-4xl md:text-5xl font-bold mb-6 text-gray-900 leading-tight tracking-tight">
           {seriesName}
         </h1>
         
-        <p class="text-xl text-gray-600 dark:text-gray-400 mb-8 max-w-3xl mx-auto leading-relaxed">
+        <p class="text-xl text-gray-600 mb-8 max-w-3xl mx-auto leading-relaxed">
           A comprehensive tutorial series to master {seriesName.toLowerCase()}. Follow along step by step.
         </p>
         
-        <div class="flex flex-wrap justify-center items-center gap-6 text-sm text-gray-500 dark:text-gray-400 mb-6">
+        <div class="flex flex-wrap justify-center items-center gap-6 text-sm text-gray-500 mb-6">
           <div class="flex items-center gap-2">
             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
@@ -97,9 +97,9 @@ const progressPercentage = Math.round((completedParts / seriesInfo.totalParts) *
           </div>
           <div class="flex items-center gap-2">
             <span class={`inline-block text-xs px-3 py-1 rounded-full font-medium uppercase tracking-wide ${
-              seriesInfo.difficulty === 'beginner' ? 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200' :
-              seriesInfo.difficulty === 'intermediate' ? 'bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-200' :
-              'bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-200'
+              seriesInfo.difficulty === 'beginner' ? 'bg-green-100 text-green-800' :
+              seriesInfo.difficulty === 'intermediate' ? 'bg-yellow-100 text-yellow-800' :
+              'bg-red-100 text-red-800'
             }`}>
               {seriesInfo.difficulty}
             </span>
@@ -108,11 +108,11 @@ const progressPercentage = Math.round((completedParts / seriesInfo.totalParts) *
         
         <!-- Progress Bar -->
         <div class="max-w-md mx-auto mb-6">
-          <div class="flex items-center justify-between text-sm text-gray-600 dark:text-gray-400 mb-2">
+          <div class="flex items-center justify-between text-sm text-gray-600 mb-2">
             <span>Series Progress</span>
             <span>{progressPercentage}% Complete</span>
           </div>
-          <div class="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2">
+          <div class="w-full bg-gray-200 rounded-full h-2">
             <div 
               class="bg-blue-600 h-2 rounded-full transition-all duration-300" 
               style={`width: ${progressPercentage}%`}
@@ -123,7 +123,7 @@ const progressPercentage = Math.round((completedParts / seriesInfo.totalParts) *
         <!-- Tags -->
         <div class="flex flex-wrap justify-center gap-2">
           {seriesInfo.tags.map((tag) => (
-            <span class="bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 px-4 py-2 rounded-full text-sm font-medium hover:bg-blue-200 dark:hover:bg-blue-800 transition-colors">
+            <span class="bg-blue-100 text-blue-800 px-4 py-2 rounded-full text-sm font-medium hover:bg-blue-200 transition-colors">
               {tag}
             </span>
           ))}
@@ -136,8 +136,8 @@ const progressPercentage = Math.round((completedParts / seriesInfo.totalParts) *
   <main class="py-12">
     <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
       <div class="mb-8">
-        <h2 class="text-2xl font-bold text-gray-900 dark:text-gray-100 mb-4">Tutorial Parts</h2>
-        <p class="text-gray-600 dark:text-gray-400">
+        <h2 class="text-2xl font-bold text-gray-900 mb-4">Tutorial Parts</h2>
+        <p class="text-gray-600">
           Follow the tutorials in order for the best learning experience. Each part builds on the previous one.
         </p>
       </div>
@@ -171,16 +171,16 @@ const progressPercentage = Math.round((completedParts / seriesInfo.totalParts) *
           const partNumber = completedParts + index + 1;
           return (
             <div class="relative">
-              <div class="bg-gray-100 dark:bg-gray-800 rounded-xl border-2 border-dashed border-gray-300 dark:border-gray-600 p-6 text-center">
-                <div class="text-gray-400 dark:text-gray-500 mb-4">
+              <div class="bg-gray-100 rounded-xl border-2 border-dashed border-gray-300 p-6 text-center">
+                <div class="text-gray-400 mb-4">
                   <svg class="w-12 h-12 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                   </svg>
                 </div>
-                <h3 class="text-lg font-semibold text-gray-500 dark:text-gray-400 mb-2">
+                <h3 class="text-lg font-semibold text-gray-500 mb-2">
                   Part {partNumber}
                 </h3>
-                <p class="text-sm text-gray-400 dark:text-gray-500">
+                <p class="text-sm text-gray-400">
                   Coming Soon
                 </p>
               </div>
@@ -195,18 +195,18 @@ const progressPercentage = Math.round((completedParts / seriesInfo.totalParts) *
       </div>
       
       <!-- Series Navigation -->
-      <div class="mt-12 bg-gray-50 dark:bg-gray-800 rounded-xl p-6">
-        <h3 class="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-4">Quick Navigation</h3>
+      <div class="mt-12 bg-gray-50 rounded-xl p-6">
+        <h3 class="text-lg font-semibold text-gray-900 mb-4">Quick Navigation</h3>
         <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
           {sortedTutorials.map((tutorial) => (
             <a 
               href={`/tutorials/${tutorial.slug}`}
-              class="flex items-center gap-2 p-3 bg-white dark:bg-gray-700 rounded-lg hover:bg-blue-50 dark:hover:bg-gray-600 transition-colors group"
+              class="flex items-center gap-2 p-3 bg-white rounded-lg hover:bg-blue-50 transition-colors group"
             >
               <div class="w-6 h-6 bg-blue-600 text-white rounded-full flex items-center justify-center text-xs font-bold">
                 {tutorial.data.part}
               </div>
-              <span class="text-sm text-gray-700 dark:text-gray-300 group-hover:text-blue-600 dark:group-hover:text-blue-400 truncate">
+              <span class="text-sm text-gray-700 group-hover:text-blue-600 truncate">
                 Part {tutorial.data.part}
               </span>
             </a>

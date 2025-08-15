@@ -30,9 +30,9 @@ if (tutorial.data.series) {
 }
 
 const difficultyColors = {
-  beginner: 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200',
-  intermediate: 'bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-200',
-  advanced: 'bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-200',
+  beginner: 'bg-green-100 text-green-800',
+  intermediate: 'bg-yellow-100 text-yellow-800',
+  advanced: 'bg-red-100 text-red-800',
 };
 ---
 
@@ -46,20 +46,20 @@ const difficultyColors = {
   canonical={`https://codersbox.dev/tutorials/${tutorial.slug}/`}
   image={tutorial.data.image || '/og-image.jpg'}
 >
-  <main class="min-h-screen bg-gray-50 dark:bg-gray-900">
+  <main class="min-h-screen bg-gray-50">
     <!-- Tutorial Hero Section -->
-    <header class="bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700">
+    <header class="bg-white border-b border-gray-200">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <div class="text-center">
-          <h1 class="text-4xl md:text-5xl font-bold mb-6 text-gray-900 dark:text-gray-100 leading-tight tracking-tight">
+          <h1 class="text-4xl md:text-5xl font-bold mb-6 text-gray-900 leading-tight tracking-tight">
             {tutorial.data.title}
           </h1>
           
-          <p class="text-xl text-gray-600 dark:text-gray-400 mb-8 max-w-3xl mx-auto leading-relaxed">
+          <p class="text-xl text-gray-600 mb-8 max-w-3xl mx-auto leading-relaxed">
             {tutorial.data.description}
           </p>
           
-          <div class="flex flex-wrap justify-center items-center gap-6 text-sm text-gray-500 dark:text-gray-400 mb-6">
+          <div class="flex flex-wrap justify-center items-center gap-6 text-sm text-gray-500 mb-6">
             <div class="flex items-center gap-2">
               <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
@@ -87,7 +87,7 @@ const difficultyColors = {
           <!-- Tags -->
           <div class="flex flex-wrap justify-center gap-2">
             {tutorial.data.tags.map((tag) => (
-              <span class="bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 px-4 py-2 rounded-full text-sm font-medium hover:bg-blue-200 dark:hover:bg-blue-800 transition-colors">
+              <span class="bg-blue-100 text-blue-800 px-4 py-2 rounded-full text-sm font-medium hover:bg-blue-200 transition-colors">
                 {tag}
               </span>
             ))}
@@ -101,7 +101,7 @@ const difficultyColors = {
       {((headings ?? []).filter((h) => h.depth >= 2 && h.depth <= 4).length > 0 || seriesTutorials.length > 0) ? (
         <div class="grid grid-cols-1 lg:grid-cols-4 gap-8">
           <!-- Left Sidebar - Tutorial Navigation & TOC -->
-          <aside class="lg:col-span-1 lg:border-r lg:border-gray-200 lg:dark:border-gray-700 lg:pr-8">
+          <aside class="lg:col-span-1 lg:border-r lg:border-gray-200 lg:pr-8">
             <TutorialSidebar 
               headings={headings ?? []} 
               currentTutorial={tutorial}
@@ -113,7 +113,7 @@ const difficultyColors = {
           <article class="lg:col-span-3">
             <div class="px-0 py-0">
               <!-- Tutorial Content -->
-              <div class="prose prose-lg dark:prose-invert max-w-none tutorial-content">
+              <div class="prose prose-lg max-w-none tutorial-content">
                 <Content />
               </div>
             </div>
@@ -124,7 +124,7 @@ const difficultyColors = {
         <article class="max-w-4xl mx-auto">
           <div class="px-0 py-0">
             <!-- Tutorial Content -->
-            <div class="prose prose-lg dark:prose-invert max-w-none tutorial-content">
+            <div class="prose prose-lg max-w-none tutorial-content">
               <Content />
             </div>
           </div>
@@ -132,9 +132,9 @@ const difficultyColors = {
       )}
       
       <!-- Tutorial Footer -->
-      <footer class="mt-12 bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700 p-8">
+      <footer class="mt-12 bg-white rounded-xl shadow-sm border border-gray-200 p-8">
         <div class="flex items-center justify-between">
-          <div class="text-sm text-gray-500 dark:text-gray-400">
+          <div class="text-sm text-gray-500">
             Published on {tutorial.data.publishDate.toLocaleDateString('en-US', { 
               year: 'numeric', 
               month: 'long', 
@@ -142,7 +142,7 @@ const difficultyColors = {
             })}
           </div>
           <div class="flex items-center space-x-4">
-            <a href="/tutorials" class="text-blue-600 dark:text-blue-400 hover:underline text-sm font-medium">
+            <a href="/tutorials" class="text-blue-600 hover:underline text-sm font-medium">
               ← Back to Tutorials
             </a>
           </div>
@@ -152,7 +152,7 @@ const difficultyColors = {
   </main>
   <!-- Back to Top Button -->
   <button id="back-to-top" aria-label="Back to top"
-    class="fixed bottom-6 right-6 z-40 inline-flex items-center justify-center w-12 h-12 rounded-full bg-black text-white shadow-lg transition-all duration-200 hover:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-offset-2 focus:ring-offset-white dark:focus:ring-offset-gray-900 opacity-0 pointer-events-none">
+    class="fixed bottom-6 right-6 z-40 inline-flex items-center justify-center w-12 h-12 rounded-full bg-black text-white shadow-lg transition-all duration-200 hover:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-offset-2 focus:ring-offset-white opacity-0 pointer-events-none">
     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
       <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7" />
     </svg>
@@ -231,9 +231,6 @@ const difficultyColors = {
     line-height: 1.75;
   }
   
-  .dark .tutorial-content {
-    color: #abb2bf; /* One Dark foreground */
-  }
   
   /* Custom heading styles with better spacing */
   .tutorial-content :is(h1, h2, h3, h4, h5, h6) {
@@ -260,9 +257,6 @@ const difficultyColors = {
     padding-left: 1.5em; /* reserve space for left anchor */
   }
   
-  .dark .tutorial-content h2 {
-    border-bottom-color: #3e4451; /* One Dark selection background */
-  }
   
   .tutorial-content h3 {
     font-size: 1.5rem;
@@ -315,11 +309,6 @@ const difficultyColors = {
     border: 1px solid rgb(229 231 235) !important;
   }
   
-  .dark .tutorial-content :not(pre) > code {
-    color: #56b6c2 !important; /* One Dark cyan */
-    background: #3e4451 !important; /* One Dark selection background */
-    border-color: #3e4451 !important; /* One Dark selection background */
-  }
   
   /* Heading copy-link anchor button */
   .tutorial-content .heading-anchor {
@@ -353,13 +342,6 @@ const difficultyColors = {
     color: rgb(37 99 235);
     outline: none;
   }
-  .dark .tutorial-content .heading-anchor {
-    color: rgb(107 114 128);
-  }
-  .dark .tutorial-content .heading-anchor:hover,
-  .dark .tutorial-content .heading-anchor:focus-visible {
-    color: rgb(96 165 250);
-  }
   .tutorial-content :is(h2, h3, h4):hover .heading-anchor,
   .tutorial-content :is(h2, h3, h4):focus-within .heading-anchor {
     opacity: 1;
@@ -378,10 +360,5 @@ const difficultyColors = {
     border: 1px solid rgb(229 231 235);
     border-radius: 0.25rem;
     white-space: nowrap;
-  }
-  .dark .tutorial-content .heading-anchor.copied::after {
-    background: rgb(31 41 55);
-    color: rgb(243 244 246);
-    border-color: rgb(55 65 81);
   }
 </style>

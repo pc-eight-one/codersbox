@@ -8,17 +8,17 @@ import HeroBackground from '@/components/HeroBackground.astro';
 import Newsletter from '@/components/Newsletter.astro';
 
 // Get featured content from all collections
-const featuredArticles = await getCollection('articles', ({ data }) => {
+const featuredArticles = (await getCollection('articles', ({ data }) => {
   return data.featured === true && data.draft !== true;
-});
+})).sort((a, b) => new Date(b.data.publishDate).getTime() - new Date(a.data.publishDate).getTime());
 
-const featuredTutorials = await getCollection('tutorials', ({ data }) => {
+const featuredTutorials = (await getCollection('tutorials', ({ data }) => {
   return data.featured === true && data.draft !== true;
-});
+})).sort((a, b) => new Date(b.data.publishDate).getTime() - new Date(a.data.publishDate).getTime());
 
-const featuredProjects = await getCollection('projects', ({ data }) => {
+const featuredProjects = (await getCollection('projects', ({ data }) => {
   return data.featured === true && data.draft !== true;
-});
+})).sort((a, b) => new Date(b.data.publishDate).getTime() - new Date(a.data.publishDate).getTime());
 
 // Get recent content (limit 3 each)
 const recentArticles = await getCollection('articles', ({ data }) => {
@@ -33,7 +33,7 @@ const recentTutorials = await getCollection('tutorials', ({ data }) => {
   tutorials
     .filter(t => t.data.series && t.data.part === 1)
     .sort((a, b) => new Date(b.data.publishDate).getTime() - new Date(a.data.publishDate).getTime())
-    .slice(0, 3)
+    .slice(0, 4)
 );
 
 const recentProjects = await getCollection('projects', ({ data }) => {
@@ -57,38 +57,38 @@ const recentProjects = await getCollection('projects', ({ data }) => {
       <!-- Search Results and No Results Message -->
       <div id="search-results" class="hidden">
         <div class="mb-6">
-          <h3 class="text-2xl font-semibold text-gray-900 dark:text-gray-100">Search Results</h3>
-          <p id="search-summary" class="text-gray-600 dark:text-gray-400 mt-1"></p>
+          <h3 class="text-2xl font-semibold text-gray-900">Search Results</h3>
+          <p id="search-summary" class="text-gray-600 mt-1"></p>
         </div>
         
         <!-- Articles Results -->
         <div id="search-articles-section" class="mb-8 hidden">
-          <h4 class="text-lg font-medium text-gray-900 dark:text-gray-100 mb-4">Articles</h4>
+          <h4 class="text-lg font-medium text-gray-900 mb-4">Articles</h4>
           <div id="search-articles-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"></div>
         </div>
         
         <!-- Tutorials Results -->
         <div id="search-tutorials-section" class="mb-8 hidden">
-          <h4 class="text-lg font-medium text-gray-900 dark:text-gray-100 mb-4">Tutorials</h4>
+          <h4 class="text-lg font-medium text-gray-900 mb-4">Tutorials</h4>
           <div id="search-tutorials-grid" class="grid grid-cols-1 md:grid-cols-2 gap-6"></div>
         </div>
         
         <!-- Projects Results -->
         <div id="search-projects-section" class="mb-8 hidden">
-          <h4 class="text-lg font-medium text-gray-900 dark:text-gray-100 mb-4">Projects</h4>
+          <h4 class="text-lg font-medium text-gray-900 mb-4">Projects</h4>
           <div id="search-projects-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"></div>
         </div>
         
         <!-- No Results -->
         <div id="no-search-results" class="text-center py-12 hidden">
-          <div class="text-gray-400 dark:text-gray-500 mb-4">
+          <div class="text-gray-400 mb-4">
             <svg class="w-16 h-16 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
             </svg>
           </div>
-          <h3 class="text-xl font-semibold text-gray-900 dark:text-gray-100 mb-2">No results found</h3>
-          <p class="text-gray-600 dark:text-gray-400 mb-4">Try a different search term or browse the latest content below.</p>
-          <button id="clear-search" class="text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 font-medium">
+          <h3 class="text-xl font-semibold text-gray-900 mb-2">No results found</h3>
+          <p class="text-gray-600 mb-4">Try a different search term or browse the latest content below.</p>
+          <button id="clear-search" class="text-blue-600 hover:text-blue-700 font-medium">
             Clear search
           </button>
         </div>
@@ -98,8 +98,8 @@ const recentProjects = await getCollection('projects', ({ data }) => {
         {recentArticles.length > 0 && (
           <div id="articles-section">
             <div class="flex items-center justify-between mb-6">
-              <h3 class="text-2xl font-semibold text-gray-900 dark:text-gray-100">Latest Articles</h3>
-              <a href="/articles" class="text-blue-600 hover:text-blue-700 dark:text-blue-400 dark:hover:text-blue-300 font-medium">View all →</a>
+              <h3 class="text-2xl font-semibold text-gray-900">Latest Articles</h3>
+              <a href="/articles" class="text-blue-600 hover:text-blue-700 font-medium">View all →</a>
             </div>
             <div id="articles-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {recentArticles.map((article) => (
@@ -132,8 +132,8 @@ const recentProjects = await getCollection('projects', ({ data }) => {
         {recentTutorials.length > 0 && (
           <div id="tutorials-section">
             <div class="flex items-center justify-between mb-6">
-              <h3 class="text-2xl font-semibold text-gray-900 dark:text-gray-100">Latest Tutorials</h3>
-              <a href="/tutorials" class="text-blue-600 hover:text-blue-700 dark:text-blue-400 dark:hover:text-blue-300 font-medium">View all →</a>
+              <h3 class="text-2xl font-semibold text-gray-900">Latest Tutorials</h3>
+              <a href="/tutorials" class="text-blue-600 hover:text-blue-700 font-medium">View all →</a>
             </div>
             <div id="tutorials-grid" class="grid grid-cols-1 md:grid-cols-2 gap-6">
               {recentTutorials.map((tutorial) => (
@@ -165,8 +165,8 @@ const recentProjects = await getCollection('projects', ({ data }) => {
         {recentProjects.length > 0 && (
           <div id="projects-section">
             <div class="flex items-center justify-between mb-6">
-              <h3 class="text-2xl font-semibold text-gray-900 dark:text-gray-100">Latest Projects</h3>
-              <a href="/projects" class="text-blue-600 hover:text-blue-700 dark:text-blue-400 dark:hover:text-blue-300 font-medium">View all →</a>
+              <h3 class="text-2xl font-semibold text-gray-900">Latest Projects</h3>
+              <a href="/projects" class="text-blue-600 hover:text-blue-700 font-medium">View all →</a>
             </div>
             <div id="projects-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {recentProjects.map((project) => (
@@ -327,11 +327,11 @@ const recentProjects = await getCollection('projects', ({ data }) => {
         const typeLabel = suggestion.type === 'content' ? suggestion.contentType : 'search';
         
         return `
-          <div class="suggestion-item flex items-center px-4 py-3 hover:bg-gray-100 dark:hover:bg-gray-700 cursor-pointer border-b border-gray-100 dark:border-gray-700 last:border-b-0" data-index="${index}">
+          <div class="suggestion-item flex items-center px-4 py-3 hover:bg-gray-100 cursor-pointer border-b border-gray-100 last:border-b-0" data-index="${index}">
             <span class="mr-3 text-sm">${typeIcon}</span>
             <div class="flex-grow">
-              <div class="text-sm font-medium text-gray-900 dark:text-gray-100">${suggestion.text}</div>
-              <div class="text-xs text-gray-500 dark:text-gray-400 capitalize">${typeLabel}</div>
+              <div class="text-sm font-medium text-gray-900">${suggestion.text}</div>
+              <div class="text-xs text-gray-500 capitalize">${typeLabel}</div>
             </div>
           </div>
         `;
@@ -365,9 +365,9 @@ const recentProjects = await getCollection('projects', ({ data }) => {
     function highlightSuggestion(index) {
       document.querySelectorAll('.suggestion-item').forEach((item, i) => {
         if (i === index) {
-          item.classList.add('bg-gray-100', 'dark:bg-gray-700');
+          item.classList.add('bg-gray-100');
         } else {
-          item.classList.remove('bg-gray-100', 'dark:bg-gray-700');
+          item.classList.remove('bg-gray-100');
         }
       });
     }

@@ -2,14 +2,21 @@ User-agent: *
 Allow: /
 
 # Sitemap
-Sitemap: https://codersbox.dev/sitemap.xml
+Sitemap: https://codersbox.dev/sitemap-index.xml
 
 # Crawl-delay for respectful crawling
 Crawl-delay: 1
 
-# Block specific paths if needed
-# Disallow: /admin/
-# Disallow: /private/
+# Block specific paths
+Disallow: /api/
+Disallow: /_astro/
+Disallow: /admin/
+Disallow: /private/
+
+# Allow search engines to index images
+User-agent: Googlebot-Image
+Allow: /images/
+Allow: /assets/
 
 # Allow all major search engines
 User-agent: Googlebot

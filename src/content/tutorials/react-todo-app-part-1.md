@@ -25,7 +25,7 @@ Our todo app will feature:
 - **Drag and drop reordering** for better UX
 - **Local storage persistence** to save data
 - **Responsive design** for all devices
-- **Dark/light theme toggle**
+- **Clean, modern interface**
 - **Keyboard shortcuts** for power users
 
 ## Project Setup
@@ -61,7 +61,6 @@ export default {
     "./index.html",
     "./src/**/*.{js,ts,jsx,tsx}",
   ],
-  darkMode: 'class',
   theme: {
     extend: {
       animation: {
@@ -103,7 +102,7 @@ Update your `src/index.css`:
   }
   
   body {
-    @apply bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-gray-100 transition-colors duration-200;
+    @apply bg-gray-50 text-gray-900 transition-colors duration-200;
   }
 }
 
@@ -117,7 +116,7 @@ Update your `src/index.css`:
   }
   
   .btn-secondary {
-    @apply bg-gray-200 hover:bg-gray-300 text-gray-800 dark:bg-gray-700 dark:hover:bg-gray-600 dark:text-gray-200 focus:ring-gray-500;
+    @apply bg-gray-200 hover:bg-gray-300 text-gray-800 focus:ring-gray-500;
   }
   
   .btn-danger {
@@ -125,7 +124,7 @@ Update your `src/index.css`:
   }
   
   .input {
-    @apply w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors duration-200;
+    @apply w-full px-3 py-2 border border-gray-300 rounded-lg bg-white text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors duration-200;
   }
 }
 ```
@@ -145,10 +144,9 @@ src/
 │   ├── TodoList.jsx
 │   ├── TodoForm.jsx
 │   ├── TodoFilters.jsx
-│   └── ThemeToggle.jsx
+│   └── TodoStats.jsx
 ├── hooks/
 │   ├── useTodos.js
-│   ├── useTheme.js
 │   └── useLocalStorage.js
 ├── utils/
 │   ├── todoHelpers.js
@@ -230,7 +228,7 @@ const Button = ({
     primary: 'btn-primary',
     secondary: 'btn-secondary',
     danger: 'btn-danger',
-    ghost: 'hover:bg-gray-100 dark:hover:bg-gray-800 text-gray-700 dark:text-gray-300'
+    ghost: 'hover:bg-gray-100 text-gray-700'
   };
   
   const sizes = {
@@ -283,7 +281,7 @@ const Input = forwardRef(({
       {label && (
         <label 
           htmlFor={props.id} 
-          className="block text-sm font-medium text-gray-700 dark:text-gray-300"
+          className="block text-sm font-medium text-gray-700"
         >
           {label}
         </label>
@@ -300,11 +298,11 @@ const Input = forwardRef(({
       />
       
       {error && (
-        <p className="text-sm text-red-600 dark:text-red-400">{error}</p>
+        <p className="text-sm text-red-600">{error}</p>
       )}
       
       {helpText && !error && (
-        <p className="text-sm text-gray-500 dark:text-gray-400">{helpText}</p>
+        <p className="text-sm text-gray-500">{helpText}</p>
       )}
     </div>
   );
@@ -351,33 +349,6 @@ export const useLocalStorage = (key, initialValue) => {
 };
 ```
 
-### useTheme Hook
-
-```javascript
-// src/hooks/useTheme.js
-import { useEffect } from 'react';
-import { useLocalStorage } from './useLocalStorage';
-
-export const useTheme = () => {
-  const [theme, setTheme] = useLocalStorage('theme', 'light');
-
-  useEffect(() => {
-    const root = window.document.documentElement;
-    
-    // Remove previous theme class
-    root.classList.remove('light', 'dark');
-    
-    // Add current theme class
-    root.classList.add(theme);
-  }, [theme]);
-
-  const toggleTheme = () => {
-    setTheme(prevTheme => prevTheme === 'light' ? 'dark' : 'light');
-  };
-
-  return { theme, setTheme, toggleTheme };
-};
-```
 
 ### useTodos Hook
 
@@ -543,8 +514,8 @@ const TodoItem = ({ todo, onUpdate, onDelete, onToggle }) => {
 
   return (
     <div className={clsx(
-      'group flex items-center space-x-3 p-4 bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700 transition-all duration-200',
-      'hover:shadow-md hover:border-gray-300 dark:hover:border-gray-600',
+      'group flex items-center space-x-3 p-4 bg-white rounded-lg shadow-sm border border-gray-200 transition-all duration-200',
+      'hover:shadow-md hover:border-gray-300',
       todo.completed && 'opacity-75'
     )}>
       {/* Checkbox */}
@@ -554,7 +525,7 @@ const TodoItem = ({ todo, onUpdate, onDelete, onToggle }) => {
           'flex-shrink-0 w-5 h-5 rounded border-2 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2',
           todo.completed
             ? 'bg-blue-600 border-blue-600 text-white'
-            : 'border-gray-300 dark:border-gray-600 hover:border-blue-500'
+            : 'border-gray-300 hover:border-blue-500'
         )}
       >
         {todo.completed && (
@@ -595,8 +566,8 @@ const TodoItem = ({ todo, onUpdate, onDelete, onToggle }) => {
             className={clsx(
               'text-sm cursor-pointer transition-colors duration-200',
               todo.completed
-                ? 'line-through text-gray-500 dark:text-gray-400'
-                : 'text-gray-900 dark:text-gray-100 hover:text-blue-600 dark:hover:text-blue-400'
+                ? 'line-through text-gray-500'
+                : 'text-gray-900 hover:text-blue-600'
             )}
             onClick={handleEdit}
           >
@@ -624,7 +595,7 @@ const TodoItem = ({ todo, onUpdate, onDelete, onToggle }) => {
               variant="ghost"
               size="sm"
               onClick={() => onDelete(todo.id)}
-              className="p-1 text-red-600 hover:text-red-700 hover:bg-red-50 dark:hover:bg-red-900/20"
+              className="p-1 text-red-600 hover:text-red-700 hover:bg-red-50"
             >
               <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
@@ -711,7 +682,7 @@ const TodoForm = ({ onSubmit }) => {
 
       <div className="flex space-x-3">
         <div className="flex-1">
-          <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+          <label className="block text-sm font-medium text-gray-700 mb-1">
             Priority
           </label>
           <select
@@ -729,7 +700,7 @@ const TodoForm = ({ onSubmit }) => {
         </div>
 
         <div className="flex-1">
-          <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+          <label className="block text-sm font-medium text-gray-700 mb-1">
             Category
           </label>
           <input
@@ -754,7 +725,6 @@ export default TodoForm;
 ```jsx
 // src/App.jsx
 import { useTodos } from './hooks/useTodos';
-import { useTheme } from './hooks/useTheme';
 import TodoForm from './components/TodoForm';
 import TodoItem from './components/TodoItem';
 import Button from './components/ui/Button';
@@ -770,39 +740,19 @@ function App() {
     clearCompleted 
   } = useTodos();
   
-  const { theme, toggleTheme } = useTheme();
-
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-gray-900 transition-colors duration-200">
+    <div className="min-h-screen bg-gray-50">
       <div className="max-w-2xl mx-auto px-4 py-8">
         {/* Header */}
         <header className="text-center mb-8">
-          <div className="flex items-center justify-between mb-4">
-            <h1 className="text-4xl font-bold text-gray-900 dark:text-gray-100">
+          <div className="mb-4">
+            <h1 className="text-4xl font-bold text-gray-900">
               Todo App
             </h1>
-            
-            <Button
-              variant="ghost"
-              size="sm"
-              onClick={toggleTheme}
-              className="p-2"
-              aria-label={`Switch to ${theme === 'light' ? 'dark' : 'light'} mode`}
-            >
-              {theme === 'light' ? (
-                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
-                </svg>
-              ) : (
-                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
-                </svg>
-              )}
-            </Button>
           </div>
           
           {/* Stats */}
-          <div className="flex justify-center space-x-6 text-sm text-gray-600 dark:text-gray-400">
+          <div className="flex justify-center space-x-6 text-sm text-gray-600">
             <span>Total: {stats.total}</span>
             <span>Active: {stats.active}</span>
             <span>Completed: {stats.completed}</span>
@@ -819,10 +769,10 @@ function App() {
         <div className="space-y-3">
           {todos.length === 0 ? (
             <div className="text-center py-12">
-              <svg className="w-16 h-16 mx-auto text-gray-300 dark:text-gray-600 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <svg className="w-16 h-16 mx-auto text-gray-300 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1" d="M9 5H7a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4" />
               </svg>
-              <p className="text-gray-500 dark:text-gray-400">No todos yet. Add one above to get started!</p>
+              <p className="text-gray-500">No todos yet. Add one above to get started!</p>
             </div>
           ) : (
             todos.map(todo => (
@@ -871,7 +821,6 @@ Let's test our basic todo functionality:
    - Toggle completion status
    - Edit todos by clicking on them
    - Delete todos using the delete button
-   - Test theme toggle
 
 3. **Check responsive design**:
    - Test on mobile and desktop viewports

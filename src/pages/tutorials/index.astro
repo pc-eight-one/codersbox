@@ -99,29 +99,29 @@ const nextUrl = totalPages > 1 ? '/tutorials/page/2' : null;
             <div id="tutorials-grid" class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-12">
             {paginatedSeries.map((series) => (
               <article 
-                class="tutorial-item bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 overflow-hidden shadow-sm hover:shadow-md transition-all duration-300 h-full flex"
+                class="tutorial-item bg-white rounded-lg border border-gray-200 overflow-hidden shadow-sm hover:shadow-md transition-all duration-300 h-full flex"
                 data-title={series.name.toLowerCase()}
                 data-description={series.description.toLowerCase()}
                 data-tags={JSON.stringify(series.tags || [])}
                 data-difficulty={series.difficulty}
                 data-date={series.latestPublishDate.getTime()}
               >
-                <div class="w-2 bg-gray-900 dark:bg-gray-600"></div>
+                <div class="w-2 bg-gray-900"></div>
                 <div class="p-6 flex-grow flex flex-col">
                   <div class="flex items-center justify-between mb-4">
                     <div class="flex items-center gap-3">
                       <span class={`inline-block text-xs px-3 py-1 rounded-full font-medium uppercase tracking-wide ${
-                        series.difficulty === 'beginner' ? 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200' :
-                        series.difficulty === 'intermediate' ? 'bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-200' :
-                        'bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-200'
+                        series.difficulty === 'beginner' ? 'bg-green-100 text-green-800' :
+                        series.difficulty === 'intermediate' ? 'bg-yellow-100 text-yellow-800' :
+                        'bg-red-100 text-red-800'
                       }`}>
                         {series.difficulty}
                       </span>
-                      <span class="bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 text-xs px-2 py-1 rounded-full font-medium">
+                      <span class="bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded-full font-medium">
                         {series.totalParts} parts
                       </span>
                     </div>
-                    <time class="text-xs text-gray-500 dark:text-gray-400">
+                    <time class="text-xs text-gray-500">
                       {new Date(series.latestPublishDate).toLocaleDateString('en-US', { 
                         year: 'numeric', 
                         month: 'short', 
@@ -130,18 +130,18 @@ const nextUrl = totalPages > 1 ? '/tutorials/page/2' : null;
                     </time>
                   </div>
                   
-                  <h3 class="font-bold text-lg mb-2 text-gray-900 dark:text-gray-100 leading-tight line-clamp-2">
+                  <h3 class="font-bold text-lg mb-2 text-gray-900 leading-tight line-clamp-2">
                     <a href={`/tutorials/series/${series.name.toLowerCase().replace(/\s+/g, '-')}`} class="hover:underline">
                       {series.name}
                     </a>
                   </h3>
-                  <p class="text-gray-600 dark:text-gray-400 text-sm mb-4 leading-relaxed line-clamp-3 flex-grow">
+                  <p class="text-gray-600 text-sm mb-4 leading-relaxed line-clamp-3 flex-grow">
                     {series.description}
                   </p>
                   
                   <div class="flex flex-wrap gap-2 mb-4">
                     {series.tags.map((tag) => (
-                      <span class="bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-200 rounded-full px-3 py-1 text-xs font-medium">
+                      <span class="bg-gray-100 text-gray-800 rounded-full px-3 py-1 text-xs font-medium">
                         {tag}
                       </span>
                     ))}
@@ -149,10 +149,10 @@ const nextUrl = totalPages > 1 ? '/tutorials/page/2' : null;
                   
                   <div class="flex items-center justify-between mt-auto">
                     <div class="flex flex-col gap-1">
-                      <div class="flex items-center gap-3 text-xs text-gray-500 dark:text-gray-400">
+                      <div class="flex items-center gap-3 text-xs text-gray-500">
                         <a 
                           href={`/tutorials/series/${series.name.toLowerCase().replace(/\s+/g, '-')}`}
-                          class="text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 text-sm font-medium inline-flex items-center transition-colors"
+                          class="text-blue-600 hover:text-blue-700 text-sm font-medium inline-flex items-center transition-colors"
                         >
                           View Series
                           <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -180,14 +180,14 @@ const nextUrl = totalPages > 1 ? '/tutorials/page/2' : null;
             
             <!-- No Results Message -->
             <div id="no-results" class="text-center py-12 hidden">
-              <div class="text-gray-400 dark:text-gray-500 mb-4">
+              <div class="text-gray-400 mb-4">
                 <svg class="w-16 h-16 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path>
                 </svg>
               </div>
-              <h3 class="text-xl font-semibold text-gray-900 dark:text-gray-100 mb-2">No tutorials found</h3>
-              <p class="text-gray-600 dark:text-gray-400 mb-4">Try adjusting your search or filters to find what you're looking for.</p>
-              <button id="clear-all-filters" class="text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 font-medium">
+              <h3 class="text-xl font-semibold text-gray-900 mb-2">No tutorials found</h3>
+              <p class="text-gray-600 mb-4">Try adjusting your search or filters to find what you're looking for.</p>
+              <button id="clear-all-filters" class="text-blue-600 hover:text-blue-700 font-medium">
                 Clear all filters
               </button>
             </div>
@@ -207,8 +207,8 @@ const nextUrl = totalPages > 1 ? '/tutorials/page/2' : null;
         </>
       ) : (
         <div class="text-center py-12">
-          <h3 class="text-xl font-semibold text-gray-900 dark:text-gray-100 mb-2">No tutorial series found</h3>
-          <p class="text-gray-600 dark:text-gray-400">Check back later for new tutorial series!</p>
+          <h3 class="text-xl font-semibold text-gray-900 mb-2">No tutorial series found</h3>
+          <p class="text-gray-600">Check back later for new tutorial series!</p>
         </div>
       )}
     </div>
@@ -339,11 +339,11 @@ const nextUrl = totalPages > 1 ? '/tutorials/page/2' : null;
                         suggestion.type === 'tag' ? '🏷️' : '🔍';
         
         return `
-          <div class="suggestion-item flex items-center px-4 py-3 hover:bg-gray-100 dark:hover:bg-gray-700 cursor-pointer border-b border-gray-100 dark:border-gray-700 last:border-b-0" data-index="${index}">
+          <div class="suggestion-item flex items-center px-4 py-3 hover:bg-gray-100 cursor-pointer border-b border-gray-100 last:border-b-0" data-index="${index}">
             <span class="mr-3 text-sm">${typeIcon}</span>
             <div class="flex-grow">
-              <div class="text-sm font-medium text-gray-900 dark:text-gray-100">${suggestion.text}</div>
-              <div class="text-xs text-gray-500 dark:text-gray-400 capitalize">${suggestion.type}</div>
+              <div class="text-sm font-medium text-gray-900">${suggestion.text}</div>
+              <div class="text-xs text-gray-500 capitalize">${suggestion.type}</div>
             </div>
           </div>
         `;
@@ -377,9 +377,9 @@ const nextUrl = totalPages > 1 ? '/tutorials/page/2' : null;
     function highlightSuggestion(index) {
       document.querySelectorAll('.suggestion-item').forEach((item, i) => {
         if (i === index) {
-          item.classList.add('bg-gray-100', 'dark:bg-gray-700');
+          item.classList.add('bg-gray-100');
         } else {
-          item.classList.remove('bg-gray-100', 'dark:bg-gray-700');
+          item.classList.remove('bg-gray-100');
         }
       });
     }

@@ -11,7 +11,7 @@ interface Props {
 const { title = 'codersbox', nav } = Astro.props;
 ---
 
-<nav id="main-navigation" class="bg-white/70 dark:bg-gray-900/70 backdrop-blur-xl border-b border-white/20 dark:border-gray-700/50 shadow-lg shadow-black/5 dark:shadow-black/20 sticky top-0 z-50 transition-all duration-300">
+<nav id="main-navigation" class="bg-white/70 backdrop-blur-xl border-b border-white/20 shadow-lg shadow-black/5 sticky top-0 z-50 transition-all duration-300">
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
     <div class="flex justify-between items-center h-20">
       <div class="flex items-center">
@@ -24,7 +24,7 @@ const { title = 'codersbox', nav } = Astro.props;
           {nav.map((item) => (
             <a 
               href={item.link}
-              class="nav-link relative px-4 py-2 text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white text-sm font-medium rounded-lg transition-all duration-200"
+              class="nav-link relative px-4 py-2 text-gray-600 hover:text-gray-900 text-sm font-medium rounded-lg transition-all duration-200"
             >
               {item.name}
             </a>
@@ -32,7 +32,7 @@ const { title = 'codersbox', nav } = Astro.props;
         </div>
       </div>
       <div class="flex items-center">
-        <button id="mobile-menu-toggle" class="md:hidden ml-2 p-2 text-gray-600 dark:text-gray-300 hover:text-black dark:hover:text-white transition-all duration-200 rounded-lg hover:bg-gray-100/50 dark:hover:bg-gray-800/50" aria-label="Toggle menu">
+        <button id="mobile-menu-toggle" class="md:hidden ml-2 p-2 text-gray-600 hover:text-black transition-all duration-200 rounded-lg hover:bg-gray-100/50" aria-label="Toggle menu">
           <Icon name="fa6-solid:ellipsis-vertical" class="text-xl" />
         </button>
       </div>
@@ -41,11 +41,11 @@ const { title = 'codersbox', nav } = Astro.props;
 
   <!-- Mobile menu -->
   <div id="mobile-menu" class="hidden md:hidden mobile-menu-panel">
-    <div class="px-2 pt-2 pb-3 space-y-1 bg-white/80 dark:bg-gray-900/80 backdrop-blur-xl border-b border-white/20 dark:border-gray-700/50">
+    <div class="px-2 pt-2 pb-3 space-y-1 bg-white/80 backdrop-blur-xl border-b border-white/20">
       {nav.map((item) => (
         <a 
           href={item.link}
-          class="mobile-nav-link block px-3 py-2 rounded-lg text-base font-medium text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white hover:bg-white/60 dark:hover:bg-gray-800/60 transition-all duration-200"
+          class="mobile-nav-link block px-3 py-2 rounded-lg text-base font-medium text-gray-600 hover:text-gray-900 hover:bg-white/60 transition-all duration-200"
         >
           {item.name}
         </a>
@@ -117,11 +117,6 @@ const { title = 'codersbox', nav } = Astro.props;
     box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
   }
   
-  .dark #main-navigation {
-    background: rgba(17, 24, 39, 0.7);
-    border-bottom: 1px solid rgba(75, 85, 99, 0.5);
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
-  }
 
   /* Scrolled state - enhanced blur */
   #main-navigation.nav-scrolled {
@@ -132,11 +127,6 @@ const { title = 'codersbox', nav } = Astro.props;
     border-bottom: 1px solid rgba(255, 255, 255, 0.3);
   }
   
-  .dark #main-navigation.nav-scrolled {
-    background: rgba(17, 24, 39, 0.85);
-    box-shadow: 0 8px 40px rgba(0, 0, 0, 0.4);
-    border-bottom: 1px solid rgba(75, 85, 99, 0.6);
-  }
 
 
   /* Navigation link hover effects */
@@ -166,9 +156,6 @@ const { title = 'codersbox', nav } = Astro.props;
     transform: translateY(-1px);
   }
   
-  .dark .nav-link:hover {
-    background: rgba(59, 130, 246, 0.1);
-  }
 
   /* Logo hover animation */
   .nav-logo-link {
@@ -249,7 +236,4 @@ const { title = 'codersbox', nav } = Astro.props;
     pointer-events: none;
   }
   
-  .dark #main-navigation::before {
-    background: linear-gradient(135deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0));
-  }
 </style>

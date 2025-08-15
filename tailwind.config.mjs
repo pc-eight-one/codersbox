@@ -1,7 +1,6 @@
 /** @type {import('tailwindcss').Config} */
 export default {
   content: ['./src/**/*.{astro,html,js,jsx,md,mdx,svelte,ts,tsx,vue}'],
-  darkMode: 'class',
   theme: {
     extend: {
       colors: {
@@ -217,71 +216,6 @@ export default {
               borderTopWidth: '1px',
               marginTop: '3em',
               marginBottom: '3em',
-            },
-          },
-        },
-        // Dark mode styles - One Dark color scheme
-        invert: {
-          css: {
-            '--tw-prose-body': '#abb2bf', // One Dark foreground
-            '--tw-prose-headings': '#abb2bf', // One Dark foreground for headings
-            '--tw-prose-links': '#61afef', // One Dark blue
-            '--tw-prose-bold': '#abb2bf', // One Dark foreground for bold
-            '--tw-prose-counters': '#5c6370', // One Dark muted gray
-            '--tw-prose-bullets': '#5c6370', // One Dark muted gray
-            '--tw-prose-hr': '#3e4451', // One Dark selection background
-            '--tw-prose-quotes': '#abb2bf', // One Dark foreground
-            '--tw-prose-quote-borders': '#3e4451', // One Dark selection background
-            '--tw-prose-captions': '#5c6370', // One Dark muted gray
-            '--tw-prose-code': '#56b6c2', // One Dark cyan
-            '--tw-prose-th-borders': '#3e4451', // One Dark selection background
-            '--tw-prose-td-borders': '#3e4451', // One Dark selection background
-            
-            color: '#abb2bf', // One Dark foreground
-            
-            'h1, h2, h3, h4, h5, h6': {
-              color: '#abb2bf', // One Dark foreground for headings
-            },
-            
-            h2: {
-              borderBottomColor: '#3e4451', // One Dark selection background
-            },
-            
-            code: {
-              color: '#56b6c2', // One Dark cyan
-              backgroundColor: '#3e4451', // One Dark selection background
-            },
-            
-            pre: {
-              backgroundColor: '#282c34', // One Dark background
-              color: '#abb2bf', // One Dark foreground
-              borderColor: '#3e4451', // One Dark selection background
-            },
-            
-            blockquote: {
-              color: '#abb2bf', // One Dark foreground
-              borderLeftColor: '#61afef', // One Dark blue border
-              backgroundColor: '#3e4451', // One Dark selection background
-            },
-            
-            a: {
-              color: '#61afef', // One Dark blue
-            },
-            'a:hover': {
-              color: '#528bff', // One Dark cursor color (lighter blue)
-              borderBottomColor: '#528bff',
-            },
-            
-            thead: {
-              backgroundColor: '#3e4451', // One Dark selection background
-              borderBottomColor: '#3e4451', // One Dark selection background
-            },
-            'thead th': {
-              color: '#abb2bf', // One Dark foreground
-            },
-            
-            img: {
-              borderColor: '#3e4451', // One Dark selection background
             },
           },
         },

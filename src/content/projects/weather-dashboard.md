@@ -38,7 +38,7 @@ A modern, responsive weather application that provides comprehensive weather inf
 
 ### User Experience
 - **Responsive design** optimized for all devices
-- **Dark/light theme** toggle
+- **Clean, intuitive interface**
 - **Celsius/Fahrenheit** temperature switching
 - **Offline support** with cached data
 - **Loading states** and error handling
@@ -117,7 +117,7 @@ class WeatherService {
 ```vue
 <!-- WeatherCard.vue -->
 <template>
-  <div class="weather-card bg-gradient-to-br from-blue-400 to-blue-600 dark:from-blue-600 dark:to-blue-800 rounded-xl p-6 text-white">
+  <div class="weather-card bg-gradient-to-br from-blue-400 to-blue-600 rounded-xl p-6 text-white">
     <div class="flex items-center justify-between mb-4">
       <div>
         <h2 class="text-2xl font-bold">{{ location.name }}</h2>
@@ -325,7 +325,7 @@ describe('WeatherCard', () => {
 - **Focus management** for keyboard navigation
 
 ### Visual Accessibility
-- **High contrast** theme option
+- **Clear, readable typography**
 - **Large text** support
 - **Color-blind friendly** color schemes
 - **Reduced motion** preferences respected

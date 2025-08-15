@@ -26,20 +26,20 @@ const { Content, headings } = await article.render();
   canonical={`https://codersbox.dev/articles/${article.slug}/`}
   image={article.data.image || '/og-image.jpg'}
 >
-  <main class="min-h-screen bg-gray-50 dark:bg-gray-900">
+  <main class="min-h-screen bg-gray-50">
     <!-- Article Hero Section -->
-    <header class="bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700">
+    <header class="bg-white border-b border-gray-200">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <div class="text-center">
-          <h1 class="text-4xl md:text-5xl font-bold mb-6 text-gray-900 dark:text-gray-100 leading-tight tracking-tight">
+          <h1 class="text-4xl md:text-5xl font-bold mb-6 text-gray-900 leading-tight tracking-tight">
             {article.data.title}
           </h1>
           
-          <p class="text-xl text-gray-600 dark:text-gray-400 mb-8 max-w-3xl mx-auto leading-relaxed">
+          <p class="text-xl text-gray-600 mb-8 max-w-3xl mx-auto leading-relaxed">
             {article.data.description}
           </p>
           
-          <div class="flex flex-wrap justify-center items-center gap-6 text-sm text-gray-500 dark:text-gray-400 mb-6">
+          <div class="flex flex-wrap justify-center items-center gap-6 text-sm text-gray-500 mb-6">
             <div class="flex items-center gap-2">
               <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
@@ -67,7 +67,7 @@ const { Content, headings } = await article.render();
           <!-- Tags -->
           <div class="flex flex-wrap justify-center gap-2">
             {article.data.tags.map((tag) => (
-              <span class="bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 px-4 py-2 rounded-full text-sm font-medium hover:bg-blue-200 dark:hover:bg-blue-800 transition-colors">
+              <span class="bg-blue-100 text-blue-800 px-4 py-2 rounded-full text-sm font-medium hover:bg-blue-200 transition-colors">
                 {tag}
               </span>
             ))}
@@ -81,7 +81,7 @@ const { Content, headings } = await article.render();
       {(headings ?? []).filter((h) => h.depth >= 2 && h.depth <= 4).length > 0 ? (
         <div class="grid grid-cols-1 lg:grid-cols-4 gap-8">
           <!-- Left Sidebar - Table of Contents -->
-          <aside class="lg:col-span-1 lg:border-r lg:border-gray-200 lg:dark:border-gray-700 lg:pr-8">
+          <aside class="lg:col-span-1 lg:border-r lg:border-gray-200 lg:pr-8">
             <TableOfContents headings={headings ?? []} />
           </aside>
           
@@ -89,7 +89,7 @@ const { Content, headings } = await article.render();
           <article class="lg:col-span-3">
             <div class="px-0 py-0">
               <!-- Enhanced Article Content with Custom Typography -->
-              <div class="prose prose-lg dark:prose-invert max-w-none article-content">
+              <div class="prose prose-lg max-w-none article-content">
                 <Content />
               </div>
             </div>
@@ -100,7 +100,7 @@ const { Content, headings } = await article.render();
         <article class="max-w-4xl mx-auto">
           <div class="px-0 py-0">
             <!-- Enhanced Article Content with Custom Typography -->
-            <div class="prose prose-lg dark:prose-invert max-w-none article-content">
+            <div class="prose prose-lg max-w-none article-content">
               <Content />
             </div>
           </div>
@@ -108,11 +108,11 @@ const { Content, headings } = await article.render();
       )}
       
       <!-- Article Navigation/Footer -->
-      <footer class="mt-12 bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700 p-8">
+      <footer class="mt-12 bg-white rounded-xl shadow-sm border border-gray-200 p-8">
         <div class="flex flex-col md:flex-row items-center justify-between gap-6">
           <div class="text-center md:text-left">
-            <p class="text-sm text-gray-500 dark:text-gray-400 mb-2">Published on</p>
-            <p class="font-semibold text-gray-900 dark:text-gray-100">
+            <p class="text-sm text-gray-500 mb-2">Published on</p>
+            <p class="font-semibold text-gray-900">
               {article.data.publishDate.toLocaleDateString('en-US', { 
                 year: 'numeric', 
                 month: 'long', 
@@ -124,7 +124,7 @@ const { Content, headings } = await article.render();
           <div class="flex items-center gap-4">
             <a 
               href="/articles" 
-              class="inline-flex items-center gap-2 px-6 py-3 border border-blue-200 dark:border-blue-700 bg-blue-50 dark:bg-blue-900/40 text-blue-700 dark:text-blue-300 rounded-lg hover:bg-blue-100 dark:hover:bg-blue-800/60 transition-colors font-medium"
+              class="inline-flex items-center gap-2 px-6 py-3 border border-blue-200 bg-blue-50 text-blue-700 rounded-lg hover:bg-blue-100 transition-colors font-medium"
             >
               <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
@@ -157,7 +157,7 @@ const { Content, headings } = await article.render();
 
   <!-- Back to Top Button -->
   <button id="back-to-top" aria-label="Back to top"
-    class="fixed bottom-6 right-6 z-40 inline-flex items-center justify-center w-12 h-12 rounded-full bg-black text-white shadow-lg transition-all duration-200 hover:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-offset-2 focus:ring-offset-white dark:focus:ring-offset-gray-900 opacity-0 pointer-events-none">
+    class="fixed bottom-6 right-6 z-40 inline-flex items-center justify-center w-12 h-12 rounded-full bg-black text-white shadow-lg transition-all duration-200 hover:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-offset-2 focus:ring-offset-white opacity-0 pointer-events-none">
     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
       <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7" />
     </svg>
@@ -266,9 +266,6 @@ const { Content, headings } = await article.render();
     line-height: 1.75;
   }
   
-  .dark .article-content {
-    color: #d4d4d4; /* Dark+ foreground */
-  }
   
   /* Custom heading styles with better spacing */
   .article-content :is(h1, h2, h3, h4, h5, h6) {
@@ -295,9 +292,6 @@ const { Content, headings } = await article.render();
     padding-left: 1.5em; /* reserve space for left anchor */
   }
   
-  .dark .article-content h2 {
-    border-bottom-color: #404040; /* Dark+ selection background */
-  }
   
   .article-content h3 {
     font-size: 1.5rem;
@@ -350,11 +344,6 @@ const { Content, headings } = await article.render();
     border: 1px solid rgb(229 231 235) !important;
   }
   
-  .dark .article-content :not(pre) > code {
-    color: #4ec9b0 !important; /* Dark+ teal for inline code */
-    background: #404040 !important; /* Dark+ selection background */
-    border-color: #404040 !important; /* Dark+ selection background */
-  }
   
   /* Enhanced blockquotes */
   .article-content blockquote {
@@ -368,10 +357,6 @@ const { Content, headings } = await article.render();
     box-shadow: 0 2px 4px rgb(0 0 0 / 0.05);
   }
   
-  .dark .article-content blockquote {
-    background: #2d2d30; /* Dark+ blockquote background */
-    border-left-color: #569cd6; /* Dark+ blue */
-  }
   
   .article-content blockquote::before {
     content: '"';
@@ -402,9 +387,6 @@ const { Content, headings } = await article.render();
     border: 1px solid rgb(229 231 235);
   }
   
-  .dark .article-content table {
-    border-color: rgb(55 65 81);
-  }
   
   .article-content thead th {
     background: rgb(249 250 251);
@@ -415,10 +397,6 @@ const { Content, headings } = await article.render();
     color: rgb(55 65 81);
   }
   
-  .dark .article-content thead th {
-    background: rgb(31 41 55);
-    color: rgb(209 213 219);
-  }
   
   /* Enhanced images */
   .article-content img {
@@ -427,9 +405,6 @@ const { Content, headings } = await article.render();
     border: 1px solid rgb(229 231 235);
   }
   
-  .dark .article-content img {
-    border-color: rgb(55 65 81);
-  }
 
   /* Heading copy-link anchor button */
   .article-content .heading-anchor {
@@ -463,13 +438,6 @@ const { Content, headings } = await article.render();
     color: rgb(37 99 235); /* blue-600 */
     outline: none;
   }
-  .dark .article-content .heading-anchor {
-    color: rgb(107 114 128); /* gray-500 muted in dark */
-  }
-  .dark .article-content .heading-anchor:hover,
-  .dark .article-content .heading-anchor:focus-visible {
-    color: #569cd6; /* Dark+ blue */
-  }
   .article-content :is(h2, h3, h4):hover .heading-anchor,
   .article-content :is(h2, h3, h4):focus-within .heading-anchor {
     opacity: 1;
@@ -488,11 +456,6 @@ const { Content, headings } = await article.render();
     border: 1px solid rgb(229 231 235);
     border-radius: 0.25rem;
     white-space: nowrap;
-  }
-  .dark .article-content .heading-anchor.copied::after {
-    background: rgb(31 41 55);
-    color: rgb(243 244 246);
-    border-color: rgb(55 65 81);
   }
   
   /* Link hover effects */

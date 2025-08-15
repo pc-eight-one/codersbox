@@ -22,7 +22,7 @@ Welcome back! In Part 1, we set up our project structure and created the HTML fo
 - Hero section styling with animations
 - Typography and color schemes
 - CSS Grid and Flexbox
-- Dark mode implementation
+- Smooth scrolling and animations
 
 ## Setting Up Our Main Stylesheet
 
@@ -122,10 +122,6 @@ Let's style our responsive navigation:
     transition: all var(--transition-normal);
 }
 
-[data-theme="dark"] .header {
-    background: rgba(15, 23, 42, 0.95);
-    border-bottom-color: var(--color-gray-700);
-}
 
 .nav {
     display: flex;
@@ -172,9 +168,6 @@ Let's style our responsive navigation:
     box-shadow: var(--shadow-lg);
 }
 
-[data-theme="dark"] .nav__menu--open {
-    border-bottom-color: var(--color-gray-700);
-}
 
 .nav__link {
     position: relative;
@@ -209,8 +202,8 @@ Let's style our responsive navigation:
     gap: var(--spacing-md);
 }
 
-/* Theme Toggle */
-.theme-toggle {
+/* Search Toggle */
+.search-toggle {
     position: relative;
     width: 2.5rem;
     height: 2.5rem;
@@ -223,40 +216,16 @@ Let's style our responsive navigation:
     transition: all var(--transition-normal);
 }
 
-.theme-toggle:hover {
+.search-toggle:hover {
     background: var(--color-gray-200);
     transform: scale(1.05);
 }
 
-.theme-toggle__icon {
-    position: relative;
+.search-toggle__icon {
     width: 1rem;
     height: 1rem;
-    border-radius: 50%;
-    background: var(--color-accent);
+    stroke: var(--color-gray-600);
     transition: all var(--transition-normal);
-}
-
-.theme-toggle__icon::before {
-    content: '';
-    position: absolute;
-    top: -0.25rem;
-    left: -0.25rem;
-    width: 1.5rem;
-    height: 1.5rem;
-    border: 2px solid var(--color-accent);
-    border-radius: 50%;
-    clip-path: polygon(0 0, 50% 0, 50% 100%, 0 100%);
-    transition: all var(--transition-normal);
-}
-
-[data-theme="dark"] .theme-toggle {
-    background: var(--color-gray-700);
-    border-color: var(--color-gray-600);
-}
-
-[data-theme="dark"] .theme-toggle__icon::before {
-    clip-path: polygon(50% 0, 100% 0, 100% 100%, 50% 100%);
 }
 
 /* Mobile Menu Toggle */
@@ -313,9 +282,6 @@ Now let's create an impressive hero section:
     background: linear-gradient(135deg, var(--color-bg-primary) 0%, var(--color-gray-50) 100%);
 }
 
-[data-theme="dark"] .hero {
-    background: linear-gradient(135deg, var(--color-gray-900) 0%, var(--color-gray-800) 100%);
-}
 
 .hero::before {
     content: '';
@@ -591,9 +557,6 @@ Let's add stylish button components:
     transform: translateY(-4px);
 }
 
-[data-theme="dark"] .card {
-    border-color: var(--color-gray-700);
-}
 
 /* Utility Classes */
 .text-center { text-align: center; }
@@ -665,7 +628,7 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Initialize components
     initNavigation();
-    initThemeToggle();
+    initContactForm();
     initSmoothScrolling();
     initScrollEffects();
     initLazyLoading();
@@ -715,44 +678,28 @@ function initNavigation() {
     }
 }
 
-function initThemeToggle() {
-    const themeToggle = document.querySelector('.theme-toggle');
-    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)');
+function initContactForm() {
+    const contactForm = document.querySelector('#contact-form');
     
-    // Get saved theme or use system preference
-    let currentTheme = localStorage.getItem('theme');
-    if (!currentTheme) {
-        currentTheme = prefersDark.matches ? 'dark' : 'light';
-    }
-    
-    // Set initial theme
-    setTheme(currentTheme);
-    
-    if (themeToggle) {
-        themeToggle.addEventListener('click', () => {
-            const currentTheme = document.documentElement.getAttribute('data-theme');
-            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
-            setTheme(newTheme);
+    if (contactForm) {
+        contactForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            
+            // Get form data
+            const formData = new FormData(contactForm);
+            const data = Object.fromEntries(formData);
+            
+            // Simple validation
+            if (!data.name || !data.email || !data.message) {
+                alert('Please fill in all required fields.');
+                return;
+            }
+            
+            // Here you would typically send the data to your server
+            console.log('Form submitted:', data);
+            alert('Thank you for your message! I\'ll get back to you soon.');
+            contactForm.reset();
         });
-    }
-    
-    // Listen for system theme changes
-    prefersDark.addEventListener('change', (e) => {
-        if (!localStorage.getItem('theme')) {
-            setTheme(e.matches ? 'dark' : 'light');
-        }
-    });
-    
-    function setTheme(theme) {
-        document.documentElement.setAttribute('data-theme', theme);
-        localStorage.setItem('theme', theme);
-        
-        // Update theme toggle aria-label
-        if (themeToggle) {
-            themeToggle.setAttribute('aria-label', 
-                `Switch to ${theme === 'dark' ? 'light' : 'dark'} mode`
-            );
-        }
     }
 }
 

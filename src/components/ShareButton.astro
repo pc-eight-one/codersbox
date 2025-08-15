@@ -33,9 +33,9 @@ const shareUrls = {
 };
 
 const buttonClasses = {
-  default: "inline-flex items-center gap-2 px-6 py-3 bg-black text-white rounded-lg hover:bg-gray-900 dark:hover:bg-gray-700 transition-all duration-200 font-medium focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-offset-2 focus:ring-offset-white dark:focus:ring-offset-gray-900 group",
-  floating: "fixed bottom-6 left-6 z-40 inline-flex items-center gap-2 px-4 py-3 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 rounded-full shadow-lg border border-gray-200 dark:border-gray-700 hover:shadow-xl transition-all duration-200 font-medium focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-offset-2 focus:ring-offset-white dark:focus:ring-offset-gray-900",
-  minimal: "inline-flex items-center gap-2 px-4 py-2 text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors font-medium focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-offset-2"
+  default: "inline-flex items-center gap-2 px-6 py-3 bg-black text-white rounded-lg hover:bg-gray-900 transition-all duration-200 font-medium focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-offset-2 focus:ring-offset-white group",
+  floating: "fixed bottom-6 left-6 z-40 inline-flex items-center gap-2 px-4 py-3 bg-white text-gray-900 rounded-full shadow-lg border border-gray-200 hover:shadow-xl transition-all duration-200 font-medium focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-offset-2 focus:ring-offset-white",
+  minimal: "inline-flex items-center gap-2 px-4 py-2 text-gray-600 hover:text-gray-900 rounded-lg hover:bg-gray-100 transition-colors font-medium focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-offset-2"
 };
 ---
 
@@ -65,15 +65,15 @@ const buttonClasses = {
     
     <!-- Modal Content -->
     <div class="fixed inset-0 flex items-center justify-center p-4">
-      <div class="bg-white dark:bg-gray-800 rounded-xl shadow-2xl border border-gray-200 dark:border-gray-700 max-w-md w-full max-h-[90vh] overflow-hidden animate-modal-enter">
+      <div class="bg-white rounded-xl shadow-2xl border border-gray-200 max-w-md w-full max-h-[90vh] overflow-hidden animate-modal-enter">
         <!-- Header -->
-        <div class="flex items-center justify-between p-6 border-b border-gray-200 dark:border-gray-700">
-          <h3 id="share-modal-title" class="text-lg font-semibold text-gray-900 dark:text-gray-100">
+        <div class="flex items-center justify-between p-6 border-b border-gray-200">
+          <h3 id="share-modal-title" class="text-lg font-semibold text-gray-900">
             Share Article
           </h3>
           <button 
             id="close-share-modal" 
-            class="p-2 text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
+            class="p-2 text-gray-400 hover:text-gray-600 rounded-lg hover:bg-gray-100 transition-colors"
             aria-label="Close share modal"
           >
             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -86,7 +86,7 @@ const buttonClasses = {
         <div class="p-6">
           <!-- Copy Link -->
           <div class="mb-6">
-            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+            <label class="block text-sm font-medium text-gray-700 mb-2">
               Article URL
             </label>
             <div class="flex items-center gap-2">
@@ -95,11 +95,11 @@ const buttonClasses = {
                 type="text" 
                 readonly 
                 value={currentUrl}
-                class="flex-1 px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-gray-50 dark:bg-gray-700 text-gray-900 dark:text-gray-100 text-sm focus:outline-none focus:ring-2 focus:ring-blue-400"
+                class="flex-1 px-3 py-2 border border-gray-300 rounded-lg bg-gray-50 text-gray-900 text-sm focus:outline-none focus:ring-2 focus:ring-blue-400"
               />
               <button 
                 id="copy-link" 
-                class="inline-flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors text-sm font-medium focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-offset-2 focus:ring-offset-white dark:focus:ring-offset-gray-800"
+                class="inline-flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors text-sm font-medium focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-offset-2 focus:ring-offset-white"
                 aria-label="Copy link to clipboard"
               >
                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -108,14 +108,14 @@ const buttonClasses = {
                 Copy
               </button>
             </div>
-            <div id="copy-feedback" class="hidden mt-2 text-sm text-green-600 dark:text-green-400">
+            <div id="copy-feedback" class="hidden mt-2 text-sm text-green-600">
               ✓ Link copied to clipboard!
             </div>
           </div>
           
           <!-- Social Share Buttons -->
           <div class="space-y-3">
-            <h4 class="text-sm font-medium text-gray-700 dark:text-gray-300 mb-3">
+            <h4 class="text-sm font-medium text-gray-700 mb-3">
               Share on social media
             </h4>
             
@@ -125,7 +125,7 @@ const buttonClasses = {
                 href={shareUrls.twitter}
                 target="_blank" 
                 rel="noopener noreferrer"
-                class="inline-flex items-center gap-3 px-4 py-3 border border-gray-200 dark:border-gray-600 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors group"
+                class="inline-flex items-center gap-3 px-4 py-3 border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors group"
               >
                 <div class="w-8 h-8 bg-[#1DA1F2] rounded-lg flex items-center justify-center group-hover:scale-110 transition-transform">
                   <svg class="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 24 24">
@@ -133,8 +133,8 @@ const buttonClasses = {
                   </svg>
                 </div>
                 <div class="flex-1">
-                  <div class="text-sm font-medium text-gray-900 dark:text-gray-100">Share on Twitter</div>
-                  <div class="text-xs text-gray-500 dark:text-gray-400">Share with your followers</div>
+                  <div class="text-sm font-medium text-gray-900">Share on Twitter</div>
+                  <div class="text-xs text-gray-500">Share with your followers</div>
                 </div>
               </a>
               
@@ -143,7 +143,7 @@ const buttonClasses = {
                 href={shareUrls.linkedin}
                 target="_blank" 
                 rel="noopener noreferrer"
-                class="inline-flex items-center gap-3 px-4 py-3 border border-gray-200 dark:border-gray-600 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors group"
+                class="inline-flex items-center gap-3 px-4 py-3 border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors group"
               >
                 <div class="w-8 h-8 bg-[#0077B5] rounded-lg flex items-center justify-center group-hover:scale-110 transition-transform">
                   <svg class="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 24 24">
@@ -151,8 +151,8 @@ const buttonClasses = {
                   </svg>
                 </div>
                 <div class="flex-1">
-                  <div class="text-sm font-medium text-gray-900 dark:text-gray-100">Share on LinkedIn</div>
-                  <div class="text-xs text-gray-500 dark:text-gray-400">Share with professionals</div>
+                  <div class="text-sm font-medium text-gray-900">Share on LinkedIn</div>
+                  <div class="text-xs text-gray-500">Share with professionals</div>
                 </div>
               </a>
               
@@ -161,7 +161,7 @@ const buttonClasses = {
                 href={shareUrls.facebook}
                 target="_blank" 
                 rel="noopener noreferrer"
-                class="inline-flex items-center gap-3 px-4 py-3 border border-gray-200 dark:border-gray-600 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors group"
+                class="inline-flex items-center gap-3 px-4 py-3 border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors group"
               >
                 <div class="w-8 h-8 bg-[#1877F2] rounded-lg flex items-center justify-center group-hover:scale-110 transition-transform">
                   <svg class="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 24 24">
@@ -169,8 +169,8 @@ const buttonClasses = {
                   </svg>
                 </div>
                 <div class="flex-1">
-                  <div class="text-sm font-medium text-gray-900 dark:text-gray-100">Share on Facebook</div>
-                  <div class="text-xs text-gray-500 dark:text-gray-400">Share with friends</div>
+                  <div class="text-sm font-medium text-gray-900">Share on Facebook</div>
+                  <div class="text-xs text-gray-500">Share with friends</div>
                 </div>
               </a>
               
@@ -179,7 +179,7 @@ const buttonClasses = {
                 href={shareUrls.reddit}
                 target="_blank" 
                 rel="noopener noreferrer"
-                class="inline-flex items-center gap-3 px-4 py-3 border border-gray-200 dark:border-gray-600 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors group"
+                class="inline-flex items-center gap-3 px-4 py-3 border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors group"
               >
                 <div class="w-8 h-8 bg-[#FF4500] rounded-lg flex items-center justify-center group-hover:scale-110 transition-transform">
                   <svg class="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 24 24">
@@ -187,8 +187,8 @@ const buttonClasses = {
                   </svg>
                 </div>
                 <div class="flex-1">
-                  <div class="text-sm font-medium text-gray-900 dark:text-gray-100">Share on Reddit</div>
-                  <div class="text-xs text-gray-500 dark:text-gray-400">Share with the community</div>
+                  <div class="text-sm font-medium text-gray-900">Share on Reddit</div>
+                  <div class="text-xs text-gray-500">Share with the community</div>
                 </div>
               </a>
               
@@ -197,7 +197,7 @@ const buttonClasses = {
                 href={shareUrls.hackernews}
                 target="_blank" 
                 rel="noopener noreferrer"
-                class="inline-flex items-center gap-3 px-4 py-3 border border-gray-200 dark:border-gray-600 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors group"
+                class="inline-flex items-center gap-3 px-4 py-3 border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors group"
               >
                 <div class="w-8 h-8 bg-[#FF6600] rounded-lg flex items-center justify-center group-hover:scale-110 transition-transform">
                   <svg class="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 24 24">
@@ -205,8 +205,8 @@ const buttonClasses = {
                   </svg>
                 </div>
                 <div class="flex-1">
-                  <div class="text-sm font-medium text-gray-900 dark:text-gray-100">Share on Hacker News</div>
-                  <div class="text-xs text-gray-500 dark:text-gray-400">Share with developers</div>
+                  <div class="text-sm font-medium text-gray-900">Share on Hacker News</div>
+                  <div class="text-xs text-gray-500">Share with developers</div>
                 </div>
               </a>
             </div>
@@ -296,8 +296,8 @@ const buttonClasses = {
     function showCopyFeedback(message, isError = false) {
       copyFeedback.textContent = isError ? '❌ ' + message : '✓ ' + message;
       copyFeedback.className = isError ? 
-        'mt-2 text-sm text-red-600 dark:text-red-400' : 
-        'mt-2 text-sm text-green-600 dark:text-green-400';
+        'mt-2 text-sm text-red-600' : 
+        'mt-2 text-sm text-green-600';
       copyFeedback.classList.remove('hidden');
       
       setTimeout(() => {

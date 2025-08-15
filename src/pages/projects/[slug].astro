@@ -16,9 +16,9 @@ const { project } = Astro.props;
 const { Content, headings } = await project.render();
 
 const statusColors = {
-  completed: 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200',
-  'in-progress': 'bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-200',
-  archived: 'bg-gray-100 text-gray-800 dark:bg-gray-900 dark:text-gray-200',
+  completed: 'bg-green-100 text-green-800',
+  'in-progress': 'bg-yellow-100 text-yellow-800',
+  archived: 'bg-gray-100 text-gray-800',
 };
 ---
 
@@ -31,9 +31,9 @@ const statusColors = {
   canonical={`https://codersbox.dev/projects/${project.slug}/`}
   image={project.data.image || '/og-image.jpg'}
 >
-  <main class="min-h-screen bg-gray-50 dark:bg-gray-900 py-12">
+  <main class="min-h-screen bg-gray-50 py-12">
     <!-- Project Hero Section -->
-    <header class="bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700 mb-16">
+    <header class="bg-white border-b border-gray-200 mb-16">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         {project.data.image && (
           <div class="bg-gray-900 h-64 flex items-center justify-center rounded-lg mb-8">
@@ -50,15 +50,15 @@ const statusColors = {
         )}
         
         <div class="text-center">
-          <h1 class="text-4xl md:text-5xl font-bold mb-6 text-gray-900 dark:text-gray-100 leading-tight tracking-tight">
+          <h1 class="text-4xl md:text-5xl font-bold mb-6 text-gray-900 leading-tight tracking-tight">
             {project.data.title}
           </h1>
           
-          <p class="text-xl text-gray-600 dark:text-gray-400 mb-8 max-w-3xl mx-auto leading-relaxed">
+          <p class="text-xl text-gray-600 mb-8 max-w-3xl mx-auto leading-relaxed">
             {project.data.description}
           </p>
           
-          <div class="flex flex-wrap justify-center items-center gap-6 text-sm text-gray-500 dark:text-gray-400 mb-6">
+          <div class="flex flex-wrap justify-center items-center gap-6 text-sm text-gray-500 mb-6">
             <div class="flex items-center gap-2">
               <span class={`inline-block text-xs px-3 py-1 rounded-full font-medium uppercase tracking-wide ${statusColors[project.data.status]}`}>
                 {project.data.status.replace('-', ' ')}
@@ -75,13 +75,13 @@ const statusColors = {
               })}</span>
             </div>
             {project.data.github && (
-              <a href={project.data.github} target="_blank" rel="noopener noreferrer" class="text-gray-700 dark:text-gray-300 hover:text-black dark:hover:text-white transition-colors flex items-center gap-2">
+              <a href={project.data.github} target="_blank" rel="noopener noreferrer" class="text-gray-700 hover:text-black transition-colors flex items-center gap-2">
                 <Icon name="fa6-brands:github" class="text-lg" />
                 <span>GitHub</span>
               </a>
             )}
             {project.data.demo && (
-              <a href={project.data.demo} target="_blank" rel="noopener noreferrer" class="text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 transition-colors flex items-center gap-2">
+              <a href={project.data.demo} target="_blank" rel="noopener noreferrer" class="text-blue-600 hover:text-blue-700 transition-colors flex items-center gap-2">
                 <Icon name="fa6-solid:link" class="text-lg" />
                 <span>Live Demo</span>
               </a>
@@ -91,7 +91,7 @@ const statusColors = {
           <!-- Tech Stack -->
           <div class="flex flex-wrap justify-center gap-2">
             {project.data.tech.map((tech) => (
-              <span class="bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 px-4 py-2 rounded-full text-sm font-medium hover:bg-blue-200 dark:hover:bg-blue-800 transition-colors">
+              <span class="bg-blue-100 text-blue-800 px-4 py-2 rounded-full text-sm font-medium hover:bg-blue-200 transition-colors">
                 {tech}
               </span>
             ))}
@@ -105,7 +105,7 @@ const statusColors = {
       {(headings ?? []).filter((h) => h.depth >= 2 && h.depth <= 4).length > 0 ? (
         <div class="grid grid-cols-1 lg:grid-cols-4 gap-8">
           <!-- Left Sidebar - Table of Contents -->
-          <aside class="lg:col-span-1 lg:border-r lg:border-gray-200 lg:dark:border-gray-700 lg:pr-8">
+          <aside class="lg:col-span-1 lg:border-r lg:border-gray-200 lg:pr-8">
             <TableOfContents headings={headings ?? []} />
           </aside>
           
@@ -113,7 +113,7 @@ const statusColors = {
           <article class="lg:col-span-3">
             <div class="px-0 py-0">
               <!-- Project Content -->
-              <div class="prose prose-lg dark:prose-invert max-w-none project-content">
+              <div class="prose prose-lg max-w-none project-content">
                 <Content />
               </div>
             </div>
@@ -124,7 +124,7 @@ const statusColors = {
         <article class="max-w-4xl mx-auto">
           <div class="px-0 py-0">
             <!-- Project Content -->
-            <div class="prose prose-lg dark:prose-invert max-w-none project-content">
+            <div class="prose prose-lg max-w-none project-content">
               <Content />
             </div>
           </div>
@@ -132,9 +132,9 @@ const statusColors = {
       )}
       
       <!-- Project Footer -->
-      <footer class="mt-12 bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700 p-8">
+      <footer class="mt-12 bg-white rounded-xl shadow-sm border border-gray-200 p-8">
         <div class="flex items-center justify-between">
-          <div class="text-sm text-gray-500 dark:text-gray-400">
+          <div class="text-sm text-gray-500">
             Published on {project.data.publishDate.toLocaleDateString('en-US', { 
               year: 'numeric', 
               month: 'long', 
@@ -142,7 +142,7 @@ const statusColors = {
             })}
           </div>
           <div class="flex items-center space-x-4">
-            <a href="/projects" class="text-blue-600 dark:text-blue-400 hover:underline text-sm font-medium">
+            <a href="/projects" class="text-blue-600 hover:underline text-sm font-medium">
               ← Back to Projects
             </a>
           </div>
@@ -151,7 +151,7 @@ const statusColors = {
     </div>
   <!-- Back to Top Button -->
   <button id="back-to-top" aria-label="Back to top"
-    class="fixed bottom-6 right-6 z-40 inline-flex items-center justify-center w-12 h-12 rounded-full bg-black text-white shadow-lg transition-all duration-200 hover:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-offset-2 focus:ring-offset-white dark:focus:ring-offset-gray-900 opacity-0 pointer-events-none">
+    class="fixed bottom-6 right-6 z-40 inline-flex items-center justify-center w-12 h-12 rounded-full bg-black text-white shadow-lg transition-all duration-200 hover:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-offset-2 focus:ring-offset-white opacity-0 pointer-events-none">
     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
       <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7" />
     </svg>
@@ -231,9 +231,6 @@ const statusColors = {
     line-height: 1.75;
   }
   
-  .dark .project-content {
-    color: #abb2bf; /* One Dark foreground */
-  }
   
   /* Custom heading styles with better spacing */
   .project-content :is(h1, h2, h3, h4, h5, h6) {
@@ -260,9 +257,6 @@ const statusColors = {
     padding-left: 1.5em; /* reserve space for left anchor */
   }
   
-  .dark .project-content h2 {
-    border-bottom-color: #3e4451; /* One Dark selection background */
-  }
   
   .project-content h3 {
     font-size: 1.5rem;
@@ -315,11 +309,6 @@ const statusColors = {
     border: 1px solid rgb(229 231 235) !important;
   }
   
-  .dark .project-content :not(pre) > code {
-    color: #56b6c2 !important; /* One Dark cyan */
-    background: #3e4451 !important; /* One Dark selection background */
-    border-color: #3e4451 !important; /* One Dark selection background */
-  }
 
   /* Heading copy-link anchor button */
   .project-content .heading-anchor {
@@ -350,9 +339,6 @@ const statusColors = {
     color: rgb(37 99 235);
     outline: none;
   }
-  .dark .project-content .heading-anchor { color: rgb(107 114 128); }
-  .dark .project-content .heading-anchor:hover,
-  .dark .project-content .heading-anchor:focus-visible { color: rgb(96 165 250); }
   .project-content :is(h2, h3, h4):hover .heading-anchor,
   .project-content :is(h2, h3, h4):focus-within .heading-anchor {
     opacity: 1;
@@ -371,10 +357,5 @@ const statusColors = {
     border: 1px solid rgb(229 231 235);
     border-radius: 0.25rem;
     white-space: nowrap;
-  }
-  .dark .project-content .heading-anchor.copied::after {
-    background: rgb(31 41 55);
-    color: rgb(243 244 246);
-    border-color: rgb(55 65 81);
   }
 </style>

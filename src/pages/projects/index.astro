@@ -79,14 +79,14 @@ const nextUrl = totalPages > 1 ? '/projects/page/2' : null;
             
             <!-- No Results Message -->
             <div id="no-results" class="text-center py-12 hidden">
-              <div class="text-gray-400 dark:text-gray-500 mb-4">
+              <div class="text-gray-400 mb-4">
                 <svg class="w-16 h-16 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"></path>
                 </svg>
               </div>
-              <h3 class="text-xl font-semibold text-gray-900 dark:text-gray-100 mb-2">No projects found</h3>
-              <p class="text-gray-600 dark:text-gray-400 mb-4">Try adjusting your search or filters to find what you're looking for.</p>
-              <button id="clear-all-filters" class="text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 font-medium">
+              <h3 class="text-xl font-semibold text-gray-900 mb-2">No projects found</h3>
+              <p class="text-gray-600 mb-4">Try adjusting your search or filters to find what you're looking for.</p>
+              <button id="clear-all-filters" class="text-blue-600 hover:text-blue-700 font-medium">
                 Clear all filters
               </button>
             </div>
@@ -106,8 +106,8 @@ const nextUrl = totalPages > 1 ? '/projects/page/2' : null;
         </>
       ) : (
         <div class="text-center py-12">
-          <h3 class="text-xl font-semibold text-gray-900 dark:text-gray-100 mb-2">No projects found</h3>
-          <p class="text-gray-600 dark:text-gray-400">Check back later for new projects!</p>
+          <h3 class="text-xl font-semibold text-gray-900 mb-2">No projects found</h3>
+          <p class="text-gray-600">Check back later for new projects!</p>
         </div>
       )}
     </div>
@@ -223,11 +223,11 @@ const nextUrl = totalPages > 1 ? '/projects/page/2' : null;
                         suggestion.type === 'status' ? '📊' : '🔍';
         
         return `
-          <div class="suggestion-item flex items-center px-4 py-3 hover:bg-gray-100 dark:hover:bg-gray-700 cursor-pointer border-b border-gray-100 dark:border-gray-700 last:border-b-0" data-index="${index}">
+          <div class="suggestion-item flex items-center px-4 py-3 hover:bg-gray-100 cursor-pointer border-b border-gray-100 last:border-b-0" data-index="${index}">
             <span class="mr-3 text-sm">${typeIcon}</span>
             <div class="flex-grow">
-              <div class="text-sm font-medium text-gray-900 dark:text-gray-100">${suggestion.text}</div>
-              <div class="text-xs text-gray-500 dark:text-gray-400 capitalize">${suggestion.type}</div>
+              <div class="text-sm font-medium text-gray-900">${suggestion.text}</div>
+              <div class="text-xs text-gray-500 capitalize">${suggestion.type}</div>
             </div>
           </div>
         `;
@@ -261,9 +261,9 @@ const nextUrl = totalPages > 1 ? '/projects/page/2' : null;
     function highlightSuggestion(index) {
       document.querySelectorAll('.suggestion-item').forEach((item, i) => {
         if (i === index) {
-          item.classList.add('bg-gray-100', 'dark:bg-gray-700');
+          item.classList.add('bg-gray-100');
         } else {
-          item.classList.remove('bg-gray-100', 'dark:bg-gray-700');
+          item.classList.remove('bg-gray-100');
         }
       });
     }
