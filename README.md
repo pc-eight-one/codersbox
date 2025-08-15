@@ -1,6 +1,6 @@
-# Nuxt Minimal Starter
+# Project Docs
 
-Look at the [Nuxt documentation](https://nuxt.com/docs/getting-started/introduction) to learn more.
+This project uses Astro for the site, and is deployed to Vercel.
 
 ## Setup
 
@@ -37,6 +37,21 @@ yarn dev
 # bun
 bun run dev
 ```
+
+## Vercel environment variables
+
+Pull development env vars locally into .env.development.local:
+
+```bash
+npm run env:pull:dev
+```
+
+Notes:
+- You must be logged in to Vercel (npx vercel login) and the project must be linked (npx vercel link), OR set the VERCE L_TOKEN env var.
+- The file .env.development.local is git-ignored by default.
+- For preview/prod, you can use:
+  - Preview: `npm run env:pull:preview`
+  - Production: `npm run env:pull:prod`
 
 ## Production
 
