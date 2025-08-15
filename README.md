@@ -38,6 +38,28 @@ yarn dev
 bun run dev
 ```
 
+## Link this repo to Vercel
+
+Before pulling env vars or deploying, link the repo to a Vercel project.
+
+Interactive (local):
+
+```bash
+npx vercel login
+npm run vercel:link
+```
+
+Non-interactive (CI or scripted):
+
+```bash
+# Required: VERCEL_TOKEN, optional: VERCEL_SCOPE (team slug)
+export VERCEL_TOKEN=xxxxx
+export VERCEL_SCOPE=my-team
+npm run vercel:link:ci
+```
+
+Alternatively, commit a `.vercel/project.json` using the template in `.vercel/project.example.json` once you have your `orgId` and `projectId`.
+
 ## Vercel environment variables
 
 Pull development env vars locally into .env.development.local:
@@ -47,7 +69,7 @@ npm run env:pull:dev
 ```
 
 Notes:
-- You must be logged in to Vercel (npx vercel login) and the project must be linked (npx vercel link), OR set the VERCE L_TOKEN env var.
+- You must be logged in to Vercel (npx vercel login) and the project must be linked (npm run vercel:link), OR set the VERCEL_TOKEN env var and use the non-interactive link.
 - The file .env.development.local is git-ignored by default.
 - For preview/prod, you can use:
   - Preview: `npm run env:pull:preview`
