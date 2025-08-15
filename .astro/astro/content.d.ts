@@ -345,6 +345,55 @@ declare module 'astro:content' {
   collection: "tutorials";
   data: InferEntrySchema<"tutorials">
 } & { render(): Render[".md"] };
+"java-tutorial-series/java-tutorial-part-1.md": {
+	id: "java-tutorial-series/java-tutorial-part-1.md";
+  slug: "java-tutorial-series/java-tutorial-part-1";
+  body: string;
+  collection: "tutorials";
+  data: InferEntrySchema<"tutorials">
+} & { render(): Render[".md"] };
+"java-tutorial-series/java-tutorial-part-10.md": {
+	id: "java-tutorial-series/java-tutorial-part-10.md";
+  slug: "java-tutorial-series/java-tutorial-part-10";
+  body: string;
+  collection: "tutorials";
+  data: InferEntrySchema<"tutorials">
+} & { render(): Render[".md"] };
+"java-tutorial-series/java-tutorial-part-2.md": {
+	id: "java-tutorial-series/java-tutorial-part-2.md";
+  slug: "java-tutorial-series/java-tutorial-part-2";
+  body: string;
+  collection: "tutorials";
+  data: InferEntrySchema<"tutorials">
+} & { render(): Render[".md"] };
+"java-tutorial-series/java-tutorial-part-3.md": {
+	id: "java-tutorial-series/java-tutorial-part-3.md";
+  slug: "java-tutorial-series/java-tutorial-part-3";
+  body: string;
+  collection: "tutorials";
+  data: InferEntrySchema<"tutorials">
+} & { render(): Render[".md"] };
+"java-tutorial-series/java-tutorial-part-4.md": {
+	id: "java-tutorial-series/java-tutorial-part-4.md";
+  slug: "java-tutorial-series/java-tutorial-part-4";
+  body: string;
+  collection: "tutorials";
+  data: InferEntrySchema<"tutorials">
+} & { render(): Render[".md"] };
+"java-tutorial-series/java-tutorial-part-5.md": {
+	id: "java-tutorial-series/java-tutorial-part-5.md";
+  slug: "java-tutorial-series/java-tutorial-part-5";
+  body: string;
+  collection: "tutorials";
+  data: InferEntrySchema<"tutorials">
+} & { render(): Render[".md"] };
+"java-tutorial-series/java-tutorial-part-6.md": {
+	id: "java-tutorial-series/java-tutorial-part-6.md";
+  slug: "java-tutorial-series/java-tutorial-part-6";
+  body: string;
+  collection: "tutorials";
+  data: InferEntrySchema<"tutorials">
+} & { render(): Render[".md"] };
 "nextjs-blog/nextjs-blog-part-1.md": {
 	id: "nextjs-blog/nextjs-blog-part-1.md";
   slug: "nextjs-blog/nextjs-blog-part-1";

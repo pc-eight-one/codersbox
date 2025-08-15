@@ -415,8 +415,8 @@ describe('UserController', () => {
 
 ```typescript
 // ✅ Good: const assertion for immutable data
-const themes = ['light', 'dark', 'auto'] as const;
-type Theme = typeof themes[number]; // 'light' | 'dark' | 'auto'
+const viewModes = ['comfortable', 'compact', 'detailed'] as const;
+type ViewMode = typeof viewModes[number]; // 'comfortable' | 'compact' | 'detailed'
 
 const config = {
   apiUrl: 'https://api.example.com',

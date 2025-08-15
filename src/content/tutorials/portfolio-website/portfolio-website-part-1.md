@@ -24,7 +24,7 @@ By the end of this series, you'll have a fully functional portfolio website feat
 - **About section** highlighting your skills and experience
 - **Contact form** for potential clients or employers
 - **Blog section** to share your thoughts and expertise
-- **Dark/light theme toggle**
+- **Clean, professional design**
 - **Smooth animations** and modern UI/UX
 
 ## Planning Our Portfolio
@@ -162,9 +162,6 @@ Let's start with a semantic HTML5 structure:
             </ul>
             
             <div class="nav__actions">
-                <button class="theme-toggle" aria-label="Toggle dark mode">
-                    <span class="theme-toggle__icon"></span>
-                </button>
                 <button class="nav__toggle" aria-label="Toggle navigation menu">
                     <span></span>
                     <span></span>
@@ -336,7 +333,7 @@ ul, ol {
 :root {
     /* Colors */
     --color-primary: #3b82f6;
-    --color-primary-dark: #1e40af;
+    --color-primary-hover: #1e40af;
     --color-secondary: #64748b;
     --color-accent: #f59e0b;
     
@@ -409,15 +406,6 @@ ul, ol {
     --z-header: 300;
 }
 
-/* Dark mode variables */
-[data-theme="dark"] {
-    --color-text-primary: var(--color-gray-100);
-    --color-text-secondary: var(--color-gray-300);
-    --color-text-muted: var(--color-gray-400);
-    
-    --color-bg-primary: var(--color-gray-900);
-    --color-bg-secondary: var(--color-gray-800);
-}
 ```
 
 ## Basic JavaScript Setup
@@ -431,7 +419,6 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Initialize components
     initNavigation();
-    initThemeToggle();
     initSmoothScrolling();
 });
 
@@ -448,21 +435,8 @@ function initNavigation() {
 }
 
 function initThemeToggle() {
-    const themeToggle = document.querySelector('.theme-toggle');
-    const currentTheme = localStorage.getItem('theme') || 'light';
-    
-    // Set initial theme
-    document.documentElement.setAttribute('data-theme', currentTheme);
-    
-    if (themeToggle) {
-        themeToggle.addEventListener('click', () => {
-            const currentTheme = document.documentElement.getAttribute('data-theme');
-            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
-            
-            document.documentElement.setAttribute('data-theme', newTheme);
-            localStorage.setItem('theme', newTheme);
-        });
-    }
+    // Theme toggle functionality removed - focusing on light mode only
+    console.log('Theme system disabled for this tutorial');
 }
 
 function initSmoothScrolling() {
@@ -511,7 +485,6 @@ In **Part 2**, we'll:
 - Style our hero section with modern CSS
 - Create responsive navigation
 - Add beautiful typography
-- Implement the theme toggle functionality
 - Add smooth animations and transitions
 
 ## Key Takeaways
