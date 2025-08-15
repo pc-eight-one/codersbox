@@ -7,7 +7,10 @@
     "start": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
-    "astro": "astro"
+    "astro": "astro",
+    "env:pull:dev": "npx vercel env pull .env.development.local",
+    "env:pull:preview": "npx vercel env pull .env.preview.local --environment=preview",
+    "env:pull:prod": "npx vercel env pull .env.production.local --environment=production"
   },
   "dependencies": {
     "@astrojs/mdx": "^3.1.9",
