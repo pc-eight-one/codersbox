@@ -51,9 +51,25 @@ This is an Astro blog/portfolio site called "codersbox" built with TypeScript, T
 - Responsive grid layouts for content cards
 - Clean, minimal design with consistent spacing
 
+### Database Integration
+- **Turso Database**: libSQL database for contact forms, newsletter subscriptions, and analytics
+- **Client**: `src/lib/turso.ts` - Database client configuration and helper functions
+- **Models**: `src/lib/database.ts` - Database operations and schema definitions
+- **API Endpoints**: Contact form (`/api/contact`) and newsletter (`/api/newsletter`) with database persistence
+- **Initialization**: Use `/api/init-db` endpoint to create database tables
+
+### Environment Variables Required
+- `TURSO_DATABASE_URL` - Turso database connection URL
+- `TURSO_AUTH_TOKEN` - Turso authentication token
+- `SENDGRID_API_KEY` - SendGrid API key for email notifications
+- `SENDGRID_FROM_EMAIL` - Email address for outgoing emails
+- `SENDGRID_TO_EMAIL` - Email address to receive contact form submissions
+- `DATABASE_INIT_TOKEN` - Token for database initialization endpoint (optional, defaults to 'dev-token')
+
 ### Key Differences from Previous Nuxt Version
 - Uses Astro components (.astro) instead of Vue components (.vue)
 - Static site generation by default
 - No client-side JavaScript unless explicitly added
 - Props are defined in component frontmatter
 - Layouts are imported and used as wrapper components
+- Database persistence for forms and analytics

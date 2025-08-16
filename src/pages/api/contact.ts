@@ -1,4 +1,6 @@
 import type { APIRoute } from 'astro';
+import { createContactFormSubmission } from '../../lib/database';
+import { sendContactFormNotification } from '../../lib/resend';
 
 export const prerender = false;
 
@@ -39,59 +41,6 @@ const rateLimit = async (ip: string): Promise<boolean> => {
   return true;
 };
 
-// Send email notification using SendGrid
-const sendContactNotification = async (contactData: any): Promise<boolean> => {
-  if (typeof process !== 'undefined' && process.env.SENDGRID_API_KEY) {
-    try {
-      const response = await fetch('https://api.sendgrid.com/v3/mail/send', {
-        method: 'POST',
-        headers: {
-          'Authorization': `Bearer ${process.env.SENDGRID_API_KEY}`,
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-          personalizations: [{
-            to: [{ email: process.env.SENDGRID_TO_EMAIL || 'contact@codersbox.dev' }],
-            subject: `Contact Form: ${contactData.subject}`
-          }],
-          from: { 
-            email: process.env.SENDGRID_FROM_EMAIL || 'noreply@codersbox.dev',
-            name: 'codersbox Contact Form'
-          },
-          reply_to: {
-            email: contactData.email,
-            name: contactData.name
-          },
-          content: [{
-            type: 'text/html',
-            value: `
-              <h2>New Contact Form Submission</h2>
-              <p><strong>Name:</strong> ${contactData.name}</p>
-              <p><strong>Email:</strong> ${contactData.email}</p>
-              <p><strong>Subject:</strong> ${contactData.subject}</p>
-              <p><strong>Message:</strong></p>
-              <div style="background: #f5f5f5; padding: 15px; border-left: 4px solid #007acc; margin: 10px 0;">
-                ${contactData.message.replace(/\n/g, '<br>')}
-              </div>
-              <hr>
-              <p><small>
-                Submitted at: ${contactData.timestamp}<br>
-                IP Address: ${contactData.ip}<br>
-                User Agent: ${contactData.userAgent}
-              </small></p>
-            `
-          }]
-        })
-      });
-      
-      return response.ok;
-    } catch (error) {
-      console.error('SendGrid contact email error:', error);
-      return false;
-    }
-  }
-  return true;
-};
 
 export const POST: APIRoute = async ({ request, clientAddress }) => {
   try {
@@ -137,33 +86,33 @@ export const POST: APIRoute = async ({ request, clientAddress }) => {
 
     console.log('Contact form submission:', contactData);
 
-    // TODO: Integrate with email service or save to database
-    // Options include:
-    // - Send email via SendGrid, Nodemailer, etc.
-    // - Save to database (PostgreSQL, MongoDB, etc.)
-    // - Send to Slack/Discord webhook
-    // - Create GitHub issue
-    // - Forward to support email
+    // Check rate limit
+    const rateLimitPassed = await rateLimit(contactData.ip);
+    if (!rateLimitPassed) {
+      return new Response(
+        JSON.stringify({ error: 'Too many requests. Please wait before submitting again.' }),
+        { status: 429, headers: { 'Content-Type': 'application/json' } }
+      );
+    }
 
-    // Example email service integration:
-    // await sendEmail({
-    //   to: 'your-email@example.com',
-    //   from: 'noreply@codersbox.dev',
-    //   subject: `Contact Form: ${contactData.subject}`,
-    //   html: `
-    //     <h2>New Contact Form Submission</h2>
-    //     <p><strong>Name:</strong> ${contactData.name}</p>
-    //     <p><strong>Email:</strong> ${contactData.email}</p>
-    //     <p><strong>Subject:</strong> ${contactData.subject}</p>
-    //     <p><strong>Message:</strong></p>
-    //     <p>${contactData.message.replace(/\n/g, '<br>')}</p>
-    //     <hr>
-    //     <p><small>Submitted at: ${contactData.timestamp}</small></p>
-    //   `
-    // });
+    // Save to database
+    const dbResult = await createContactFormSubmission({
+      name: contactData.name,
+      email: contactData.email,
+      subject: contactData.subject,
+      message: contactData.message,
+    });
 
-    // Simulate processing delay
-    await new Promise(resolve => setTimeout(resolve, 1500));
+    if (!dbResult.success) {
+      console.error('Database error:', dbResult.error);
+      // Continue with email notification even if database fails
+    }
+
+    // Send email notification using Resend
+    const emailResult = await sendContactFormNotification(contactData);
+    if (!emailResult.success) {
+      console.warn('Failed to send email notification:', emailResult.error);
+    }
 
     return new Response(
       JSON.stringify({ 

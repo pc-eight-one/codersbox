@@ -1,4 +1,6 @@
 import type { APIRoute } from 'astro';
+import { subscribeToNewsletter } from '../../lib/database';
+import { sendNewsletterWelcome } from '../../lib/resend';
 
 export const prerender = false;
 
@@ -39,45 +41,6 @@ const rateLimit = async (ip: string): Promise<boolean> => {
   return true;
 };
 
-// Send email using SendGrid (Vercel recommended)
-const sendNewsletterConfirmation = async (email: string): Promise<boolean> => {
-  if (typeof process !== 'undefined' && process.env.SENDGRID_API_KEY) {
-    try {
-      const response = await fetch('https://api.sendgrid.com/v3/mail/send', {
-        method: 'POST',
-        headers: {
-          'Authorization': `Bearer ${process.env.SENDGRID_API_KEY}`,
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-          personalizations: [{
-            to: [{ email }],
-            subject: 'Welcome to codersbox Newsletter!'
-          }],
-          from: { 
-            email: process.env.SENDGRID_FROM_EMAIL || 'noreply@codersbox.dev',
-            name: 'codersbox'
-          },
-          content: [{
-            type: 'text/html',
-            value: `
-              <h2>Welcome to codersbox!</h2>
-              <p>Thank you for subscribing to our newsletter. You'll receive the latest articles, tutorials, and coding tips directly in your inbox.</p>
-              <p>If you didn't subscribe to this newsletter, you can safely ignore this email.</p>
-              <p>Happy coding!<br>The codersbox Team</p>
-            `
-          }]
-        })
-      });
-      
-      return response.ok;
-    } catch (error) {
-      console.error('SendGrid error:', error);
-      return false;
-    }
-  }
-  return true; // Return true if no email service configured (for development)
-};
 
 export const POST: APIRoute = async ({ request, clientAddress }) => {
   try {
@@ -110,6 +73,20 @@ export const POST: APIRoute = async ({ request, clientAddress }) => {
       );
     }
 
+    // Save to database
+    const dbResult = await subscribeToNewsletter({
+      email: email.toLowerCase(),
+      source: 'website'
+    });
+
+    if (!dbResult.success) {
+      console.error('Database error:', dbResult.error);
+      return new Response(
+        JSON.stringify({ error: 'Failed to subscribe. Please try again.' }),
+        { status: 500, headers: { 'Content-Type': 'application/json' } }
+      );
+    }
+
     // Log subscription with Vercel analytics
     console.log('Newsletter subscription:', { 
       email: email.toLowerCase(), 
@@ -118,14 +95,12 @@ export const POST: APIRoute = async ({ request, clientAddress }) => {
       userAgent: request.headers.get('user-agent')
     });
 
-    // Send confirmation email
-    const emailSent = await sendNewsletterConfirmation(email);
+    // Send welcome email using Resend
+    const emailResult = await sendNewsletterWelcome(email);
     
-    if (!emailSent && process.env.SENDGRID_API_KEY) {
-      return new Response(
-        JSON.stringify({ error: 'Failed to send confirmation email. Please try again.' }),
-        { status: 500, headers: { 'Content-Type': 'application/json' } }
-      );
+    if (!emailResult.success) {
+      console.warn('Failed to send welcome email:', emailResult.error);
+      // Continue with success response even if email fails
     }
 
     return new Response(

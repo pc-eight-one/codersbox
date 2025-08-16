@@ -1,6 +1,6 @@
 ---
 title: "Java Tutorial Series - Part 5: Arrays"
-description: "Master Java arrays including single and multi-dimensional arrays, initialization techniques, traversal methods, common operations, and sorting/searching algorithms."
+description: "Master Java arrays including single and multi-dimensional arrays, initialization techniques, traversal methods, common operations, sorting, and searching algorithms."
 publishDate: 2025-01-15
 tags: ["Java", "Arrays", "Data Structures", "Algorithms", "Sorting", "Searching"]
 difficulty: "beginner"
@@ -13,7 +13,7 @@ featured: false
 
 # Java Tutorial Series - Part 5: Arrays
 
-Arrays are fundamental data structures in Java that store multiple values of the same type in a single variable. They provide an efficient way to organize and manipulate collections of data. In this part, we'll explore everything you need to know about working with arrays in Java.
+Arrays are fundamental data structures in Java that allow you to store multiple values of the same type in a single variable. They provide efficient access to elements using indices and are the building blocks for more complex data structures. In this part, we'll explore everything you need to know about working with arrays effectively.
 
 ## What are Arrays?
 
@@ -21,17 +21,15 @@ An array is a container object that holds a fixed number of values of a single t
 
 ### Key Characteristics of Arrays
 
-**1. Fixed Size**: Once created, array size cannot be changed
-**2. Homogeneous**: All elements must be of the same type
-**3. Indexed Access**: Elements are accessed using zero-based indexing
-**4. Reference Types**: Arrays are objects in Java
-**5. Contiguous Memory**: Elements are stored in contiguous memory locations
+- **Fixed size**: Once created, the array size cannot be changed
+- **Homogeneous**: All elements must be of the same type
+- **Indexed**: Elements are accessed using zero-based indices
+- **Reference type**: Arrays are objects in Java
+- **Contiguous memory**: Elements are stored in consecutive memory locations
 
-## Array Declaration and Initialization
+## Declaring and Initializing Arrays
 
-### Single-Dimensional Arrays
-
-#### Declaration Syntax
+### Array Declaration
 
 ```java
 public class ArrayDeclaration {
@@ -39,316 +37,259 @@ public class ArrayDeclaration {
         // Different ways to declare arrays
         
         // Method 1: Type followed by square brackets
-        int[] numbers;
-        String[] names;
-        double[] prices;
-        boolean[] flags;
+        int[] numbers1;
+        String[] names1;
+        double[] prices1;
         
-        // Method 2: Square brackets after variable name (less common)
-        int ages[];
-        String cities[];
+        // Method 2: Square brackets after variable name (less preferred)
+        int numbers2[];
+        String names2[];
+        double prices2[];
         
-        // Method 3: Declare and initialize in one line
-        int[] scores = new int[5];           // Array of 5 integers, all initialized to 0
-        String[] colors = new String[3];     // Array of 3 strings, all initialized to null
+        // Method 3: Declaring multiple arrays
+        int[] array1, array2, array3;
         
-        // Method 4: Declare, create, and initialize with values
-        int[] fibNumbers = {0, 1, 1, 2, 3, 5, 8, 13};
-        String[] days = {"Monday", "Tuesday", "Wednesday", "Thursday", "Friday"};
-        double[] temperatures = {23.5, 25.0, 22.8, 26.3, 24.1};
+        // Note: This creates one array and one int variable!
+        int[] arrayVar, intVar; // arrayVar is int[], intVar is just int
         
-        // Method 5: Using new keyword with initializer list
-        int[] primes = new int[]{2, 3, 5, 7, 11, 13, 17, 19};
-        String[] months = new String[]{"Jan", "Feb", "Mar", "Apr"};
-        
-        // Print array information
-        System.out.println("Fibonacci numbers array length: " + fibNumbers.length);
-        System.out.println("Days array length: " + days.length);
-        System.out.println("Temperatures array length: " + temperatures.length);
+        System.out.println("Arrays declared successfully!");
     }
 }
 ```
 
-#### Array Initialization Techniques
+### Array Initialization
 
 ```java
 public class ArrayInitialization {
-    
-    public static void demonstrateInitialization() {
-        System.out.println("=== Array Initialization Techniques ===");
-        
-        // 1. Default initialization (zeros, nulls, false)
-        int[] defaultInts = new int[5];
-        String[] defaultStrings = new String[3];
-        boolean[] defaultBooleans = new boolean[4];
-        
-        System.out.println("Default int array:");
-        printArray(defaultInts);
-        
-        System.out.println("Default String array:");
-        printArray(defaultStrings);
-        
-        System.out.println("Default boolean array:");
-        printArray(defaultBooleans);
-        
-        // 2. Manual initialization using loops
-        int[] squares = new int[10];
-        for (int i = 0; i < squares.length; i++) {
-            squares[i] = (i + 1) * (i + 1);
-        }
-        System.out.println("Squares array (manual initialization):");
-        printArray(squares);
-        
-        // 3. Initialization with user input simulation
-        String[] studentNames = new String[3];
-        studentNames[0] = "Alice";
-        studentNames[1] = "Bob";
-        studentNames[2] = "Charlie";
-        
-        System.out.println("Student names:");
-        printArray(studentNames);
-        
-        // 4. Copying from another array
-        int[] originalArray = {10, 20, 30, 40, 50};
-        int[] copiedArray = new int[originalArray.length];
-        
-        // Manual copy
-        for (int i = 0; i < originalArray.length; i++) {
-            copiedArray[i] = originalArray[i];
-        }
-        
-        System.out.println("Original array:");
-        printArray(originalArray);
-        System.out.println("Copied array:");
-        printArray(copiedArray);
-        
-        // 5. Using System.arraycopy()
-        int[] systemCopiedArray = new int[originalArray.length];
-        System.arraycopy(originalArray, 0, systemCopiedArray, 0, originalArray.length);
-        
-        System.out.println("System copied array:");
-        printArray(systemCopiedArray);
-    }
-    
-    // Helper method to print integer arrays
-    public static void printArray(int[] array) {
-        System.out.print("[");
-        for (int i = 0; i < array.length; i++) {
-            System.out.print(array[i]);
-            if (i < array.length - 1) {
-                System.out.print(", ");
-            }
-        }
-        System.out.println("]");
-    }
-    
-    // Helper method to print String arrays
-    public static void printArray(String[] array) {
-        System.out.print("[");
-        for (int i = 0; i < array.length; i++) {
-            System.out.print(array[i] == null ? "null" : "\"" + array[i] + "\"");
-            if (i < array.length - 1) {
-                System.out.print(", ");
-            }
-        }
-        System.out.println("]");
-    }
-    
-    // Helper method to print boolean arrays
-    public static void printArray(boolean[] array) {
-        System.out.print("[");
-        for (int i = 0; i < array.length; i++) {
-            System.out.print(array[i]);
-            if (i < array.length - 1) {
-                System.out.print(", ");
-            }
-        }
-        System.out.println("]");
-    }
-    
     public static void main(String[] args) {
-        demonstrateInitialization();
+        // Method 1: Declare and initialize separately
+        int[] numbers;
+        numbers = new int[5]; // Creates array with 5 elements, all initialized to 0
+        
+        // Method 2: Declare and initialize in one line
+        int[] scores = new int[10]; // Array of 10 integers
+        String[] names = new String[3]; // Array of 3 strings (initialized to null)
+        boolean[] flags = new boolean[4]; // Array of 4 booleans (initialized to false)
+        
+        // Method 3: Initialize with specific values
+        int[] grades = {85, 92, 78, 96, 87}; // Array literal
+        String[] colors = {"red", "green", "blue", "yellow"};
+        double[] temperatures = {23.5, 25.0, 22.8, 26.2};
+        
+        // Method 4: Using new keyword with initialization
+        int[] fibonacci = new int[]{0, 1, 1, 2, 3, 5, 8, 13};
+        String[] fruits = new String[]{"apple", "banana", "orange"};
+        
+        // Method 5: Anonymous array (useful for method parameters)
+        printArray(new int[]{1, 2, 3, 4, 5});
+        
+        // Display array information
+        System.out.println("Numbers array length: " + numbers.length);
+        System.out.println("Grades array length: " + grades.length);
+        System.out.println("Colors array length: " + colors.length);
+        
+        // Display default values
+        System.out.println("Default int value: " + numbers[0]);
+        System.out.println("Default String value: " + names[0]);
+        System.out.println("Default boolean value: " + flags[0]);
+    }
+    
+    public static void printArray(int[] array) {
+        System.out.print("Anonymous array: ");
+        for (int value : array) {
+            System.out.print(value + " ");
+        }
+        System.out.println();
     }
 }
 ```
 
-## Array Access and Traversal
+## Single-Dimensional Arrays
 
-### Accessing Array Elements
+### Accessing and Modifying Array Elements
 
 ```java
 public class ArrayAccess {
-    
-    public static void demonstrateAccess() {
-        int[] numbers = {10, 25, 30, 45, 50, 65, 70, 85, 90};
-        
-        System.out.println("=== Array Access Examples ===");
-        
-        // Basic element access
-        System.out.println("First element (index 0): " + numbers[0]);
-        System.out.println("Last element (index " + (numbers.length - 1) + "): " + numbers[numbers.length - 1]);
-        System.out.println("Middle element: " + numbers[numbers.length / 2]);
-        
-        // Modifying elements
-        System.out.println("\nBefore modification:");
-        printArray(numbers);
-        
-        numbers[0] = 100;           // Change first element
-        numbers[numbers.length - 1] = 999;  // Change last element
-        
-        System.out.println("After modification:");
-        printArray(numbers);
-        
-        // Safe access with bounds checking
-        int index = 5;
-        if (index >= 0 && index < numbers.length) {
-            System.out.println("Element at index " + index + ": " + numbers[index]);
-        } else {
-            System.out.println("Index " + index + " is out of bounds");
-        }
-        
-        // Demonstrate ArrayIndexOutOfBoundsException
-        try {
-            int invalidElement = numbers[15]; // This will throw an exception
-        } catch (ArrayIndexOutOfBoundsException e) {
-            System.out.println("Caught exception: " + e.getMessage());
-        }
-    }
-    
-    public static void printArray(int[] array) {
-        System.out.print("[");
-        for (int i = 0; i < array.length; i++) {
-            System.out.print(array[i]);
-            if (i < array.length - 1) {
-                System.out.print(", ");
-            }
-        }
-        System.out.println("]");
-    }
-    
     public static void main(String[] args) {
-        demonstrateAccess();
+        // Create and initialize array
+        String[] students = {"Alice", "Bob", "Charlie", "Diana", "Eve"};
+        
+        // Access elements using index (0-based)
+        System.out.println("First student: " + students[0]);
+        System.out.println("Last student: " + students[students.length - 1]);
+        System.out.println("Third student: " + students[2]);
+        
+        // Modify array elements
+        students[1] = "Robert"; // Change "Bob" to "Robert"
+        students[4] = "Eva";    // Change "Eve" to "Eva"
+        
+        System.out.println("\nAfter modifications:");
+        for (int i = 0; i < students.length; i++) {
+            System.out.println("Student " + (i + 1) + ": " + students[i]);
+        }
+        
+        // Working with numeric arrays
+        int[] scores = new int[5];
+        
+        // Initialize with user input simulation
+        scores[0] = 85;
+        scores[1] = 92;
+        scores[2] = 78;
+        scores[3] = 96;
+        scores[4] = 87;
+        
+        // Calculate and display statistics
+        int total = 0;
+        int max = scores[0];
+        int min = scores[0];
+        
+        for (int i = 0; i < scores.length; i++) {
+            total += scores[i];
+            if (scores[i] > max) max = scores[i];
+            if (scores[i] < min) min = scores[i];
+        }
+        
+        double average = (double) total / scores.length;
+        
+        System.out.println("\nScore Statistics:");
+        System.out.println("Total: " + total);
+        System.out.printf("Average: %.2f%n", average);
+        System.out.println("Highest: " + max);
+        System.out.println("Lowest: " + min);
     }
 }
 ```
 
-### Array Traversal Methods
+### Array Bounds and Common Errors
+
+```java
+public class ArrayBounds {
+    public static void main(String[] args) {
+        int[] numbers = {10, 20, 30, 40, 50};
+        
+        System.out.println("Array length: " + numbers.length);
+        System.out.println("Valid indices: 0 to " + (numbers.length - 1));
+        
+        // Valid access
+        System.out.println("First element: " + numbers[0]);
+        System.out.println("Last element: " + numbers[numbers.length - 1]);
+        
+        // Common mistakes and how to avoid them
+        
+        // MISTAKE 1: Using length as index (should be length - 1)
+        try {
+            System.out.println("Trying to access index " + numbers.length);
+            System.out.println(numbers[numbers.length]); // This will throw exception
+        } catch (ArrayIndexOutOfBoundsException e) {
+            System.out.println("Error: " + e.getMessage());
+        }
+        
+        // MISTAKE 2: Negative index
+        try {
+            System.out.println("Trying to access index -1");
+            System.out.println(numbers[-1]); // This will throw exception
+        } catch (ArrayIndexOutOfBoundsException e) {
+            System.out.println("Error: " + e.getMessage());
+        }
+        
+        // SAFE WAY: Always check bounds
+        int index = 10; // Some index we want to access
+        if (index >= 0 && index < numbers.length) {
+            System.out.println("Element at index " + index + ": " + numbers[index]);
+        } else {
+            System.out.println("Index " + index + " is out of bounds!");
+        }
+        
+        // Helper method for safe access
+        System.out.println("Safe access result: " + safeGet(numbers, 2));
+        System.out.println("Safe access result: " + safeGet(numbers, 10));
+    }
+    
+    public static Integer safeGet(int[] array, int index) {
+        if (index >= 0 && index < array.length) {
+            return array[index];
+        }
+        return null; // or throw a custom exception
+    }
+}
+```
+
+## Array Traversal Techniques
+
+### Traditional for Loop
 
 ```java
 public class ArrayTraversal {
-    
-    public static void demonstrateTraversal() {
-        String[] fruits = {"apple", "banana", "cherry", "date", "elderberry"};
-        int[] scores = {85, 92, 78, 96, 88, 74, 91};
+    public static void main(String[] args) {
+        int[] numbers = {2, 4, 6, 8, 10, 12, 14, 16, 18, 20};
         
-        System.out.println("=== Array Traversal Methods ===");
-        
-        // Method 1: Traditional for loop
-        System.out.println("1. Traditional for loop:");
-        for (int i = 0; i < fruits.length; i++) {
-            System.out.println("  Index " + i + ": " + fruits[i]);
+        // Method 1: Traditional for loop (when you need index)
+        System.out.println("Method 1: Traditional for loop");
+        for (int i = 0; i < numbers.length; i++) {
+            System.out.println("Index " + i + ": " + numbers[i]);
         }
         
-        // Method 2: Enhanced for loop (for-each)
-        System.out.println("\n2. Enhanced for loop (for-each):");
-        for (String fruit : fruits) {
-            System.out.println("  Fruit: " + fruit);
+        // Method 2: Enhanced for loop (for-each) - when you just need values
+        System.out.println("\nMethod 2: Enhanced for loop");
+        for (int number : numbers) {
+            System.out.print(number + " ");
         }
+        System.out.println();
         
         // Method 3: While loop
-        System.out.println("\n3. While loop:");
+        System.out.println("\nMethod 3: While loop");
         int index = 0;
-        while (index < scores.length) {
-            System.out.println("  Score " + (index + 1) + ": " + scores[index]);
+        while (index < numbers.length) {
+            System.out.print(numbers[index] + " ");
             index++;
         }
+        System.out.println();
         
         // Method 4: Reverse traversal
-        System.out.println("\n4. Reverse traversal:");
-        for (int i = fruits.length - 1; i >= 0; i--) {
-            System.out.println("  " + fruits[i]);
+        System.out.println("\nMethod 4: Reverse traversal");
+        for (int i = numbers.length - 1; i >= 0; i--) {
+            System.out.print(numbers[i] + " ");
         }
+        System.out.println();
         
-        // Method 5: Processing while traversing
-        System.out.println("\n5. Calculating sum while traversing:");
-        int sum = 0;
-        for (int score : scores) {
-            sum += score;
-            System.out.println("  Current score: " + score + ", Running sum: " + sum);
-        }
-        System.out.println("  Final sum: " + sum);
-        System.out.println("  Average: " + (double)sum / scores.length);
+        // Practical examples
+        demonstrateTraversalUseCases();
     }
     
-    // Advanced traversal: finding elements
-    public static void findElements() {
-        int[] numbers = {15, 8, 23, 42, 7, 31, 18, 9, 36, 12};
+    public static void demonstrateTraversalUseCases() {
+        String[] words = {"Java", "Python", "JavaScript", "TypeScript", "Go"};
         
-        System.out.println("\n=== Finding Elements ===");
-        printArray(numbers);
+        // Use case 1: Find longest word (need to compare values)
+        String longest = words[0];
+        for (String word : words) {
+            if (word.length() > longest.length()) {
+                longest = word;
+            }
+        }
+        System.out.println("\nLongest word: " + longest);
         
-        // Find specific element
-        int target = 23;
-        boolean found = false;
+        // Use case 2: Find index of specific word (need index)
+        String target = "JavaScript";
         int foundIndex = -1;
-        
-        for (int i = 0; i < numbers.length; i++) {
-            if (numbers[i] == target) {
-                found = true;
+        for (int i = 0; i < words.length; i++) {
+            if (words[i].equals(target)) {
                 foundIndex = i;
-                break; // Exit loop once found
+                break;
             }
         }
+        System.out.println(target + " found at index: " + foundIndex);
         
-        if (found) {
-            System.out.println("Found " + target + " at index " + foundIndex);
-        } else {
-            System.out.println(target + " not found in the array");
+        // Use case 3: Create modified array (need both index and value)
+        String[] uppercased = new String[words.length];
+        for (int i = 0; i < words.length; i++) {
+            uppercased[i] = words[i].toUpperCase();
         }
         
-        // Find all even numbers
-        System.out.println("Even numbers in the array:");
-        for (int i = 0; i < numbers.length; i++) {
-            if (numbers[i] % 2 == 0) {
-                System.out.println("  " + numbers[i] + " at index " + i);
-            }
+        System.out.print("Uppercased: ");
+        for (String word : uppercased) {
+            System.out.print(word + " ");
         }
-        
-        // Find maximum and minimum
-        int max = numbers[0];
-        int min = numbers[0];
-        int maxIndex = 0;
-        int minIndex = 0;
-        
-        for (int i = 1; i < numbers.length; i++) {
-            if (numbers[i] > max) {
-                max = numbers[i];
-                maxIndex = i;
-            }
-            if (numbers[i] < min) {
-                min = numbers[i];
-                minIndex = i;
-            }
-        }
-        
-        System.out.println("Maximum: " + max + " at index " + maxIndex);
-        System.out.println("Minimum: " + min + " at index " + minIndex);
-    }
-    
-    public static void printArray(int[] array) {
-        System.out.print("[");
-        for (int i = 0; i < array.length; i++) {
-            System.out.print(array[i]);
-            if (i < array.length - 1) {
-                System.out.print(", ");
-            }
-        }
-        System.out.println("]");
-    }
-    
-    public static void main(String[] args) {
-        demonstrateTraversal();
-        findElements();
+        System.out.println();
     }
 }
 ```
@@ -359,13 +300,10 @@ public class ArrayTraversal {
 
 ```java
 public class TwoDimensionalArrays {
-    
-    public static void demonstrate2DArrays() {
-        System.out.println("=== Two-Dimensional Arrays ===");
-        
+    public static void main(String[] args) {
         // Declaration and initialization
         
-        // Method 1: Declare and create with specific size
+        // Method 1: Specify dimensions
         int[][] matrix1 = new int[3][4]; // 3 rows, 4 columns
         
         // Method 2: Initialize with values
@@ -375,126 +313,118 @@ public class TwoDimensionalArrays {
             {9, 10, 11, 12}
         };
         
-        // Method 3: Create and initialize separately
-        int[][] matrix3 = new int[2][3];
-        matrix3[0][0] = 100; matrix3[0][1] = 200; matrix3[0][2] = 300;
-        matrix3[1][0] = 400; matrix3[1][1] = 500; matrix3[1][2] = 600;
-        
-        // Method 4: Jagged arrays (different row lengths)
-        int[][] jaggedArray = {
-            {1, 2},
-            {3, 4, 5, 6},
-            {7, 8, 9}
+        // Method 3: Using new keyword with values
+        int[][] matrix3 = new int[][]{
+            {10, 20},
+            {30, 40},
+            {50, 60}
         };
         
-        System.out.println("Matrix 2 (initialized with values):");
-        print2DArray(matrix2);
+        // Working with 2D arrays
+        System.out.println("Matrix2 dimensions: " + matrix2.length + " x " + matrix2[0].length);
         
-        System.out.println("Matrix 3 (manually initialized):");
-        print2DArray(matrix3);
-        
-        System.out.println("Jagged Array:");
-        print2DArray(jaggedArray);
-        
-        // Populate matrix1 with multiplication table
-        for (int i = 0; i < matrix1.length; i++) {
-            for (int j = 0; j < matrix1[i].length; j++) {
-                matrix1[i][j] = (i + 1) * (j + 1);
+        // Populate matrix1
+        int value = 1;
+        for (int row = 0; row < matrix1.length; row++) {
+            for (int col = 0; col < matrix1[row].length; col++) {
+                matrix1[row][col] = value++;
             }
         }
         
-        System.out.println("Matrix 1 (multiplication table):");
-        print2DArray(matrix1);
+        // Display matrices
+        System.out.println("\nMatrix1:");
+        printMatrix(matrix1);
+        
+        System.out.println("\nMatrix2:");
+        printMatrix(matrix2);
+        
+        // Practical example: Student grades
+        demonstrateStudentGrades();
+        
+        // Matrix operations
+        demonstrateMatrixOperations();
     }
     
-    public static void practical2DExamples() {
-        System.out.println("\n=== Practical 2D Array Examples ===");
-        
-        // Example 1: Student grades (students x subjects)
-        String[] students = {"Alice", "Bob", "Charlie"};
+    public static void printMatrix(int[][] matrix) {
+        for (int row = 0; row < matrix.length; row++) {
+            for (int col = 0; col < matrix[row].length; col++) {
+                System.out.printf("%4d", matrix[row][col]);
+            }
+            System.out.println();
+        }
+    }
+    
+    public static void demonstrateStudentGrades() {
+        // Rows represent students, columns represent subjects
+        String[] students = {"Alice", "Bob", "Charlie", "Diana"};
         String[] subjects = {"Math", "Science", "English", "History"};
         int[][] grades = {
             {85, 92, 78, 88},  // Alice's grades
-            {79, 85, 91, 82},  // Bob's grades
-            {92, 88, 85, 90}   // Charlie's grades
+            {90, 87, 85, 92},  // Bob's grades
+            {78, 85, 90, 86},  // Charlie's grades
+            {92, 89, 87, 91}   // Diana's grades
         };
         
-        System.out.println("Student Grade Report:");
+        System.out.println("\n=== Student Grade Report ===");
+        
+        // Print header
         System.out.printf("%-10s", "Student");
         for (String subject : subjects) {
-            System.out.printf("%-10s", subject);
+            System.out.printf("%8s", subject);
         }
-        System.out.printf("%-10s%n", "Average");
-        System.out.println("-".repeat(60));
+        System.out.printf("%8s%n", "Average");
         
+        // Print student grades and averages
         for (int i = 0; i < students.length; i++) {
             System.out.printf("%-10s", students[i]);
-            int sum = 0;
+            
+            int total = 0;
             for (int j = 0; j < grades[i].length; j++) {
-                System.out.printf("%-10d", grades[i][j]);
-                sum += grades[i][j];
+                System.out.printf("%8d", grades[i][j]);
+                total += grades[i][j];
             }
-            double average = (double)sum / grades[i].length;
-            System.out.printf("%-10.1f%n", average);
+            
+            double average = (double) total / grades[i].length;
+            System.out.printf("%8.1f%n", average);
         }
         
-        // Example 2: Tic-tac-toe board
-        char[][] board = {
-            {'X', 'O', 'X'},
-            {'O', 'X', 'O'},
-            {' ', 'X', 'O'}
-        };
-        
-        System.out.println("\nTic-Tac-Toe Board:");
-        printTicTacToeBoard(board);
-        
-        // Example 3: Matrix operations
-        int[][] matrixA = {{1, 2}, {3, 4}};
-        int[][] matrixB = {{5, 6}, {7, 8}};
-        
-        System.out.println("\nMatrix A:");
-        print2DArray(matrixA);
-        
-        System.out.println("Matrix B:");
-        print2DArray(matrixB);
-        
-        int[][] sum = addMatrices(matrixA, matrixB);
-        System.out.println("Matrix A + Matrix B:");
-        print2DArray(sum);
-    }
-    
-    // Helper method to print 2D integer arrays
-    public static void print2DArray(int[][] array) {
-        for (int i = 0; i < array.length; i++) {
-            for (int j = 0; j < array[i].length; j++) {
-                System.out.printf("%4d ", array[i][j]);
+        // Calculate subject averages
+        System.out.printf("%-10s", "Average");
+        for (int j = 0; j < subjects.length; j++) {
+            int total = 0;
+            for (int i = 0; i < grades.length; i++) {
+                total += grades[i][j];
             }
-            System.out.println();
+            double average = (double) total / grades.length;
+            System.out.printf("%8.1f", average);
         }
         System.out.println();
     }
     
-    // Helper method to print tic-tac-toe board
-    public static void printTicTacToeBoard(char[][] board) {
-        for (int i = 0; i < board.length; i++) {
-            for (int j = 0; j < board[i].length; j++) {
-                System.out.print(" " + board[i][j] + " ");
-                if (j < board[i].length - 1) {
-                    System.out.print("|");
-                }
-            }
-            System.out.println();
-            if (i < board.length - 1) {
-                System.out.println("-----------");
-            }
-        }
-        System.out.println();
+    public static void demonstrateMatrixOperations() {
+        int[][] matrix1 = {{1, 2, 3}, {4, 5, 6}};
+        int[][] matrix2 = {{7, 8, 9}, {10, 11, 12}};
+        
+        System.out.println("\n=== Matrix Operations ===");
+        
+        // Matrix addition
+        int[][] sum = addMatrices(matrix1, matrix2);
+        System.out.println("Matrix Addition:");
+        printMatrix(sum);
+        
+        // Find maximum element
+        int max = findMaximum(matrix1);
+        System.out.println("\nMaximum element in matrix1: " + max);
+        
+        // Transpose matrix
+        int[][] transposed = transpose(matrix1);
+        System.out.println("\nTransposed matrix1:");
+        printMatrix(transposed);
     }
     
-    // Matrix addition
     public static int[][] addMatrices(int[][] a, int[][] b) {
         if (a.length != b.length || a[0].length != b[0].length) {
-            throw new IllegalArgumentException("Matrices must have the same dimensions");
+            throw new IllegalArgumentException("Matrices must have same dimensions");
         }
         
         int[][] result = new int[a.length][a[0].length];
@@ -506,385 +436,446 @@ public class TwoDimensionalArrays {
         return result;
     }
     
-    public static void main(String[] args) {
-        demonstrate2DArrays();
-        practical2DExamples();
+    public static int findMaximum(int[][] matrix) {
+        int max = matrix[0][0];
+        for (int[] row : matrix) {
+            for (int value : row) {
+                if (value > max) {
+                    max = value;
+                }
+            }
+        }
+        return max;
+    }
+    
+    public static int[][] transpose(int[][] matrix) {
+        int[][] result = new int[matrix[0].length][matrix.length];
+        for (int i = 0; i < matrix.length; i++) {
+            for (int j = 0; j < matrix[i].length; j++) {
+                result[j][i] = matrix[i][j];
+            }
+        }
+        return result;
     }
 }
 ```
 
-### Three-Dimensional Arrays and Beyond
+### Jagged Arrays
 
 ```java
-public class MultiDimensionalArrays {
-    
-    public static void demonstrate3DArrays() {
-        System.out.println("=== Three-Dimensional Arrays ===");
+public class JaggedArrays {
+    public static void main(String[] args) {
+        // Jagged arrays: arrays where rows can have different lengths
         
-        // Example: 3D array representing a cube of data
-        // Think of it as: floors x rows x columns
-        int floors = 2;
-        int rows = 3;
-        int columns = 4;
+        // Method 1: Create rows with different sizes
+        int[][] jaggedArray = new int[4][]; // 4 rows, columns not specified
+        jaggedArray[0] = new int[3];     // First row has 3 elements
+        jaggedArray[1] = new int[5];     // Second row has 5 elements
+        jaggedArray[2] = new int[2];     // Third row has 2 elements
+        jaggedArray[3] = new int[4];     // Fourth row has 4 elements
         
-        int[][][] cube = new int[floors][rows][columns];
-        
-        // Initialize the cube with some pattern
-        int value = 1;
-        for (int f = 0; f < floors; f++) {
-            for (int r = 0; r < rows; r++) {
-                for (int c = 0; c < columns; c++) {
-                    cube[f][r][c] = value++;
-                }
-            }
-        }
-        
-        // Print the cube
-        for (int f = 0; f < floors; f++) {
-            System.out.println("Floor " + f + ":");
-            for (int r = 0; r < rows; r++) {
-                for (int c = 0; c < columns; c++) {
-                    System.out.printf("%3d ", cube[f][r][c]);
-                }
-                System.out.println();
-            }
-            System.out.println();
-        }
-        
-        // Practical example: Student data across multiple semesters
-        // Dimensions: semester x student x subject
-        String[] semesters = {"Fall", "Spring"};
-        String[] students = {"Alice", "Bob", "Charlie"};
-        String[] subjects = {"Math", "Science", "English"};
-        
-        int[][][] semesterGrades = {
-            // Fall semester
-            {
-                {85, 90, 88},  // Alice's fall grades
-                {78, 82, 85},  // Bob's fall grades
-                {92, 89, 91}   // Charlie's fall grades
-            },
-            // Spring semester
-            {
-                {88, 92, 90},  // Alice's spring grades
-                {82, 85, 88},  // Bob's spring grades
-                {89, 91, 93}   // Charlie's spring grades
-            }
+        // Method 2: Initialize with different sized rows
+        int[][] triangularArray = {
+            {1},
+            {2, 3},
+            {4, 5, 6},
+            {7, 8, 9, 10},
+            {11, 12, 13, 14, 15}
         };
         
-        // Print semester report
-        for (int s = 0; s < semesters.length; s++) {
-            System.out.println(semesters[s] + " Semester Grades:");
-            System.out.printf("%-10s", "Student");
-            for (String subject : subjects) {
-                System.out.printf("%-10s", subject);
+        // Populate jagged array
+        int value = 1;
+        for (int i = 0; i < jaggedArray.length; i++) {
+            for (int j = 0; j < jaggedArray[i].length; j++) {
+                jaggedArray[i][j] = value++;
             }
-            System.out.println();
-            System.out.println("-".repeat(40));
-            
-            for (int i = 0; i < students.length; i++) {
-                System.out.printf("%-10s", students[i]);
-                for (int j = 0; j < subjects.length; j++) {
-                    System.out.printf("%-10d", semesterGrades[s][i][j]);
-                }
-                System.out.println();
+        }
+        
+        // Display jagged arrays
+        System.out.println("Jagged Array:");
+        printJaggedArray(jaggedArray);
+        
+        System.out.println("\nTriangular Array:");
+        printJaggedArray(triangularArray);
+        
+        // Practical example: Different class sizes
+        demonstrateClassSizes();
+    }
+    
+    public static void printJaggedArray(int[][] array) {
+        for (int i = 0; i < array.length; i++) {
+            System.out.print("Row " + i + ": ");
+            for (int j = 0; j < array[i].length; j++) {
+                System.out.print(array[i][j] + " ");
             }
             System.out.println();
         }
     }
     
-    public static void main(String[] args) {
-        demonstrate3DArrays();
+    public static void demonstrateClassSizes() {
+        // Different grades have different number of students
+        String[][] students = {
+            {"Alice", "Bob", "Charlie"},                    // Grade 1: 3 students
+            {"Diana", "Eve", "Frank", "Grace"},            // Grade 2: 4 students
+            {"Henry", "Ivy"},                              // Grade 3: 2 students
+            {"Jack", "Kate", "Liam", "Mia", "Noah"}       // Grade 4: 5 students
+        };
+        
+        System.out.println("\n=== School Enrollment by Grade ===");
+        
+        int totalStudents = 0;
+        for (int grade = 0; grade < students.length; grade++) {
+            System.out.println("Grade " + (grade + 1) + " (" + students[grade].length + " students):");
+            for (String student : students[grade]) {
+                System.out.println("  - " + student);
+            }
+            totalStudents += students[grade].length;
+        }
+        
+        System.out.println("\nTotal students: " + totalStudents);
+        
+        // Calculate average class size
+        double averageClassSize = (double) totalStudents / students.length;
+        System.out.printf("Average class size: %.1f students%n", averageClassSize);
     }
 }
 ```
 
 ## Common Array Operations
 
-### Array Manipulation Operations
+### Copying Arrays
 
 ```java
-public class ArrayOperations {
-    
-    public static void demonstrateBasicOperations() {
-        int[] original = {5, 2, 8, 1, 9, 3};
-        
-        System.out.println("=== Basic Array Operations ===");
-        System.out.println("Original array:");
-        printArray(original);
-        
-        // 1. Find sum and average
-        int sum = calculateSum(original);
-        double average = (double)sum / original.length;
-        System.out.println("Sum: " + sum);
-        System.out.println("Average: " + average);
-        
-        // 2. Find min and max
-        int min = findMinimum(original);
-        int max = findMaximum(original);
-        System.out.println("Minimum: " + min);
-        System.out.println("Maximum: " + max);
-        
-        // 3. Count specific elements
-        int target = 8;
-        int count = countOccurrences(original, target);
-        System.out.println("Count of " + target + ": " + count);
-        
-        // 4. Reverse array
-        int[] reversed = reverseArray(original);
-        System.out.println("Reversed array:");
-        printArray(reversed);
-        
-        // 5. Copy array
-        int[] copied = copyArray(original);
-        System.out.println("Copied array:");
-        printArray(copied);
-        
-        // 6. Insert element at position
-        int[] inserted = insertElement(original, 99, 2);
-        System.out.println("Array after inserting 99 at index 2:");
-        printArray(inserted);
-        
-        // 7. Remove element at position
-        int[] removed = removeElement(original, 1);
-        System.out.println("Array after removing element at index 1:");
-        printArray(removed);
-    }
-    
-    // Calculate sum of all elements
-    public static int calculateSum(int[] array) {
-        int sum = 0;
-        for (int element : array) {
-            sum += element;
-        }
-        return sum;
-    }
-    
-    // Find minimum element
-    public static int findMinimum(int[] array) {
-        if (array.length == 0) {
-            throw new IllegalArgumentException("Array cannot be empty");
-        }
-        
-        int min = array[0];
-        for (int i = 1; i < array.length; i++) {
-            if (array[i] < min) {
-                min = array[i];
-            }
-        }
-        return min;
-    }
-    
-    // Find maximum element
-    public static int findMaximum(int[] array) {
-        if (array.length == 0) {
-            throw new IllegalArgumentException("Array cannot be empty");
-        }
-        
-        int max = array[0];
-        for (int i = 1; i < array.length; i++) {
-            if (array[i] > max) {
-                max = array[i];
-            }
-        }
-        return max;
-    }
-    
-    // Count occurrences of a specific element
-    public static int countOccurrences(int[] array, int target) {
-        int count = 0;
-        for (int element : array) {
-            if (element == target) {
-                count++;
-            }
-        }
-        return count;
-    }
-    
-    // Reverse array (creates new array)
-    public static int[] reverseArray(int[] array) {
-        int[] reversed = new int[array.length];
-        for (int i = 0; i < array.length; i++) {
-            reversed[i] = array[array.length - 1 - i];
-        }
-        return reversed;
-    }
-    
-    // Copy array
-    public static int[] copyArray(int[] array) {
-        int[] copy = new int[array.length];
-        for (int i = 0; i < array.length; i++) {
-            copy[i] = array[i];
-        }
-        return copy;
-    }
-    
-    // Insert element at specific position
-    public static int[] insertElement(int[] array, int element, int position) {
-        if (position < 0 || position > array.length) {
-            throw new IllegalArgumentException("Invalid position");
-        }
-        
-        int[] newArray = new int[array.length + 1];
-        
-        // Copy elements before the insertion point
-        for (int i = 0; i < position; i++) {
-            newArray[i] = array[i];
-        }
-        
-        // Insert the new element
-        newArray[position] = element;
-        
-        // Copy remaining elements
-        for (int i = position; i < array.length; i++) {
-            newArray[i + 1] = array[i];
-        }
-        
-        return newArray;
-    }
-    
-    // Remove element at specific position
-    public static int[] removeElement(int[] array, int position) {
-        if (position < 0 || position >= array.length) {
-            throw new IllegalArgumentException("Invalid position");
-        }
-        
-        int[] newArray = new int[array.length - 1];
-        
-        // Copy elements before the removal point
-        for (int i = 0; i < position; i++) {
-            newArray[i] = array[i];
-        }
-        
-        // Copy elements after the removal point
-        for (int i = position + 1; i < array.length; i++) {
-            newArray[i - 1] = array[i];
-        }
-        
-        return newArray;
-    }
-    
-    public static void printArray(int[] array) {
-        System.out.print("[");
-        for (int i = 0; i < array.length; i++) {
-            System.out.print(array[i]);
-            if (i < array.length - 1) {
-                System.out.print(", ");
-            }
-        }
-        System.out.println("]");
-    }
-    
+import java.util.Arrays;
+
+public class ArrayCopying {
     public static void main(String[] args) {
-        demonstrateBasicOperations();
+        int[] original = {1, 2, 3, 4, 5};
+        
+        // Method 1: Manual copying
+        int[] copy1 = new int[original.length];
+        for (int i = 0; i < original.length; i++) {
+            copy1[i] = original[i];
+        }
+        
+        // Method 2: System.arraycopy()
+        int[] copy2 = new int[original.length];
+        System.arraycopy(original, 0, copy2, 0, original.length);
+        
+        // Method 3: Arrays.copyOf()
+        int[] copy3 = Arrays.copyOf(original, original.length);
+        
+        // Method 4: Arrays.copyOfRange()
+        int[] copy4 = Arrays.copyOfRange(original, 1, 4); // Copy elements 1-3
+        
+        // Method 5: Clone method
+        int[] copy5 = original.clone();
+        
+        // Display results
+        System.out.println("Original: " + Arrays.toString(original));
+        System.out.println("Copy1 (manual): " + Arrays.toString(copy1));
+        System.out.println("Copy2 (System.arraycopy): " + Arrays.toString(copy2));
+        System.out.println("Copy3 (Arrays.copyOf): " + Arrays.toString(copy3));
+        System.out.println("Copy4 (Arrays.copyOfRange): " + Arrays.toString(copy4));
+        System.out.println("Copy5 (clone): " + Arrays.toString(copy5));
+        
+        // Demonstrate shallow vs deep copy with object arrays
+        demonstrateShallowCopy();
+    }
+    
+    public static void demonstrateShallowCopy() {
+        // Create array of string arrays
+        String[][] original = {
+            {"Alice", "Engineer"},
+            {"Bob", "Designer"},
+            {"Charlie", "Manager"}
+        };
+        
+        // Shallow copy - copies references, not objects
+        String[][] shallowCopy = original.clone();
+        
+        // Modify original
+        original[0][1] = "Senior Engineer"; // This affects both arrays!
+        
+        System.out.println("\n=== Shallow Copy Demonstration ===");
+        System.out.println("Original: " + Arrays.deepToString(original));
+        System.out.println("Shallow copy: " + Arrays.deepToString(shallowCopy));
+        
+        // Deep copy - create completely independent copy
+        String[][] deepCopy = new String[original.length][];
+        for (int i = 0; i < original.length; i++) {
+            deepCopy[i] = Arrays.copyOf(original[i], original[i].length);
+        }
+        
+        // Modify original again
+        original[1][1] = "Senior Designer";
+        
+        System.out.println("\nAfter second modification:");
+        System.out.println("Original: " + Arrays.deepToString(original));
+        System.out.println("Deep copy: " + Arrays.deepToString(deepCopy));
     }
 }
 ```
 
-## Array Sorting and Searching
-
-### Sorting Algorithms
+### Resizing Arrays
 
 ```java
-public class ArraySorting {
-    
-    public static void demonstrateSorting() {
-        int[] numbers = {64, 34, 25, 12, 22, 11, 90, 88, 76, 50, 42};
+import java.util.Arrays;
+
+public class ArrayResizing {
+    public static void main(String[] args) {
+        // Arrays have fixed size, but we can simulate resizing
         
-        System.out.println("=== Array Sorting Algorithms ===");
-        System.out.println("Original array:");
-        printArray(numbers);
+        int[] numbers = {1, 2, 3, 4, 5};
+        System.out.println("Original: " + Arrays.toString(numbers));
         
-        // Test different sorting algorithms
-        testBubbleSort(numbers.clone());
-        testSelectionSort(numbers.clone());
-        testInsertionSort(numbers.clone());
-        testBuiltInSort(numbers.clone());
+        // Expand array
+        numbers = expandArray(numbers, 8);
+        System.out.println("Expanded: " + Arrays.toString(numbers));
+        
+        // Add element to array
+        numbers = addElement(numbers, 99);
+        System.out.println("After adding 99: " + Arrays.toString(numbers));
+        
+        // Remove element from array
+        numbers = removeElement(numbers, 2); // Remove element at index 2
+        System.out.println("After removing index 2: " + Arrays.toString(numbers));
+        
+        // Insert element at specific position
+        numbers = insertElement(numbers, 2, 100);
+        System.out.println("After inserting 100 at index 2: " + Arrays.toString(numbers));
+        
+        // Demonstrate dynamic array behavior
+        demonstrateDynamicArray();
     }
     
-    public static void testBubbleSort(int[] array) {
-        System.out.println("\n--- Bubble Sort ---");
-        long startTime = System.nanoTime();
-        bubbleSort(array);
-        long endTime = System.nanoTime();
+    public static int[] expandArray(int[] array, int newSize) {
+        if (newSize <= array.length) {
+            return Arrays.copyOf(array, array.length);
+        }
+        return Arrays.copyOf(array, newSize);
+    }
+    
+    public static int[] addElement(int[] array, int element) {
+        // Find first available spot (null/0 for int arrays)
+        for (int i = 0; i < array.length; i++) {
+            if (array[i] == 0) { // Assuming 0 means empty for this example
+                array[i] = element;
+                return array;
+            }
+        }
         
-        System.out.println("Sorted array:");
-        printArray(array);
-        System.out.println("Time taken: " + (endTime - startTime) / 1000000.0 + " ms");
+        // No space available, expand array
+        int[] newArray = Arrays.copyOf(array, array.length + 1);
+        newArray[array.length] = element;
+        return newArray;
+    }
+    
+    public static int[] removeElement(int[] array, int index) {
+        if (index < 0 || index >= array.length) {
+            return array; // Invalid index
+        }
+        
+        int[] newArray = new int[array.length - 1];
+        
+        // Copy elements before the index
+        System.arraycopy(array, 0, newArray, 0, index);
+        
+        // Copy elements after the index
+        System.arraycopy(array, index + 1, newArray, index, array.length - index - 1);
+        
+        return newArray;
+    }
+    
+    public static int[] insertElement(int[] array, int index, int element) {
+        if (index < 0 || index > array.length) {
+            return array; // Invalid index
+        }
+        
+        int[] newArray = new int[array.length + 1];
+        
+        // Copy elements before the index
+        System.arraycopy(array, 0, newArray, 0, index);
+        
+        // Insert new element
+        newArray[index] = element;
+        
+        // Copy elements after the index
+        System.arraycopy(array, index, newArray, index + 1, array.length - index);
+        
+        return newArray;
+    }
+    
+    public static void demonstrateDynamicArray() {
+        System.out.println("\n=== Dynamic Array Simulation ===");
+        
+        int[] dynamicArray = new int[0]; // Start with empty array
+        
+        // Add several elements
+        dynamicArray = addToEnd(dynamicArray, 10);
+        dynamicArray = addToEnd(dynamicArray, 20);
+        dynamicArray = addToEnd(dynamicArray, 30);
+        dynamicArray = addToEnd(dynamicArray, 40);
+        
+        System.out.println("After adding elements: " + Arrays.toString(dynamicArray));
+        
+        // Remove last element
+        dynamicArray = removeFromEnd(dynamicArray);
+        System.out.println("After removing last: " + Arrays.toString(dynamicArray));
+    }
+    
+    public static int[] addToEnd(int[] array, int element) {
+        int[] newArray = Arrays.copyOf(array, array.length + 1);
+        newArray[array.length] = element;
+        return newArray;
+    }
+    
+    public static int[] removeFromEnd(int[] array) {
+        if (array.length == 0) return array;
+        return Arrays.copyOf(array, array.length - 1);
+    }
+}
+```
+
+## Sorting Arrays
+
+### Built-in Sorting
+
+```java
+import java.util.Arrays;
+import java.util.Collections;
+
+public class ArraySorting {
+    public static void main(String[] args) {
+        // Sorting primitive arrays
+        int[] numbers = {64, 34, 25, 12, 22, 11, 90, 88, 76, 50, 42};
+        System.out.println("Original: " + Arrays.toString(numbers));
+        
+        // Sort in ascending order
+        int[] ascending = Arrays.copyOf(numbers, numbers.length);
+        Arrays.sort(ascending);
+        System.out.println("Ascending: " + Arrays.toString(ascending));
+        
+        // For descending order with primitives, we need to sort and reverse
+        Integer[] numberObjects = new Integer[numbers.length];
+        for (int i = 0; i < numbers.length; i++) {
+            numberObjects[i] = numbers[i];
+        }
+        Arrays.sort(numberObjects, Collections.reverseOrder());
+        System.out.println("Descending: " + Arrays.toString(numberObjects));
+        
+        // Sorting strings
+        String[] names = {"Alice", "charlie", "Bob", "diana", "Eve"};
+        System.out.println("\nOriginal names: " + Arrays.toString(names));
+        
+        Arrays.sort(names); // Case-sensitive sort
+        System.out.println("Sorted (case-sensitive): " + Arrays.toString(names));
+        
+        // Case-insensitive sort
+        String[] namesCopy = {"Alice", "charlie", "Bob", "diana", "Eve"};
+        Arrays.sort(namesCopy, String.CASE_INSENSITIVE_ORDER);
+        System.out.println("Sorted (case-insensitive): " + Arrays.toString(namesCopy));
+        
+        // Partial sorting
+        int[] partialSort = {5, 2, 8, 1, 9, 3, 7, 4, 6};
+        Arrays.sort(partialSort, 2, 6); // Sort elements from index 2 to 5
+        System.out.println("Partial sort (index 2-5): " + Arrays.toString(partialSort));
+        
+        // Demonstrate custom sorting
+        demonstrateCustomSorting();
+        
+        // Implement basic sorting algorithms
+        demonstrateSortingAlgorithms();
+    }
+    
+    public static void demonstrateCustomSorting() {
+        System.out.println("\n=== Custom Sorting ===");
+        
+        // Create array of students with grades
+        Student[] students = {
+            new Student("Alice", 85),
+            new Student("Bob", 92),
+            new Student("Charlie", 78),
+            new Student("Diana", 96),
+            new Student("Eve", 87)
+        };
+        
+        System.out.println("Original order:");
+        for (Student student : students) {
+            System.out.println(student);
+        }
+        
+        // Sort by grade (ascending)
+        Arrays.sort(students, (s1, s2) -> Integer.compare(s1.grade, s2.grade));
+        System.out.println("\nSorted by grade (ascending):");
+        for (Student student : students) {
+            System.out.println(student);
+        }
+        
+        // Sort by name (alphabetical)
+        Arrays.sort(students, (s1, s2) -> s1.name.compareTo(s2.name));
+        System.out.println("\nSorted by name (alphabetical):");
+        for (Student student : students) {
+            System.out.println(student);
+        }
+    }
+    
+    public static void demonstrateSortingAlgorithms() {
+        System.out.println("\n=== Sorting Algorithms Implementation ===");
+        
+        int[] data = {64, 34, 25, 12, 22, 11, 90, 88, 76, 50, 42};
+        
+        // Bubble Sort
+        int[] bubbleData = Arrays.copyOf(data, data.length);
+        bubbleSort(bubbleData);
+        System.out.println("Bubble Sort: " + Arrays.toString(bubbleData));
+        
+        // Selection Sort
+        int[] selectionData = Arrays.copyOf(data, data.length);
+        selectionSort(selectionData);
+        System.out.println("Selection Sort: " + Arrays.toString(selectionData));
+        
+        // Insertion Sort
+        int[] insertionData = Arrays.copyOf(data, data.length);
+        insertionSort(insertionData);
+        System.out.println("Insertion Sort: " + Arrays.toString(insertionData));
     }
     
     // Bubble Sort implementation
     public static void bubbleSort(int[] array) {
         int n = array.length;
-        boolean swapped;
-        
         for (int i = 0; i < n - 1; i++) {
-            swapped = false;
-            
-            // Last i elements are already in place
             for (int j = 0; j < n - i - 1; j++) {
                 if (array[j] > array[j + 1]) {
                     // Swap elements
                     int temp = array[j];
                     array[j] = array[j + 1];
                     array[j + 1] = temp;
-                    swapped = true;
                 }
             }
-            
-            // If no swapping occurred, array is sorted
-            if (!swapped) {
-                break;
-            }
         }
-    }
-    
-    public static void testSelectionSort(int[] array) {
-        System.out.println("\n--- Selection Sort ---");
-        long startTime = System.nanoTime();
-        selectionSort(array);
-        long endTime = System.nanoTime();
-        
-        System.out.println("Sorted array:");
-        printArray(array);
-        System.out.println("Time taken: " + (endTime - startTime) / 1000000.0 + " ms");
     }
     
     // Selection Sort implementation
     public static void selectionSort(int[] array) {
         int n = array.length;
-        
         for (int i = 0; i < n - 1; i++) {
-            // Find the minimum element in remaining unsorted array
             int minIndex = i;
             for (int j = i + 1; j < n; j++) {
                 if (array[j] < array[minIndex]) {
                     minIndex = j;
                 }
             }
-            
-            // Swap the found minimum element with the first element
+            // Swap minimum element with first element
             int temp = array[minIndex];
             array[minIndex] = array[i];
             array[i] = temp;
         }
     }
     
-    public static void testInsertionSort(int[] array) {
-        System.out.println("\n--- Insertion Sort ---");
-        long startTime = System.nanoTime();
-        insertionSort(array);
-        long endTime = System.nanoTime();
-        
-        System.out.println("Sorted array:");
-        printArray(array);
-        System.out.println("Time taken: " + (endTime - startTime) / 1000000.0 + " ms");
-    }
-    
     // Insertion Sort implementation
     public static void insertionSort(int[] array) {
         int n = array.length;
-        
         for (int i = 1; i < n; i++) {
             int key = array[i];
             int j = i - 1;
@@ -898,107 +889,78 @@ public class ArraySorting {
         }
     }
     
-    public static void testBuiltInSort(int[] array) {
-        System.out.println("\n--- Built-in Sort (Arrays.sort) ---");
-        long startTime = System.nanoTime();
-        java.util.Arrays.sort(array);
-        long endTime = System.nanoTime();
+    // Helper class for custom sorting
+    static class Student {
+        String name;
+        int grade;
         
-        System.out.println("Sorted array:");
-        printArray(array);
-        System.out.println("Time taken: " + (endTime - startTime) / 1000000.0 + " ms");
-    }
-    
-    public static void printArray(int[] array) {
-        System.out.print("[");
-        for (int i = 0; i < array.length; i++) {
-            System.out.print(array[i]);
-            if (i < array.length - 1) {
-                System.out.print(", ");
-            }
+        Student(String name, int grade) {
+            this.name = name;
+            this.grade = grade;
         }
-        System.out.println("]");
-    }
-    
-    public static void main(String[] args) {
-        demonstrateSorting();
+        
+        @Override
+        public String toString() {
+            return name + ": " + grade;
+        }
     }
 }
 ```
 
-### Searching Algorithms
+## Searching Arrays
 
 ```java
+import java.util.Arrays;
+
 public class ArraySearching {
-    
-    public static void demonstrateSearching() {
-        int[] unsortedArray = {64, 34, 25, 12, 22, 11, 90, 88, 76, 50, 42};
-        int[] sortedArray = {11, 12, 22, 25, 34, 42, 50, 64, 76, 88, 90};
+    public static void main(String[] args) {
+        int[] numbers = {2, 5, 8, 12, 16, 23, 38, 45, 56, 67, 78};
         
-        System.out.println("=== Array Searching Algorithms ===");
-        System.out.println("Unsorted array:");
-        printArray(unsortedArray);
-        System.out.println("Sorted array:");
-        printArray(sortedArray);
+        // Linear Search
+        System.out.println("=== Linear Search ===");
+        int target = 23;
+        int index = linearSearch(numbers, target);
+        System.out.println("Linear search for " + target + ": " + 
+                         (index != -1 ? "found at index " + index : "not found"));
         
-        int target = 25;
-        System.out.println("\nSearching for: " + target);
+        // Binary Search (array must be sorted)
+        System.out.println("\n=== Binary Search ===");
+        index = binarySearch(numbers, target);
+        System.out.println("Binary search for " + target + ": " + 
+                         (index != -1 ? "found at index " + index : "not found"));
         
-        // Linear search on unsorted array
-        testLinearSearch(unsortedArray, target);
+        // Built-in binary search
+        index = Arrays.binarySearch(numbers, target);
+        System.out.println("Arrays.binarySearch for " + target + ": " + 
+                         (index >= 0 ? "found at index " + index : "not found"));
         
-        // Linear search on sorted array
-        testLinearSearch(sortedArray, target);
+        // Search in unsorted array
+        int[] unsorted = {45, 12, 78, 23, 8, 56, 2, 67, 38, 16, 5};
+        System.out.println("\n=== Search in Unsorted Array ===");
+        System.out.println("Unsorted array: " + Arrays.toString(unsorted));
         
-        // Binary search on sorted array
-        testBinarySearch(sortedArray, target);
+        index = linearSearch(unsorted, target);
+        System.out.println("Linear search for " + target + ": " + 
+                         (index != -1 ? "found at index " + index : "not found"));
         
-        // Test with element not in array
-        int notFound = 100;
-        System.out.println("\nSearching for: " + notFound + " (not in array)");
-        testLinearSearch(sortedArray, notFound);
-        testBinarySearch(sortedArray, notFound);
+        // String array search
+        demonstrateStringSearch();
+        
+        // Advanced search operations
+        demonstrateAdvancedSearch();
     }
     
-    public static void testLinearSearch(int[] array, int target) {
-        System.out.println("\n--- Linear Search ---");
-        long startTime = System.nanoTime();
-        int result = linearSearch(array, target);
-        long endTime = System.nanoTime();
-        
-        if (result != -1) {
-            System.out.println("Element found at index: " + result);
-        } else {
-            System.out.println("Element not found");
-        }
-        System.out.println("Time taken: " + (endTime - startTime) + " nanoseconds");
-    }
-    
-    // Linear Search implementation
+    // Linear Search - works on any array
     public static int linearSearch(int[] array, int target) {
         for (int i = 0; i < array.length; i++) {
             if (array[i] == target) {
-                return i; // Return index of found element
+                return i;
             }
         }
-        return -1; // Element not found
+        return -1; // Not found
     }
     
-    public static void testBinarySearch(int[] array, int target) {
-        System.out.println("\n--- Binary Search ---");
-        long startTime = System.nanoTime();
-        int result = binarySearch(array, target);
-        long endTime = System.nanoTime();
-        
-        if (result != -1) {
-            System.out.println("Element found at index: " + result);
-        } else {
-            System.out.println("Element not found");
-        }
-        System.out.println("Time taken: " + (endTime - startTime) + " nanoseconds");
-    }
-    
-    // Binary Search implementation (requires sorted array)
+    // Binary Search - requires sorted array
     public static int binarySearch(int[] array, int target) {
         int left = 0;
         int right = array.length - 1;
@@ -1006,65 +968,105 @@ public class ArraySearching {
         while (left <= right) {
             int mid = left + (right - left) / 2;
             
-            // Check if target is at mid
             if (array[mid] == target) {
                 return mid;
             }
             
-            // If target is greater, ignore left half
             if (array[mid] < target) {
                 left = mid + 1;
-            }
-            // If target is smaller, ignore right half
-            else {
+            } else {
                 right = mid - 1;
             }
         }
         
-        return -1; // Element not found
+        return -1; // Not found
     }
     
-    // Advanced search: find all occurrences
-    public static void findAllOccurrences() {
-        int[] arrayWithDuplicates = {2, 5, 8, 5, 12, 5, 3, 5, 9};
-        int target = 5;
+    public static void demonstrateStringSearch() {
+        System.out.println("\n=== String Array Search ===");
         
-        System.out.println("\n=== Finding All Occurrences ===");
-        System.out.println("Array:");
-        printArray(arrayWithDuplicates);
-        System.out.println("Finding all occurrences of: " + target);
+        String[] fruits = {"apple", "banana", "cherry", "date", "elderberry", "fig", "grape"};
+        String target = "cherry";
         
-        int[] indices = findAllIndices(arrayWithDuplicates, target);
-        if (indices.length > 0) {
-            System.out.print("Found at indices: ");
-            for (int i = 0; i < indices.length; i++) {
-                System.out.print(indices[i]);
-                if (i < indices.length - 1) {
-                    System.out.print(", ");
-                }
+        // Case-sensitive search
+        int index = linearSearchString(fruits, target);
+        System.out.println("Search for '" + target + "': " + 
+                         (index != -1 ? "found at index " + index : "not found"));
+        
+        // Case-insensitive search
+        target = "CHERRY";
+        index = linearSearchStringIgnoreCase(fruits, target);
+        System.out.println("Case-insensitive search for '" + target + "': " + 
+                         (index != -1 ? "found at index " + index : "not found"));
+        
+        // Partial match search
+        String partial = "erry";
+        index = searchPartialMatch(fruits, partial);
+        System.out.println("Partial match search for '" + partial + "': " + 
+                         (index != -1 ? "found in '" + fruits[index] + "' at index " + index : "not found"));
+    }
+    
+    public static int linearSearchString(String[] array, String target) {
+        for (int i = 0; i < array.length; i++) {
+            if (array[i].equals(target)) {
+                return i;
             }
-            System.out.println();
-            System.out.println("Total occurrences: " + indices.length);
-        } else {
-            System.out.println("Element not found");
         }
+        return -1;
     }
     
-    // Find all indices where target appears
-    public static int[] findAllIndices(int[] array, int target) {
-        // First, count occurrences
+    public static int linearSearchStringIgnoreCase(String[] array, String target) {
+        for (int i = 0; i < array.length; i++) {
+            if (array[i].equalsIgnoreCase(target)) {
+                return i;
+            }
+        }
+        return -1;
+    }
+    
+    public static int searchPartialMatch(String[] array, String partial) {
+        for (int i = 0; i < array.length; i++) {
+            if (array[i].contains(partial)) {
+                return i;
+            }
+        }
+        return -1;
+    }
+    
+    public static void demonstrateAdvancedSearch() {
+        System.out.println("\n=== Advanced Search Operations ===");
+        
+        int[] numbers = {12, 45, 23, 67, 23, 89, 23, 34, 56, 23};
+        int target = 23;
+        
+        // Find all occurrences
+        int[] indices = findAllOccurrences(numbers, target);
+        System.out.println("All occurrences of " + target + ": " + Arrays.toString(indices));
+        
+        // Find min and max
+        int min = findMinimum(numbers);
+        int max = findMaximum(numbers);
+        System.out.println("Minimum: " + min + ", Maximum: " + max);
+        
+        // Find second largest
+        int secondLargest = findSecondLargest(numbers);
+        System.out.println("Second largest: " + secondLargest);
+        
+        // Count occurrences
+        int count = countOccurrences(numbers, target);
+        System.out.println("Count of " + target + ": " + count);
+    }
+    
+    public static int[] findAllOccurrences(int[] array, int target) {
+        // First pass: count occurrences
         int count = 0;
-        for (int element : array) {
-            if (element == target) {
-                count++;
-            }
+        for (int value : array) {
+            if (value == target) count++;
         }
         
-        // Create result array
+        // Second pass: collect indices
         int[] indices = new int[count];
         int index = 0;
-        
-        // Fill result array with indices
         for (int i = 0; i < array.length; i++) {
             if (array[i] == target) {
                 indices[index++] = i;
@@ -1074,305 +1076,54 @@ public class ArraySearching {
         return indices;
     }
     
-    public static void printArray(int[] array) {
-        System.out.print("[");
-        for (int i = 0; i < array.length; i++) {
-            System.out.print(array[i]);
-            if (i < array.length - 1) {
-                System.out.print(", ");
+    public static int findMinimum(int[] array) {
+        if (array.length == 0) throw new IllegalArgumentException("Array is empty");
+        
+        int min = array[0];
+        for (int i = 1; i < array.length; i++) {
+            if (array[i] < min) {
+                min = array[i];
             }
         }
-        System.out.println("]");
+        return min;
     }
     
-    public static void main(String[] args) {
-        demonstrateSearching();
-        findAllOccurrences();
-    }
-}
-```
-
-## Practical Array Applications
-
-### Complete Array Utility Class
-
-```java
-/**
- * A comprehensive utility class demonstrating practical array operations
- * commonly used in real-world applications.
- */
-public class ArrayUtilities {
-    
-    /**
-     * Statistical analysis of an array
-     */
-    public static class Statistics {
-        public final double sum;
-        public final double mean;
-        public final double median;
-        public final int min;
-        public final int max;
-        public final double standardDeviation;
+    public static int findMaximum(int[] array) {
+        if (array.length == 0) throw new IllegalArgumentException("Array is empty");
         
-        public Statistics(double sum, double mean, double median, 
-                         int min, int max, double standardDeviation) {
-            this.sum = sum;
-            this.mean = mean;
-            this.median = median;
-            this.min = min;
-            this.max = max;
-            this.standardDeviation = standardDeviation;
-        }
-        
-        @Override
-        public String toString() {
-            return String.format(
-                "Statistics{sum=%.2f, mean=%.2f, median=%.2f, min=%d, max=%d, stdDev=%.2f}",
-                sum, mean, median, min, max, standardDeviation
-            );
-        }
-    }
-    
-    /**
-     * Calculate comprehensive statistics for an array
-     */
-    public static Statistics calculateStatistics(int[] array) {
-        if (array == null || array.length == 0) {
-            throw new IllegalArgumentException("Array cannot be null or empty");
-        }
-        
-        // Calculate sum and mean
-        double sum = 0;
-        for (int value : array) {
-            sum += value;
-        }
-        double mean = sum / array.length;
-        
-        // Find min and max
-        int min = array[0];
         int max = array[0];
         for (int i = 1; i < array.length; i++) {
-            if (array[i] < min) min = array[i];
-            if (array[i] > max) max = array[i];
+            if (array[i] > max) {
+                max = array[i];
+            }
         }
+        return max;
+    }
+    
+    public static int findSecondLargest(int[] array) {
+        if (array.length < 2) throw new IllegalArgumentException("Array must have at least 2 elements");
         
-        // Calculate median (requires sorting)
-        int[] sorted = array.clone();
-        java.util.Arrays.sort(sorted);
-        double median;
-        if (sorted.length % 2 == 0) {
-            median = (sorted[sorted.length / 2 - 1] + sorted[sorted.length / 2]) / 2.0;
-        } else {
-            median = sorted[sorted.length / 2];
-        }
+        int largest = Integer.MIN_VALUE;
+        int secondLargest = Integer.MIN_VALUE;
         
-        // Calculate standard deviation
-        double sumSquaredDifferences = 0;
         for (int value : array) {
-            double difference = value - mean;
-            sumSquaredDifferences += difference * difference;
-        }
-        double variance = sumSquaredDifferences / array.length;
-        double standardDeviation = Math.sqrt(variance);
-        
-        return new Statistics(sum, mean, median, min, max, standardDeviation);
-    }
-    
-    /**
-     * Remove duplicates from an array
-     */
-    public static int[] removeDuplicates(int[] array) {
-        if (array == null || array.length == 0) {
-            return new int[0];
-        }
-        
-        // Count unique elements
-        int uniqueCount = 0;
-        for (int i = 0; i < array.length; i++) {
-            boolean isDuplicate = false;
-            for (int j = 0; j < i; j++) {
-                if (array[i] == array[j]) {
-                    isDuplicate = true;
-                    break;
-                }
-            }
-            if (!isDuplicate) {
-                uniqueCount++;
+            if (value > largest) {
+                secondLargest = largest;
+                largest = value;
+            } else if (value > secondLargest && value < largest) {
+                secondLargest = value;
             }
         }
         
-        // Create array with unique elements
-        int[] unique = new int[uniqueCount];
-        int index = 0;
-        for (int i = 0; i < array.length; i++) {
-            boolean isDuplicate = false;
-            for (int j = 0; j < i; j++) {
-                if (array[i] == array[j]) {
-                    isDuplicate = true;
-                    break;
-                }
-            }
-            if (!isDuplicate) {
-                unique[index++] = array[i];
-            }
-        }
-        
-        return unique;
+        return secondLargest;
     }
     
-    /**
-     * Merge two sorted arrays into one sorted array
-     */
-    public static int[] mergeSortedArrays(int[] array1, int[] array2) {
-        int[] merged = new int[array1.length + array2.length];
-        int i = 0, j = 0, k = 0;
-        
-        // Merge elements in sorted order
-        while (i < array1.length && j < array2.length) {
-            if (array1[i] <= array2[j]) {
-                merged[k++] = array1[i++];
-            } else {
-                merged[k++] = array2[j++];
-            }
+    public static int countOccurrences(int[] array, int target) {
+        int count = 0;
+        for (int value : array) {
+            if (value == target) count++;
         }
-        
-        // Copy remaining elements
-        while (i < array1.length) {
-            merged[k++] = array1[i++];
-        }
-        while (j < array2.length) {
-            merged[k++] = array2[j++];
-        }
-        
-        return merged;
-    }
-    
-    /**
-     * Rotate array to the left by k positions
-     */
-    public static int[] rotateLeft(int[] array, int k) {
-        if (array == null || array.length == 0) {
-            return array;
-        }
-        
-        k = k % array.length; // Handle k > array.length
-        int[] rotated = new int[array.length];
-        
-        for (int i = 0; i < array.length; i++) {
-            rotated[i] = array[(i + k) % array.length];
-        }
-        
-        return rotated;
-    }
-    
-    /**
-     * Find the longest increasing subsequence length
-     */
-    public static int longestIncreasingSubsequence(int[] array) {
-        if (array == null || array.length == 0) {
-            return 0;
-        }
-        
-        int maxLength = 1;
-        int currentLength = 1;
-        
-        for (int i = 1; i < array.length; i++) {
-            if (array[i] > array[i - 1]) {
-                currentLength++;
-                maxLength = Math.max(maxLength, currentLength);
-            } else {
-                currentLength = 1;
-            }
-        }
-        
-        return maxLength;
-    }
-    
-    /**
-     * Check if array is a palindrome
-     */
-    public static boolean isPalindrome(int[] array) {
-        if (array == null) {
-            return false;
-        }
-        
-        int left = 0;
-        int right = array.length - 1;
-        
-        while (left < right) {
-            if (array[left] != array[right]) {
-                return false;
-            }
-            left++;
-            right--;
-        }
-        
-        return true;
-    }
-    
-    /**
-     * Demonstration of all utility methods
-     */
-    public static void demonstrateUtilities() {
-        System.out.println("=== Array Utilities Demonstration ===");
-        
-        // Test data
-        int[] numbers = {5, 2, 8, 2, 1, 9, 5, 3, 8, 1};
-        int[] sortedArray1 = {1, 3, 5, 7, 9};
-        int[] sortedArray2 = {2, 4, 6, 8, 10, 12};
-        int[] palindromeArray = {1, 2, 3, 2, 1};
-        int[] increasingArray = {1, 2, 2, 3, 5, 4, 6, 7, 8};
-        
-        System.out.println("Original array:");
-        printArray(numbers);
-        
-        // Statistics
-        Statistics stats = calculateStatistics(numbers);
-        System.out.println("\nStatistics: " + stats);
-        
-        // Remove duplicates
-        int[] unique = removeDuplicates(numbers);
-        System.out.println("\nArray without duplicates:");
-        printArray(unique);
-        
-        // Merge sorted arrays
-        int[] merged = mergeSortedArrays(sortedArray1, sortedArray2);
-        System.out.println("\nMerged sorted arrays:");
-        System.out.print("Array 1: "); printArray(sortedArray1);
-        System.out.print("Array 2: "); printArray(sortedArray2);
-        System.out.print("Merged:  "); printArray(merged);
-        
-        // Rotate array
-        int[] rotated = rotateLeft(numbers, 3);
-        System.out.println("\nArray rotated left by 3 positions:");
-        printArray(rotated);
-        
-        // Check palindrome
-        System.out.println("\nPalindrome check:");
-        System.out.print("Array: "); printArray(palindromeArray);
-        System.out.println("Is palindrome: " + isPalindrome(palindromeArray));
-        System.out.print("Array: "); printArray(numbers);
-        System.out.println("Is palindrome: " + isPalindrome(numbers));
-        
-        // Longest increasing subsequence
-        System.out.println("\nLongest increasing subsequence:");
-        System.out.print("Array: "); printArray(increasingArray);
-        System.out.println("Length: " + longestIncreasingSubsequence(increasingArray));
-    }
-    
-    public static void printArray(int[] array) {
-        System.out.print("[");
-        for (int i = 0; i < array.length; i++) {
-            System.out.print(array[i]);
-            if (i < array.length - 1) {
-                System.out.print(", ");
-            }
-        }
-        System.out.println("]");
-    }
-    
-    public static void main(String[] args) {
-        demonstrateUtilities();
+        return count;
     }
 }
 ```
@@ -1381,29 +1132,21 @@ public class ArrayUtilities {
 
 In this fifth part of our Java tutorial series, you've learned:
 
-✅ **Array Fundamentals**: Declaration, initialization, and basic array concepts  
-✅ **Array Access**: Indexing, traversal methods, and safe access techniques  
-✅ **Multi-dimensional Arrays**: Working with 2D, 3D, and nested array structures  
-✅ **Array Operations**: Common manipulations like copying, reversing, and modifying  
-✅ **Sorting Algorithms**: Bubble sort, selection sort, insertion sort, and built-in sorting  
-✅ **Searching Algorithms**: Linear search, binary search, and finding multiple occurrences  
-✅ **Practical Applications**: Real-world array utilities and statistical operations  
+✅ **Array Fundamentals**: Declaration, initialization, and basic operations  
+✅ **Single-Dimensional Arrays**: Working with one-dimensional arrays effectively  
+✅ **Multi-Dimensional Arrays**: Creating and manipulating 2D arrays and jagged arrays  
+✅ **Array Traversal**: Different techniques for iterating through arrays  
+✅ **Common Operations**: Copying, resizing, and manipulating array contents  
+✅ **Sorting Algorithms**: Built-in sorting and implementing basic sorting algorithms  
+✅ **Searching Techniques**: Linear search, binary search, and advanced search operations  
 
 ### Key Takeaways
 
 1. **Fixed Size**: Arrays have a fixed size that cannot be changed after creation
-2. **Zero-based Indexing**: Array indices start at 0 and go up to length-1
-3. **Type Safety**: All elements in an array must be of the same type
-4. **Performance**: Arrays provide constant-time access to elements by index
-5. **Memory Efficiency**: Arrays store elements in contiguous memory locations
-
-### Common Pitfalls to Avoid
-
-1. **ArrayIndexOutOfBoundsException**: Always check array bounds before accessing
-2. **NullPointerException**: Check for null arrays before operations
-3. **Off-by-one Errors**: Remember that array indices go from 0 to length-1
-4. **Modifying Arrays During Iteration**: Be careful when changing array size during loops
-5. **Assuming Array Contents**: Arrays of objects are initialized to null, primitives to their default values
+2. **Zero-Based Indexing**: Array indices start at 0 and go to length-1
+3. **Bounds Checking**: Always validate array indices to prevent runtime errors
+4. **Reference Types**: Arrays are objects and are passed by reference
+5. **Performance**: Arrays provide O(1) access time but O(n) insertion/deletion
 
 ### What's Next?
 
@@ -1418,14 +1161,13 @@ In **Part 6: Object-Oriented Programming Basics**, we'll explore:
 
 Before moving on, try these exercises:
 
-1. **Grade Manager**: Create a program that manages student grades using arrays
-2. **Matrix Calculator**: Implement basic matrix operations (addition, multiplication, transpose)
-3. **Data Analysis**: Build a program that analyzes sales data using array statistics
-4. **Game Board**: Create a tic-tac-toe or connect-four game using 2D arrays
-5. **Sorting Comparison**: Compare the performance of different sorting algorithms
+1. **Grade Book System**: Create a program that manages student grades using 2D arrays
+2. **Matrix Calculator**: Implement matrix operations (addition, multiplication, transpose)
+3. **Array Statistics**: Build a utility class for statistical analysis of arrays
+4. **Search and Sort Comparison**: Compare performance of different sorting and searching algorithms
 
 Ready to dive into object-oriented programming? Let's continue to Part 6!
 
 ---
 
-*This tutorial is part of our comprehensive Java Tutorial Series. Arrays are fundamental to programming and data manipulation, so practice these concepts thoroughly before moving to object-oriented programming.*
+*This tutorial is part of our comprehensive Java Tutorial Series. Arrays are fundamental to Java programming and form the basis for understanding more complex data structures.*

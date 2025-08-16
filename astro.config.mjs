@@ -3,6 +3,7 @@ import tailwind from '@astrojs/tailwind';
 import icon from 'astro-icon';
 import mdx from '@astrojs/mdx';
 import sitemap from '@astrojs/sitemap';
+import vercel from '@astrojs/vercel/serverless';
 
 // https://astro.build/config
 export default defineConfig({
@@ -33,7 +34,8 @@ export default defineConfig({
     }),
   ],
   site: 'https://codersbox.dev',
-  output: 'static',
+  output: 'hybrid',
+  adapter: vercel(),
   srcDir: './src',
   publicDir: './public',
   
