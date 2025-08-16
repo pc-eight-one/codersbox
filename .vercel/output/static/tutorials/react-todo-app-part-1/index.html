@@ -1,0 +1,858 @@
+<!DOCTYPE html><html lang="en" data-astro-cid-37fxchfa> <head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><!-- SEO Meta Tags --><title>Build a React Todo App - Part 1: Setup and Basic Components - codersbox</title><meta name="description" content="Learn React fundamentals by building a todo application from scratch. Part 1 covers project setup, components, and state management."><meta name="author" content="Prashant Chaturvedi"><meta name="keywords" content="React, JavaScript, Components, State Management"><link rel="canonical" href="https://codersbox.dev/tutorials/react-todo-app-part-1/"><!-- Open Graph Tags --><meta property="og:type" content="article"><meta property="og:title" content="Build a React Todo App - Part 1: Setup and Basic Components - codersbox"><meta property="og:description" content="Learn React fundamentals by building a todo application from scratch. Part 1 covers project setup, components, and state management."><meta property="og:url" content="https://codersbox.dev/tutorials/react-todo-app-part-1/"><meta property="og:site_name" content="codersbox"><meta property="og:image" content="https://codersbox.dev/og-image.jpg"><meta property="og:image:alt" content="Build a React Todo App - Part 1: Setup and Basic Components - codersbox"><meta property="og:locale" content="en_US"><!-- Twitter Card Tags --><meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="Build a React Todo App - Part 1: Setup and Basic Components - codersbox"><meta name="twitter:description" content="Learn React fundamentals by building a todo application from scratch. Part 1 covers project setup, components, and state management."><meta name="twitter:image" content="https://codersbox.dev/og-image.jpg"><meta name="twitter:image:alt" content="Build a React Todo App - Part 1: Setup and Basic Components - codersbox"><meta name="twitter:site" content="@codersbox"><meta name="twitter:creator" content="@codersbox"><meta property="article:published_time" content="2025-01-14T00:00:00.000Z"><meta property="article:author" content="Prashant Chaturvedi"><meta property="article:tag" content="React"><meta property="article:tag" content="JavaScript"><meta property="article:tag" content="Components"><meta property="article:tag" content="State Management"><!-- Favicon and Icons --><link rel="icon" type="image/x-icon" href="/favicon.ico"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png"><link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="manifest" href="/site.webmanifest"><!-- Performance Optimizations --><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="dns-prefetch" href="https://fonts.googleapis.com"><!-- Theme Color --><meta name="theme-color" content="#3b82f6"><meta name="msapplication-TileColor" content="#3b82f6"><!-- Structured Data --><script type="application/ld+json">
+    {JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": type === 'article' ? 'Article' : 'WebSite',
+      "name": title,
+      "description": description,
+      "url": currentUrl,
+      "publisher": {
+        "@type": "Organization",
+        "name": "codersbox",
+        "url": siteUrl,
+        "logo": {
+          "@type": "ImageObject",
+          "url": `${siteUrl}/logo.png`
+        }
+      },
+      ...(type === 'article' && publishDate && {
+        "author": {
+          "@type": "Person",
+          "name": author
+        },
+        "datePublished": publishDate.toISOString(),
+        "dateModified": publishDate.toISOString(),
+        "headline": title,
+        "image": fullImageUrl,
+        "keywords": tags.join(', ')
+      }),
+      ...(type === 'website' && {
+        "potentialAction": {
+          "@type": "SearchAction",
+          "target": {
+            "@type": "EntryPoint",
+            "urlTemplate": `${siteUrl}/search?q={search_term_string}`
+          },
+          "query-input": "required name=search_term_string"
+        }
+      })
+    })}
+  </script><!-- Critical CSS --><link rel="stylesheet" href="/_astro/about.yENWLJj_.css">
+<style>.toc-navigating[data-astro-cid-cca4qjef]{margin:-.25rem -.5rem;border-radius:.25rem;--tw-bg-opacity: 1;background-color:rgb(239 246 255 / var(--tw-bg-opacity, 1));padding:.25rem .5rem;--tw-text-opacity: 1;color:rgb(37 99 235 / var(--tw-text-opacity, 1));transform:scale(1.02);transition:all .2s ease-in-out}.scrollbar-hide[data-astro-cid-cca4qjef]{-ms-overflow-style:none;scrollbar-width:none}.scrollbar-hide[data-astro-cid-cca4qjef]::-webkit-scrollbar{display:none}.tutorial-content[data-astro-cid-5mk7rcd7]{font-family:Inter,system-ui,sans-serif;color:#374151;line-height:1.75}.tutorial-content[data-astro-cid-5mk7rcd7] :is(h1,h2,h3,h4,h5,h6)[data-astro-cid-5mk7rcd7]{scroll-margin-top:6rem;position:relative}.tutorial-content[data-astro-cid-5mk7rcd7] h1[data-astro-cid-5mk7rcd7]{font-size:2.25rem;line-height:1.2;margin-top:0;margin-bottom:2rem;font-weight:800}.tutorial-content[data-astro-cid-5mk7rcd7] h2[data-astro-cid-5mk7rcd7]{font-size:1.875rem;line-height:1.25;margin-top:3rem;margin-bottom:1.5rem;padding-bottom:.75rem;border-bottom:2px solid rgb(229 231 235);font-weight:700;padding-left:1.5em}.tutorial-content[data-astro-cid-5mk7rcd7] h3[data-astro-cid-5mk7rcd7]{font-size:1.5rem;line-height:1.3;margin-top:2.5rem;margin-bottom:1.25rem;font-weight:700;padding-left:1.5em}.tutorial-content[data-astro-cid-5mk7rcd7] h4[data-astro-cid-5mk7rcd7]{font-size:1.25rem;line-height:1.4;margin-top:2rem;margin-bottom:1rem;font-weight:600;padding-left:1.5em}.tutorial-content[data-astro-cid-5mk7rcd7] pre[data-astro-cid-5mk7rcd7]{position:relative;background:#282c34!important;border:1px solid #3e4451;border-radius:.75rem;padding:1.5rem;margin:2rem 0;overflow-x:auto;box-shadow:0 4px 6px -1px #0000001a}.tutorial-content[data-astro-cid-5mk7rcd7] pre[data-astro-cid-5mk7rcd7] code[data-astro-cid-5mk7rcd7]{font-family:JetBrains Mono,Fira Code,Consolas,Monaco,Courier New,monospace;font-size:.875rem;line-height:1.5;color:#abb2bf!important;background:transparent!important;border:none!important;padding:0!important}.tutorial-content[data-astro-cid-5mk7rcd7] :not(pre)[data-astro-cid-5mk7rcd7]>code[data-astro-cid-5mk7rcd7]{font-family:JetBrains Mono,Fira Code,Consolas,Monaco,Courier New,monospace;font-size:.875em;font-weight:600;color:#ef4444!important;background:#f3f4f6!important;padding:.125rem .375rem!important;border-radius:.375rem!important;border:1px solid rgb(229 231 235)!important}.tutorial-content[data-astro-cid-5mk7rcd7] .heading-anchor[data-astro-cid-5mk7rcd7]{position:absolute;left:0;top:50%;transform:translateY(-50%);display:inline-flex;align-items:center;justify-content:center;width:1em;height:1em;font-size:1em;line-height:1;color:#9ca3af;background:transparent;border:none;border-radius:.25rem;opacity:0;visibility:hidden;pointer-events:none;transition:opacity .15s ease,color .15s ease;cursor:pointer}.tutorial-content[data-astro-cid-5mk7rcd7] .heading-anchor[data-astro-cid-5mk7rcd7] svg[data-astro-cid-5mk7rcd7]{width:1em;height:1em}.tutorial-content[data-astro-cid-5mk7rcd7] .heading-anchor[data-astro-cid-5mk7rcd7]:hover,.tutorial-content[data-astro-cid-5mk7rcd7] .heading-anchor[data-astro-cid-5mk7rcd7]:focus-visible{color:#2563eb;outline:none}.tutorial-content[data-astro-cid-5mk7rcd7] :is(h2,h3,h4):hover[data-astro-cid-5mk7rcd7] .heading-anchor[data-astro-cid-5mk7rcd7],.tutorial-content[data-astro-cid-5mk7rcd7] :is(h2,h3,h4):focus-within[data-astro-cid-5mk7rcd7] .heading-anchor[data-astro-cid-5mk7rcd7]{opacity:1;visibility:visible;pointer-events:auto}.tutorial-content[data-astro-cid-5mk7rcd7] .heading-anchor[data-astro-cid-5mk7rcd7].copied:after{content:"Copied!";position:absolute;top:-1.75rem;left:0;font-size:.75rem;padding:.125rem .375rem;background:#f3f4f6;color:#1f2937;border:1px solid rgb(229 231 235);border-radius:.25rem;white-space:nowrap}
+#main-navigation[data-astro-cid-pux6a34n]{backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);background:#ffffffb3;border-bottom:1px solid rgba(255,255,255,.2);box-shadow:0 8px 32px #0000001a}#main-navigation[data-astro-cid-pux6a34n].nav-scrolled{background:#ffffffd9;backdrop-filter:blur(25px);-webkit-backdrop-filter:blur(25px);box-shadow:0 8px 40px #00000026;border-bottom:1px solid rgba(255,255,255,.3)}.nav-link[data-astro-cid-pux6a34n]{position:relative;overflow:hidden}.nav-link[data-astro-cid-pux6a34n]:before{content:"";position:absolute;bottom:0;left:50%;width:0;height:2px;background:linear-gradient(90deg,#3b82f6,#1d4ed8);transform:translate(-50%);transition:width .3s ease}.nav-link[data-astro-cid-pux6a34n]:hover:before{width:80%}.nav-link[data-astro-cid-pux6a34n]:hover{background:#3b82f60d;transform:translateY(-1px)}.nav-logo-link[data-astro-cid-pux6a34n]{transition:transform .3s ease}.nav-logo-link[data-astro-cid-pux6a34n]:hover{transform:scale(1.05)}.mobile-menu-panel[data-astro-cid-pux6a34n]{opacity:0;transform:translateY(-10px);transition:all .3s cubic-bezier(.4,0,.2,1)}.mobile-menu-panel[data-astro-cid-pux6a34n]:not(.hidden){opacity:1;transform:translateY(0)}.mobile-menu-panel[data-astro-cid-pux6a34n].mobile-menu-show{animation:slideDown .3s ease-out}@keyframes slideDown{0%{opacity:0;transform:translateY(-10px)}to{opacity:1;transform:translateY(0)}}.mobile-nav-link[data-astro-cid-pux6a34n]{opacity:0;transform:translate(-20px);animation:slideInLeft .3s ease-out forwards}.mobile-nav-link[data-astro-cid-pux6a34n]:nth-child(1){animation-delay:.1s}.mobile-nav-link[data-astro-cid-pux6a34n]:nth-child(2){animation-delay:.15s}.mobile-nav-link[data-astro-cid-pux6a34n]:nth-child(3){animation-delay:.2s}.mobile-nav-link[data-astro-cid-pux6a34n]:nth-child(4){animation-delay:.25s}.mobile-nav-link[data-astro-cid-pux6a34n]:nth-child(5){animation-delay:.3s}@keyframes slideInLeft{to{opacity:1;transform:translate(0)}}#mobile-menu-toggle[data-astro-cid-pux6a34n]{backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px)}#mobile-menu-toggle[data-astro-cid-pux6a34n]:hover{transform:scale(1.1);background:#3b82f61a}#main-navigation[data-astro-cid-pux6a34n]:before{content:"";position:absolute;inset:0;background:linear-gradient(135deg,#ffffff1a,#fff0);pointer-events:none}html{visibility:hidden}html.loaded{visibility:visible}
+</style><script type="module" src="/_astro/hoisted.GpgkMP4r.js"></script>
+<script type="module" src="/_astro/page.DsLumr9O.js"></script>
+<script>window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };
+		var script = document.createElement('script');
+		script.defer = true;
+		script.src = '/_vercel/insights/script.js';
+		var head = document.querySelector('head');
+		head.appendChild(script);
+	</script></head> <body class="bg-gray-100 text-gray-900 min-h-screen" data-astro-cid-37fxchfa> <nav id="main-navigation" class="bg-white/70 backdrop-blur-xl border-b border-white/20 shadow-lg shadow-black/5 sticky top-0 z-50 transition-all duration-300" data-astro-cid-pux6a34n> <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8" data-astro-cid-pux6a34n> <div class="flex justify-between items-center h-20" data-astro-cid-pux6a34n> <div class="flex items-center" data-astro-cid-pux6a34n> <div class="flex-shrink-0 font-extrabold text-2xl tracking-[-.1em]" data-astro-cid-pux6a34n> <a href="/" class="flex items-center nav-logo-link" data-astro-cid-pux6a34n> <div> <!-- <span class={logoClass}>&gt;&nbsp;</span> --> <span class="text-3xl">codersbox</span> </div> </a> </div> <div class="hidden md:flex ml-10 space-x-1" data-astro-cid-pux6a34n> <a href="/" class="nav-link relative px-4 py-2 text-gray-600 hover:text-gray-900 text-sm font-medium rounded-lg transition-all duration-200" data-astro-cid-pux6a34n> Home </a><a href="/articles" class="nav-link relative px-4 py-2 text-gray-600 hover:text-gray-900 text-sm font-medium rounded-lg transition-all duration-200" data-astro-cid-pux6a34n> Articles </a><a href="/tutorials" class="nav-link relative px-4 py-2 text-gray-600 hover:text-gray-900 text-sm font-medium rounded-lg transition-all duration-200" data-astro-cid-pux6a34n> Tutorials </a><a href="/projects" class="nav-link relative px-4 py-2 text-gray-600 hover:text-gray-900 text-sm font-medium rounded-lg transition-all duration-200" data-astro-cid-pux6a34n> Projects </a><a href="/about" class="nav-link relative px-4 py-2 text-gray-600 hover:text-gray-900 text-sm font-medium rounded-lg transition-all duration-200" data-astro-cid-pux6a34n> About </a> </div> </div> <div class="flex items-center" data-astro-cid-pux6a34n> <button id="mobile-menu-toggle" class="md:hidden ml-2 p-2 text-gray-600 hover:text-black transition-all duration-200 rounded-lg hover:bg-gray-100/50" aria-label="Toggle menu" data-astro-cid-pux6a34n> <svg width="0.25em" height="1em" class="text-xl" data-astro-cid-pux6a34n data-icon="fa6-solid:ellipsis-vertical">   <symbol id="ai:fa6-solid:ellipsis-vertical" viewBox="0 0 128 512"><path fill="currentColor" d="M64 360a56 56 0 1 0 0 112a56 56 0 1 0 0-112m0-160a56 56 0 1 0 0 112a56 56 0 1 0 0-112m56-104A56 56 0 1 0 8 96a56 56 0 1 0 112 0"/></symbol><use href="#ai:fa6-solid:ellipsis-vertical"></use>  </svg> </button> </div> </div> </div> <!-- Mobile menu --> <div id="mobile-menu" class="hidden md:hidden mobile-menu-panel" data-astro-cid-pux6a34n> <div class="px-2 pt-2 pb-3 space-y-1 bg-white/80 backdrop-blur-xl border-b border-white/20" data-astro-cid-pux6a34n> <a href="/" class="mobile-nav-link block px-3 py-2 rounded-lg text-base font-medium text-gray-600 hover:text-gray-900 hover:bg-white/60 transition-all duration-200" data-astro-cid-pux6a34n> Home </a><a href="/articles" class="mobile-nav-link block px-3 py-2 rounded-lg text-base font-medium text-gray-600 hover:text-gray-900 hover:bg-white/60 transition-all duration-200" data-astro-cid-pux6a34n> Articles </a><a href="/tutorials" class="mobile-nav-link block px-3 py-2 rounded-lg text-base font-medium text-gray-600 hover:text-gray-900 hover:bg-white/60 transition-all duration-200" data-astro-cid-pux6a34n> Tutorials </a><a href="/projects" class="mobile-nav-link block px-3 py-2 rounded-lg text-base font-medium text-gray-600 hover:text-gray-900 hover:bg-white/60 transition-all duration-200" data-astro-cid-pux6a34n> Projects </a><a href="/about" class="mobile-nav-link block px-3 py-2 rounded-lg text-base font-medium text-gray-600 hover:text-gray-900 hover:bg-white/60 transition-all duration-200" data-astro-cid-pux6a34n> About </a> </div> </div> </nav>    <main class="min-h-screen bg-gray-50" data-astro-cid-5mk7rcd7> <!-- Tutorial Hero Section --> <header class="bg-white border-b border-gray-200" data-astro-cid-5mk7rcd7> <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12" data-astro-cid-5mk7rcd7> <div class="text-center" data-astro-cid-5mk7rcd7> <h1 class="text-4xl md:text-5xl font-bold mb-6 text-gray-900 leading-tight tracking-tight" data-astro-cid-5mk7rcd7> Build a React Todo App - Part 1: Setup and Basic Components </h1> <p class="text-xl text-gray-600 mb-8 max-w-3xl mx-auto leading-relaxed" data-astro-cid-5mk7rcd7> Learn React fundamentals by building a todo application from scratch. Part 1 covers project setup, components, and state management. </p> <div class="flex flex-wrap justify-center items-center gap-6 text-sm text-gray-500 mb-6" data-astro-cid-5mk7rcd7> <div class="flex items-center gap-2" data-astro-cid-5mk7rcd7> <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" data-astro-cid-5mk7rcd7> <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" data-astro-cid-5mk7rcd7></path> </svg> <span data-astro-cid-5mk7rcd7>January 14, 2025</span> </div> <div class="flex items-center gap-2" data-astro-cid-5mk7rcd7> <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" data-astro-cid-5mk7rcd7> <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" data-astro-cid-5mk7rcd7></path> </svg> <span data-astro-cid-5mk7rcd7>90 minutes</span> </div> <div class="flex items-center gap-2" data-astro-cid-5mk7rcd7> <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" data-astro-cid-5mk7rcd7> <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" data-astro-cid-5mk7rcd7></path> </svg> <span data-astro-cid-5mk7rcd7>By Prashant Chaturvedi</span> </div> </div> <!-- Tags --> <div class="flex flex-wrap justify-center gap-2" data-astro-cid-5mk7rcd7> <span class="bg-blue-100 text-blue-800 px-4 py-2 rounded-full text-sm font-medium hover:bg-blue-200 transition-colors" data-astro-cid-5mk7rcd7> React </span><span class="bg-blue-100 text-blue-800 px-4 py-2 rounded-full text-sm font-medium hover:bg-blue-200 transition-colors" data-astro-cid-5mk7rcd7> JavaScript </span><span class="bg-blue-100 text-blue-800 px-4 py-2 rounded-full text-sm font-medium hover:bg-blue-200 transition-colors" data-astro-cid-5mk7rcd7> Components </span><span class="bg-blue-100 text-blue-800 px-4 py-2 rounded-full text-sm font-medium hover:bg-blue-200 transition-colors" data-astro-cid-5mk7rcd7> State Management </span> </div> </div> </div> </header> <!-- Tutorial Content --> <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16" data-astro-cid-5mk7rcd7> <div class="grid grid-cols-1 lg:grid-cols-4 gap-8" data-astro-cid-5mk7rcd7> <!-- Left Sidebar - Tutorial Navigation & TOC --> <aside class="lg:col-span-1 lg:border-r lg:border-gray-200 lg:pr-8" data-astro-cid-5mk7rcd7> <nav class="sticky top-24 max-h-[calc(100vh-7rem)] overflow-y-auto scrollbar-hide" data-astro-cid-cca4qjef><div class="space-y-8" data-astro-cid-cca4qjef><!-- Series Navigation --><div data-astro-cid-cca4qjef><h2 class="text-lg font-semibold text-gray-900 mb-4 flex items-center gap-2" data-astro-cid-cca4qjef><svg class="w-5 h-5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" data-astro-cid-cca4qjef><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" data-astro-cid-cca4qjef></path></svg><span data-astro-cid-cca4qjef>React Todo App</span></h2><ul class="space-y-1 text-sm" data-astro-cid-cca4qjef><li data-astro-cid-cca4qjef><a href="/tutorials/react-todo-app-part-1" class="flex items-center gap-3 p-2 rounded-lg transition-colors bg-blue-100 text-blue-700" data-astro-cid-cca4qjef><div class="w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold flex-shrink-0 bg-blue-600 text-white" data-astro-cid-cca4qjef>1</div><span class="truncate" data-astro-cid-cca4qjef>Setup and Basic Components</span></a></li></ul></div><!-- Table of Contents --><div data-astro-cid-cca4qjef><h2 class="text-lg font-semibold text-gray-900 mb-4 flex items-center gap-2" data-astro-cid-cca4qjef><svg class="w-5 h-5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" data-astro-cid-cca4qjef><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 10h16M4 14h16M4 18h16" data-astro-cid-cca4qjef></path></svg><span data-astro-cid-cca4qjef>Contents</span></h2><ul class="space-y-2 text-sm" data-astro-cid-cca4qjef><li data-astro-cid-cca4qjef><a href="#what-well-build" data-toc-link class="block text-gray-700 hover:text-blue-600 transition-colors leading-relaxed font-medium" data-astro-cid-cca4qjef>What We’ll Build</a></li><li data-astro-cid-cca4qjef><a href="#project-setup" data-toc-link class="block text-gray-700 hover:text-blue-600 transition-colors leading-relaxed font-medium" data-astro-cid-cca4qjef>Project Setup</a></li><li data-astro-cid-cca4qjef><a href="#creating-the-react-app" data-toc-link class="block text-gray-700 hover:text-blue-600 transition-colors leading-relaxed pl-4 text-sm" data-astro-cid-cca4qjef>Creating the React App</a></li><li data-astro-cid-cca4qjef><a href="#configuring-tailwind-css" data-toc-link class="block text-gray-700 hover:text-blue-600 transition-colors leading-relaxed pl-4 text-sm" data-astro-cid-cca4qjef>Configuring Tailwind CSS</a></li><li data-astro-cid-cca4qjef><a href="#project-structure" data-toc-link class="block text-gray-700 hover:text-blue-600 transition-colors leading-relaxed font-medium" data-astro-cid-cca4qjef>Project Structure</a></li><li data-astro-cid-cca4qjef><a href="#defining-data-types" data-toc-link class="block text-gray-700 hover:text-blue-600 transition-colors leading-relaxed font-medium" data-astro-cid-cca4qjef>Defining Data Types</a></li><li data-astro-cid-cca4qjef><a href="#creating-ui-components" data-toc-link class="block text-gray-700 hover:text-blue-600 transition-colors leading-relaxed font-medium" data-astro-cid-cca4qjef>Creating UI Components</a></li><li data-astro-cid-cca4qjef><a href="#button-component" data-toc-link class="block text-gray-700 hover:text-blue-600 transition-colors leading-relaxed pl-4 text-sm" data-astro-cid-cca4qjef>Button Component</a></li><li data-astro-cid-cca4qjef><a href="#input-component" data-toc-link class="block text-gray-700 hover:text-blue-600 transition-colors leading-relaxed pl-4 text-sm" data-astro-cid-cca4qjef>Input Component</a></li><li data-astro-cid-cca4qjef><a href="#custom-hooks" data-toc-link class="block text-gray-700 hover:text-blue-600 transition-colors leading-relaxed font-medium" data-astro-cid-cca4qjef>Custom Hooks</a></li><li data-astro-cid-cca4qjef><a href="#uselocalstorage-hook" data-toc-link class="block text-gray-700 hover:text-blue-600 transition-colors leading-relaxed pl-4 text-sm" data-astro-cid-cca4qjef>useLocalStorage Hook</a></li><li data-astro-cid-cca4qjef><a href="#usetodos-hook" data-toc-link class="block text-gray-700 hover:text-blue-600 transition-colors leading-relaxed pl-4 text-sm" data-astro-cid-cca4qjef>useTodos Hook</a></li><li data-astro-cid-cca4qjef><a href="#todo-components" data-toc-link class="block text-gray-700 hover:text-blue-600 transition-colors leading-relaxed font-medium" data-astro-cid-cca4qjef>Todo Components</a></li><li data-astro-cid-cca4qjef><a href="#todoitem-component" data-toc-link class="block text-gray-700 hover:text-blue-600 transition-colors leading-relaxed pl-4 text-sm" data-astro-cid-cca4qjef>TodoItem Component</a></li><li data-astro-cid-cca4qjef><a href="#todoform-component" data-toc-link class="block text-gray-700 hover:text-blue-600 transition-colors leading-relaxed pl-4 text-sm" data-astro-cid-cca4qjef>TodoForm Component</a></li><li data-astro-cid-cca4qjef><a href="#main-app-component" data-toc-link class="block text-gray-700 hover:text-blue-600 transition-colors leading-relaxed font-medium" data-astro-cid-cca4qjef>Main App Component</a></li><li data-astro-cid-cca4qjef><a href="#testing-our-app" data-toc-link class="block text-gray-700 hover:text-blue-600 transition-colors leading-relaxed font-medium" data-astro-cid-cca4qjef>Testing Our App</a></li><li data-astro-cid-cca4qjef><a href="#whats-next" data-toc-link class="block text-gray-700 hover:text-blue-600 transition-colors leading-relaxed font-medium" data-astro-cid-cca4qjef>What’s Next?</a></li><li data-astro-cid-cca4qjef><a href="#key-takeaways" data-toc-link class="block text-gray-700 hover:text-blue-600 transition-colors leading-relaxed font-medium" data-astro-cid-cca4qjef>Key Takeaways</a></li><li data-astro-cid-cca4qjef><a href="#homework" data-toc-link class="block text-gray-700 hover:text-blue-600 transition-colors leading-relaxed font-medium" data-astro-cid-cca4qjef>Homework</a></li></ul></div></div></nav> </aside> <!-- Main Content --> <article class="lg:col-span-3" data-astro-cid-5mk7rcd7> <div class="px-0 py-0" data-astro-cid-5mk7rcd7> <!-- Tutorial Content --> <div class="prose prose-lg max-w-none tutorial-content" data-astro-cid-5mk7rcd7> <h1 id="build-a-react-todo-app---part-1-setup-and-basic-components">Build a React Todo App - Part 1: Setup and Basic Components</h1>
+<p>Welcome to this comprehensive React tutorial series! We’ll build a fully functional todo application that demonstrates core React concepts including components, state management, hooks, and modern development practices.</p>
+<h2 id="what-well-build">What We’ll Build</h2>
+<p>Our todo app will feature:</p>
+<ul>
+<li><strong>Add/Edit/Delete todos</strong> with validation</li>
+<li><strong>Mark todos as complete</strong> with visual feedback</li>
+<li><strong>Filter todos</strong> by status (all, active, completed)</li>
+<li><strong>Drag and drop reordering</strong> for better UX</li>
+<li><strong>Local storage persistence</strong> to save data</li>
+<li><strong>Responsive design</strong> for all devices</li>
+<li><strong>Clean, modern interface</strong></li>
+<li><strong>Keyboard shortcuts</strong> for power users</li>
+</ul>
+<h2 id="project-setup">Project Setup</h2>
+<h3 id="creating-the-react-app">Creating the React App</h3>
+<p>Let’s start by creating a new React application using Vite for faster development:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#6A737D"># Create new React app with Vite</span></span>
+<span class="line"><span style="color:#B392F0">npm</span><span style="color:#9ECBFF"> create</span><span style="color:#9ECBFF"> vite@latest</span><span style="color:#9ECBFF"> react-todo-app</span><span style="color:#79B8FF"> --</span><span style="color:#79B8FF"> --template</span><span style="color:#9ECBFF"> react</span></span>
+<span class="line"><span style="color:#79B8FF">cd</span><span style="color:#9ECBFF"> react-todo-app</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D"># Install dependencies</span></span>
+<span class="line"><span style="color:#B392F0">npm</span><span style="color:#9ECBFF"> install</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D"># Install additional packages we'll need</span></span>
+<span class="line"><span style="color:#B392F0">npm</span><span style="color:#9ECBFF"> install</span><span style="color:#9ECBFF"> uuid</span><span style="color:#9ECBFF"> date-fns</span><span style="color:#9ECBFF"> clsx</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D"># Install development dependencies</span></span>
+<span class="line"><span style="color:#B392F0">npm</span><span style="color:#9ECBFF"> install</span><span style="color:#79B8FF"> -D</span><span style="color:#9ECBFF"> tailwindcss</span><span style="color:#9ECBFF"> postcss</span><span style="color:#9ECBFF"> autoprefixer</span><span style="color:#9ECBFF"> @types/uuid</span></span>
+<span class="line"><span style="color:#B392F0">npx</span><span style="color:#9ECBFF"> tailwindcss</span><span style="color:#9ECBFF"> init</span><span style="color:#79B8FF"> -p</span></span>
+<span class="line"></span></code></pre>
+<h3 id="configuring-tailwind-css">Configuring Tailwind CSS</h3>
+<p>Update your <code>tailwind.config.js</code>:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#6A737D">/** </span><span style="color:#F97583">@type</span><span style="color:#B392F0"> {import('tailwindcss').Config}</span><span style="color:#6A737D"> */</span></span>
+<span class="line"><span style="color:#F97583">export</span><span style="color:#F97583"> default</span><span style="color:#E1E4E8"> {</span></span>
+<span class="line"><span style="color:#E1E4E8">  content: [</span></span>
+<span class="line"><span style="color:#9ECBFF">    "./index.html"</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#9ECBFF">    "./src/**/*.{js,ts,jsx,tsx}"</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#E1E4E8">  ],</span></span>
+<span class="line"><span style="color:#E1E4E8">  theme: {</span></span>
+<span class="line"><span style="color:#E1E4E8">    extend: {</span></span>
+<span class="line"><span style="color:#E1E4E8">      animation: {</span></span>
+<span class="line"><span style="color:#9ECBFF">        'fade-in'</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">'fadeIn 0.2s ease-in-out'</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#9ECBFF">        'slide-in'</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">'slideIn 0.3s ease-out'</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#9ECBFF">        'bounce-in'</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">'bounceIn 0.4s ease-out'</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#E1E4E8">      },</span></span>
+<span class="line"><span style="color:#E1E4E8">      keyframes: {</span></span>
+<span class="line"><span style="color:#E1E4E8">        fadeIn: {</span></span>
+<span class="line"><span style="color:#9ECBFF">          '0%'</span><span style="color:#E1E4E8">: { opacity: </span><span style="color:#9ECBFF">'0'</span><span style="color:#E1E4E8"> },</span></span>
+<span class="line"><span style="color:#9ECBFF">          '100%'</span><span style="color:#E1E4E8">: { opacity: </span><span style="color:#9ECBFF">'1'</span><span style="color:#E1E4E8"> },</span></span>
+<span class="line"><span style="color:#E1E4E8">        },</span></span>
+<span class="line"><span style="color:#E1E4E8">        slideIn: {</span></span>
+<span class="line"><span style="color:#9ECBFF">          '0%'</span><span style="color:#E1E4E8">: { transform: </span><span style="color:#9ECBFF">'translateY(-10px)'</span><span style="color:#E1E4E8">, opacity: </span><span style="color:#9ECBFF">'0'</span><span style="color:#E1E4E8"> },</span></span>
+<span class="line"><span style="color:#9ECBFF">          '100%'</span><span style="color:#E1E4E8">: { transform: </span><span style="color:#9ECBFF">'translateY(0)'</span><span style="color:#E1E4E8">, opacity: </span><span style="color:#9ECBFF">'1'</span><span style="color:#E1E4E8"> },</span></span>
+<span class="line"><span style="color:#E1E4E8">        },</span></span>
+<span class="line"><span style="color:#E1E4E8">        bounceIn: {</span></span>
+<span class="line"><span style="color:#9ECBFF">          '0%'</span><span style="color:#E1E4E8">: { transform: </span><span style="color:#9ECBFF">'scale(0.8)'</span><span style="color:#E1E4E8">, opacity: </span><span style="color:#9ECBFF">'0'</span><span style="color:#E1E4E8"> },</span></span>
+<span class="line"><span style="color:#9ECBFF">          '50%'</span><span style="color:#E1E4E8">: { transform: </span><span style="color:#9ECBFF">'scale(1.05)'</span><span style="color:#E1E4E8"> },</span></span>
+<span class="line"><span style="color:#9ECBFF">          '100%'</span><span style="color:#E1E4E8">: { transform: </span><span style="color:#9ECBFF">'scale(1)'</span><span style="color:#E1E4E8">, opacity: </span><span style="color:#9ECBFF">'1'</span><span style="color:#E1E4E8"> },</span></span>
+<span class="line"><span style="color:#E1E4E8">        },</span></span>
+<span class="line"><span style="color:#E1E4E8">      },</span></span>
+<span class="line"><span style="color:#E1E4E8">    },</span></span>
+<span class="line"><span style="color:#E1E4E8">  },</span></span>
+<span class="line"><span style="color:#E1E4E8">  plugins: [],</span></span>
+<span class="line"><span style="color:#E1E4E8">}</span></span>
+<span class="line"></span></code></pre>
+<p>Update your <code>src/index.css</code>:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="css"><code><span class="line"><span style="color:#F97583">@tailwind</span><span style="color:#E1E4E8"> base;</span></span>
+<span class="line"><span style="color:#F97583">@tailwind</span><span style="color:#E1E4E8"> components;</span></span>
+<span class="line"><span style="color:#F97583">@tailwind</span><span style="color:#E1E4E8"> utilities;</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#F97583">@layer</span><span style="color:#E1E4E8"> base {</span></span>
+<span class="line"><span style="color:#85E89D">  html</span><span style="color:#E1E4E8"> {</span></span>
+<span class="line"><span style="color:#79B8FF">    scroll-behavior</span><span style="color:#E1E4E8">: </span><span style="color:#79B8FF">smooth</span><span style="color:#E1E4E8">;</span></span>
+<span class="line"><span style="color:#E1E4E8">  }</span></span>
+<span class="line"><span style="color:#E1E4E8">  </span></span>
+<span class="line"><span style="color:#85E89D">  body</span><span style="color:#E1E4E8"> {</span></span>
+<span class="line"><span style="color:#E1E4E8">    @</span><span style="color:#79B8FF">apply</span><span style="color:#79B8FF"> bg-gray-</span><span style="color:#E1E4E8">50 </span><span style="color:#79B8FF">text-gray-</span><span style="color:#E1E4E8">900 </span><span style="color:#79B8FF">transition-colors</span><span style="color:#79B8FF"> duration-</span><span style="color:#E1E4E8">200;</span></span>
+<span class="line"><span style="color:#E1E4E8">  }</span></span>
+<span class="line"><span style="color:#E1E4E8">}</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#F97583">@layer</span><span style="color:#E1E4E8"> components {</span></span>
+<span class="line"><span style="color:#B392F0">  .btn</span><span style="color:#E1E4E8"> {</span></span>
+<span class="line"><span style="color:#E1E4E8">    @</span><span style="color:#79B8FF">apply</span><span style="color:#79B8FF"> px-</span><span style="color:#E1E4E8">4 </span><span style="color:#79B8FF">py-</span><span style="color:#E1E4E8">2 </span><span style="color:#79B8FF">rounded-lg</span><span style="color:#79B8FF"> font-medium</span><span style="color:#79B8FF"> transition-all</span><span style="color:#79B8FF"> duration-</span><span style="color:#E1E4E8">200 </span><span style="color:#79B8FF">focus</span><span style="color:#E1E4E8">:outline-none focus:ring-2 focus:ring-offset-2;</span></span>
+<span class="line"><span style="color:#E1E4E8">  }</span></span>
+<span class="line"><span style="color:#E1E4E8">  </span></span>
+<span class="line"><span style="color:#B392F0">  .btn-primary</span><span style="color:#E1E4E8"> {</span></span>
+<span class="line"><span style="color:#E1E4E8">    @</span><span style="color:#79B8FF">apply</span><span style="color:#79B8FF"> bg-black</span><span style="color:#79B8FF"> hover</span><span style="color:#E1E4E8">:bg-gray-900 text-white focus:ring-blue-500;</span></span>
+<span class="line"><span style="color:#E1E4E8">  }</span></span>
+<span class="line"><span style="color:#E1E4E8">  </span></span>
+<span class="line"><span style="color:#B392F0">  .btn-secondary</span><span style="color:#E1E4E8"> {</span></span>
+<span class="line"><span style="color:#E1E4E8">    @</span><span style="color:#79B8FF">apply</span><span style="color:#79B8FF"> bg-gray-</span><span style="color:#E1E4E8">200 </span><span style="color:#79B8FF">hover</span><span style="color:#E1E4E8">:bg-gray-300 text-gray-800 focus:ring-gray-500;</span></span>
+<span class="line"><span style="color:#E1E4E8">  }</span></span>
+<span class="line"><span style="color:#E1E4E8">  </span></span>
+<span class="line"><span style="color:#B392F0">  .btn-danger</span><span style="color:#E1E4E8"> {</span></span>
+<span class="line"><span style="color:#E1E4E8">    @</span><span style="color:#79B8FF">apply</span><span style="color:#79B8FF"> bg-red-</span><span style="color:#E1E4E8">600 </span><span style="color:#79B8FF">hover</span><span style="color:#E1E4E8">:bg-red-700 text-white focus:ring-red-500;</span></span>
+<span class="line"><span style="color:#E1E4E8">  }</span></span>
+<span class="line"><span style="color:#E1E4E8">  </span></span>
+<span class="line"><span style="color:#B392F0">  .input</span><span style="color:#E1E4E8"> {</span></span>
+<span class="line"><span style="color:#E1E4E8">    @</span><span style="color:#79B8FF">apply</span><span style="color:#79B8FF"> w-full</span><span style="color:#79B8FF"> px-</span><span style="color:#E1E4E8">3 </span><span style="color:#79B8FF">py-</span><span style="color:#E1E4E8">2 </span><span style="color:#79B8FF">border</span><span style="color:#79B8FF"> border-gray-</span><span style="color:#E1E4E8">300 </span><span style="color:#79B8FF">rounded-lg</span><span style="color:#79B8FF"> bg-white</span><span style="color:#79B8FF"> text-gray-</span><span style="color:#E1E4E8">900 </span><span style="color:#79B8FF">focus</span><span style="color:#E1E4E8">:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors duration-200;</span></span>
+<span class="line"><span style="color:#E1E4E8">  }</span></span>
+<span class="line"><span style="color:#E1E4E8">}</span></span>
+<span class="line"></span></code></pre>
+<h2 id="project-structure">Project Structure</h2>
+<p>Let’s organize our project with a clean structure:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="plaintext"><code><span class="line"><span>src/</span></span>
+<span class="line"><span>├── components/</span></span>
+<span class="line"><span>│   ├── ui/</span></span>
+<span class="line"><span>│   │   ├── Button.jsx</span></span>
+<span class="line"><span>│   │   ├── Input.jsx</span></span>
+<span class="line"><span>│   │   └── Modal.jsx</span></span>
+<span class="line"><span>│   ├── TodoItem.jsx</span></span>
+<span class="line"><span>│   ├── TodoList.jsx</span></span>
+<span class="line"><span>│   ├── TodoForm.jsx</span></span>
+<span class="line"><span>│   ├── TodoFilters.jsx</span></span>
+<span class="line"><span>│   └── TodoStats.jsx</span></span>
+<span class="line"><span>├── hooks/</span></span>
+<span class="line"><span>│   ├── useTodos.js</span></span>
+<span class="line"><span>│   └── useLocalStorage.js</span></span>
+<span class="line"><span>├── utils/</span></span>
+<span class="line"><span>│   ├── todoHelpers.js</span></span>
+<span class="line"><span>│   └── constants.js</span></span>
+<span class="line"><span>├── types/</span></span>
+<span class="line"><span>│   └── todo.js</span></span>
+<span class="line"><span>├── App.jsx</span></span>
+<span class="line"><span>└── main.jsx</span></span>
+<span class="line"><span></span></span></code></pre>
+<h2 id="defining-data-types">Defining Data Types</h2>
+<p>Let’s start by defining our todo data structure:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#6A737D">// src/types/todo.js</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">/**</span></span>
+<span class="line"><span style="color:#6A737D"> * Todo item structure</span></span>
+<span class="line"><span style="color:#6A737D"> * </span><span style="color:#F97583">@typedef</span><span style="color:#B392F0"> {Object}</span><span style="color:#B392F0"> Todo</span></span>
+<span class="line"><span style="color:#6A737D"> * </span><span style="color:#F97583">@property</span><span style="color:#B392F0"> {string}</span><span style="color:#E1E4E8"> id</span><span style="color:#6A737D"> - Unique identifier</span></span>
+<span class="line"><span style="color:#6A737D"> * </span><span style="color:#F97583">@property</span><span style="color:#B392F0"> {string}</span><span style="color:#E1E4E8"> text</span><span style="color:#6A737D"> - Todo description</span></span>
+<span class="line"><span style="color:#6A737D"> * </span><span style="color:#F97583">@property</span><span style="color:#B392F0"> {boolean}</span><span style="color:#E1E4E8"> completed</span><span style="color:#6A737D"> - Completion status</span></span>
+<span class="line"><span style="color:#6A737D"> * </span><span style="color:#F97583">@property</span><span style="color:#B392F0"> {Date}</span><span style="color:#E1E4E8"> createdAt</span><span style="color:#6A737D"> - Creation timestamp</span></span>
+<span class="line"><span style="color:#6A737D"> * </span><span style="color:#F97583">@property</span><span style="color:#B392F0"> {Date}</span><span style="color:#E1E4E8"> updatedAt</span><span style="color:#6A737D"> - Last update timestamp</span></span>
+<span class="line"><span style="color:#6A737D"> * </span><span style="color:#F97583">@property</span><span style="color:#B392F0"> {string}</span><span style="color:#E1E4E8"> priority</span><span style="color:#6A737D"> - Priority level (low, medium, high)</span></span>
+<span class="line"><span style="color:#6A737D"> * </span><span style="color:#F97583">@property</span><span style="color:#B392F0"> {string}</span><span style="color:#E1E4E8"> category</span><span style="color:#6A737D"> - Optional category</span></span>
+<span class="line"><span style="color:#6A737D"> */</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">/**</span></span>
+<span class="line"><span style="color:#6A737D"> * Filter options for todos</span></span>
+<span class="line"><span style="color:#6A737D"> * </span><span style="color:#F97583">@typedef</span><span style="color:#B392F0"> {Object}</span><span style="color:#B392F0"> TodoFilter</span></span>
+<span class="line"><span style="color:#6A737D"> * </span><span style="color:#F97583">@property</span><span style="color:#B392F0"> {string}</span><span style="color:#E1E4E8"> status</span><span style="color:#6A737D"> - 'all' | 'active' | 'completed'</span></span>
+<span class="line"><span style="color:#6A737D"> * </span><span style="color:#F97583">@property</span><span style="color:#B392F0"> {string}</span><span style="color:#E1E4E8"> priority</span><span style="color:#6A737D"> - 'all' | 'low' | 'medium' | 'high'</span></span>
+<span class="line"><span style="color:#6A737D"> * </span><span style="color:#F97583">@property</span><span style="color:#B392F0"> {string}</span><span style="color:#E1E4E8"> category</span><span style="color:#6A737D"> - category name or 'all'</span></span>
+<span class="line"><span style="color:#6A737D"> */</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#F97583">export</span><span style="color:#F97583"> const</span><span style="color:#79B8FF"> TODO_FILTERS</span><span style="color:#F97583"> =</span><span style="color:#E1E4E8"> {</span></span>
+<span class="line"><span style="color:#E1E4E8">  STATUS: {</span></span>
+<span class="line"><span style="color:#E1E4E8">    ALL: </span><span style="color:#9ECBFF">'all'</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#E1E4E8">    ACTIVE: </span><span style="color:#9ECBFF">'active'</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#E1E4E8">    COMPLETED: </span><span style="color:#9ECBFF">'completed'</span></span>
+<span class="line"><span style="color:#E1E4E8">  },</span></span>
+<span class="line"><span style="color:#E1E4E8">  PRIORITY: {</span></span>
+<span class="line"><span style="color:#E1E4E8">    ALL: </span><span style="color:#9ECBFF">'all'</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#E1E4E8">    LOW: </span><span style="color:#9ECBFF">'low'</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#E1E4E8">    MEDIUM: </span><span style="color:#9ECBFF">'medium'</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#E1E4E8">    HIGH: </span><span style="color:#9ECBFF">'high'</span></span>
+<span class="line"><span style="color:#E1E4E8">  }</span></span>
+<span class="line"><span style="color:#E1E4E8">};</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#F97583">export</span><span style="color:#F97583"> const</span><span style="color:#79B8FF"> TODO_PRIORITIES</span><span style="color:#F97583"> =</span><span style="color:#E1E4E8"> [</span></span>
+<span class="line"><span style="color:#E1E4E8">  { value: </span><span style="color:#9ECBFF">'low'</span><span style="color:#E1E4E8">, label: </span><span style="color:#9ECBFF">'Low'</span><span style="color:#E1E4E8">, color: </span><span style="color:#9ECBFF">'green'</span><span style="color:#E1E4E8"> },</span></span>
+<span class="line"><span style="color:#E1E4E8">  { value: </span><span style="color:#9ECBFF">'medium'</span><span style="color:#E1E4E8">, label: </span><span style="color:#9ECBFF">'Medium'</span><span style="color:#E1E4E8">, color: </span><span style="color:#9ECBFF">'yellow'</span><span style="color:#E1E4E8"> },</span></span>
+<span class="line"><span style="color:#E1E4E8">  { value: </span><span style="color:#9ECBFF">'high'</span><span style="color:#E1E4E8">, label: </span><span style="color:#9ECBFF">'High'</span><span style="color:#E1E4E8">, color: </span><span style="color:#9ECBFF">'red'</span><span style="color:#E1E4E8"> }</span></span>
+<span class="line"><span style="color:#E1E4E8">];</span></span>
+<span class="line"></span></code></pre>
+<h2 id="creating-ui-components">Creating UI Components</h2>
+<h3 id="button-component">Button Component</h3>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="jsx"><code><span class="line"><span style="color:#6A737D">// src/components/ui/Button.jsx</span></span>
+<span class="line"><span style="color:#F97583">import</span><span style="color:#E1E4E8"> { clsx } </span><span style="color:#F97583">from</span><span style="color:#9ECBFF"> 'clsx'</span><span style="color:#E1E4E8">;</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#F97583">const</span><span style="color:#B392F0"> Button</span><span style="color:#F97583"> =</span><span style="color:#E1E4E8"> ({ </span></span>
+<span class="line"><span style="color:#E1E4E8">  children, </span></span>
+<span class="line"><span style="color:#E1E4E8">  variant </span><span style="color:#F97583">=</span><span style="color:#9ECBFF"> 'primary'</span><span style="color:#E1E4E8">, </span></span>
+<span class="line"><span style="color:#E1E4E8">  size </span><span style="color:#F97583">=</span><span style="color:#9ECBFF"> 'md'</span><span style="color:#E1E4E8">, </span></span>
+<span class="line"><span style="color:#E1E4E8">  disabled </span><span style="color:#F97583">=</span><span style="color:#79B8FF"> false</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#E1E4E8">  loading </span><span style="color:#F97583">=</span><span style="color:#79B8FF"> false</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#E1E4E8">  className,</span></span>
+<span class="line"><span style="color:#F97583">  ...</span><span style="color:#E1E4E8">props </span></span>
+<span class="line"><span style="color:#E1E4E8">}) </span><span style="color:#F97583">=></span><span style="color:#E1E4E8"> {</span></span>
+<span class="line"><span style="color:#F97583">  const</span><span style="color:#79B8FF"> baseClasses</span><span style="color:#F97583"> =</span><span style="color:#9ECBFF"> 'btn inline-flex items-center justify-center disabled:opacity-50 disabled:cursor-not-allowed'</span><span style="color:#E1E4E8">;</span></span>
+<span class="line"><span style="color:#E1E4E8">  </span></span>
+<span class="line"><span style="color:#F97583">  const</span><span style="color:#79B8FF"> variants</span><span style="color:#F97583"> =</span><span style="color:#E1E4E8"> {</span></span>
+<span class="line"><span style="color:#E1E4E8">    primary: </span><span style="color:#9ECBFF">'btn-primary'</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#E1E4E8">    secondary: </span><span style="color:#9ECBFF">'btn-secondary'</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#E1E4E8">    danger: </span><span style="color:#9ECBFF">'btn-danger'</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#E1E4E8">    ghost: </span><span style="color:#9ECBFF">'hover:bg-gray-100 text-gray-700'</span></span>
+<span class="line"><span style="color:#E1E4E8">  };</span></span>
+<span class="line"><span style="color:#E1E4E8">  </span></span>
+<span class="line"><span style="color:#F97583">  const</span><span style="color:#79B8FF"> sizes</span><span style="color:#F97583"> =</span><span style="color:#E1E4E8"> {</span></span>
+<span class="line"><span style="color:#E1E4E8">    sm: </span><span style="color:#9ECBFF">'px-3 py-1.5 text-sm'</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#E1E4E8">    md: </span><span style="color:#9ECBFF">'px-4 py-2'</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#E1E4E8">    lg: </span><span style="color:#9ECBFF">'px-6 py-3 text-lg'</span></span>
+<span class="line"><span style="color:#E1E4E8">  };</span></span>
+<span class="line"><span style="color:#E1E4E8">  </span></span>
+<span class="line"><span style="color:#F97583">  return</span><span style="color:#E1E4E8"> (</span></span>
+<span class="line"><span style="color:#E1E4E8">    &#x3C;</span><span style="color:#85E89D">button</span></span>
+<span class="line"><span style="color:#B392F0">      className</span><span style="color:#F97583">=</span><span style="color:#E1E4E8">{</span><span style="color:#B392F0">clsx</span><span style="color:#E1E4E8">(</span></span>
+<span class="line"><span style="color:#E1E4E8">        baseClasses,</span></span>
+<span class="line"><span style="color:#E1E4E8">        variants[variant],</span></span>
+<span class="line"><span style="color:#E1E4E8">        sizes[size],</span></span>
+<span class="line"><span style="color:#E1E4E8">        className</span></span>
+<span class="line"><span style="color:#E1E4E8">      )}</span></span>
+<span class="line"><span style="color:#B392F0">      disabled</span><span style="color:#F97583">=</span><span style="color:#E1E4E8">{disabled </span><span style="color:#F97583">||</span><span style="color:#E1E4E8"> loading}</span></span>
+<span class="line"><span style="color:#E1E4E8">      {</span><span style="color:#F97583">...</span><span style="color:#E1E4E8">props}</span></span>
+<span class="line"><span style="color:#E1E4E8">    ></span></span>
+<span class="line"><span style="color:#E1E4E8">      {loading </span><span style="color:#F97583">&#x26;&#x26;</span><span style="color:#E1E4E8"> (</span></span>
+<span class="line"><span style="color:#E1E4E8">        &#x3C;</span><span style="color:#85E89D">svg</span><span style="color:#B392F0"> className</span><span style="color:#F97583">=</span><span style="color:#9ECBFF">"animate-spin -ml-1 mr-2 h-4 w-4"</span><span style="color:#B392F0"> fill</span><span style="color:#F97583">=</span><span style="color:#9ECBFF">"none"</span><span style="color:#B392F0"> viewBox</span><span style="color:#F97583">=</span><span style="color:#9ECBFF">"0 0 24 24"</span><span style="color:#E1E4E8">></span></span>
+<span class="line"><span style="color:#E1E4E8">          &#x3C;</span><span style="color:#85E89D">circle</span><span style="color:#B392F0"> className</span><span style="color:#F97583">=</span><span style="color:#9ECBFF">"opacity-25"</span><span style="color:#B392F0"> cx</span><span style="color:#F97583">=</span><span style="color:#9ECBFF">"12"</span><span style="color:#B392F0"> cy</span><span style="color:#F97583">=</span><span style="color:#9ECBFF">"12"</span><span style="color:#B392F0"> r</span><span style="color:#F97583">=</span><span style="color:#9ECBFF">"10"</span><span style="color:#B392F0"> stroke</span><span style="color:#F97583">=</span><span style="color:#9ECBFF">"currentColor"</span><span style="color:#B392F0"> strokeWidth</span><span style="color:#F97583">=</span><span style="color:#9ECBFF">"4"</span><span style="color:#E1E4E8"> /></span></span>
+<span class="line"><span style="color:#E1E4E8">          &#x3C;</span><span style="color:#85E89D">path</span><span style="color:#B392F0"> className</span><span style="color:#F97583">=</span><span style="color:#9ECBFF">"opacity-75"</span><span style="color:#B392F0"> fill</span><span style="color:#F97583">=</span><span style="color:#9ECBFF">"currentColor"</span><span style="color:#B392F0"> d</span><span style="color:#F97583">=</span><span style="color:#9ECBFF">"M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"</span><span style="color:#E1E4E8"> /></span></span>
+<span class="line"><span style="color:#E1E4E8">        &#x3C;/</span><span style="color:#85E89D">svg</span><span style="color:#E1E4E8">></span></span>
+<span class="line"><span style="color:#E1E4E8">      )}</span></span>
+<span class="line"><span style="color:#E1E4E8">      {children}</span></span>
+<span class="line"><span style="color:#E1E4E8">    &#x3C;/</span><span style="color:#85E89D">button</span><span style="color:#E1E4E8">></span></span>
+<span class="line"><span style="color:#E1E4E8">  );</span></span>
+<span class="line"><span style="color:#E1E4E8">};</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#F97583">export</span><span style="color:#F97583"> default</span><span style="color:#E1E4E8"> Button;</span></span>
+<span class="line"></span></code></pre>
+<h3 id="input-component">Input Component</h3>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="jsx"><code><span class="line"><span style="color:#6A737D">// src/components/ui/Input.jsx</span></span>
+<span class="line"><span style="color:#F97583">import</span><span style="color:#E1E4E8"> { clsx } </span><span style="color:#F97583">from</span><span style="color:#9ECBFF"> 'clsx'</span><span style="color:#E1E4E8">;</span></span>
+<span class="line"><span style="color:#F97583">import</span><span style="color:#E1E4E8"> { forwardRef } </span><span style="color:#F97583">from</span><span style="color:#9ECBFF"> 'react'</span><span style="color:#E1E4E8">;</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#F97583">const</span><span style="color:#79B8FF"> Input</span><span style="color:#F97583"> =</span><span style="color:#B392F0"> forwardRef</span><span style="color:#E1E4E8">(({ </span></span>
+<span class="line"><span style="color:#E1E4E8">  label, </span></span>
+<span class="line"><span style="color:#E1E4E8">  error, </span></span>
+<span class="line"><span style="color:#E1E4E8">  helpText,</span></span>
+<span class="line"><span style="color:#E1E4E8">  className,</span></span>
+<span class="line"><span style="color:#F97583">  ...</span><span style="color:#E1E4E8">props </span></span>
+<span class="line"><span style="color:#E1E4E8">}, ref) </span><span style="color:#F97583">=></span><span style="color:#E1E4E8"> {</span></span>
+<span class="line"><span style="color:#F97583">  return</span><span style="color:#E1E4E8"> (</span></span>
+<span class="line"><span style="color:#E1E4E8">    &#x3C;</span><span style="color:#85E89D">div</span><span style="color:#B392F0"> className</span><span style="color:#F97583">=</span><span style="color:#9ECBFF">"space-y-1"</span><span style="color:#E1E4E8">></span></span>
+<span class="line"><span style="color:#E1E4E8">      {label </span><span style="color:#F97583">&#x26;&#x26;</span><span style="color:#E1E4E8"> (</span></span>
+<span class="line"><span style="color:#E1E4E8">        &#x3C;</span><span style="color:#85E89D">label</span><span style="color:#E1E4E8"> </span></span>
+<span class="line"><span style="color:#B392F0">          htmlFor</span><span style="color:#F97583">=</span><span style="color:#E1E4E8">{props.id} </span></span>
+<span class="line"><span style="color:#B392F0">          className</span><span style="color:#F97583">=</span><span style="color:#9ECBFF">"block text-sm font-medium text-gray-700"</span></span>
+<span class="line"><span style="color:#E1E4E8">        ></span></span>
+<span class="line"><span style="color:#E1E4E8">          {label}</span></span>
+<span class="line"><span style="color:#E1E4E8">        &#x3C;/</span><span style="color:#85E89D">label</span><span style="color:#E1E4E8">></span></span>
+<span class="line"><span style="color:#E1E4E8">      )}</span></span>
+<span class="line"><span style="color:#E1E4E8">      </span></span>
+<span class="line"><span style="color:#E1E4E8">      &#x3C;</span><span style="color:#85E89D">input</span></span>
+<span class="line"><span style="color:#B392F0">        ref</span><span style="color:#F97583">=</span><span style="color:#E1E4E8">{ref}</span></span>
+<span class="line"><span style="color:#B392F0">        className</span><span style="color:#F97583">=</span><span style="color:#E1E4E8">{</span><span style="color:#B392F0">clsx</span><span style="color:#E1E4E8">(</span></span>
+<span class="line"><span style="color:#9ECBFF">          'input'</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#E1E4E8">          error </span><span style="color:#F97583">&#x26;&#x26;</span><span style="color:#9ECBFF"> 'border-red-500 focus:ring-red-500'</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#E1E4E8">          className</span></span>
+<span class="line"><span style="color:#E1E4E8">        )}</span></span>
+<span class="line"><span style="color:#E1E4E8">        {</span><span style="color:#F97583">...</span><span style="color:#E1E4E8">props}</span></span>
+<span class="line"><span style="color:#E1E4E8">      /></span></span>
+<span class="line"><span style="color:#E1E4E8">      </span></span>
+<span class="line"><span style="color:#E1E4E8">      {error </span><span style="color:#F97583">&#x26;&#x26;</span><span style="color:#E1E4E8"> (</span></span>
+<span class="line"><span style="color:#E1E4E8">        &#x3C;</span><span style="color:#85E89D">p</span><span style="color:#B392F0"> className</span><span style="color:#F97583">=</span><span style="color:#9ECBFF">"text-sm text-red-600"</span><span style="color:#E1E4E8">>{error}&#x3C;/</span><span style="color:#85E89D">p</span><span style="color:#E1E4E8">></span></span>
+<span class="line"><span style="color:#E1E4E8">      )}</span></span>
+<span class="line"><span style="color:#E1E4E8">      </span></span>
+<span class="line"><span style="color:#E1E4E8">      {helpText </span><span style="color:#F97583">&#x26;&#x26;</span><span style="color:#F97583"> !</span><span style="color:#E1E4E8">error </span><span style="color:#F97583">&#x26;&#x26;</span><span style="color:#E1E4E8"> (</span></span>
+<span class="line"><span style="color:#E1E4E8">        &#x3C;</span><span style="color:#85E89D">p</span><span style="color:#B392F0"> className</span><span style="color:#F97583">=</span><span style="color:#9ECBFF">"text-sm text-gray-500"</span><span style="color:#E1E4E8">>{helpText}&#x3C;/</span><span style="color:#85E89D">p</span><span style="color:#E1E4E8">></span></span>
+<span class="line"><span style="color:#E1E4E8">      )}</span></span>
+<span class="line"><span style="color:#E1E4E8">    &#x3C;/</span><span style="color:#85E89D">div</span><span style="color:#E1E4E8">></span></span>
+<span class="line"><span style="color:#E1E4E8">  );</span></span>
+<span class="line"><span style="color:#E1E4E8">});</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#E1E4E8">Input.displayName </span><span style="color:#F97583">=</span><span style="color:#9ECBFF"> 'Input'</span><span style="color:#E1E4E8">;</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#F97583">export</span><span style="color:#F97583"> default</span><span style="color:#E1E4E8"> Input;</span></span>
+<span class="line"></span></code></pre>
+<h2 id="custom-hooks">Custom Hooks</h2>
+<h3 id="uselocalstorage-hook">useLocalStorage Hook</h3>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#6A737D">// src/hooks/useLocalStorage.js</span></span>
+<span class="line"><span style="color:#F97583">import</span><span style="color:#E1E4E8"> { useState, useEffect } </span><span style="color:#F97583">from</span><span style="color:#9ECBFF"> 'react'</span><span style="color:#E1E4E8">;</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#F97583">export</span><span style="color:#F97583"> const</span><span style="color:#B392F0"> useLocalStorage</span><span style="color:#F97583"> =</span><span style="color:#E1E4E8"> (</span><span style="color:#FFAB70">key</span><span style="color:#E1E4E8">, </span><span style="color:#FFAB70">initialValue</span><span style="color:#E1E4E8">) </span><span style="color:#F97583">=></span><span style="color:#E1E4E8"> {</span></span>
+<span class="line"><span style="color:#6A737D">  // Get value from localStorage or use initial value</span></span>
+<span class="line"><span style="color:#F97583">  const</span><span style="color:#E1E4E8"> [</span><span style="color:#79B8FF">storedValue</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">setStoredValue</span><span style="color:#E1E4E8">] </span><span style="color:#F97583">=</span><span style="color:#B392F0"> useState</span><span style="color:#E1E4E8">(() </span><span style="color:#F97583">=></span><span style="color:#E1E4E8"> {</span></span>
+<span class="line"><span style="color:#F97583">    try</span><span style="color:#E1E4E8"> {</span></span>
+<span class="line"><span style="color:#F97583">      const</span><span style="color:#79B8FF"> item</span><span style="color:#F97583"> =</span><span style="color:#E1E4E8"> window.localStorage.</span><span style="color:#B392F0">getItem</span><span style="color:#E1E4E8">(key);</span></span>
+<span class="line"><span style="color:#F97583">      return</span><span style="color:#E1E4E8"> item </span><span style="color:#F97583">?</span><span style="color:#79B8FF"> JSON</span><span style="color:#E1E4E8">.</span><span style="color:#B392F0">parse</span><span style="color:#E1E4E8">(item) </span><span style="color:#F97583">:</span><span style="color:#E1E4E8"> initialValue;</span></span>
+<span class="line"><span style="color:#E1E4E8">    } </span><span style="color:#F97583">catch</span><span style="color:#E1E4E8"> (error) {</span></span>
+<span class="line"><span style="color:#E1E4E8">      console.</span><span style="color:#B392F0">error</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">`Error reading localStorage key "${</span><span style="color:#E1E4E8">key</span><span style="color:#9ECBFF">}":`</span><span style="color:#E1E4E8">, error);</span></span>
+<span class="line"><span style="color:#F97583">      return</span><span style="color:#E1E4E8"> initialValue;</span></span>
+<span class="line"><span style="color:#E1E4E8">    }</span></span>
+<span class="line"><span style="color:#E1E4E8">  });</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">  // Update localStorage when state changes</span></span>
+<span class="line"><span style="color:#F97583">  const</span><span style="color:#B392F0"> setValue</span><span style="color:#F97583"> =</span><span style="color:#E1E4E8"> (</span><span style="color:#FFAB70">value</span><span style="color:#E1E4E8">) </span><span style="color:#F97583">=></span><span style="color:#E1E4E8"> {</span></span>
+<span class="line"><span style="color:#F97583">    try</span><span style="color:#E1E4E8"> {</span></span>
+<span class="line"><span style="color:#6A737D">      // Allow value to be a function so we have the same API as useState</span></span>
+<span class="line"><span style="color:#F97583">      const</span><span style="color:#79B8FF"> valueToStore</span><span style="color:#F97583"> =</span><span style="color:#E1E4E8"> value </span><span style="color:#F97583">instanceof</span><span style="color:#B392F0"> Function</span><span style="color:#F97583"> ?</span><span style="color:#B392F0"> value</span><span style="color:#E1E4E8">(storedValue) </span><span style="color:#F97583">:</span><span style="color:#E1E4E8"> value;</span></span>
+<span class="line"><span style="color:#B392F0">      setStoredValue</span><span style="color:#E1E4E8">(valueToStore);</span></span>
+<span class="line"><span style="color:#E1E4E8">      window.localStorage.</span><span style="color:#B392F0">setItem</span><span style="color:#E1E4E8">(key, </span><span style="color:#79B8FF">JSON</span><span style="color:#E1E4E8">.</span><span style="color:#B392F0">stringify</span><span style="color:#E1E4E8">(valueToStore));</span></span>
+<span class="line"><span style="color:#E1E4E8">    } </span><span style="color:#F97583">catch</span><span style="color:#E1E4E8"> (error) {</span></span>
+<span class="line"><span style="color:#E1E4E8">      console.</span><span style="color:#B392F0">error</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">`Error setting localStorage key "${</span><span style="color:#E1E4E8">key</span><span style="color:#9ECBFF">}":`</span><span style="color:#E1E4E8">, error);</span></span>
+<span class="line"><span style="color:#E1E4E8">    }</span></span>
+<span class="line"><span style="color:#E1E4E8">  };</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#F97583">  return</span><span style="color:#E1E4E8"> [storedValue, setValue];</span></span>
+<span class="line"><span style="color:#E1E4E8">};</span></span>
+<span class="line"></span></code></pre>
+<h3 id="usetodos-hook">useTodos Hook</h3>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#6A737D">// src/hooks/useTodos.js</span></span>
+<span class="line"><span style="color:#F97583">import</span><span style="color:#E1E4E8"> { useState, useCallback, useMemo } </span><span style="color:#F97583">from</span><span style="color:#9ECBFF"> 'react'</span><span style="color:#E1E4E8">;</span></span>
+<span class="line"><span style="color:#F97583">import</span><span style="color:#E1E4E8"> { useLocalStorage } </span><span style="color:#F97583">from</span><span style="color:#9ECBFF"> './useLocalStorage'</span><span style="color:#E1E4E8">;</span></span>
+<span class="line"><span style="color:#F97583">import</span><span style="color:#E1E4E8"> { v4 </span><span style="color:#F97583">as</span><span style="color:#E1E4E8"> uuidv4 } </span><span style="color:#F97583">from</span><span style="color:#9ECBFF"> 'uuid'</span><span style="color:#E1E4E8">;</span></span>
+<span class="line"><span style="color:#F97583">import</span><span style="color:#E1E4E8"> { TODO_FILTERS } </span><span style="color:#F97583">from</span><span style="color:#9ECBFF"> '../types/todo'</span><span style="color:#E1E4E8">;</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#F97583">export</span><span style="color:#F97583"> const</span><span style="color:#B392F0"> useTodos</span><span style="color:#F97583"> =</span><span style="color:#E1E4E8"> () </span><span style="color:#F97583">=></span><span style="color:#E1E4E8"> {</span></span>
+<span class="line"><span style="color:#F97583">  const</span><span style="color:#E1E4E8"> [</span><span style="color:#79B8FF">todos</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">setTodos</span><span style="color:#E1E4E8">] </span><span style="color:#F97583">=</span><span style="color:#B392F0"> useLocalStorage</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">'todos'</span><span style="color:#E1E4E8">, []);</span></span>
+<span class="line"><span style="color:#F97583">  const</span><span style="color:#E1E4E8"> [</span><span style="color:#79B8FF">filter</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">setFilter</span><span style="color:#E1E4E8">] </span><span style="color:#F97583">=</span><span style="color:#B392F0"> useState</span><span style="color:#E1E4E8">({</span></span>
+<span class="line"><span style="color:#E1E4E8">    status: </span><span style="color:#79B8FF">TODO_FILTERS</span><span style="color:#E1E4E8">.</span><span style="color:#79B8FF">STATUS</span><span style="color:#E1E4E8">.</span><span style="color:#79B8FF">ALL</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#E1E4E8">    priority: </span><span style="color:#79B8FF">TODO_FILTERS</span><span style="color:#E1E4E8">.</span><span style="color:#79B8FF">PRIORITY</span><span style="color:#E1E4E8">.</span><span style="color:#79B8FF">ALL</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#E1E4E8">    category: </span><span style="color:#9ECBFF">'all'</span></span>
+<span class="line"><span style="color:#E1E4E8">  });</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">  // Add new todo</span></span>
+<span class="line"><span style="color:#F97583">  const</span><span style="color:#79B8FF"> addTodo</span><span style="color:#F97583"> =</span><span style="color:#B392F0"> useCallback</span><span style="color:#E1E4E8">((</span><span style="color:#FFAB70">todoData</span><span style="color:#E1E4E8">) </span><span style="color:#F97583">=></span><span style="color:#E1E4E8"> {</span></span>
+<span class="line"><span style="color:#F97583">    const</span><span style="color:#79B8FF"> newTodo</span><span style="color:#F97583"> =</span><span style="color:#E1E4E8"> {</span></span>
+<span class="line"><span style="color:#E1E4E8">      id: </span><span style="color:#B392F0">uuidv4</span><span style="color:#E1E4E8">(),</span></span>
+<span class="line"><span style="color:#E1E4E8">      text: todoData.text.</span><span style="color:#B392F0">trim</span><span style="color:#E1E4E8">(),</span></span>
+<span class="line"><span style="color:#E1E4E8">      completed: </span><span style="color:#79B8FF">false</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#E1E4E8">      priority: todoData.priority </span><span style="color:#F97583">||</span><span style="color:#9ECBFF"> 'medium'</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#E1E4E8">      category: todoData.category </span><span style="color:#F97583">||</span><span style="color:#9ECBFF"> 'general'</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#E1E4E8">      createdAt: </span><span style="color:#F97583">new</span><span style="color:#B392F0"> Date</span><span style="color:#E1E4E8">().</span><span style="color:#B392F0">toISOString</span><span style="color:#E1E4E8">(),</span></span>
+<span class="line"><span style="color:#E1E4E8">      updatedAt: </span><span style="color:#F97583">new</span><span style="color:#B392F0"> Date</span><span style="color:#E1E4E8">().</span><span style="color:#B392F0">toISOString</span><span style="color:#E1E4E8">()</span></span>
+<span class="line"><span style="color:#E1E4E8">    };</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#B392F0">    setTodos</span><span style="color:#E1E4E8">(</span><span style="color:#FFAB70">prevTodos</span><span style="color:#F97583"> =></span><span style="color:#E1E4E8"> [newTodo, </span><span style="color:#F97583">...</span><span style="color:#E1E4E8">prevTodos]);</span></span>
+<span class="line"><span style="color:#F97583">    return</span><span style="color:#E1E4E8"> newTodo;</span></span>
+<span class="line"><span style="color:#E1E4E8">  }, [setTodos]);</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">  // Update todo</span></span>
+<span class="line"><span style="color:#F97583">  const</span><span style="color:#79B8FF"> updateTodo</span><span style="color:#F97583"> =</span><span style="color:#B392F0"> useCallback</span><span style="color:#E1E4E8">((</span><span style="color:#FFAB70">id</span><span style="color:#E1E4E8">, </span><span style="color:#FFAB70">updates</span><span style="color:#E1E4E8">) </span><span style="color:#F97583">=></span><span style="color:#E1E4E8"> {</span></span>
+<span class="line"><span style="color:#B392F0">    setTodos</span><span style="color:#E1E4E8">(</span><span style="color:#FFAB70">prevTodos</span><span style="color:#F97583"> =></span></span>
+<span class="line"><span style="color:#E1E4E8">      prevTodos.</span><span style="color:#B392F0">map</span><span style="color:#E1E4E8">(</span><span style="color:#FFAB70">todo</span><span style="color:#F97583"> =></span></span>
+<span class="line"><span style="color:#E1E4E8">        todo.id </span><span style="color:#F97583">===</span><span style="color:#E1E4E8"> id</span></span>
+<span class="line"><span style="color:#F97583">          ?</span><span style="color:#E1E4E8"> { </span></span>
+<span class="line"><span style="color:#F97583">              ...</span><span style="color:#E1E4E8">todo, </span></span>
+<span class="line"><span style="color:#F97583">              ...</span><span style="color:#E1E4E8">updates, </span></span>
+<span class="line"><span style="color:#E1E4E8">              updatedAt: </span><span style="color:#F97583">new</span><span style="color:#B392F0"> Date</span><span style="color:#E1E4E8">().</span><span style="color:#B392F0">toISOString</span><span style="color:#E1E4E8">() </span></span>
+<span class="line"><span style="color:#E1E4E8">            }</span></span>
+<span class="line"><span style="color:#F97583">          :</span><span style="color:#E1E4E8"> todo</span></span>
+<span class="line"><span style="color:#E1E4E8">      )</span></span>
+<span class="line"><span style="color:#E1E4E8">    );</span></span>
+<span class="line"><span style="color:#E1E4E8">  }, [setTodos]);</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">  // Delete todo</span></span>
+<span class="line"><span style="color:#F97583">  const</span><span style="color:#79B8FF"> deleteTodo</span><span style="color:#F97583"> =</span><span style="color:#B392F0"> useCallback</span><span style="color:#E1E4E8">((</span><span style="color:#FFAB70">id</span><span style="color:#E1E4E8">) </span><span style="color:#F97583">=></span><span style="color:#E1E4E8"> {</span></span>
+<span class="line"><span style="color:#B392F0">    setTodos</span><span style="color:#E1E4E8">(</span><span style="color:#FFAB70">prevTodos</span><span style="color:#F97583"> =></span><span style="color:#E1E4E8"> prevTodos.</span><span style="color:#B392F0">filter</span><span style="color:#E1E4E8">(</span><span style="color:#FFAB70">todo</span><span style="color:#F97583"> =></span><span style="color:#E1E4E8"> todo.id </span><span style="color:#F97583">!==</span><span style="color:#E1E4E8"> id));</span></span>
+<span class="line"><span style="color:#E1E4E8">  }, [setTodos]);</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">  // Toggle todo completion</span></span>
+<span class="line"><span style="color:#F97583">  const</span><span style="color:#79B8FF"> toggleTodo</span><span style="color:#F97583"> =</span><span style="color:#B392F0"> useCallback</span><span style="color:#E1E4E8">((</span><span style="color:#FFAB70">id</span><span style="color:#E1E4E8">) </span><span style="color:#F97583">=></span><span style="color:#E1E4E8"> {</span></span>
+<span class="line"><span style="color:#B392F0">    updateTodo</span><span style="color:#E1E4E8">(id, { </span></span>
+<span class="line"><span style="color:#E1E4E8">      completed: </span><span style="color:#F97583">!</span><span style="color:#E1E4E8">todos.</span><span style="color:#B392F0">find</span><span style="color:#E1E4E8">(</span><span style="color:#FFAB70">todo</span><span style="color:#F97583"> =></span><span style="color:#E1E4E8"> todo.id </span><span style="color:#F97583">===</span><span style="color:#E1E4E8"> id)?.completed </span></span>
+<span class="line"><span style="color:#E1E4E8">    });</span></span>
+<span class="line"><span style="color:#E1E4E8">  }, [todos, updateTodo]);</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">  // Clear completed todos</span></span>
+<span class="line"><span style="color:#F97583">  const</span><span style="color:#79B8FF"> clearCompleted</span><span style="color:#F97583"> =</span><span style="color:#B392F0"> useCallback</span><span style="color:#E1E4E8">(() </span><span style="color:#F97583">=></span><span style="color:#E1E4E8"> {</span></span>
+<span class="line"><span style="color:#B392F0">    setTodos</span><span style="color:#E1E4E8">(</span><span style="color:#FFAB70">prevTodos</span><span style="color:#F97583"> =></span><span style="color:#E1E4E8"> prevTodos.</span><span style="color:#B392F0">filter</span><span style="color:#E1E4E8">(</span><span style="color:#FFAB70">todo</span><span style="color:#F97583"> =></span><span style="color:#F97583"> !</span><span style="color:#E1E4E8">todo.completed));</span></span>
+<span class="line"><span style="color:#E1E4E8">  }, [setTodos]);</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">  // Filtered todos based on current filter</span></span>
+<span class="line"><span style="color:#F97583">  const</span><span style="color:#79B8FF"> filteredTodos</span><span style="color:#F97583"> =</span><span style="color:#B392F0"> useMemo</span><span style="color:#E1E4E8">(() </span><span style="color:#F97583">=></span><span style="color:#E1E4E8"> {</span></span>
+<span class="line"><span style="color:#F97583">    return</span><span style="color:#E1E4E8"> todos.</span><span style="color:#B392F0">filter</span><span style="color:#E1E4E8">(</span><span style="color:#FFAB70">todo</span><span style="color:#F97583"> =></span><span style="color:#E1E4E8"> {</span></span>
+<span class="line"><span style="color:#6A737D">      // Filter by status</span></span>
+<span class="line"><span style="color:#F97583">      if</span><span style="color:#E1E4E8"> (filter.status </span><span style="color:#F97583">===</span><span style="color:#79B8FF"> TODO_FILTERS</span><span style="color:#E1E4E8">.</span><span style="color:#79B8FF">STATUS</span><span style="color:#E1E4E8">.</span><span style="color:#79B8FF">ACTIVE</span><span style="color:#F97583"> &#x26;&#x26;</span><span style="color:#E1E4E8"> todo.completed) {</span></span>
+<span class="line"><span style="color:#F97583">        return</span><span style="color:#79B8FF"> false</span><span style="color:#E1E4E8">;</span></span>
+<span class="line"><span style="color:#E1E4E8">      }</span></span>
+<span class="line"><span style="color:#F97583">      if</span><span style="color:#E1E4E8"> (filter.status </span><span style="color:#F97583">===</span><span style="color:#79B8FF"> TODO_FILTERS</span><span style="color:#E1E4E8">.</span><span style="color:#79B8FF">STATUS</span><span style="color:#E1E4E8">.</span><span style="color:#79B8FF">COMPLETED</span><span style="color:#F97583"> &#x26;&#x26;</span><span style="color:#F97583"> !</span><span style="color:#E1E4E8">todo.completed) {</span></span>
+<span class="line"><span style="color:#F97583">        return</span><span style="color:#79B8FF"> false</span><span style="color:#E1E4E8">;</span></span>
+<span class="line"><span style="color:#E1E4E8">      }</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">      // Filter by priority</span></span>
+<span class="line"><span style="color:#F97583">      if</span><span style="color:#E1E4E8"> (filter.priority </span><span style="color:#F97583">!==</span><span style="color:#79B8FF"> TODO_FILTERS</span><span style="color:#E1E4E8">.</span><span style="color:#79B8FF">PRIORITY</span><span style="color:#E1E4E8">.</span><span style="color:#79B8FF">ALL</span><span style="color:#F97583"> &#x26;&#x26;</span><span style="color:#E1E4E8"> todo.priority </span><span style="color:#F97583">!==</span><span style="color:#E1E4E8"> filter.priority) {</span></span>
+<span class="line"><span style="color:#F97583">        return</span><span style="color:#79B8FF"> false</span><span style="color:#E1E4E8">;</span></span>
+<span class="line"><span style="color:#E1E4E8">      }</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">      // Filter by category</span></span>
+<span class="line"><span style="color:#F97583">      if</span><span style="color:#E1E4E8"> (filter.category </span><span style="color:#F97583">!==</span><span style="color:#9ECBFF"> 'all'</span><span style="color:#F97583"> &#x26;&#x26;</span><span style="color:#E1E4E8"> todo.category </span><span style="color:#F97583">!==</span><span style="color:#E1E4E8"> filter.category) {</span></span>
+<span class="line"><span style="color:#F97583">        return</span><span style="color:#79B8FF"> false</span><span style="color:#E1E4E8">;</span></span>
+<span class="line"><span style="color:#E1E4E8">      }</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#F97583">      return</span><span style="color:#79B8FF"> true</span><span style="color:#E1E4E8">;</span></span>
+<span class="line"><span style="color:#E1E4E8">    });</span></span>
+<span class="line"><span style="color:#E1E4E8">  }, [todos, filter]);</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">  // Statistics</span></span>
+<span class="line"><span style="color:#F97583">  const</span><span style="color:#79B8FF"> stats</span><span style="color:#F97583"> =</span><span style="color:#B392F0"> useMemo</span><span style="color:#E1E4E8">(() </span><span style="color:#F97583">=></span><span style="color:#E1E4E8"> {</span></span>
+<span class="line"><span style="color:#F97583">    const</span><span style="color:#79B8FF"> total</span><span style="color:#F97583"> =</span><span style="color:#E1E4E8"> todos.</span><span style="color:#79B8FF">length</span><span style="color:#E1E4E8">;</span></span>
+<span class="line"><span style="color:#F97583">    const</span><span style="color:#79B8FF"> completed</span><span style="color:#F97583"> =</span><span style="color:#E1E4E8"> todos.</span><span style="color:#B392F0">filter</span><span style="color:#E1E4E8">(</span><span style="color:#FFAB70">todo</span><span style="color:#F97583"> =></span><span style="color:#E1E4E8"> todo.completed).</span><span style="color:#79B8FF">length</span><span style="color:#E1E4E8">;</span></span>
+<span class="line"><span style="color:#F97583">    const</span><span style="color:#79B8FF"> active</span><span style="color:#F97583"> =</span><span style="color:#E1E4E8"> total </span><span style="color:#F97583">-</span><span style="color:#E1E4E8"> completed;</span></span>
+<span class="line"><span style="color:#E1E4E8">    </span></span>
+<span class="line"><span style="color:#F97583">    return</span><span style="color:#E1E4E8"> {</span></span>
+<span class="line"><span style="color:#E1E4E8">      total,</span></span>
+<span class="line"><span style="color:#E1E4E8">      completed,</span></span>
+<span class="line"><span style="color:#E1E4E8">      active,</span></span>
+<span class="line"><span style="color:#E1E4E8">      completionRate: total </span><span style="color:#F97583">></span><span style="color:#79B8FF"> 0</span><span style="color:#F97583"> ?</span><span style="color:#E1E4E8"> Math.</span><span style="color:#B392F0">round</span><span style="color:#E1E4E8">((completed </span><span style="color:#F97583">/</span><span style="color:#E1E4E8"> total) </span><span style="color:#F97583">*</span><span style="color:#79B8FF"> 100</span><span style="color:#E1E4E8">) </span><span style="color:#F97583">:</span><span style="color:#79B8FF"> 0</span></span>
+<span class="line"><span style="color:#E1E4E8">    };</span></span>
+<span class="line"><span style="color:#E1E4E8">  }, [todos]);</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#F97583">  return</span><span style="color:#E1E4E8"> {</span></span>
+<span class="line"><span style="color:#E1E4E8">    todos: filteredTodos,</span></span>
+<span class="line"><span style="color:#E1E4E8">    allTodos: todos,</span></span>
+<span class="line"><span style="color:#E1E4E8">    filter,</span></span>
+<span class="line"><span style="color:#E1E4E8">    setFilter,</span></span>
+<span class="line"><span style="color:#E1E4E8">    stats,</span></span>
+<span class="line"><span style="color:#E1E4E8">    addTodo,</span></span>
+<span class="line"><span style="color:#E1E4E8">    updateTodo,</span></span>
+<span class="line"><span style="color:#E1E4E8">    deleteTodo,</span></span>
+<span class="line"><span style="color:#E1E4E8">    toggleTodo,</span></span>
+<span class="line"><span style="color:#E1E4E8">    clearCompleted</span></span>
+<span class="line"><span style="color:#E1E4E8">  };</span></span>
+<span class="line"><span style="color:#E1E4E8">};</span></span>
+<span class="line"></span></code></pre>
+<h2 id="todo-components">Todo Components</h2>
+<h3 id="todoitem-component">TodoItem Component</h3>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="jsx"><code><span class="line"><span style="color:#6A737D">// src/components/TodoItem.jsx</span></span>
+<span class="line"><span style="color:#F97583">import</span><span style="color:#E1E4E8"> { useState } </span><span style="color:#F97583">from</span><span style="color:#9ECBFF"> 'react'</span><span style="color:#E1E4E8">;</span></span>
+<span class="line"><span style="color:#F97583">import</span><span style="color:#E1E4E8"> { clsx } </span><span style="color:#F97583">from</span><span style="color:#9ECBFF"> 'clsx'</span><span style="color:#E1E4E8">;</span></span>
+<span class="line"><span style="color:#F97583">import</span><span style="color:#E1E4E8"> Button </span><span style="color:#F97583">from</span><span style="color:#9ECBFF"> './ui/Button'</span><span style="color:#E1E4E8">;</span></span>
+<span class="line"><span style="color:#F97583">import</span><span style="color:#E1E4E8"> Input </span><span style="color:#F97583">from</span><span style="color:#9ECBFF"> './ui/Input'</span><span style="color:#E1E4E8">;</span></span>
+<span class="line"><span style="color:#F97583">import</span><span style="color:#E1E4E8"> { TODO_PRIORITIES } </span><span style="color:#F97583">from</span><span style="color:#9ECBFF"> '../types/todo'</span><span style="color:#E1E4E8">;</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#F97583">const</span><span style="color:#B392F0"> TodoItem</span><span style="color:#F97583"> =</span><span style="color:#E1E4E8"> ({ </span><span style="color:#FFAB70">todo</span><span style="color:#E1E4E8">, </span><span style="color:#FFAB70">onUpdate</span><span style="color:#E1E4E8">, </span><span style="color:#FFAB70">onDelete</span><span style="color:#E1E4E8">, </span><span style="color:#FFAB70">onToggle</span><span style="color:#E1E4E8"> }) </span><span style="color:#F97583">=></span><span style="color:#E1E4E8"> {</span></span>
+<span class="line"><span style="color:#F97583">  const</span><span style="color:#E1E4E8"> [</span><span style="color:#79B8FF">isEditing</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">setIsEditing</span><span style="color:#E1E4E8">] </span><span style="color:#F97583">=</span><span style="color:#B392F0"> useState</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">false</span><span style="color:#E1E4E8">);</span></span>
+<span class="line"><span style="color:#F97583">  const</span><span style="color:#E1E4E8"> [</span><span style="color:#79B8FF">editText</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">setEditText</span><span style="color:#E1E4E8">] </span><span style="color:#F97583">=</span><span style="color:#B392F0"> useState</span><span style="color:#E1E4E8">(todo.text);</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#F97583">  const</span><span style="color:#79B8FF"> priority</span><span style="color:#F97583"> =</span><span style="color:#79B8FF"> TODO_PRIORITIES</span><span style="color:#E1E4E8">.</span><span style="color:#B392F0">find</span><span style="color:#E1E4E8">(</span><span style="color:#FFAB70">p</span><span style="color:#F97583"> =></span><span style="color:#E1E4E8"> p.value </span><span style="color:#F97583">===</span><span style="color:#E1E4E8"> todo.priority);</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#F97583">  const</span><span style="color:#B392F0"> handleEdit</span><span style="color:#F97583"> =</span><span style="color:#E1E4E8"> () </span><span style="color:#F97583">=></span><span style="color:#E1E4E8"> {</span></span>
+<span class="line"><span style="color:#B392F0">    setIsEditing</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">true</span><span style="color:#E1E4E8">);</span></span>
+<span class="line"><span style="color:#B392F0">    setEditText</span><span style="color:#E1E4E8">(todo.text);</span></span>
+<span class="line"><span style="color:#E1E4E8">  };</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#F97583">  const</span><span style="color:#B392F0"> handleSave</span><span style="color:#F97583"> =</span><span style="color:#E1E4E8"> () </span><span style="color:#F97583">=></span><span style="color:#E1E4E8"> {</span></span>
+<span class="line"><span style="color:#F97583">    if</span><span style="color:#E1E4E8"> (editText.</span><span style="color:#B392F0">trim</span><span style="color:#E1E4E8">()) {</span></span>
+<span class="line"><span style="color:#B392F0">      onUpdate</span><span style="color:#E1E4E8">(todo.id, { text: editText.</span><span style="color:#B392F0">trim</span><span style="color:#E1E4E8">() });</span></span>
+<span class="line"><span style="color:#B392F0">      setIsEditing</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">false</span><span style="color:#E1E4E8">);</span></span>
+<span class="line"><span style="color:#E1E4E8">    }</span></span>
+<span class="line"><span style="color:#E1E4E8">  };</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#F97583">  const</span><span style="color:#B392F0"> handleCancel</span><span style="color:#F97583"> =</span><span style="color:#E1E4E8"> () </span><span style="color:#F97583">=></span><span style="color:#E1E4E8"> {</span></span>
+<span class="line"><span style="color:#B392F0">    setEditText</span><span style="color:#E1E4E8">(todo.text);</span></span>
+<span class="line"><span style="color:#B392F0">    setIsEditing</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">false</span><span style="color:#E1E4E8">);</span></span>
+<span class="line"><span style="color:#E1E4E8">  };</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#F97583">  const</span><span style="color:#B392F0"> handleKeyPress</span><span style="color:#F97583"> =</span><span style="color:#E1E4E8"> (</span><span style="color:#FFAB70">e</span><span style="color:#E1E4E8">) </span><span style="color:#F97583">=></span><span style="color:#E1E4E8"> {</span></span>
+<span class="line"><span style="color:#F97583">    if</span><span style="color:#E1E4E8"> (e.key </span><span style="color:#F97583">===</span><span style="color:#9ECBFF"> 'Enter'</span><span style="color:#E1E4E8">) {</span></span>
+<span class="line"><span style="color:#B392F0">      handleSave</span><span style="color:#E1E4E8">();</span></span>
+<span class="line"><span style="color:#E1E4E8">    } </span><span style="color:#F97583">else</span><span style="color:#F97583"> if</span><span style="color:#E1E4E8"> (e.key </span><span style="color:#F97583">===</span><span style="color:#9ECBFF"> 'Escape'</span><span style="color:#E1E4E8">) {</span></span>
+<span class="line"><span style="color:#B392F0">      handleCancel</span><span style="color:#E1E4E8">();</span></span>
+<span class="line"><span style="color:#E1E4E8">    }</span></span>
+<span class="line"><span style="color:#E1E4E8">  };</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#F97583">  return</span><span style="color:#E1E4E8"> (</span></span>
+<span class="line"><span style="color:#E1E4E8">    &#x3C;</span><span style="color:#85E89D">div</span><span style="color:#B392F0"> className</span><span style="color:#F97583">=</span><span style="color:#E1E4E8">{</span><span style="color:#B392F0">clsx</span><span style="color:#E1E4E8">(</span></span>
+<span class="line"><span style="color:#9ECBFF">      'group flex items-center space-x-3 p-4 bg-white rounded-lg shadow-sm border border-gray-200 transition-all duration-200'</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#9ECBFF">      'hover:shadow-md hover:border-gray-300'</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#E1E4E8">      todo.completed </span><span style="color:#F97583">&#x26;&#x26;</span><span style="color:#9ECBFF"> 'opacity-75'</span></span>
+<span class="line"><span style="color:#E1E4E8">    )}></span></span>
+<span class="line"><span style="color:#E1E4E8">      {</span><span style="color:#6A737D">/* Checkbox */</span><span style="color:#E1E4E8">}</span></span>
+<span class="line"><span style="color:#E1E4E8">      &#x3C;</span><span style="color:#85E89D">button</span></span>
+<span class="line"><span style="color:#B392F0">        onClick</span><span style="color:#F97583">=</span><span style="color:#E1E4E8">{() </span><span style="color:#F97583">=></span><span style="color:#B392F0"> onToggle</span><span style="color:#E1E4E8">(todo.id)}</span></span>
+<span class="line"><span style="color:#B392F0">        className</span><span style="color:#F97583">=</span><span style="color:#E1E4E8">{</span><span style="color:#B392F0">clsx</span><span style="color:#E1E4E8">(</span></span>
+<span class="line"><span style="color:#9ECBFF">          'flex-shrink-0 w-5 h-5 rounded border-2 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2'</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#E1E4E8">          todo.completed</span></span>
+<span class="line"><span style="color:#F97583">            ?</span><span style="color:#9ECBFF"> 'bg-blue-600 border-blue-600 text-white'</span></span>
+<span class="line"><span style="color:#F97583">            :</span><span style="color:#9ECBFF"> 'border-gray-300 hover:border-blue-500'</span></span>
+<span class="line"><span style="color:#E1E4E8">        )}</span></span>
+<span class="line"><span style="color:#E1E4E8">      ></span></span>
+<span class="line"><span style="color:#E1E4E8">        {todo.completed </span><span style="color:#F97583">&#x26;&#x26;</span><span style="color:#E1E4E8"> (</span></span>
+<span class="line"><span style="color:#E1E4E8">          &#x3C;</span><span style="color:#85E89D">svg</span><span style="color:#B392F0"> className</span><span style="color:#F97583">=</span><span style="color:#9ECBFF">"w-3 h-3 mx-auto"</span><span style="color:#B392F0"> fill</span><span style="color:#F97583">=</span><span style="color:#9ECBFF">"currentColor"</span><span style="color:#B392F0"> viewBox</span><span style="color:#F97583">=</span><span style="color:#9ECBFF">"0 0 20 20"</span><span style="color:#E1E4E8">></span></span>
+<span class="line"><span style="color:#E1E4E8">            &#x3C;</span><span style="color:#85E89D">path</span></span>
+<span class="line"><span style="color:#B392F0">              fillRule</span><span style="color:#F97583">=</span><span style="color:#9ECBFF">"evenodd"</span></span>
+<span class="line"><span style="color:#B392F0">              d</span><span style="color:#F97583">=</span><span style="color:#9ECBFF">"M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"</span></span>
+<span class="line"><span style="color:#B392F0">              clipRule</span><span style="color:#F97583">=</span><span style="color:#9ECBFF">"evenodd"</span></span>
+<span class="line"><span style="color:#E1E4E8">            /></span></span>
+<span class="line"><span style="color:#E1E4E8">          &#x3C;/</span><span style="color:#85E89D">svg</span><span style="color:#E1E4E8">></span></span>
+<span class="line"><span style="color:#E1E4E8">        )}</span></span>
+<span class="line"><span style="color:#E1E4E8">      &#x3C;/</span><span style="color:#85E89D">button</span><span style="color:#E1E4E8">></span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#E1E4E8">      {</span><span style="color:#6A737D">/* Priority Indicator */</span><span style="color:#E1E4E8">}</span></span>
+<span class="line"><span style="color:#E1E4E8">      &#x3C;</span><span style="color:#85E89D">div</span></span>
+<span class="line"><span style="color:#B392F0">        className</span><span style="color:#F97583">=</span><span style="color:#E1E4E8">{</span><span style="color:#B392F0">clsx</span><span style="color:#E1E4E8">(</span></span>
+<span class="line"><span style="color:#9ECBFF">          'flex-shrink-0 w-3 h-3 rounded-full'</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#E1E4E8">          priority?.color </span><span style="color:#F97583">===</span><span style="color:#9ECBFF"> 'red'</span><span style="color:#F97583"> &#x26;&#x26;</span><span style="color:#9ECBFF"> 'bg-red-500'</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#E1E4E8">          priority?.color </span><span style="color:#F97583">===</span><span style="color:#9ECBFF"> 'yellow'</span><span style="color:#F97583"> &#x26;&#x26;</span><span style="color:#9ECBFF"> 'bg-yellow-500'</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#E1E4E8">          priority?.color </span><span style="color:#F97583">===</span><span style="color:#9ECBFF"> 'green'</span><span style="color:#F97583"> &#x26;&#x26;</span><span style="color:#9ECBFF"> 'bg-green-500'</span></span>
+<span class="line"><span style="color:#E1E4E8">        )}</span></span>
+<span class="line"><span style="color:#B392F0">        title</span><span style="color:#F97583">=</span><span style="color:#E1E4E8">{</span><span style="color:#9ECBFF">`Priority: ${</span><span style="color:#E1E4E8">priority</span><span style="color:#9ECBFF">?.</span><span style="color:#E1E4E8">label</span><span style="color:#9ECBFF">}`</span><span style="color:#E1E4E8">}</span></span>
+<span class="line"><span style="color:#E1E4E8">      /></span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#E1E4E8">      {</span><span style="color:#6A737D">/* Todo Text */</span><span style="color:#E1E4E8">}</span></span>
+<span class="line"><span style="color:#E1E4E8">      &#x3C;</span><span style="color:#85E89D">div</span><span style="color:#B392F0"> className</span><span style="color:#F97583">=</span><span style="color:#9ECBFF">"flex-grow min-w-0"</span><span style="color:#E1E4E8">></span></span>
+<span class="line"><span style="color:#E1E4E8">        {isEditing </span><span style="color:#F97583">?</span><span style="color:#E1E4E8"> (</span></span>
+<span class="line"><span style="color:#E1E4E8">          &#x3C;</span><span style="color:#79B8FF">Input</span></span>
+<span class="line"><span style="color:#B392F0">            value</span><span style="color:#F97583">=</span><span style="color:#E1E4E8">{editText}</span></span>
+<span class="line"><span style="color:#B392F0">            onChange</span><span style="color:#F97583">=</span><span style="color:#E1E4E8">{(</span><span style="color:#FFAB70">e</span><span style="color:#E1E4E8">) </span><span style="color:#F97583">=></span><span style="color:#B392F0"> setEditText</span><span style="color:#E1E4E8">(e.target.value)}</span></span>
+<span class="line"><span style="color:#B392F0">            onKeyDown</span><span style="color:#F97583">=</span><span style="color:#E1E4E8">{handleKeyPress}</span></span>
+<span class="line"><span style="color:#B392F0">            onBlur</span><span style="color:#F97583">=</span><span style="color:#E1E4E8">{handleSave}</span></span>
+<span class="line"><span style="color:#B392F0">            className</span><span style="color:#F97583">=</span><span style="color:#9ECBFF">"text-sm"</span></span>
+<span class="line"><span style="color:#B392F0">            autoFocus</span></span>
+<span class="line"><span style="color:#E1E4E8">          /></span></span>
+<span class="line"><span style="color:#E1E4E8">        ) </span><span style="color:#F97583">:</span><span style="color:#E1E4E8"> (</span></span>
+<span class="line"><span style="color:#E1E4E8">          &#x3C;</span><span style="color:#85E89D">p</span></span>
+<span class="line"><span style="color:#B392F0">            className</span><span style="color:#F97583">=</span><span style="color:#E1E4E8">{</span><span style="color:#B392F0">clsx</span><span style="color:#E1E4E8">(</span></span>
+<span class="line"><span style="color:#9ECBFF">              'text-sm cursor-pointer transition-colors duration-200'</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#E1E4E8">              todo.completed</span></span>
+<span class="line"><span style="color:#F97583">                ?</span><span style="color:#9ECBFF"> 'line-through text-gray-500'</span></span>
+<span class="line"><span style="color:#F97583">                :</span><span style="color:#9ECBFF"> 'text-gray-900 hover:text-blue-600'</span></span>
+<span class="line"><span style="color:#E1E4E8">            )}</span></span>
+<span class="line"><span style="color:#B392F0">            onClick</span><span style="color:#F97583">=</span><span style="color:#E1E4E8">{handleEdit}</span></span>
+<span class="line"><span style="color:#E1E4E8">          ></span></span>
+<span class="line"><span style="color:#E1E4E8">            {todo.text}</span></span>
+<span class="line"><span style="color:#E1E4E8">          &#x3C;/</span><span style="color:#85E89D">p</span><span style="color:#E1E4E8">></span></span>
+<span class="line"><span style="color:#E1E4E8">        )}</span></span>
+<span class="line"><span style="color:#E1E4E8">      &#x3C;/</span><span style="color:#85E89D">div</span><span style="color:#E1E4E8">></span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#E1E4E8">      {</span><span style="color:#6A737D">/* Actions */</span><span style="color:#E1E4E8">}</span></span>
+<span class="line"><span style="color:#E1E4E8">      &#x3C;</span><span style="color:#85E89D">div</span><span style="color:#B392F0"> className</span><span style="color:#F97583">=</span><span style="color:#9ECBFF">"flex-shrink-0 flex items-center space-x-2 opacity-0 group-hover:opacity-100 transition-opacity duration-200"</span><span style="color:#E1E4E8">></span></span>
+<span class="line"><span style="color:#E1E4E8">        {</span><span style="color:#F97583">!</span><span style="color:#E1E4E8">isEditing </span><span style="color:#F97583">&#x26;&#x26;</span><span style="color:#E1E4E8"> (</span></span>
+<span class="line"><span style="color:#E1E4E8">          &#x3C;></span></span>
+<span class="line"><span style="color:#E1E4E8">            &#x3C;</span><span style="color:#79B8FF">Button</span></span>
+<span class="line"><span style="color:#B392F0">              variant</span><span style="color:#F97583">=</span><span style="color:#9ECBFF">"ghost"</span></span>
+<span class="line"><span style="color:#B392F0">              size</span><span style="color:#F97583">=</span><span style="color:#9ECBFF">"sm"</span></span>
+<span class="line"><span style="color:#B392F0">              onClick</span><span style="color:#F97583">=</span><span style="color:#E1E4E8">{handleEdit}</span></span>
+<span class="line"><span style="color:#B392F0">              className</span><span style="color:#F97583">=</span><span style="color:#9ECBFF">"p-1"</span></span>
+<span class="line"><span style="color:#E1E4E8">            ></span></span>
+<span class="line"><span style="color:#E1E4E8">              &#x3C;</span><span style="color:#85E89D">svg</span><span style="color:#B392F0"> className</span><span style="color:#F97583">=</span><span style="color:#9ECBFF">"w-4 h-4"</span><span style="color:#B392F0"> fill</span><span style="color:#F97583">=</span><span style="color:#9ECBFF">"none"</span><span style="color:#B392F0"> stroke</span><span style="color:#F97583">=</span><span style="color:#9ECBFF">"currentColor"</span><span style="color:#B392F0"> viewBox</span><span style="color:#F97583">=</span><span style="color:#9ECBFF">"0 0 24 24"</span><span style="color:#E1E4E8">></span></span>
+<span class="line"><span style="color:#E1E4E8">                &#x3C;</span><span style="color:#85E89D">path</span><span style="color:#B392F0"> strokeLinecap</span><span style="color:#F97583">=</span><span style="color:#9ECBFF">"round"</span><span style="color:#B392F0"> strokeLinejoin</span><span style="color:#F97583">=</span><span style="color:#9ECBFF">"round"</span><span style="color:#B392F0"> strokeWidth</span><span style="color:#F97583">=</span><span style="color:#9ECBFF">"2"</span><span style="color:#B392F0"> d</span><span style="color:#F97583">=</span><span style="color:#9ECBFF">"M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"</span><span style="color:#E1E4E8"> /></span></span>
+<span class="line"><span style="color:#E1E4E8">              &#x3C;/</span><span style="color:#85E89D">svg</span><span style="color:#E1E4E8">></span></span>
+<span class="line"><span style="color:#E1E4E8">            &#x3C;/</span><span style="color:#79B8FF">Button</span><span style="color:#E1E4E8">></span></span>
+<span class="line"><span style="color:#E1E4E8">            </span></span>
+<span class="line"><span style="color:#E1E4E8">            &#x3C;</span><span style="color:#79B8FF">Button</span></span>
+<span class="line"><span style="color:#B392F0">              variant</span><span style="color:#F97583">=</span><span style="color:#9ECBFF">"ghost"</span></span>
+<span class="line"><span style="color:#B392F0">              size</span><span style="color:#F97583">=</span><span style="color:#9ECBFF">"sm"</span></span>
+<span class="line"><span style="color:#B392F0">              onClick</span><span style="color:#F97583">=</span><span style="color:#E1E4E8">{() </span><span style="color:#F97583">=></span><span style="color:#B392F0"> onDelete</span><span style="color:#E1E4E8">(todo.id)}</span></span>
+<span class="line"><span style="color:#B392F0">              className</span><span style="color:#F97583">=</span><span style="color:#9ECBFF">"p-1 text-red-600 hover:text-red-700 hover:bg-red-50"</span></span>
+<span class="line"><span style="color:#E1E4E8">            ></span></span>
+<span class="line"><span style="color:#E1E4E8">              &#x3C;</span><span style="color:#85E89D">svg</span><span style="color:#B392F0"> className</span><span style="color:#F97583">=</span><span style="color:#9ECBFF">"w-4 h-4"</span><span style="color:#B392F0"> fill</span><span style="color:#F97583">=</span><span style="color:#9ECBFF">"none"</span><span style="color:#B392F0"> stroke</span><span style="color:#F97583">=</span><span style="color:#9ECBFF">"currentColor"</span><span style="color:#B392F0"> viewBox</span><span style="color:#F97583">=</span><span style="color:#9ECBFF">"0 0 24 24"</span><span style="color:#E1E4E8">></span></span>
+<span class="line"><span style="color:#E1E4E8">                &#x3C;</span><span style="color:#85E89D">path</span><span style="color:#B392F0"> strokeLinecap</span><span style="color:#F97583">=</span><span style="color:#9ECBFF">"round"</span><span style="color:#B392F0"> strokeLinejoin</span><span style="color:#F97583">=</span><span style="color:#9ECBFF">"round"</span><span style="color:#B392F0"> strokeWidth</span><span style="color:#F97583">=</span><span style="color:#9ECBFF">"2"</span><span style="color:#B392F0"> d</span><span style="color:#F97583">=</span><span style="color:#9ECBFF">"M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"</span><span style="color:#E1E4E8"> /></span></span>
+<span class="line"><span style="color:#E1E4E8">              &#x3C;/</span><span style="color:#85E89D">svg</span><span style="color:#E1E4E8">></span></span>
+<span class="line"><span style="color:#E1E4E8">            &#x3C;/</span><span style="color:#79B8FF">Button</span><span style="color:#E1E4E8">></span></span>
+<span class="line"><span style="color:#E1E4E8">          &#x3C;/></span></span>
+<span class="line"><span style="color:#E1E4E8">        )}</span></span>
+<span class="line"><span style="color:#E1E4E8">      &#x3C;/</span><span style="color:#85E89D">div</span><span style="color:#E1E4E8">></span></span>
+<span class="line"><span style="color:#E1E4E8">    &#x3C;/</span><span style="color:#85E89D">div</span><span style="color:#E1E4E8">></span></span>
+<span class="line"><span style="color:#E1E4E8">  );</span></span>
+<span class="line"><span style="color:#E1E4E8">};</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#F97583">export</span><span style="color:#F97583"> default</span><span style="color:#E1E4E8"> TodoItem;</span></span>
+<span class="line"></span></code></pre>
+<h3 id="todoform-component">TodoForm Component</h3>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="jsx"><code><span class="line"><span style="color:#6A737D">// src/components/TodoForm.jsx</span></span>
+<span class="line"><span style="color:#F97583">import</span><span style="color:#E1E4E8"> { useState } </span><span style="color:#F97583">from</span><span style="color:#9ECBFF"> 'react'</span><span style="color:#E1E4E8">;</span></span>
+<span class="line"><span style="color:#F97583">import</span><span style="color:#E1E4E8"> Button </span><span style="color:#F97583">from</span><span style="color:#9ECBFF"> './ui/Button'</span><span style="color:#E1E4E8">;</span></span>
+<span class="line"><span style="color:#F97583">import</span><span style="color:#E1E4E8"> Input </span><span style="color:#F97583">from</span><span style="color:#9ECBFF"> './ui/Input'</span><span style="color:#E1E4E8">;</span></span>
+<span class="line"><span style="color:#F97583">import</span><span style="color:#E1E4E8"> { TODO_PRIORITIES } </span><span style="color:#F97583">from</span><span style="color:#9ECBFF"> '../types/todo'</span><span style="color:#E1E4E8">;</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#F97583">const</span><span style="color:#B392F0"> TodoForm</span><span style="color:#F97583"> =</span><span style="color:#E1E4E8"> ({ </span><span style="color:#FFAB70">onSubmit</span><span style="color:#E1E4E8"> }) </span><span style="color:#F97583">=></span><span style="color:#E1E4E8"> {</span></span>
+<span class="line"><span style="color:#F97583">  const</span><span style="color:#E1E4E8"> [</span><span style="color:#79B8FF">formData</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">setFormData</span><span style="color:#E1E4E8">] </span><span style="color:#F97583">=</span><span style="color:#B392F0"> useState</span><span style="color:#E1E4E8">({</span></span>
+<span class="line"><span style="color:#E1E4E8">    text: </span><span style="color:#9ECBFF">''</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#E1E4E8">    priority: </span><span style="color:#9ECBFF">'medium'</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#E1E4E8">    category: </span><span style="color:#9ECBFF">'general'</span></span>
+<span class="line"><span style="color:#E1E4E8">  });</span></span>
+<span class="line"><span style="color:#F97583">  const</span><span style="color:#E1E4E8"> [</span><span style="color:#79B8FF">isSubmitting</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">setIsSubmitting</span><span style="color:#E1E4E8">] </span><span style="color:#F97583">=</span><span style="color:#B392F0"> useState</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">false</span><span style="color:#E1E4E8">);</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#F97583">  const</span><span style="color:#B392F0"> handleSubmit</span><span style="color:#F97583"> =</span><span style="color:#F97583"> async</span><span style="color:#E1E4E8"> (</span><span style="color:#FFAB70">e</span><span style="color:#E1E4E8">) </span><span style="color:#F97583">=></span><span style="color:#E1E4E8"> {</span></span>
+<span class="line"><span style="color:#E1E4E8">    e.</span><span style="color:#B392F0">preventDefault</span><span style="color:#E1E4E8">();</span></span>
+<span class="line"><span style="color:#E1E4E8">    </span></span>
+<span class="line"><span style="color:#F97583">    if</span><span style="color:#E1E4E8"> (</span><span style="color:#F97583">!</span><span style="color:#E1E4E8">formData.text.</span><span style="color:#B392F0">trim</span><span style="color:#E1E4E8">()) </span><span style="color:#F97583">return</span><span style="color:#E1E4E8">;</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#B392F0">    setIsSubmitting</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">true</span><span style="color:#E1E4E8">);</span></span>
+<span class="line"><span style="color:#E1E4E8">    </span></span>
+<span class="line"><span style="color:#F97583">    try</span><span style="color:#E1E4E8"> {</span></span>
+<span class="line"><span style="color:#F97583">      await</span><span style="color:#B392F0"> onSubmit</span><span style="color:#E1E4E8">(formData);</span></span>
+<span class="line"><span style="color:#B392F0">      setFormData</span><span style="color:#E1E4E8">({</span></span>
+<span class="line"><span style="color:#E1E4E8">        text: </span><span style="color:#9ECBFF">''</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#E1E4E8">        priority: </span><span style="color:#9ECBFF">'medium'</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#E1E4E8">        category: </span><span style="color:#9ECBFF">'general'</span></span>
+<span class="line"><span style="color:#E1E4E8">      });</span></span>
+<span class="line"><span style="color:#E1E4E8">    } </span><span style="color:#F97583">catch</span><span style="color:#E1E4E8"> (error) {</span></span>
+<span class="line"><span style="color:#E1E4E8">      console.</span><span style="color:#B392F0">error</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">'Error adding todo:'</span><span style="color:#E1E4E8">, error);</span></span>
+<span class="line"><span style="color:#E1E4E8">    } </span><span style="color:#F97583">finally</span><span style="color:#E1E4E8"> {</span></span>
+<span class="line"><span style="color:#B392F0">      setIsSubmitting</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">false</span><span style="color:#E1E4E8">);</span></span>
+<span class="line"><span style="color:#E1E4E8">    }</span></span>
+<span class="line"><span style="color:#E1E4E8">  };</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#F97583">  const</span><span style="color:#B392F0"> handleInputChange</span><span style="color:#F97583"> =</span><span style="color:#E1E4E8"> (</span><span style="color:#FFAB70">field</span><span style="color:#E1E4E8">, </span><span style="color:#FFAB70">value</span><span style="color:#E1E4E8">) </span><span style="color:#F97583">=></span><span style="color:#E1E4E8"> {</span></span>
+<span class="line"><span style="color:#B392F0">    setFormData</span><span style="color:#E1E4E8">(</span><span style="color:#FFAB70">prev</span><span style="color:#F97583"> =></span><span style="color:#E1E4E8"> ({</span></span>
+<span class="line"><span style="color:#F97583">      ...</span><span style="color:#E1E4E8">prev,</span></span>
+<span class="line"><span style="color:#E1E4E8">      [field]: value</span></span>
+<span class="line"><span style="color:#E1E4E8">    }));</span></span>
+<span class="line"><span style="color:#E1E4E8">  };</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#F97583">  return</span><span style="color:#E1E4E8"> (</span></span>
+<span class="line"><span style="color:#E1E4E8">    &#x3C;</span><span style="color:#85E89D">form</span><span style="color:#B392F0"> onSubmit</span><span style="color:#F97583">=</span><span style="color:#E1E4E8">{handleSubmit} </span><span style="color:#B392F0">className</span><span style="color:#F97583">=</span><span style="color:#9ECBFF">"space-y-4"</span><span style="color:#E1E4E8">></span></span>
+<span class="line"><span style="color:#E1E4E8">      &#x3C;</span><span style="color:#85E89D">div</span><span style="color:#B392F0"> className</span><span style="color:#F97583">=</span><span style="color:#9ECBFF">"flex space-x-3"</span><span style="color:#E1E4E8">></span></span>
+<span class="line"><span style="color:#E1E4E8">        &#x3C;</span><span style="color:#85E89D">div</span><span style="color:#B392F0"> className</span><span style="color:#F97583">=</span><span style="color:#9ECBFF">"flex-grow"</span><span style="color:#E1E4E8">></span></span>
+<span class="line"><span style="color:#E1E4E8">          &#x3C;</span><span style="color:#79B8FF">Input</span></span>
+<span class="line"><span style="color:#B392F0">            type</span><span style="color:#F97583">=</span><span style="color:#9ECBFF">"text"</span></span>
+<span class="line"><span style="color:#B392F0">            value</span><span style="color:#F97583">=</span><span style="color:#E1E4E8">{formData.text}</span></span>
+<span class="line"><span style="color:#B392F0">            onChange</span><span style="color:#F97583">=</span><span style="color:#E1E4E8">{(</span><span style="color:#FFAB70">e</span><span style="color:#E1E4E8">) </span><span style="color:#F97583">=></span><span style="color:#B392F0"> handleInputChange</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">'text'</span><span style="color:#E1E4E8">, e.target.value)}</span></span>
+<span class="line"><span style="color:#B392F0">            placeholder</span><span style="color:#F97583">=</span><span style="color:#9ECBFF">"What needs to be done?"</span></span>
+<span class="line"><span style="color:#B392F0">            className</span><span style="color:#F97583">=</span><span style="color:#9ECBFF">"text-lg"</span></span>
+<span class="line"><span style="color:#B392F0">            disabled</span><span style="color:#F97583">=</span><span style="color:#E1E4E8">{isSubmitting}</span></span>
+<span class="line"><span style="color:#E1E4E8">          /></span></span>
+<span class="line"><span style="color:#E1E4E8">        &#x3C;/</span><span style="color:#85E89D">div</span><span style="color:#E1E4E8">></span></span>
+<span class="line"><span style="color:#E1E4E8">        </span></span>
+<span class="line"><span style="color:#E1E4E8">        &#x3C;</span><span style="color:#79B8FF">Button</span></span>
+<span class="line"><span style="color:#B392F0">          type</span><span style="color:#F97583">=</span><span style="color:#9ECBFF">"submit"</span></span>
+<span class="line"><span style="color:#B392F0">          loading</span><span style="color:#F97583">=</span><span style="color:#E1E4E8">{isSubmitting}</span></span>
+<span class="line"><span style="color:#B392F0">          disabled</span><span style="color:#F97583">=</span><span style="color:#E1E4E8">{</span><span style="color:#F97583">!</span><span style="color:#E1E4E8">formData.text.</span><span style="color:#B392F0">trim</span><span style="color:#E1E4E8">()}</span></span>
+<span class="line"><span style="color:#B392F0">          className</span><span style="color:#F97583">=</span><span style="color:#9ECBFF">"px-6"</span></span>
+<span class="line"><span style="color:#E1E4E8">        ></span></span>
+<span class="line"><span style="color:#E1E4E8">          Add Todo</span></span>
+<span class="line"><span style="color:#E1E4E8">        &#x3C;/</span><span style="color:#79B8FF">Button</span><span style="color:#E1E4E8">></span></span>
+<span class="line"><span style="color:#E1E4E8">      &#x3C;/</span><span style="color:#85E89D">div</span><span style="color:#E1E4E8">></span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#E1E4E8">      &#x3C;</span><span style="color:#85E89D">div</span><span style="color:#B392F0"> className</span><span style="color:#F97583">=</span><span style="color:#9ECBFF">"flex space-x-3"</span><span style="color:#E1E4E8">></span></span>
+<span class="line"><span style="color:#E1E4E8">        &#x3C;</span><span style="color:#85E89D">div</span><span style="color:#B392F0"> className</span><span style="color:#F97583">=</span><span style="color:#9ECBFF">"flex-1"</span><span style="color:#E1E4E8">></span></span>
+<span class="line"><span style="color:#E1E4E8">          &#x3C;</span><span style="color:#85E89D">label</span><span style="color:#B392F0"> className</span><span style="color:#F97583">=</span><span style="color:#9ECBFF">"block text-sm font-medium text-gray-700 mb-1"</span><span style="color:#E1E4E8">></span></span>
+<span class="line"><span style="color:#E1E4E8">            Priority</span></span>
+<span class="line"><span style="color:#E1E4E8">          &#x3C;/</span><span style="color:#85E89D">label</span><span style="color:#E1E4E8">></span></span>
+<span class="line"><span style="color:#E1E4E8">          &#x3C;</span><span style="color:#85E89D">select</span></span>
+<span class="line"><span style="color:#B392F0">            value</span><span style="color:#F97583">=</span><span style="color:#E1E4E8">{formData.priority}</span></span>
+<span class="line"><span style="color:#B392F0">            onChange</span><span style="color:#F97583">=</span><span style="color:#E1E4E8">{(</span><span style="color:#FFAB70">e</span><span style="color:#E1E4E8">) </span><span style="color:#F97583">=></span><span style="color:#B392F0"> handleInputChange</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">'priority'</span><span style="color:#E1E4E8">, e.target.value)}</span></span>
+<span class="line"><span style="color:#B392F0">            className</span><span style="color:#F97583">=</span><span style="color:#9ECBFF">"input text-sm"</span></span>
+<span class="line"><span style="color:#B392F0">            disabled</span><span style="color:#F97583">=</span><span style="color:#E1E4E8">{isSubmitting}</span></span>
+<span class="line"><span style="color:#E1E4E8">          ></span></span>
+<span class="line"><span style="color:#E1E4E8">            {</span><span style="color:#79B8FF">TODO_PRIORITIES</span><span style="color:#E1E4E8">.</span><span style="color:#B392F0">map</span><span style="color:#E1E4E8">(</span><span style="color:#FFAB70">priority</span><span style="color:#F97583"> =></span><span style="color:#E1E4E8"> (</span></span>
+<span class="line"><span style="color:#E1E4E8">              &#x3C;</span><span style="color:#85E89D">option</span><span style="color:#B392F0"> key</span><span style="color:#F97583">=</span><span style="color:#E1E4E8">{priority.value} </span><span style="color:#B392F0">value</span><span style="color:#F97583">=</span><span style="color:#E1E4E8">{priority.value}></span></span>
+<span class="line"><span style="color:#E1E4E8">                {priority.label}</span></span>
+<span class="line"><span style="color:#E1E4E8">              &#x3C;/</span><span style="color:#85E89D">option</span><span style="color:#E1E4E8">></span></span>
+<span class="line"><span style="color:#E1E4E8">            ))}</span></span>
+<span class="line"><span style="color:#E1E4E8">          &#x3C;/</span><span style="color:#85E89D">select</span><span style="color:#E1E4E8">></span></span>
+<span class="line"><span style="color:#E1E4E8">        &#x3C;/</span><span style="color:#85E89D">div</span><span style="color:#E1E4E8">></span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#E1E4E8">        &#x3C;</span><span style="color:#85E89D">div</span><span style="color:#B392F0"> className</span><span style="color:#F97583">=</span><span style="color:#9ECBFF">"flex-1"</span><span style="color:#E1E4E8">></span></span>
+<span class="line"><span style="color:#E1E4E8">          &#x3C;</span><span style="color:#85E89D">label</span><span style="color:#B392F0"> className</span><span style="color:#F97583">=</span><span style="color:#9ECBFF">"block text-sm font-medium text-gray-700 mb-1"</span><span style="color:#E1E4E8">></span></span>
+<span class="line"><span style="color:#E1E4E8">            Category</span></span>
+<span class="line"><span style="color:#E1E4E8">          &#x3C;/</span><span style="color:#85E89D">label</span><span style="color:#E1E4E8">></span></span>
+<span class="line"><span style="color:#E1E4E8">          &#x3C;</span><span style="color:#85E89D">input</span></span>
+<span class="line"><span style="color:#B392F0">            type</span><span style="color:#F97583">=</span><span style="color:#9ECBFF">"text"</span></span>
+<span class="line"><span style="color:#B392F0">            value</span><span style="color:#F97583">=</span><span style="color:#E1E4E8">{formData.category}</span></span>
+<span class="line"><span style="color:#B392F0">            onChange</span><span style="color:#F97583">=</span><span style="color:#E1E4E8">{(</span><span style="color:#FFAB70">e</span><span style="color:#E1E4E8">) </span><span style="color:#F97583">=></span><span style="color:#B392F0"> handleInputChange</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">'category'</span><span style="color:#E1E4E8">, e.target.value)}</span></span>
+<span class="line"><span style="color:#B392F0">            placeholder</span><span style="color:#F97583">=</span><span style="color:#9ECBFF">"general"</span></span>
+<span class="line"><span style="color:#B392F0">            className</span><span style="color:#F97583">=</span><span style="color:#9ECBFF">"input text-sm"</span></span>
+<span class="line"><span style="color:#B392F0">            disabled</span><span style="color:#F97583">=</span><span style="color:#E1E4E8">{isSubmitting}</span></span>
+<span class="line"><span style="color:#E1E4E8">          /></span></span>
+<span class="line"><span style="color:#E1E4E8">        &#x3C;/</span><span style="color:#85E89D">div</span><span style="color:#E1E4E8">></span></span>
+<span class="line"><span style="color:#E1E4E8">      &#x3C;/</span><span style="color:#85E89D">div</span><span style="color:#E1E4E8">></span></span>
+<span class="line"><span style="color:#E1E4E8">    &#x3C;/</span><span style="color:#85E89D">form</span><span style="color:#E1E4E8">></span></span>
+<span class="line"><span style="color:#E1E4E8">  );</span></span>
+<span class="line"><span style="color:#E1E4E8">};</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#F97583">export</span><span style="color:#F97583"> default</span><span style="color:#E1E4E8"> TodoForm;</span></span>
+<span class="line"></span></code></pre>
+<h2 id="main-app-component">Main App Component</h2>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="jsx"><code><span class="line"><span style="color:#6A737D">// src/App.jsx</span></span>
+<span class="line"><span style="color:#F97583">import</span><span style="color:#E1E4E8"> { useTodos } </span><span style="color:#F97583">from</span><span style="color:#9ECBFF"> './hooks/useTodos'</span><span style="color:#E1E4E8">;</span></span>
+<span class="line"><span style="color:#F97583">import</span><span style="color:#E1E4E8"> TodoForm </span><span style="color:#F97583">from</span><span style="color:#9ECBFF"> './components/TodoForm'</span><span style="color:#E1E4E8">;</span></span>
+<span class="line"><span style="color:#F97583">import</span><span style="color:#E1E4E8"> TodoItem </span><span style="color:#F97583">from</span><span style="color:#9ECBFF"> './components/TodoItem'</span><span style="color:#E1E4E8">;</span></span>
+<span class="line"><span style="color:#F97583">import</span><span style="color:#E1E4E8"> Button </span><span style="color:#F97583">from</span><span style="color:#9ECBFF"> './components/ui/Button'</span><span style="color:#E1E4E8">;</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#F97583">function</span><span style="color:#B392F0"> App</span><span style="color:#E1E4E8">() {</span></span>
+<span class="line"><span style="color:#F97583">  const</span><span style="color:#E1E4E8"> { </span></span>
+<span class="line"><span style="color:#79B8FF">    todos</span><span style="color:#E1E4E8">, </span></span>
+<span class="line"><span style="color:#79B8FF">    stats</span><span style="color:#E1E4E8">, </span></span>
+<span class="line"><span style="color:#79B8FF">    addTodo</span><span style="color:#E1E4E8">, </span></span>
+<span class="line"><span style="color:#79B8FF">    updateTodo</span><span style="color:#E1E4E8">, </span></span>
+<span class="line"><span style="color:#79B8FF">    deleteTodo</span><span style="color:#E1E4E8">, </span></span>
+<span class="line"><span style="color:#79B8FF">    toggleTodo</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#79B8FF">    clearCompleted</span><span style="color:#E1E4E8"> </span></span>
+<span class="line"><span style="color:#E1E4E8">  } </span><span style="color:#F97583">=</span><span style="color:#B392F0"> useTodos</span><span style="color:#E1E4E8">();</span></span>
+<span class="line"><span style="color:#E1E4E8">  </span></span>
+<span class="line"><span style="color:#F97583">  return</span><span style="color:#E1E4E8"> (</span></span>
+<span class="line"><span style="color:#E1E4E8">    &#x3C;</span><span style="color:#85E89D">div</span><span style="color:#B392F0"> className</span><span style="color:#F97583">=</span><span style="color:#9ECBFF">"min-h-screen bg-gray-50"</span><span style="color:#E1E4E8">></span></span>
+<span class="line"><span style="color:#E1E4E8">      &#x3C;</span><span style="color:#85E89D">div</span><span style="color:#B392F0"> className</span><span style="color:#F97583">=</span><span style="color:#9ECBFF">"max-w-2xl mx-auto px-4 py-8"</span><span style="color:#E1E4E8">></span></span>
+<span class="line"><span style="color:#E1E4E8">        {</span><span style="color:#6A737D">/* Header */</span><span style="color:#E1E4E8">}</span></span>
+<span class="line"><span style="color:#E1E4E8">        &#x3C;</span><span style="color:#85E89D">header</span><span style="color:#B392F0"> className</span><span style="color:#F97583">=</span><span style="color:#9ECBFF">"text-center mb-8"</span><span style="color:#E1E4E8">></span></span>
+<span class="line"><span style="color:#E1E4E8">          &#x3C;</span><span style="color:#85E89D">div</span><span style="color:#B392F0"> className</span><span style="color:#F97583">=</span><span style="color:#9ECBFF">"mb-4"</span><span style="color:#E1E4E8">></span></span>
+<span class="line"><span style="color:#E1E4E8">            &#x3C;</span><span style="color:#85E89D">h1</span><span style="color:#B392F0"> className</span><span style="color:#F97583">=</span><span style="color:#9ECBFF">"text-4xl font-bold text-gray-900"</span><span style="color:#E1E4E8">></span></span>
+<span class="line"><span style="color:#E1E4E8">              Todo App</span></span>
+<span class="line"><span style="color:#E1E4E8">            &#x3C;/</span><span style="color:#85E89D">h1</span><span style="color:#E1E4E8">></span></span>
+<span class="line"><span style="color:#E1E4E8">          &#x3C;/</span><span style="color:#85E89D">div</span><span style="color:#E1E4E8">></span></span>
+<span class="line"><span style="color:#E1E4E8">          </span></span>
+<span class="line"><span style="color:#E1E4E8">          {</span><span style="color:#6A737D">/* Stats */</span><span style="color:#E1E4E8">}</span></span>
+<span class="line"><span style="color:#E1E4E8">          &#x3C;</span><span style="color:#85E89D">div</span><span style="color:#B392F0"> className</span><span style="color:#F97583">=</span><span style="color:#9ECBFF">"flex justify-center space-x-6 text-sm text-gray-600"</span><span style="color:#E1E4E8">></span></span>
+<span class="line"><span style="color:#E1E4E8">            &#x3C;</span><span style="color:#85E89D">span</span><span style="color:#E1E4E8">>Total: {stats.total}&#x3C;/</span><span style="color:#85E89D">span</span><span style="color:#E1E4E8">></span></span>
+<span class="line"><span style="color:#E1E4E8">            &#x3C;</span><span style="color:#85E89D">span</span><span style="color:#E1E4E8">>Active: {stats.active}&#x3C;/</span><span style="color:#85E89D">span</span><span style="color:#E1E4E8">></span></span>
+<span class="line"><span style="color:#E1E4E8">            &#x3C;</span><span style="color:#85E89D">span</span><span style="color:#E1E4E8">>Completed: {stats.completed}&#x3C;/</span><span style="color:#85E89D">span</span><span style="color:#E1E4E8">></span></span>
+<span class="line"><span style="color:#E1E4E8">            &#x3C;</span><span style="color:#85E89D">span</span><span style="color:#E1E4E8">>Progress: {stats.completionRate}%&#x3C;/</span><span style="color:#85E89D">span</span><span style="color:#E1E4E8">></span></span>
+<span class="line"><span style="color:#E1E4E8">          &#x3C;/</span><span style="color:#85E89D">div</span><span style="color:#E1E4E8">></span></span>
+<span class="line"><span style="color:#E1E4E8">        &#x3C;/</span><span style="color:#85E89D">header</span><span style="color:#E1E4E8">></span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#E1E4E8">        {</span><span style="color:#6A737D">/* Todo Form */</span><span style="color:#E1E4E8">}</span></span>
+<span class="line"><span style="color:#E1E4E8">        &#x3C;</span><span style="color:#85E89D">div</span><span style="color:#B392F0"> className</span><span style="color:#F97583">=</span><span style="color:#9ECBFF">"mb-8"</span><span style="color:#E1E4E8">></span></span>
+<span class="line"><span style="color:#E1E4E8">          &#x3C;</span><span style="color:#79B8FF">TodoForm</span><span style="color:#B392F0"> onSubmit</span><span style="color:#F97583">=</span><span style="color:#E1E4E8">{addTodo} /></span></span>
+<span class="line"><span style="color:#E1E4E8">        &#x3C;/</span><span style="color:#85E89D">div</span><span style="color:#E1E4E8">></span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#E1E4E8">        {</span><span style="color:#6A737D">/* Todo List */</span><span style="color:#E1E4E8">}</span></span>
+<span class="line"><span style="color:#E1E4E8">        &#x3C;</span><span style="color:#85E89D">div</span><span style="color:#B392F0"> className</span><span style="color:#F97583">=</span><span style="color:#9ECBFF">"space-y-3"</span><span style="color:#E1E4E8">></span></span>
+<span class="line"><span style="color:#E1E4E8">          {todos.</span><span style="color:#79B8FF">length</span><span style="color:#F97583"> ===</span><span style="color:#79B8FF"> 0</span><span style="color:#F97583"> ?</span><span style="color:#E1E4E8"> (</span></span>
+<span class="line"><span style="color:#E1E4E8">            &#x3C;</span><span style="color:#85E89D">div</span><span style="color:#B392F0"> className</span><span style="color:#F97583">=</span><span style="color:#9ECBFF">"text-center py-12"</span><span style="color:#E1E4E8">></span></span>
+<span class="line"><span style="color:#E1E4E8">              &#x3C;</span><span style="color:#85E89D">svg</span><span style="color:#B392F0"> className</span><span style="color:#F97583">=</span><span style="color:#9ECBFF">"w-16 h-16 mx-auto text-gray-300 mb-4"</span><span style="color:#B392F0"> fill</span><span style="color:#F97583">=</span><span style="color:#9ECBFF">"none"</span><span style="color:#B392F0"> stroke</span><span style="color:#F97583">=</span><span style="color:#9ECBFF">"currentColor"</span><span style="color:#B392F0"> viewBox</span><span style="color:#F97583">=</span><span style="color:#9ECBFF">"0 0 24 24"</span><span style="color:#E1E4E8">></span></span>
+<span class="line"><span style="color:#E1E4E8">                &#x3C;</span><span style="color:#85E89D">path</span><span style="color:#B392F0"> strokeLinecap</span><span style="color:#F97583">=</span><span style="color:#9ECBFF">"round"</span><span style="color:#B392F0"> strokeLinejoin</span><span style="color:#F97583">=</span><span style="color:#9ECBFF">"round"</span><span style="color:#B392F0"> strokeWidth</span><span style="color:#F97583">=</span><span style="color:#9ECBFF">"1"</span><span style="color:#B392F0"> d</span><span style="color:#F97583">=</span><span style="color:#9ECBFF">"M9 5H7a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"</span><span style="color:#E1E4E8"> /></span></span>
+<span class="line"><span style="color:#E1E4E8">              &#x3C;/</span><span style="color:#85E89D">svg</span><span style="color:#E1E4E8">></span></span>
+<span class="line"><span style="color:#E1E4E8">              &#x3C;</span><span style="color:#85E89D">p</span><span style="color:#B392F0"> className</span><span style="color:#F97583">=</span><span style="color:#9ECBFF">"text-gray-500"</span><span style="color:#E1E4E8">>No todos yet. Add one above to get started!&#x3C;/</span><span style="color:#85E89D">p</span><span style="color:#E1E4E8">></span></span>
+<span class="line"><span style="color:#E1E4E8">            &#x3C;/</span><span style="color:#85E89D">div</span><span style="color:#E1E4E8">></span></span>
+<span class="line"><span style="color:#E1E4E8">          ) </span><span style="color:#F97583">:</span><span style="color:#E1E4E8"> (</span></span>
+<span class="line"><span style="color:#E1E4E8">            todos.</span><span style="color:#B392F0">map</span><span style="color:#E1E4E8">(</span><span style="color:#FFAB70">todo</span><span style="color:#F97583"> =></span><span style="color:#E1E4E8"> (</span></span>
+<span class="line"><span style="color:#E1E4E8">              &#x3C;</span><span style="color:#79B8FF">TodoItem</span></span>
+<span class="line"><span style="color:#B392F0">                key</span><span style="color:#F97583">=</span><span style="color:#E1E4E8">{todo.id}</span></span>
+<span class="line"><span style="color:#B392F0">                todo</span><span style="color:#F97583">=</span><span style="color:#E1E4E8">{todo}</span></span>
+<span class="line"><span style="color:#B392F0">                onUpdate</span><span style="color:#F97583">=</span><span style="color:#E1E4E8">{updateTodo}</span></span>
+<span class="line"><span style="color:#B392F0">                onDelete</span><span style="color:#F97583">=</span><span style="color:#E1E4E8">{deleteTodo}</span></span>
+<span class="line"><span style="color:#B392F0">                onToggle</span><span style="color:#F97583">=</span><span style="color:#E1E4E8">{toggleTodo}</span></span>
+<span class="line"><span style="color:#E1E4E8">              /></span></span>
+<span class="line"><span style="color:#E1E4E8">            ))</span></span>
+<span class="line"><span style="color:#E1E4E8">          )}</span></span>
+<span class="line"><span style="color:#E1E4E8">        &#x3C;/</span><span style="color:#85E89D">div</span><span style="color:#E1E4E8">></span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#E1E4E8">        {</span><span style="color:#6A737D">/* Actions */</span><span style="color:#E1E4E8">}</span></span>
+<span class="line"><span style="color:#E1E4E8">        {stats.completed </span><span style="color:#F97583">></span><span style="color:#79B8FF"> 0</span><span style="color:#F97583"> &#x26;&#x26;</span><span style="color:#E1E4E8"> (</span></span>
+<span class="line"><span style="color:#E1E4E8">          &#x3C;</span><span style="color:#85E89D">div</span><span style="color:#B392F0"> className</span><span style="color:#F97583">=</span><span style="color:#9ECBFF">"mt-6 text-center"</span><span style="color:#E1E4E8">></span></span>
+<span class="line"><span style="color:#E1E4E8">            &#x3C;</span><span style="color:#79B8FF">Button</span></span>
+<span class="line"><span style="color:#B392F0">              variant</span><span style="color:#F97583">=</span><span style="color:#9ECBFF">"secondary"</span></span>
+<span class="line"><span style="color:#B392F0">              onClick</span><span style="color:#F97583">=</span><span style="color:#E1E4E8">{clearCompleted}</span></span>
+<span class="line"><span style="color:#B392F0">              className</span><span style="color:#F97583">=</span><span style="color:#9ECBFF">"text-sm"</span></span>
+<span class="line"><span style="color:#E1E4E8">            ></span></span>
+<span class="line"><span style="color:#E1E4E8">              Clear Completed ({stats.completed})</span></span>
+<span class="line"><span style="color:#E1E4E8">            &#x3C;/</span><span style="color:#79B8FF">Button</span><span style="color:#E1E4E8">></span></span>
+<span class="line"><span style="color:#E1E4E8">          &#x3C;/</span><span style="color:#85E89D">div</span><span style="color:#E1E4E8">></span></span>
+<span class="line"><span style="color:#E1E4E8">        )}</span></span>
+<span class="line"><span style="color:#E1E4E8">      &#x3C;/</span><span style="color:#85E89D">div</span><span style="color:#E1E4E8">></span></span>
+<span class="line"><span style="color:#E1E4E8">    &#x3C;/</span><span style="color:#85E89D">div</span><span style="color:#E1E4E8">></span></span>
+<span class="line"><span style="color:#E1E4E8">  );</span></span>
+<span class="line"><span style="color:#E1E4E8">}</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#F97583">export</span><span style="color:#F97583"> default</span><span style="color:#E1E4E8"> App;</span></span>
+<span class="line"></span></code></pre>
+<h2 id="testing-our-app">Testing Our App</h2>
+<p>Let’s test our basic todo functionality:</p>
+<ol>
+<li>
+<p><strong>Start the development server</strong>:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#B392F0">npm</span><span style="color:#9ECBFF"> run</span><span style="color:#9ECBFF"> dev</span></span>
+<span class="line"></span></code></pre>
+</li>
+<li>
+<p><strong>Test basic functionality</strong>:</p>
+<ul>
+<li>Add new todos with different priorities</li>
+<li>Toggle completion status</li>
+<li>Edit todos by clicking on them</li>
+<li>Delete todos using the delete button</li>
+</ul>
+</li>
+<li>
+<p><strong>Check responsive design</strong>:</p>
+<ul>
+<li>Test on mobile and desktop viewports</li>
+<li>Verify touch targets are appropriately sized</li>
+<li>Ensure text is readable at all sizes</li>
+</ul>
+</li>
+</ol>
+<h2 id="whats-next">What’s Next?</h2>
+<p>In <strong>Part 2</strong>, we’ll add:</p>
+<ul>
+<li><strong>Advanced filtering and search</strong> functionality</li>
+<li><strong>Drag and drop reordering</strong> for todos</li>
+<li><strong>Categories and tags</strong> system</li>
+<li><strong>Keyboard shortcuts</strong> for power users</li>
+<li><strong>Animations and transitions</strong> for better UX</li>
+</ul>
+<h2 id="key-takeaways">Key Takeaways</h2>
+<ul>
+<li><strong>Custom hooks</strong> help separate logic from UI components</li>
+<li><strong>Compound components</strong> make complex UIs more manageable</li>
+<li><strong>Local storage</strong> provides simple data persistence</li>
+<li><strong>Accessibility</strong> should be considered from the start</li>
+<li><strong>TypeScript</strong> (or prop types) help catch errors early</li>
+</ul>
+<h2 id="homework">Homework</h2>
+<p>Before Part 2:</p>
+<ol>
+<li><strong>Add validation</strong> to prevent empty todos</li>
+<li><strong>Implement keyboard shortcuts</strong> (Ctrl+Enter to add, Escape to cancel edit)</li>
+<li><strong>Add todo timestamps</strong> to show when items were created</li>
+<li><strong>Experiment with animations</strong> using CSS or Framer Motion</li>
+</ol>
+<p>Ready for Part 2? We’ll add advanced features and make our todo app truly powerful!</p> </div> </div> </article> </div> <!-- Tutorial Footer --> <footer class="mt-12 bg-white rounded-xl shadow-sm border border-gray-200 p-8" data-astro-cid-5mk7rcd7> <div class="flex items-center justify-between" data-astro-cid-5mk7rcd7> <div class="text-sm text-gray-500" data-astro-cid-5mk7rcd7>
+Published on January 14, 2025 </div> <div class="flex items-center space-x-4" data-astro-cid-5mk7rcd7> <a href="/tutorials" class="text-blue-600 hover:underline text-sm font-medium" data-astro-cid-5mk7rcd7>
+← Back to Tutorials
+</a> </div> </div> </footer> </div> </main>  <button id="back-to-top" aria-label="Back to top" class="fixed bottom-6 right-6 z-40 inline-flex items-center justify-center w-12 h-12 rounded-full bg-black text-white shadow-lg transition-all duration-200 hover:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-offset-2 focus:ring-offset-white opacity-0 pointer-events-none" data-astro-cid-5mk7rcd7> <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true" data-astro-cid-5mk7rcd7> <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7" data-astro-cid-5mk7rcd7></path> </svg> </button>   <footer class="bg-white border-y border-gray-200 py-8"> <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8"> <div class="flex flex-col md:flex-row justify-between items-center"> <div class="mb-4 md:mb-0"> <div class="flex items-center font-bold text-xl"> <div> <!-- <span class={logoClass}>&gt;&nbsp;</span> --> <span class="text">codersbox</span> </div> </div> <p class="text-gray-500 text-sm mt-1">© Copyright 2025. All rights reserved.</p> </div> <div class="flex space-x-6 text-xl"> <a href="#" target="_blank" class="text-gray-500 hover:text-black transition-colors"> <svg width="0.97em" height="1em" data-icon="fa6-brands:github">   <symbol id="ai:fa6-brands:github" viewBox="0 0 496 512"><path fill="currentColor" d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6c-3.3.3-5.6-1.3-5.6-3.6c0-2 2.3-3.6 5.2-3.6c3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9c2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9c.3 2 2.9 3.3 5.9 2.6c2.9-.7 4.9-2.6 4.6-4.6c-.3-1.9-3-3.2-5.9-2.9M244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2c12.8 2.3 17.3-5.6 17.3-12.1c0-6.2-.3-40.4-.3-61.4c0 0-70 15-84.7-29.8c0 0-11.4-29.1-27.8-36.6c0 0-22.9-15.7 1.6-15.4c0 0 24.9 2 38.6 25.8c21.9 38.6 58.6 27.5 72.9 20.9c2.3-16 8.8-27.1 16-33.7c-55.9-6.2-112.3-14.3-112.3-110.5c0-27.5 7.6-41.3 23.6-58.9c-2.6-6.5-11.1-33.3 2.6-67.9c20.9-6.5 69 27 69 27c20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27c13.7 34.7 5.2 61.4 2.6 67.9c16 17.7 25.8 31.5 25.8 58.9c0 96.5-58.9 104.2-114.8 110.5c9.2 7.9 17 22.9 17 46.4c0 33.7-.3 75.4-.3 83.6c0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252C496 113.3 383.5 8 244.8 8M97.2 352.9c-1.3 1-1 3.3.7 5.2c1.6 1.6 3.9 2.3 5.2 1c1.3-1 1-3.3-.7-5.2c-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9c1.6 1 3.6.7 4.3-.7c.7-1.3-.3-2.9-2.3-3.9c-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2c2.3 2.3 5.2 2.6 6.5 1c1.3-1.3.7-4.3-1.3-6.2c-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2c-1.4-2.3-4-3.3-5.6-2"/></symbol><use href="#ai:fa6-brands:github"></use>  </svg> </a> <a href="#" target="_blank" class="text-gray-500 hover:text-black transition-colors"> <svg width="1em" height="1em" data-icon="fa6-brands:twitter">   <symbol id="ai:fa6-brands:twitter" viewBox="0 0 512 512"><path fill="currentColor" d="M459.37 151.716c.325 4.548.325 9.097.325 13.645c0 138.72-105.583 298.558-298.558 298.558c-59.452 0-114.68-17.219-161.137-47.106c8.447.974 16.568 1.299 25.34 1.299c49.055 0 94.213-16.568 130.274-44.832c-46.132-.975-84.792-31.188-98.112-72.772c6.498.974 12.995 1.624 19.818 1.624c9.421 0 18.843-1.3 27.614-3.573c-48.081-9.747-84.143-51.98-84.143-102.985v-1.299c13.969 7.797 30.214 12.67 47.431 13.319c-28.264-18.843-46.781-51.005-46.781-87.391c0-19.492 5.197-37.36 14.294-52.954c51.655 63.675 129.3 105.258 216.365 109.807c-1.624-7.797-2.599-15.918-2.599-24.04c0-57.828 46.782-104.934 104.934-104.934c30.213 0 57.502 12.67 76.67 33.137c23.715-4.548 46.456-13.32 66.599-25.34c-7.798 24.366-24.366 44.833-46.132 57.827c21.117-2.273 41.584-8.122 60.426-16.243c-14.292 20.791-32.161 39.308-52.628 54.253"/></symbol><use href="#ai:fa6-brands:twitter"></use>  </svg> </a> <a href="#" target="_blank" class="text-gray-500 hover:text-black transition-colors"> <svg width="0.75em" height="1em" data-icon="fa6-brands:stack-overflow">   <symbol id="ai:fa6-brands:stack-overflow" viewBox="0 0 384 512"><path fill="currentColor" d="M290.7 311L95 269.7L86.8 309l195.7 41zm51-87L188.2 95.7l-25.5 30.8l153.5 128.3zm-31.2 39.7L129.2 179l-16.7 36.5L293.7 300zM262 32l-32 24l119.3 160.3l32-24zm20.5 328h-200v39.7h200zm39.7 80H42.7V320h-40v160h359.5V320h-40z"/></symbol><use href="#ai:fa6-brands:stack-overflow"></use>  </svg> </a> <a href="#" target="_blank" class="text-gray-500 hover:text-black transition-colors"> <svg width="1em" height="1em" data-icon="fa6-solid:envelope">   <symbol id="ai:fa6-solid:envelope" viewBox="0 0 512 512"><path fill="currentColor" d="M48 64C21.5 64 0 85.5 0 112c0 15.1 7.1 29.3 19.2 38.4l217.6 163.2c11.4 8.5 27 8.5 38.4 0l217.6-163.2c12.1-9.1 19.2-23.3 19.2-38.4c0-26.5-21.5-48-48-48zM0 176v208c0 35.3 28.7 64 64 64h384c35.3 0 64-28.7 64-64V176L294.4 339.2a63.9 63.9 0 0 1-76.8 0z"/></symbol><use href="#ai:fa6-solid:envelope"></use>  </svg> </a> </div> </div> </div> </footer> <!-- Google Analytics (replace with your tracking ID) --><!-- <script async src="https://www.googletagmanager.com/gtag/js?id=GA_TRACKING_ID"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'GA_TRACKING_ID');
+</script> --><!-- Core Web Vitals monitoring --> <!-- Service Worker for caching (optional) --> </body></html> 

@@ -1,0 +1,489 @@
+<!DOCTYPE html><html lang="en" data-astro-cid-37fxchfa> <head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><!-- SEO Meta Tags --><title>Tutorials - codersbox</title><meta name="description" content="Step-by-step tutorials for web development and programming."><meta name="author" content="codersbox"><link rel="canonical" href="https://codersbox.dev/tutorials/"><!-- Open Graph Tags --><meta property="og:type" content="website"><meta property="og:title" content="Tutorials - codersbox"><meta property="og:description" content="Step-by-step tutorials for web development and programming."><meta property="og:url" content="https://codersbox.dev/tutorials/"><meta property="og:site_name" content="codersbox"><meta property="og:image" content="https://codersbox.dev/og-image.jpg"><meta property="og:image:alt" content="Tutorials - codersbox"><meta property="og:locale" content="en_US"><!-- Twitter Card Tags --><meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="Tutorials - codersbox"><meta name="twitter:description" content="Step-by-step tutorials for web development and programming."><meta name="twitter:image" content="https://codersbox.dev/og-image.jpg"><meta name="twitter:image:alt" content="Tutorials - codersbox"><meta name="twitter:site" content="@codersbox"><meta name="twitter:creator" content="@codersbox"><!-- Favicon and Icons --><link rel="icon" type="image/x-icon" href="/favicon.ico"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png"><link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="manifest" href="/site.webmanifest"><!-- Performance Optimizations --><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="dns-prefetch" href="https://fonts.googleapis.com"><!-- Theme Color --><meta name="theme-color" content="#3b82f6"><meta name="msapplication-TileColor" content="#3b82f6"><!-- Structured Data --><script type="application/ld+json">
+    {JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": type === 'article' ? 'Article' : 'WebSite',
+      "name": title,
+      "description": description,
+      "url": currentUrl,
+      "publisher": {
+        "@type": "Organization",
+        "name": "codersbox",
+        "url": siteUrl,
+        "logo": {
+          "@type": "ImageObject",
+          "url": `${siteUrl}/logo.png`
+        }
+      },
+      ...(type === 'article' && publishDate && {
+        "author": {
+          "@type": "Person",
+          "name": author
+        },
+        "datePublished": publishDate.toISOString(),
+        "dateModified": publishDate.toISOString(),
+        "headline": title,
+        "image": fullImageUrl,
+        "keywords": tags.join(', ')
+      }),
+      ...(type === 'website' && {
+        "potentialAction": {
+          "@type": "SearchAction",
+          "target": {
+            "@type": "EntryPoint",
+            "urlTemplate": `${siteUrl}/search?q={search_term_string}`
+          },
+          "query-input": "required name=search_term_string"
+        }
+      })
+    })}
+  </script><!-- Critical CSS --><link rel="stylesheet" href="/_astro/about.yENWLJj_.css">
+<style>.tutorial-item[data-astro-cid-hwtq5dlv]{transition:opacity .3s ease}.popular-tag[data-astro-cid-hwtq5dlv]:hover{transform:translateY(-1px)}
+#main-navigation[data-astro-cid-pux6a34n]{backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);background:#ffffffb3;border-bottom:1px solid rgba(255,255,255,.2);box-shadow:0 8px 32px #0000001a}#main-navigation[data-astro-cid-pux6a34n].nav-scrolled{background:#ffffffd9;backdrop-filter:blur(25px);-webkit-backdrop-filter:blur(25px);box-shadow:0 8px 40px #00000026;border-bottom:1px solid rgba(255,255,255,.3)}.nav-link[data-astro-cid-pux6a34n]{position:relative;overflow:hidden}.nav-link[data-astro-cid-pux6a34n]:before{content:"";position:absolute;bottom:0;left:50%;width:0;height:2px;background:linear-gradient(90deg,#3b82f6,#1d4ed8);transform:translate(-50%);transition:width .3s ease}.nav-link[data-astro-cid-pux6a34n]:hover:before{width:80%}.nav-link[data-astro-cid-pux6a34n]:hover{background:#3b82f60d;transform:translateY(-1px)}.nav-logo-link[data-astro-cid-pux6a34n]{transition:transform .3s ease}.nav-logo-link[data-astro-cid-pux6a34n]:hover{transform:scale(1.05)}.mobile-menu-panel[data-astro-cid-pux6a34n]{opacity:0;transform:translateY(-10px);transition:all .3s cubic-bezier(.4,0,.2,1)}.mobile-menu-panel[data-astro-cid-pux6a34n]:not(.hidden){opacity:1;transform:translateY(0)}.mobile-menu-panel[data-astro-cid-pux6a34n].mobile-menu-show{animation:slideDown .3s ease-out}@keyframes slideDown{0%{opacity:0;transform:translateY(-10px)}to{opacity:1;transform:translateY(0)}}.mobile-nav-link[data-astro-cid-pux6a34n]{opacity:0;transform:translate(-20px);animation:slideInLeft .3s ease-out forwards}.mobile-nav-link[data-astro-cid-pux6a34n]:nth-child(1){animation-delay:.1s}.mobile-nav-link[data-astro-cid-pux6a34n]:nth-child(2){animation-delay:.15s}.mobile-nav-link[data-astro-cid-pux6a34n]:nth-child(3){animation-delay:.2s}.mobile-nav-link[data-astro-cid-pux6a34n]:nth-child(4){animation-delay:.25s}.mobile-nav-link[data-astro-cid-pux6a34n]:nth-child(5){animation-delay:.3s}@keyframes slideInLeft{to{opacity:1;transform:translate(0)}}#mobile-menu-toggle[data-astro-cid-pux6a34n]{backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px)}#mobile-menu-toggle[data-astro-cid-pux6a34n]:hover{transform:scale(1.1);background:#3b82f61a}#main-navigation[data-astro-cid-pux6a34n]:before{content:"";position:absolute;inset:0;background:linear-gradient(135deg,#ffffff1a,#fff0);pointer-events:none}html{visibility:hidden}html.loaded{visibility:visible}
+</style><script type="module" src="/_astro/hoisted.CI_T8cFe.js"></script>
+<script type="module" src="/_astro/page.DsLumr9O.js"></script>
+<script>window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };
+		var script = document.createElement('script');
+		script.defer = true;
+		script.src = '/_vercel/insights/script.js';
+		var head = document.querySelector('head');
+		head.appendChild(script);
+	</script></head> <body class="bg-gray-100 text-gray-900 min-h-screen" data-astro-cid-37fxchfa> <nav id="main-navigation" class="bg-white/70 backdrop-blur-xl border-b border-white/20 shadow-lg shadow-black/5 sticky top-0 z-50 transition-all duration-300" data-astro-cid-pux6a34n> <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8" data-astro-cid-pux6a34n> <div class="flex justify-between items-center h-20" data-astro-cid-pux6a34n> <div class="flex items-center" data-astro-cid-pux6a34n> <div class="flex-shrink-0 font-extrabold text-2xl tracking-[-.1em]" data-astro-cid-pux6a34n> <a href="/" class="flex items-center nav-logo-link" data-astro-cid-pux6a34n> <div> <!-- <span class={logoClass}>&gt;&nbsp;</span> --> <span class="text-3xl">codersbox</span> </div> </a> </div> <div class="hidden md:flex ml-10 space-x-1" data-astro-cid-pux6a34n> <a href="/" class="nav-link relative px-4 py-2 text-gray-600 hover:text-gray-900 text-sm font-medium rounded-lg transition-all duration-200" data-astro-cid-pux6a34n> Home </a><a href="/articles" class="nav-link relative px-4 py-2 text-gray-600 hover:text-gray-900 text-sm font-medium rounded-lg transition-all duration-200" data-astro-cid-pux6a34n> Articles </a><a href="/tutorials" class="nav-link relative px-4 py-2 text-gray-600 hover:text-gray-900 text-sm font-medium rounded-lg transition-all duration-200" data-astro-cid-pux6a34n> Tutorials </a><a href="/projects" class="nav-link relative px-4 py-2 text-gray-600 hover:text-gray-900 text-sm font-medium rounded-lg transition-all duration-200" data-astro-cid-pux6a34n> Projects </a><a href="/about" class="nav-link relative px-4 py-2 text-gray-600 hover:text-gray-900 text-sm font-medium rounded-lg transition-all duration-200" data-astro-cid-pux6a34n> About </a> </div> </div> <div class="flex items-center" data-astro-cid-pux6a34n> <button id="mobile-menu-toggle" class="md:hidden ml-2 p-2 text-gray-600 hover:text-black transition-all duration-200 rounded-lg hover:bg-gray-100/50" aria-label="Toggle menu" data-astro-cid-pux6a34n> <svg width="0.25em" height="1em" class="text-xl" data-astro-cid-pux6a34n data-icon="fa6-solid:ellipsis-vertical">   <symbol id="ai:fa6-solid:ellipsis-vertical" viewBox="0 0 128 512"><path fill="currentColor" d="M64 360a56 56 0 1 0 0 112a56 56 0 1 0 0-112m0-160a56 56 0 1 0 0 112a56 56 0 1 0 0-112m56-104A56 56 0 1 0 8 96a56 56 0 1 0 112 0"/></symbol><use href="#ai:fa6-solid:ellipsis-vertical"></use>  </svg> </button> </div> </div> </div> <!-- Mobile menu --> <div id="mobile-menu" class="hidden md:hidden mobile-menu-panel" data-astro-cid-pux6a34n> <div class="px-2 pt-2 pb-3 space-y-1 bg-white/80 backdrop-blur-xl border-b border-white/20" data-astro-cid-pux6a34n> <a href="/" class="mobile-nav-link block px-3 py-2 rounded-lg text-base font-medium text-gray-600 hover:text-gray-900 hover:bg-white/60 transition-all duration-200" data-astro-cid-pux6a34n> Home </a><a href="/articles" class="mobile-nav-link block px-3 py-2 rounded-lg text-base font-medium text-gray-600 hover:text-gray-900 hover:bg-white/60 transition-all duration-200" data-astro-cid-pux6a34n> Articles </a><a href="/tutorials" class="mobile-nav-link block px-3 py-2 rounded-lg text-base font-medium text-gray-600 hover:text-gray-900 hover:bg-white/60 transition-all duration-200" data-astro-cid-pux6a34n> Tutorials </a><a href="/projects" class="mobile-nav-link block px-3 py-2 rounded-lg text-base font-medium text-gray-600 hover:text-gray-900 hover:bg-white/60 transition-all duration-200" data-astro-cid-pux6a34n> Projects </a><a href="/about" class="mobile-nav-link block px-3 py-2 rounded-lg text-base font-medium text-gray-600 hover:text-gray-900 hover:bg-white/60 transition-all duration-200" data-astro-cid-pux6a34n> About </a> </div> </div> </nav>     <header class="bg-white border-b border-gray-200 py-20 relative"> <!-- Subtle Dotted Background Pattern --> <div class="absolute inset-0 z-0 opacity-10"> <svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg"> <pattern id="dots" width="20" height="20" patternUnits="userSpaceOnUse"> <circle cx="2" cy="2" r="1" fill="currentColor"></circle> </pattern> <rect width="100%" height="100%" fill="url(#dots)"></rect> </svg> </div> <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8"> <h1 class="text-4xl font-bold mb-6 tracking-tight text-gray-900">Tutorials</h1> <p class="text-gray-600 text-lg mb-8 max-w-3xl leading-relaxed">Step-by-step tutorials to help you learn new technologies and build amazing projects.</p> <!-- Search Bar with Type-ahead --> <div class="relative max-w-3xl mb-8"> <input type="text" id="hero-search" placeholder="Search tutorials..." class="w-full py-4 pl-5 pr-10 rounded-md border border-gray-300 bg-white text-gray-900 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors" autocomplete="off"> <div class="absolute inset-y-0 right-0 flex items-center pr-4"> <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"> <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path> </svg> </div> <!-- Type-ahead Suggestions --> <div id="search-suggestions" class="absolute top-full left-0 right-0 bg-white border border-gray-300 rounded-md shadow-lg mt-1 max-h-64 overflow-y-auto z-50 hidden"> <div id="suggestions-list"></div> </div> </div> <!-- Popular Tags --> <div class="mb-6"> <h3 class="text-lg font-semibold text-gray-900 mb-3">Popular Topics</h3> <div class="flex flex-wrap gap-2"> <button class="popular-tag inline-flex items-center gap-2 bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-sm font-medium hover:bg-blue-200 transition-colors cursor-pointer" data-tag="Java"> Java <span class="bg-blue-200 text-blue-700 px-1.5 py-0.5 rounded-full text-xs"> 9 </span> </button><button class="popular-tag inline-flex items-center gap-2 bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-sm font-medium hover:bg-blue-200 transition-colors cursor-pointer" data-tag="CSS"> CSS <span class="bg-blue-200 text-blue-700 px-1.5 py-0.5 rounded-full text-xs"> 5 </span> </button><button class="popular-tag inline-flex items-center gap-2 bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-sm font-medium hover:bg-blue-200 transition-colors cursor-pointer" data-tag="React"> React <span class="bg-blue-200 text-blue-700 px-1.5 py-0.5 rounded-full text-xs"> 4 </span> </button> </div> </div> </div> </header>    <main class="py-12" data-astro-cid-hwtq5dlv> <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8" data-astro-cid-hwtq5dlv>  <div id="tutorials-container" data-astro-cid-hwtq5dlv> <div id="tutorials-grid" class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-12" data-astro-cid-hwtq5dlv> <article class="tutorial-item bg-white rounded-lg border border-gray-200 overflow-hidden shadow-sm hover:shadow-md transition-all duration-300 h-full flex" data-title="fullstack crud" data-description="bootstrap a fullstack crud app using sqlite, express api, and a react frontend." data-tags="[&#34;Fullstack&#34;,&#34;React&#34;,&#34;Express&#34;,&#34;SQLite&#34;]" data-difficulty="intermediate" data-date="1738713600000" data-astro-cid-hwtq5dlv> <div class="w-2 bg-gray-900" data-astro-cid-hwtq5dlv></div> <div class="p-6 flex-grow flex flex-col" data-astro-cid-hwtq5dlv> <div class="flex items-center justify-between mb-4" data-astro-cid-hwtq5dlv> <div class="flex items-center gap-3" data-astro-cid-hwtq5dlv> <span class="inline-block text-xs px-3 py-1 rounded-full font-medium uppercase tracking-wide bg-yellow-100 text-yellow-800" data-astro-cid-hwtq5dlv> intermediate </span> <span class="bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded-full font-medium" data-astro-cid-hwtq5dlv> 2 parts
+</span> </div> <time class="text-xs text-gray-500" data-astro-cid-hwtq5dlv> Feb 5, 2025 </time> </div> <h3 class="font-bold text-lg mb-2 text-gray-900 leading-tight line-clamp-2" data-astro-cid-hwtq5dlv> <a href="/tutorials/series/fullstack-crud" class="hover:underline" data-astro-cid-hwtq5dlv> Fullstack CRUD </a> </h3> <p class="text-gray-600 text-sm mb-4 leading-relaxed line-clamp-3 flex-grow" data-astro-cid-hwtq5dlv> Bootstrap a fullstack CRUD app using SQLite, Express API, and a React frontend. </p> <div class="flex flex-wrap gap-2 mb-4" data-astro-cid-hwtq5dlv> <span class="bg-gray-100 text-gray-800 rounded-full px-3 py-1 text-xs font-medium" data-astro-cid-hwtq5dlv> Fullstack </span><span class="bg-gray-100 text-gray-800 rounded-full px-3 py-1 text-xs font-medium" data-astro-cid-hwtq5dlv> React </span><span class="bg-gray-100 text-gray-800 rounded-full px-3 py-1 text-xs font-medium" data-astro-cid-hwtq5dlv> Express </span><span class="bg-gray-100 text-gray-800 rounded-full px-3 py-1 text-xs font-medium" data-astro-cid-hwtq5dlv> SQLite </span> </div> <div class="flex items-center justify-between mt-auto" data-astro-cid-hwtq5dlv> <div class="flex flex-col gap-1" data-astro-cid-hwtq5dlv> <div class="flex items-center gap-3 text-xs text-gray-500" data-astro-cid-hwtq5dlv> <a href="/tutorials/series/fullstack-crud" class="text-blue-600 hover:text-blue-700 text-sm font-medium inline-flex items-center transition-colors" data-astro-cid-hwtq5dlv>
+View Series
+<svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" data-astro-cid-hwtq5dlv> <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" data-astro-cid-hwtq5dlv></path> </svg> </a> </div> </div> <a href="/tutorials/sql-react-crud/sql-react-crud-part-1" class="bg-black hover:bg-gray-900 text-white px-4 py-2 rounded-lg text-sm font-medium inline-flex items-center transition-colors" data-astro-cid-hwtq5dlv>
+Start Reading
+<svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" data-astro-cid-hwtq5dlv> <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" data-astro-cid-hwtq5dlv></path> </svg> </a> </div> </div> </article><article class="tutorial-item bg-white rounded-lg border border-gray-200 overflow-hidden shadow-sm hover:shadow-md transition-all duration-300 h-full flex" data-title="tailwind design system" data-description="set up a scalable design system with tailwind: color palette, spacing, and typography tokens." data-tags="[&#34;Tailwind&#34;,&#34;Design System&#34;,&#34;CSS&#34;]" data-difficulty="intermediate" data-date="1738540800000" data-astro-cid-hwtq5dlv> <div class="w-2 bg-gray-900" data-astro-cid-hwtq5dlv></div> <div class="p-6 flex-grow flex flex-col" data-astro-cid-hwtq5dlv> <div class="flex items-center justify-between mb-4" data-astro-cid-hwtq5dlv> <div class="flex items-center gap-3" data-astro-cid-hwtq5dlv> <span class="inline-block text-xs px-3 py-1 rounded-full font-medium uppercase tracking-wide bg-yellow-100 text-yellow-800" data-astro-cid-hwtq5dlv> intermediate </span> <span class="bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded-full font-medium" data-astro-cid-hwtq5dlv> 2 parts
+</span> </div> <time class="text-xs text-gray-500" data-astro-cid-hwtq5dlv> Feb 3, 2025 </time> </div> <h3 class="font-bold text-lg mb-2 text-gray-900 leading-tight line-clamp-2" data-astro-cid-hwtq5dlv> <a href="/tutorials/series/tailwind-design-system" class="hover:underline" data-astro-cid-hwtq5dlv> Tailwind Design System </a> </h3> <p class="text-gray-600 text-sm mb-4 leading-relaxed line-clamp-3 flex-grow" data-astro-cid-hwtq5dlv> Set up a scalable design system with Tailwind: color palette, spacing, and typography tokens. </p> <div class="flex flex-wrap gap-2 mb-4" data-astro-cid-hwtq5dlv> <span class="bg-gray-100 text-gray-800 rounded-full px-3 py-1 text-xs font-medium" data-astro-cid-hwtq5dlv> Tailwind </span><span class="bg-gray-100 text-gray-800 rounded-full px-3 py-1 text-xs font-medium" data-astro-cid-hwtq5dlv> Design System </span><span class="bg-gray-100 text-gray-800 rounded-full px-3 py-1 text-xs font-medium" data-astro-cid-hwtq5dlv> CSS </span> </div> <div class="flex items-center justify-between mt-auto" data-astro-cid-hwtq5dlv> <div class="flex flex-col gap-1" data-astro-cid-hwtq5dlv> <div class="flex items-center gap-3 text-xs text-gray-500" data-astro-cid-hwtq5dlv> <a href="/tutorials/series/tailwind-design-system" class="text-blue-600 hover:text-blue-700 text-sm font-medium inline-flex items-center transition-colors" data-astro-cid-hwtq5dlv>
+View Series
+<svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" data-astro-cid-hwtq5dlv> <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" data-astro-cid-hwtq5dlv></path> </svg> </a> </div> </div> <a href="/tutorials/tailwind-design-system/tailwind-design-system-part-1" class="bg-black hover:bg-gray-900 text-white px-4 py-2 rounded-lg text-sm font-medium inline-flex items-center transition-colors" data-astro-cid-hwtq5dlv>
+Start Reading
+<svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" data-astro-cid-hwtq5dlv> <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" data-astro-cid-hwtq5dlv></path> </svg> </a> </div> </div> </article><article class="tutorial-item bg-white rounded-lg border border-gray-200 overflow-hidden shadow-sm hover:shadow-md transition-all duration-300 h-full flex" data-title="astro portfolio" data-description="build a blazing-fast personal site with astro. set up the project and add interactive islands." data-tags="[&#34;Astro&#34;,&#34;Frontend&#34;,&#34;Islands&#34;]" data-difficulty="beginner" data-date="1738368000000" data-astro-cid-hwtq5dlv> <div class="w-2 bg-gray-900" data-astro-cid-hwtq5dlv></div> <div class="p-6 flex-grow flex flex-col" data-astro-cid-hwtq5dlv> <div class="flex items-center justify-between mb-4" data-astro-cid-hwtq5dlv> <div class="flex items-center gap-3" data-astro-cid-hwtq5dlv> <span class="inline-block text-xs px-3 py-1 rounded-full font-medium uppercase tracking-wide bg-green-100 text-green-800" data-astro-cid-hwtq5dlv> beginner </span> <span class="bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded-full font-medium" data-astro-cid-hwtq5dlv> 2 parts
+</span> </div> <time class="text-xs text-gray-500" data-astro-cid-hwtq5dlv> Feb 1, 2025 </time> </div> <h3 class="font-bold text-lg mb-2 text-gray-900 leading-tight line-clamp-2" data-astro-cid-hwtq5dlv> <a href="/tutorials/series/astro-portfolio" class="hover:underline" data-astro-cid-hwtq5dlv> Astro Portfolio </a> </h3> <p class="text-gray-600 text-sm mb-4 leading-relaxed line-clamp-3 flex-grow" data-astro-cid-hwtq5dlv> Build a blazing-fast personal site with Astro. Set up the project and add interactive islands. </p> <div class="flex flex-wrap gap-2 mb-4" data-astro-cid-hwtq5dlv> <span class="bg-gray-100 text-gray-800 rounded-full px-3 py-1 text-xs font-medium" data-astro-cid-hwtq5dlv> Astro </span><span class="bg-gray-100 text-gray-800 rounded-full px-3 py-1 text-xs font-medium" data-astro-cid-hwtq5dlv> Frontend </span><span class="bg-gray-100 text-gray-800 rounded-full px-3 py-1 text-xs font-medium" data-astro-cid-hwtq5dlv> Islands </span> </div> <div class="flex items-center justify-between mt-auto" data-astro-cid-hwtq5dlv> <div class="flex flex-col gap-1" data-astro-cid-hwtq5dlv> <div class="flex items-center gap-3 text-xs text-gray-500" data-astro-cid-hwtq5dlv> <a href="/tutorials/series/astro-portfolio" class="text-blue-600 hover:text-blue-700 text-sm font-medium inline-flex items-center transition-colors" data-astro-cid-hwtq5dlv>
+View Series
+<svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" data-astro-cid-hwtq5dlv> <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" data-astro-cid-hwtq5dlv></path> </svg> </a> </div> </div> <a href="/tutorials/astro-portfolio/astro-portfolio-part-1" class="bg-black hover:bg-gray-900 text-white px-4 py-2 rounded-lg text-sm font-medium inline-flex items-center transition-colors" data-astro-cid-hwtq5dlv>
+Start Reading
+<svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" data-astro-cid-hwtq5dlv> <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" data-astro-cid-hwtq5dlv></path> </svg> </a> </div> </div> </article><article class="tutorial-item bg-white rounded-lg border border-gray-200 overflow-hidden shadow-sm hover:shadow-md transition-all duration-300 h-full flex" data-title="sqlite crud" data-description="use sqlite for lightweight persistence: create tables, insert, select, and parameterize queries." data-tags="[&#34;SQLite&#34;,&#34;Database&#34;,&#34;Backend&#34;]" data-difficulty="beginner" data-date="1738195200000" data-astro-cid-hwtq5dlv> <div class="w-2 bg-gray-900" data-astro-cid-hwtq5dlv></div> <div class="p-6 flex-grow flex flex-col" data-astro-cid-hwtq5dlv> <div class="flex items-center justify-between mb-4" data-astro-cid-hwtq5dlv> <div class="flex items-center gap-3" data-astro-cid-hwtq5dlv> <span class="inline-block text-xs px-3 py-1 rounded-full font-medium uppercase tracking-wide bg-green-100 text-green-800" data-astro-cid-hwtq5dlv> beginner </span> <span class="bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded-full font-medium" data-astro-cid-hwtq5dlv> 2 parts
+</span> </div> <time class="text-xs text-gray-500" data-astro-cid-hwtq5dlv> Jan 30, 2025 </time> </div> <h3 class="font-bold text-lg mb-2 text-gray-900 leading-tight line-clamp-2" data-astro-cid-hwtq5dlv> <a href="/tutorials/series/sqlite-crud" class="hover:underline" data-astro-cid-hwtq5dlv> SQLite CRUD </a> </h3> <p class="text-gray-600 text-sm mb-4 leading-relaxed line-clamp-3 flex-grow" data-astro-cid-hwtq5dlv> Use SQLite for lightweight persistence: create tables, insert, select, and parameterize queries. </p> <div class="flex flex-wrap gap-2 mb-4" data-astro-cid-hwtq5dlv> <span class="bg-gray-100 text-gray-800 rounded-full px-3 py-1 text-xs font-medium" data-astro-cid-hwtq5dlv> SQLite </span><span class="bg-gray-100 text-gray-800 rounded-full px-3 py-1 text-xs font-medium" data-astro-cid-hwtq5dlv> Database </span><span class="bg-gray-100 text-gray-800 rounded-full px-3 py-1 text-xs font-medium" data-astro-cid-hwtq5dlv> Backend </span> </div> <div class="flex items-center justify-between mt-auto" data-astro-cid-hwtq5dlv> <div class="flex flex-col gap-1" data-astro-cid-hwtq5dlv> <div class="flex items-center gap-3 text-xs text-gray-500" data-astro-cid-hwtq5dlv> <a href="/tutorials/series/sqlite-crud" class="text-blue-600 hover:text-blue-700 text-sm font-medium inline-flex items-center transition-colors" data-astro-cid-hwtq5dlv>
+View Series
+<svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" data-astro-cid-hwtq5dlv> <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" data-astro-cid-hwtq5dlv></path> </svg> </a> </div> </div> <a href="/tutorials/sqlite-crud/sqlite-crud-part-1" class="bg-black hover:bg-gray-900 text-white px-4 py-2 rounded-lg text-sm font-medium inline-flex items-center transition-colors" data-astro-cid-hwtq5dlv>
+Start Reading
+<svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" data-astro-cid-hwtq5dlv> <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" data-astro-cid-hwtq5dlv></path> </svg> </a> </div> </div> </article><article class="tutorial-item bg-white rounded-lg border border-gray-200 overflow-hidden shadow-sm hover:shadow-md transition-all duration-300 h-full flex" data-title="testing with jest" data-description="write fast, reliable unit tests with jest. learn matchers, mocks, and test structure." data-tags="[&#34;Testing&#34;,&#34;Jest&#34;,&#34;JavaScript&#34;]" data-difficulty="beginner" data-date="1738022400000" data-astro-cid-hwtq5dlv> <div class="w-2 bg-gray-900" data-astro-cid-hwtq5dlv></div> <div class="p-6 flex-grow flex flex-col" data-astro-cid-hwtq5dlv> <div class="flex items-center justify-between mb-4" data-astro-cid-hwtq5dlv> <div class="flex items-center gap-3" data-astro-cid-hwtq5dlv> <span class="inline-block text-xs px-3 py-1 rounded-full font-medium uppercase tracking-wide bg-green-100 text-green-800" data-astro-cid-hwtq5dlv> beginner </span> <span class="bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded-full font-medium" data-astro-cid-hwtq5dlv> 2 parts
+</span> </div> <time class="text-xs text-gray-500" data-astro-cid-hwtq5dlv> Jan 28, 2025 </time> </div> <h3 class="font-bold text-lg mb-2 text-gray-900 leading-tight line-clamp-2" data-astro-cid-hwtq5dlv> <a href="/tutorials/series/testing-with-jest" class="hover:underline" data-astro-cid-hwtq5dlv> Testing with Jest </a> </h3> <p class="text-gray-600 text-sm mb-4 leading-relaxed line-clamp-3 flex-grow" data-astro-cid-hwtq5dlv> Write fast, reliable unit tests with Jest. Learn matchers, mocks, and test structure. </p> <div class="flex flex-wrap gap-2 mb-4" data-astro-cid-hwtq5dlv> <span class="bg-gray-100 text-gray-800 rounded-full px-3 py-1 text-xs font-medium" data-astro-cid-hwtq5dlv> Testing </span><span class="bg-gray-100 text-gray-800 rounded-full px-3 py-1 text-xs font-medium" data-astro-cid-hwtq5dlv> Jest </span><span class="bg-gray-100 text-gray-800 rounded-full px-3 py-1 text-xs font-medium" data-astro-cid-hwtq5dlv> JavaScript </span> </div> <div class="flex items-center justify-between mt-auto" data-astro-cid-hwtq5dlv> <div class="flex flex-col gap-1" data-astro-cid-hwtq5dlv> <div class="flex items-center gap-3 text-xs text-gray-500" data-astro-cid-hwtq5dlv> <a href="/tutorials/series/testing-with-jest" class="text-blue-600 hover:text-blue-700 text-sm font-medium inline-flex items-center transition-colors" data-astro-cid-hwtq5dlv>
+View Series
+<svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" data-astro-cid-hwtq5dlv> <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" data-astro-cid-hwtq5dlv></path> </svg> </a> </div> </div> <a href="/tutorials/testing-with-jest/testing-with-jest-part-1" class="bg-black hover:bg-gray-900 text-white px-4 py-2 rounded-lg text-sm font-medium inline-flex items-center transition-colors" data-astro-cid-hwtq5dlv>
+Start Reading
+<svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" data-astro-cid-hwtq5dlv> <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" data-astro-cid-hwtq5dlv></path> </svg> </a> </div> </div> </article><article class="tutorial-item bg-white rounded-lg border border-gray-200 overflow-hidden shadow-sm hover:shadow-md transition-all duration-300 h-full flex" data-title="typescript basics" data-description="get productive with typescript: primitives, unions, generics, and interfaces." data-tags="[&#34;TypeScript&#34;,&#34;JavaScript&#34;,&#34;Types&#34;]" data-difficulty="beginner" data-date="1737849600000" data-astro-cid-hwtq5dlv> <div class="w-2 bg-gray-900" data-astro-cid-hwtq5dlv></div> <div class="p-6 flex-grow flex flex-col" data-astro-cid-hwtq5dlv> <div class="flex items-center justify-between mb-4" data-astro-cid-hwtq5dlv> <div class="flex items-center gap-3" data-astro-cid-hwtq5dlv> <span class="inline-block text-xs px-3 py-1 rounded-full font-medium uppercase tracking-wide bg-green-100 text-green-800" data-astro-cid-hwtq5dlv> beginner </span> <span class="bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded-full font-medium" data-astro-cid-hwtq5dlv> 2 parts
+</span> </div> <time class="text-xs text-gray-500" data-astro-cid-hwtq5dlv> Jan 26, 2025 </time> </div> <h3 class="font-bold text-lg mb-2 text-gray-900 leading-tight line-clamp-2" data-astro-cid-hwtq5dlv> <a href="/tutorials/series/typescript-basics" class="hover:underline" data-astro-cid-hwtq5dlv> TypeScript Basics </a> </h3> <p class="text-gray-600 text-sm mb-4 leading-relaxed line-clamp-3 flex-grow" data-astro-cid-hwtq5dlv> Get productive with TypeScript: primitives, unions, generics, and interfaces. </p> <div class="flex flex-wrap gap-2 mb-4" data-astro-cid-hwtq5dlv> <span class="bg-gray-100 text-gray-800 rounded-full px-3 py-1 text-xs font-medium" data-astro-cid-hwtq5dlv> TypeScript </span><span class="bg-gray-100 text-gray-800 rounded-full px-3 py-1 text-xs font-medium" data-astro-cid-hwtq5dlv> JavaScript </span><span class="bg-gray-100 text-gray-800 rounded-full px-3 py-1 text-xs font-medium" data-astro-cid-hwtq5dlv> Types </span> </div> <div class="flex items-center justify-between mt-auto" data-astro-cid-hwtq5dlv> <div class="flex flex-col gap-1" data-astro-cid-hwtq5dlv> <div class="flex items-center gap-3 text-xs text-gray-500" data-astro-cid-hwtq5dlv> <a href="/tutorials/series/typescript-basics" class="text-blue-600 hover:text-blue-700 text-sm font-medium inline-flex items-center transition-colors" data-astro-cid-hwtq5dlv>
+View Series
+<svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" data-astro-cid-hwtq5dlv> <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" data-astro-cid-hwtq5dlv></path> </svg> </a> </div> </div> <a href="/tutorials/typescript-basics/typescript-basics-part-1" class="bg-black hover:bg-gray-900 text-white px-4 py-2 rounded-lg text-sm font-medium inline-flex items-center transition-colors" data-astro-cid-hwtq5dlv>
+Start Reading
+<svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" data-astro-cid-hwtq5dlv> <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" data-astro-cid-hwtq5dlv></path> </svg> </a> </div> </div> </article> </div> <!-- No Results Message --> <div id="no-results" class="text-center py-12 hidden" data-astro-cid-hwtq5dlv> <div class="text-gray-400 mb-4" data-astro-cid-hwtq5dlv> <svg class="w-16 h-16 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24" data-astro-cid-hwtq5dlv> <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" data-astro-cid-hwtq5dlv></path> </svg> </div> <h3 class="text-xl font-semibold text-gray-900 mb-2" data-astro-cid-hwtq5dlv>No tutorials found</h3> <p class="text-gray-600 mb-4" data-astro-cid-hwtq5dlv>Try adjusting your search or filters to find what you're looking for.</p> <button id="clear-all-filters" class="text-blue-600 hover:text-blue-700 font-medium" data-astro-cid-hwtq5dlv>
+Clear all filters
+</button> </div> </div>  <div id="pagination-container" data-astro-cid-hwtq5dlv> <div class="flex items-center justify-between border-t border-gray-200 pt-6"> <div class="flex w-0 flex-1 justify-start"> <span class="inline-flex items-center px-4 py-2 text-sm font-medium text-gray-400 bg-gray-100 border border-gray-200 rounded-md cursor-not-allowed"> <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"> <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path> </svg>
+Previous
+</span> </div> <div class="hidden md:flex items-center space-x-2"> <span class="text-sm text-gray-600">
+Page 1 of 3 </span> </div> <div class="flex w-0 flex-1 justify-end"> <a href="/tutorials/page/2" class="inline-flex items-center px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50 transition-colors">
+Next
+<svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"> <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path> </svg> </a> </div> </div> </div>  </div> </main>   <section class="bg-gray-50 border-t border-gray-200 py-12"> <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center"> <h2 class="text-2xl font-bold mb-4">Stay Updated</h2> <p class="text-gray-600 mb-6 max-w-2xl mx-auto">Get notified when I publish new articles and tutorials. No spam, unsubscribe at any time.</p> <div class="flex flex-col sm:flex-row items-center justify-center space-y-3 sm:space-y-0 sm:space-x-3"> <input type="email" placeholder="Your email address" class="w-full sm:w-80 px-4 py-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-gray-400 focus:border-transparent"> <button class="w-full sm:w-auto px-6 py-3 bg-gray-800 text-white font-medium rounded-md hover:bg-gray-700 transition-colors">Subscribe</button> </div> </div> </section>  <footer class="bg-white border-y border-gray-200 py-8"> <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8"> <div class="flex flex-col md:flex-row justify-between items-center"> <div class="mb-4 md:mb-0"> <div class="flex items-center font-bold text-xl"> <div> <!-- <span class={logoClass}>&gt;&nbsp;</span> --> <span class="text">codersbox</span> </div> </div> <p class="text-gray-500 text-sm mt-1">© Copyright 2025. All rights reserved.</p> </div> <div class="flex space-x-6 text-xl"> <a href="#" target="_blank" class="text-gray-500 hover:text-black transition-colors"> <svg width="0.97em" height="1em" data-icon="fa6-brands:github">   <symbol id="ai:fa6-brands:github" viewBox="0 0 496 512"><path fill="currentColor" d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6c-3.3.3-5.6-1.3-5.6-3.6c0-2 2.3-3.6 5.2-3.6c3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9c2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9c.3 2 2.9 3.3 5.9 2.6c2.9-.7 4.9-2.6 4.6-4.6c-.3-1.9-3-3.2-5.9-2.9M244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2c12.8 2.3 17.3-5.6 17.3-12.1c0-6.2-.3-40.4-.3-61.4c0 0-70 15-84.7-29.8c0 0-11.4-29.1-27.8-36.6c0 0-22.9-15.7 1.6-15.4c0 0 24.9 2 38.6 25.8c21.9 38.6 58.6 27.5 72.9 20.9c2.3-16 8.8-27.1 16-33.7c-55.9-6.2-112.3-14.3-112.3-110.5c0-27.5 7.6-41.3 23.6-58.9c-2.6-6.5-11.1-33.3 2.6-67.9c20.9-6.5 69 27 69 27c20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27c13.7 34.7 5.2 61.4 2.6 67.9c16 17.7 25.8 31.5 25.8 58.9c0 96.5-58.9 104.2-114.8 110.5c9.2 7.9 17 22.9 17 46.4c0 33.7-.3 75.4-.3 83.6c0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252C496 113.3 383.5 8 244.8 8M97.2 352.9c-1.3 1-1 3.3.7 5.2c1.6 1.6 3.9 2.3 5.2 1c1.3-1 1-3.3-.7-5.2c-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9c1.6 1 3.6.7 4.3-.7c.7-1.3-.3-2.9-2.3-3.9c-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2c2.3 2.3 5.2 2.6 6.5 1c1.3-1.3.7-4.3-1.3-6.2c-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2c-1.4-2.3-4-3.3-5.6-2"/></symbol><use href="#ai:fa6-brands:github"></use>  </svg> </a> <a href="#" target="_blank" class="text-gray-500 hover:text-black transition-colors"> <svg width="1em" height="1em" data-icon="fa6-brands:twitter">   <symbol id="ai:fa6-brands:twitter" viewBox="0 0 512 512"><path fill="currentColor" d="M459.37 151.716c.325 4.548.325 9.097.325 13.645c0 138.72-105.583 298.558-298.558 298.558c-59.452 0-114.68-17.219-161.137-47.106c8.447.974 16.568 1.299 25.34 1.299c49.055 0 94.213-16.568 130.274-44.832c-46.132-.975-84.792-31.188-98.112-72.772c6.498.974 12.995 1.624 19.818 1.624c9.421 0 18.843-1.3 27.614-3.573c-48.081-9.747-84.143-51.98-84.143-102.985v-1.299c13.969 7.797 30.214 12.67 47.431 13.319c-28.264-18.843-46.781-51.005-46.781-87.391c0-19.492 5.197-37.36 14.294-52.954c51.655 63.675 129.3 105.258 216.365 109.807c-1.624-7.797-2.599-15.918-2.599-24.04c0-57.828 46.782-104.934 104.934-104.934c30.213 0 57.502 12.67 76.67 33.137c23.715-4.548 46.456-13.32 66.599-25.34c-7.798 24.366-24.366 44.833-46.132 57.827c21.117-2.273 41.584-8.122 60.426-16.243c-14.292 20.791-32.161 39.308-52.628 54.253"/></symbol><use href="#ai:fa6-brands:twitter"></use>  </svg> </a> <a href="#" target="_blank" class="text-gray-500 hover:text-black transition-colors"> <svg width="0.75em" height="1em" data-icon="fa6-brands:stack-overflow">   <symbol id="ai:fa6-brands:stack-overflow" viewBox="0 0 384 512"><path fill="currentColor" d="M290.7 311L95 269.7L86.8 309l195.7 41zm51-87L188.2 95.7l-25.5 30.8l153.5 128.3zm-31.2 39.7L129.2 179l-16.7 36.5L293.7 300zM262 32l-32 24l119.3 160.3l32-24zm20.5 328h-200v39.7h200zm39.7 80H42.7V320h-40v160h359.5V320h-40z"/></symbol><use href="#ai:fa6-brands:stack-overflow"></use>  </svg> </a> <a href="#" target="_blank" class="text-gray-500 hover:text-black transition-colors"> <svg width="1em" height="1em" data-icon="fa6-solid:envelope">   <symbol id="ai:fa6-solid:envelope" viewBox="0 0 512 512"><path fill="currentColor" d="M48 64C21.5 64 0 85.5 0 112c0 15.1 7.1 29.3 19.2 38.4l217.6 163.2c11.4 8.5 27 8.5 38.4 0l217.6-163.2c12.1-9.1 19.2-23.3 19.2-38.4c0-26.5-21.5-48-48-48zM0 176v208c0 35.3 28.7 64 64 64h384c35.3 0 64-28.7 64-64V176L294.4 339.2a63.9 63.9 0 0 1-76.8 0z"/></symbol><use href="#ai:fa6-solid:envelope"></use>  </svg> </a> </div> </div> </div> </footer> <!-- Google Analytics (replace with your tracking ID) --><!-- <script async src="https://www.googletagmanager.com/gtag/js?id=GA_TRACKING_ID"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'GA_TRACKING_ID');
+</script> --><!-- Core Web Vitals monitoring --> <!-- Service Worker for caching (optional) --> </body></html> <script>
+  // Enhanced search functionality for tutorials with type-ahead
+  document.addEventListener('DOMContentLoaded', function() {
+    const tutorials = Array.from(document.querySelectorAll('.tutorial-item'));
+    const noResults = document.getElementById('no-results');
+    const tutorialsGrid = document.getElementById('tutorials-grid');
+    const popularTags = document.querySelectorAll('.popular-tag');
+    const clearAllFilters = document.getElementById('clear-all-filters');
+    const heroSearch = document.getElementById('hero-search');
+    const searchSuggestions = document.getElementById('search-suggestions');
+    const suggestionsList = document.getElementById('suggestions-list');
+    
+    // Build search index for type-ahead
+    const searchIndex = new Set();
+    let tutorialTitles = [];
+    let tutorialTags = new Set();
+    let tutorialSeries = new Set();
+    let difficulties = new Set();
+    
+    function buildSearchIndex() {
+      tutorials.forEach(tutorial => {
+        const title = tutorial.dataset.title || '';
+        const description = tutorial.dataset.description || '';
+        const tags = JSON.parse(tutorial.dataset.tags || '[]');
+        const difficulty = tutorial.dataset.difficulty || '';
+        const series = tutorial.dataset.series || '';
+        
+        // Add title to tutorials list
+        if (title) {
+          tutorialTitles.push({
+            title: title.split(' ').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' '),
+            search: title.toLowerCase()
+          });
+        }
+        
+        // Add tags, series, and difficulties to sets
+        tags.forEach(tag => tutorialTags.add(tag));
+        if (difficulty) difficulties.add(difficulty);
+        if (series) tutorialSeries.add(series);
+        
+        // Add individual words to search index
+        const words = (title + ' ' + description + ' ' + tags.join(' ') + ' ' + difficulty + ' ' + series).toLowerCase().split(/\s+/);
+        words.forEach(word => {
+          if (word.length > 2) {
+            searchIndex.add(word);
+          }
+        });
+      });
+    }
+    
+    buildSearchIndex();
+    
+    let selectedSuggestionIndex = -1;
+    let currentSuggestions = [];
+    
+    function generateSuggestions(query) {
+      if (!query || query.length < 2) return [];
+      
+      const queryLower = query.toLowerCase();
+      const suggestions = [];
+      
+      // Add matching tutorial titles
+      const matchingTitles = tutorialTitles
+        .filter(item => item.search.includes(queryLower))
+        .slice(0, 2);
+      
+      suggestions.push(...matchingTitles.map(item => ({
+        text: item.title,
+        type: 'tutorial',
+        query: item.search
+      })));
+      
+      // Add matching series
+      const matchingSeries = Array.from(tutorialSeries)
+        .filter(series => series.toLowerCase().includes(queryLower))
+        .slice(0, 2);
+      
+      suggestions.push(...matchingSeries.map(series => ({
+        text: series,
+        type: 'series',
+        query: series.toLowerCase()
+      })));
+      
+      // Add matching difficulties
+      const matchingDifficulties = Array.from(difficulties)
+        .filter(difficulty => difficulty.toLowerCase().includes(queryLower))
+        .slice(0, 2);
+      
+      suggestions.push(...matchingDifficulties.map(difficulty => ({
+        text: difficulty.charAt(0).toUpperCase() + difficulty.slice(1),
+        type: 'difficulty',
+        query: difficulty.toLowerCase()
+      })));
+      
+      // Add matching tags
+      const matchingTags = Array.from(tutorialTags)
+        .filter(tag => tag.toLowerCase().includes(queryLower))
+        .slice(0, 2);
+      
+      suggestions.push(...matchingTags.map(tag => ({
+        text: tag,
+        type: 'tag',
+        query: tag.toLowerCase()
+      })));
+      
+      return suggestions.slice(0, 8);
+    }
+    
+    function showSuggestions(suggestions) {
+      if (suggestions.length === 0) {
+        hideSuggestions();
+        return;
+      }
+      
+      currentSuggestions = suggestions;
+      selectedSuggestionIndex = -1;
+      
+      const html = suggestions.map((suggestion, index) => {
+        const typeIcon = suggestion.type === 'tutorial' ? '🎓' : 
+                        suggestion.type === 'series' ? '📚' :
+                        suggestion.type === 'difficulty' ? '📊' :
+                        suggestion.type === 'tag' ? '🏷️' : '🔍';
+        
+        return `
+          <div class="suggestion-item flex items-center px-4 py-3 hover:bg-gray-100 cursor-pointer border-b border-gray-100 last:border-b-0" data-index="${index}">
+            <span class="mr-3 text-sm">${typeIcon}</span>
+            <div class="flex-grow">
+              <div class="text-sm font-medium text-gray-900">${suggestion.text}</div>
+              <div class="text-xs text-gray-500 capitalize">${suggestion.type}</div>
+            </div>
+          </div>
+        `;
+      }).join('');
+      
+      suggestionsList.innerHTML = html;
+      searchSuggestions.classList.remove('hidden');
+      
+      // Add click handlers
+      document.querySelectorAll('.suggestion-item').forEach((item, index) => {
+        item.addEventListener('click', () => selectSuggestion(index));
+      });
+    }
+    
+    function hideSuggestions() {
+      searchSuggestions.classList.add('hidden');
+      selectedSuggestionIndex = -1;
+      currentSuggestions = [];
+    }
+    
+    function selectSuggestion(index) {
+      if (index >= 0 && index < currentSuggestions.length) {
+        const suggestion = currentSuggestions[index];
+        heroSearch.value = suggestion.query;
+        hideSuggestions();
+        searchTutorials();
+        heroSearch.focus();
+      }
+    }
+    
+    function highlightSuggestion(index) {
+      document.querySelectorAll('.suggestion-item').forEach((item, i) => {
+        if (i === index) {
+          item.classList.add('bg-gray-100');
+        } else {
+          item.classList.remove('bg-gray-100');
+        }
+      });
+    }
+    
+    // Debounce function to avoid excessive filtering
+    function debounce(func, delay) {
+      let timeoutId;
+      return function(...args) {
+        clearTimeout(timeoutId);
+        timeoutId = setTimeout(() => func.apply(this, args), delay);
+      };
+    }
+    
+    function searchTutorials() {
+      const searchTerm = heroSearch ? heroSearch.value.toLowerCase().trim() : '';
+      
+      if (!searchTerm) {
+        // Show all tutorials when search is empty
+        tutorials.forEach(function(tutorial) {
+          tutorial.style.display = 'block';
+        });
+        noResults.classList.add('hidden');
+        tutorialsGrid.classList.remove('hidden');
+        return;
+      }
+      
+      // Search through multiple fields with different weights
+      let searchResults = tutorials.map(function(tutorial) {
+        const title = (tutorial.dataset.title || '').toLowerCase();
+        const description = (tutorial.dataset.description || '').toLowerCase();
+        const tags = JSON.parse(tutorial.dataset.tags || '[]');
+        const tagsString = tags.map(tag => tag.toLowerCase()).join(' ');
+        const difficulty = (tutorial.dataset.difficulty || '').toLowerCase();
+        
+        let score = 0;
+        
+        // Title matches get highest score
+        if (title.includes(searchTerm)) {
+          score += title.indexOf(searchTerm) === 0 ? 10 : 5; // Boost if starts with search term
+        }
+        
+        // Description matches get medium score
+        if (description.includes(searchTerm)) {
+          score += 3;
+        }
+        
+        // Tag matches get lower score
+        if (tagsString.includes(searchTerm)) {
+          score += 2;
+        }
+        
+        // Difficulty matches
+        if (difficulty.includes(searchTerm)) {
+          score += 2;
+        }
+        
+        // Check for partial word matches
+        const searchWords = searchTerm.split(' ').filter(word => word.length > 0);
+        searchWords.forEach(function(word) {
+          if (title.includes(word)) score += 1;
+          if (description.includes(word)) score += 0.5;
+          if (difficulty.includes(word)) score += 1;
+        });
+        
+        return { tutorial: tutorial, score: score };
+      });
+      
+      // Filter tutorials with score > 0 and sort by score
+      const filteredTutorials = searchResults
+        .filter(result => result.score > 0)
+        .sort((a, b) => b.score - a.score)
+        .map(result => result.tutorial);
+      
+      // Update display
+      tutorials.forEach(function(tutorial) {
+        tutorial.style.display = 'none';
+      });
+      
+      if (filteredTutorials.length > 0) {
+        filteredTutorials.forEach(function(tutorial) {
+          tutorial.style.display = 'block';
+        });
+        noResults.classList.add('hidden');
+        tutorialsGrid.classList.remove('hidden');
+        
+        // Update no results message with search term
+        updateNoResultsMessage(searchTerm, filteredTutorials.length);
+      } else {
+        tutorialsGrid.classList.add('hidden');
+        noResults.classList.remove('hidden');
+        updateNoResultsMessage(searchTerm, 0);
+      }
+    }
+    
+    function updateNoResultsMessage(searchTerm, resultCount) {
+      const noResultsTitle = document.querySelector('#no-results h3');
+      const noResultsText = document.querySelector('#no-results p');
+      
+      if (resultCount === 0 && searchTerm) {
+        if (noResultsTitle) noResultsTitle.textContent = `No tutorials found for "${searchTerm}"`;
+        if (noResultsText) noResultsText.textContent = 'Try a different search term or browse our popular topics above.';
+      } else {
+        if (noResultsTitle) noResultsTitle.textContent = 'No tutorials found';
+        if (noResultsText) noResultsText.textContent = 'Try adjusting your search or browse our popular topics above.';
+      }
+    }
+    
+    function clearSearch() {
+      if (heroSearch) {
+        heroSearch.value = '';
+        heroSearch.focus();
+      }
+      hideSuggestions();
+      searchTutorials();
+    }
+    
+    function handleTagClick(tagName) {
+      if (heroSearch) {
+        heroSearch.value = tagName;
+        heroSearch.focus();
+        hideSuggestions();
+        searchTutorials();
+      }
+    }
+    
+    // Create debounced versions
+    const debouncedSearch = debounce(searchTutorials, 300);
+    const debouncedTypeAhead = debounce(function(query) {
+      const suggestions = generateSuggestions(query);
+      showSuggestions(suggestions);
+    }, 150);
+    
+    // Event listeners
+    if (heroSearch) {
+      heroSearch.addEventListener('input', function(e) {
+        const query = e.target.value;
+        
+        // Show type-ahead suggestions
+        if (query.length >= 2) {
+          debouncedTypeAhead(query);
+        } else {
+          hideSuggestions();
+        }
+        
+        // Trigger search
+        debouncedSearch();
+      });
+      
+      // Handle keyboard navigation
+      heroSearch.addEventListener('keydown', function(e) {
+        if (e.key === 'ArrowDown') {
+          e.preventDefault();
+          if (currentSuggestions.length > 0) {
+            selectedSuggestionIndex = Math.min(selectedSuggestionIndex + 1, currentSuggestions.length - 1);
+            highlightSuggestion(selectedSuggestionIndex);
+          }
+        } else if (e.key === 'ArrowUp') {
+          e.preventDefault();
+          if (currentSuggestions.length > 0) {
+            selectedSuggestionIndex = Math.max(selectedSuggestionIndex - 1, -1);
+            highlightSuggestion(selectedSuggestionIndex);
+          }
+        } else if (e.key === 'Enter') {
+          e.preventDefault();
+          if (selectedSuggestionIndex >= 0 && currentSuggestions.length > 0) {
+            selectSuggestion(selectedSuggestionIndex);
+          } else {
+            hideSuggestions();
+            searchTutorials();
+          }
+        } else if (e.key === 'Escape') {
+          if (searchSuggestions.classList.contains('hidden')) {
+            clearSearch();
+          } else {
+            hideSuggestions();
+          }
+        } else if (e.key === 'Tab') {
+          hideSuggestions();
+        }
+      });
+      
+      // Hide suggestions when clicking outside
+      heroSearch.addEventListener('blur', function(e) {
+        setTimeout(() => {
+          if (!searchSuggestions.contains(document.activeElement)) {
+            hideSuggestions();
+          }
+        }, 150);
+      });
+      
+      // Show suggestions when focusing if there's text
+      heroSearch.addEventListener('focus', function() {
+        if (heroSearch.value.length >= 2) {
+          const suggestions = generateSuggestions(heroSearch.value);
+          showSuggestions(suggestions);
+        }
+      });
+      
+      // Add search icon functionality
+      const searchIcon = heroSearch.parentElement.querySelector('svg');
+      if (searchIcon) {
+        searchIcon.style.cursor = 'pointer';
+        searchIcon.addEventListener('click', function() {
+          hideSuggestions();
+          searchTutorials();
+        });
+      }
+    }
+    
+    if (clearAllFilters) {
+      clearAllFilters.addEventListener('click', clearSearch);
+    }
+    
+    // Popular tag functionality
+    popularTags.forEach(function(tag) {
+      tag.addEventListener('click', function() {
+        const tagName = tag.dataset.tag;
+        if (tagName) {
+          handleTagClick(tagName);
+        }
+      });
+    });
+    
+    // Initial load - show all tutorials
+    searchTutorials();
+    
+    // Auto-focus search on page load (optional)
+    if (heroSearch && window.innerWidth > 768) { // Only on desktop
+      setTimeout(() => heroSearch.focus(), 100);
+    }
+  });
+</script> 

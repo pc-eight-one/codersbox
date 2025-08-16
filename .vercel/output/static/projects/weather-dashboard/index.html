@@ -1,0 +1,459 @@
+<!DOCTYPE html><html lang="en" data-astro-cid-37fxchfa> <head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><!-- SEO Meta Tags --><title>Weather Dashboard - codersbox</title><meta name="description" content="A responsive weather application built with Vue.js and the OpenWeather API. Features 7-day forecasts, location search, and real-time weather updates."><meta name="author" content="codersbox"><meta name="keywords" content="Vue.js, API, Responsive Design, JavaScript"><link rel="canonical" href="https://codersbox.dev/projects/weather-dashboard/"><!-- Open Graph Tags --><meta property="og:type" content="article"><meta property="og:title" content="Weather Dashboard - codersbox"><meta property="og:description" content="A responsive weather application built with Vue.js and the OpenWeather API. Features 7-day forecasts, location search, and real-time weather updates."><meta property="og:url" content="https://codersbox.dev/projects/weather-dashboard/"><meta property="og:site_name" content="codersbox"><meta property="og:image" content="https://codersbox.dev/images/projects/weather-dashboard.jpg"><meta property="og:image:alt" content="Weather Dashboard - codersbox"><meta property="og:locale" content="en_US"><!-- Twitter Card Tags --><meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="Weather Dashboard - codersbox"><meta name="twitter:description" content="A responsive weather application built with Vue.js and the OpenWeather API. Features 7-day forecasts, location search, and real-time weather updates."><meta name="twitter:image" content="https://codersbox.dev/images/projects/weather-dashboard.jpg"><meta name="twitter:image:alt" content="Weather Dashboard - codersbox"><meta name="twitter:site" content="@codersbox"><meta name="twitter:creator" content="@codersbox"><meta property="article:published_time" content="2024-12-15T00:00:00.000Z"><meta property="article:author" content="codersbox"><meta property="article:tag" content="Vue.js"><meta property="article:tag" content="API"><meta property="article:tag" content="Responsive Design"><meta property="article:tag" content="JavaScript"><!-- Favicon and Icons --><link rel="icon" type="image/x-icon" href="/favicon.ico"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png"><link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="manifest" href="/site.webmanifest"><!-- Performance Optimizations --><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="dns-prefetch" href="https://fonts.googleapis.com"><!-- Theme Color --><meta name="theme-color" content="#3b82f6"><meta name="msapplication-TileColor" content="#3b82f6"><!-- Structured Data --><script type="application/ld+json">
+    {JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": type === 'article' ? 'Article' : 'WebSite',
+      "name": title,
+      "description": description,
+      "url": currentUrl,
+      "publisher": {
+        "@type": "Organization",
+        "name": "codersbox",
+        "url": siteUrl,
+        "logo": {
+          "@type": "ImageObject",
+          "url": `${siteUrl}/logo.png`
+        }
+      },
+      ...(type === 'article' && publishDate && {
+        "author": {
+          "@type": "Person",
+          "name": author
+        },
+        "datePublished": publishDate.toISOString(),
+        "dateModified": publishDate.toISOString(),
+        "headline": title,
+        "image": fullImageUrl,
+        "keywords": tags.join(', ')
+      }),
+      ...(type === 'website' && {
+        "potentialAction": {
+          "@type": "SearchAction",
+          "target": {
+            "@type": "EntryPoint",
+            "urlTemplate": `${siteUrl}/search?q={search_term_string}`
+          },
+          "query-input": "required name=search_term_string"
+        }
+      })
+    })}
+  </script><!-- Critical CSS --><link rel="stylesheet" href="/_astro/about.yENWLJj_.css">
+<style>.toc-navigating[data-astro-cid-xvrfupwn]{margin:-.25rem -.5rem;border-radius:.25rem;--tw-bg-opacity: 1;background-color:rgb(239 246 255 / var(--tw-bg-opacity, 1));padding:.25rem .5rem;--tw-text-opacity: 1;color:rgb(37 99 235 / var(--tw-text-opacity, 1));transform:scale(1.02);transition:all .2s ease-in-out}.scrollbar-hide[data-astro-cid-xvrfupwn]{-ms-overflow-style:none;scrollbar-width:none}.scrollbar-hide[data-astro-cid-xvrfupwn]::-webkit-scrollbar{display:none}
+.project-content[data-astro-cid-ovxcmftc]{font-family:Inter,system-ui,sans-serif;color:#374151;line-height:1.75}.project-content[data-astro-cid-ovxcmftc] :is(h1,h2,h3,h4,h5,h6)[data-astro-cid-ovxcmftc]{scroll-margin-top:6rem;position:relative}.project-content[data-astro-cid-ovxcmftc] h1[data-astro-cid-ovxcmftc]{font-size:2.25rem;line-height:1.2;margin-top:0;margin-bottom:2rem;font-weight:800}.project-content[data-astro-cid-ovxcmftc] h2[data-astro-cid-ovxcmftc]{font-size:1.875rem;line-height:1.25;margin-top:3rem;margin-bottom:1.5rem;padding-bottom:.75rem;border-bottom:2px solid rgb(229 231 235);font-weight:700;padding-left:1.5em}.project-content[data-astro-cid-ovxcmftc] h3[data-astro-cid-ovxcmftc]{font-size:1.5rem;line-height:1.3;margin-top:2.5rem;margin-bottom:1.25rem;font-weight:700;padding-left:1.5em}.project-content[data-astro-cid-ovxcmftc] h4[data-astro-cid-ovxcmftc]{font-size:1.25rem;line-height:1.4;margin-top:2rem;margin-bottom:1rem;font-weight:600;padding-left:1.5em}.project-content[data-astro-cid-ovxcmftc] pre[data-astro-cid-ovxcmftc]{position:relative;background:#282c34!important;border:1px solid #3e4451;border-radius:.75rem;padding:1.5rem;margin:2rem 0;overflow-x:auto;box-shadow:0 4px 6px -1px #0000001a}.project-content[data-astro-cid-ovxcmftc] pre[data-astro-cid-ovxcmftc] code[data-astro-cid-ovxcmftc]{font-family:JetBrains Mono,Fira Code,Consolas,Monaco,Courier New,monospace;font-size:.875rem;line-height:1.5;color:#abb2bf!important;background:transparent!important;border:none!important;padding:0!important}.project-content[data-astro-cid-ovxcmftc] :not(pre)[data-astro-cid-ovxcmftc]>code[data-astro-cid-ovxcmftc]{font-family:JetBrains Mono,Fira Code,Consolas,Monaco,Courier New,monospace;font-size:.875em;font-weight:600;color:#ef4444!important;background:#f3f4f6!important;padding:.125rem .375rem!important;border-radius:.375rem!important;border:1px solid rgb(229 231 235)!important}.project-content[data-astro-cid-ovxcmftc] .heading-anchor[data-astro-cid-ovxcmftc]{position:absolute;left:0;top:50%;transform:translateY(-50%);display:inline-flex;align-items:center;justify-content:center;width:1em;height:1em;font-size:1em;line-height:1;color:#9ca3af;background:transparent;border:none;border-radius:.25rem;opacity:0;visibility:hidden;pointer-events:none;transition:opacity .15s ease,color .15s ease;cursor:pointer}.project-content[data-astro-cid-ovxcmftc] .heading-anchor[data-astro-cid-ovxcmftc] svg[data-astro-cid-ovxcmftc]{width:1em;height:1em}.project-content[data-astro-cid-ovxcmftc] .heading-anchor[data-astro-cid-ovxcmftc]:hover,.project-content[data-astro-cid-ovxcmftc] .heading-anchor[data-astro-cid-ovxcmftc]:focus-visible{color:#2563eb;outline:none}.project-content[data-astro-cid-ovxcmftc] :is(h2,h3,h4):hover[data-astro-cid-ovxcmftc] .heading-anchor[data-astro-cid-ovxcmftc],.project-content[data-astro-cid-ovxcmftc] :is(h2,h3,h4):focus-within[data-astro-cid-ovxcmftc] .heading-anchor[data-astro-cid-ovxcmftc]{opacity:1;visibility:visible;pointer-events:auto}.project-content[data-astro-cid-ovxcmftc] .heading-anchor[data-astro-cid-ovxcmftc].copied:after{content:"Copied!";position:absolute;top:-1.75rem;left:0;font-size:.75rem;padding:.125rem .375rem;background:#f3f4f6;color:#1f2937;border:1px solid rgb(229 231 235);border-radius:.25rem;white-space:nowrap}
+#main-navigation[data-astro-cid-pux6a34n]{backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);background:#ffffffb3;border-bottom:1px solid rgba(255,255,255,.2);box-shadow:0 8px 32px #0000001a}#main-navigation[data-astro-cid-pux6a34n].nav-scrolled{background:#ffffffd9;backdrop-filter:blur(25px);-webkit-backdrop-filter:blur(25px);box-shadow:0 8px 40px #00000026;border-bottom:1px solid rgba(255,255,255,.3)}.nav-link[data-astro-cid-pux6a34n]{position:relative;overflow:hidden}.nav-link[data-astro-cid-pux6a34n]:before{content:"";position:absolute;bottom:0;left:50%;width:0;height:2px;background:linear-gradient(90deg,#3b82f6,#1d4ed8);transform:translate(-50%);transition:width .3s ease}.nav-link[data-astro-cid-pux6a34n]:hover:before{width:80%}.nav-link[data-astro-cid-pux6a34n]:hover{background:#3b82f60d;transform:translateY(-1px)}.nav-logo-link[data-astro-cid-pux6a34n]{transition:transform .3s ease}.nav-logo-link[data-astro-cid-pux6a34n]:hover{transform:scale(1.05)}.mobile-menu-panel[data-astro-cid-pux6a34n]{opacity:0;transform:translateY(-10px);transition:all .3s cubic-bezier(.4,0,.2,1)}.mobile-menu-panel[data-astro-cid-pux6a34n]:not(.hidden){opacity:1;transform:translateY(0)}.mobile-menu-panel[data-astro-cid-pux6a34n].mobile-menu-show{animation:slideDown .3s ease-out}@keyframes slideDown{0%{opacity:0;transform:translateY(-10px)}to{opacity:1;transform:translateY(0)}}.mobile-nav-link[data-astro-cid-pux6a34n]{opacity:0;transform:translate(-20px);animation:slideInLeft .3s ease-out forwards}.mobile-nav-link[data-astro-cid-pux6a34n]:nth-child(1){animation-delay:.1s}.mobile-nav-link[data-astro-cid-pux6a34n]:nth-child(2){animation-delay:.15s}.mobile-nav-link[data-astro-cid-pux6a34n]:nth-child(3){animation-delay:.2s}.mobile-nav-link[data-astro-cid-pux6a34n]:nth-child(4){animation-delay:.25s}.mobile-nav-link[data-astro-cid-pux6a34n]:nth-child(5){animation-delay:.3s}@keyframes slideInLeft{to{opacity:1;transform:translate(0)}}#mobile-menu-toggle[data-astro-cid-pux6a34n]{backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px)}#mobile-menu-toggle[data-astro-cid-pux6a34n]:hover{transform:scale(1.1);background:#3b82f61a}#main-navigation[data-astro-cid-pux6a34n]:before{content:"";position:absolute;inset:0;background:linear-gradient(135deg,#ffffff1a,#fff0);pointer-events:none}html{visibility:hidden}html.loaded{visibility:visible}
+</style><script type="module" src="/_astro/hoisted.UwqMJ_-v.js"></script>
+<script type="module" src="/_astro/page.DsLumr9O.js"></script>
+<script>window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };
+		var script = document.createElement('script');
+		script.defer = true;
+		script.src = '/_vercel/insights/script.js';
+		var head = document.querySelector('head');
+		head.appendChild(script);
+	</script></head> <body class="bg-gray-100 text-gray-900 min-h-screen" data-astro-cid-37fxchfa> <nav id="main-navigation" class="bg-white/70 backdrop-blur-xl border-b border-white/20 shadow-lg shadow-black/5 sticky top-0 z-50 transition-all duration-300" data-astro-cid-pux6a34n> <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8" data-astro-cid-pux6a34n> <div class="flex justify-between items-center h-20" data-astro-cid-pux6a34n> <div class="flex items-center" data-astro-cid-pux6a34n> <div class="flex-shrink-0 font-extrabold text-2xl tracking-[-.1em]" data-astro-cid-pux6a34n> <a href="/" class="flex items-center nav-logo-link" data-astro-cid-pux6a34n> <div> <!-- <span class={logoClass}>&gt;&nbsp;</span> --> <span class="text-3xl">codersbox</span> </div> </a> </div> <div class="hidden md:flex ml-10 space-x-1" data-astro-cid-pux6a34n> <a href="/" class="nav-link relative px-4 py-2 text-gray-600 hover:text-gray-900 text-sm font-medium rounded-lg transition-all duration-200" data-astro-cid-pux6a34n> Home </a><a href="/articles" class="nav-link relative px-4 py-2 text-gray-600 hover:text-gray-900 text-sm font-medium rounded-lg transition-all duration-200" data-astro-cid-pux6a34n> Articles </a><a href="/tutorials" class="nav-link relative px-4 py-2 text-gray-600 hover:text-gray-900 text-sm font-medium rounded-lg transition-all duration-200" data-astro-cid-pux6a34n> Tutorials </a><a href="/projects" class="nav-link relative px-4 py-2 text-gray-600 hover:text-gray-900 text-sm font-medium rounded-lg transition-all duration-200" data-astro-cid-pux6a34n> Projects </a><a href="/about" class="nav-link relative px-4 py-2 text-gray-600 hover:text-gray-900 text-sm font-medium rounded-lg transition-all duration-200" data-astro-cid-pux6a34n> About </a> </div> </div> <div class="flex items-center" data-astro-cid-pux6a34n> <button id="mobile-menu-toggle" class="md:hidden ml-2 p-2 text-gray-600 hover:text-black transition-all duration-200 rounded-lg hover:bg-gray-100/50" aria-label="Toggle menu" data-astro-cid-pux6a34n> <svg width="0.25em" height="1em" class="text-xl" data-astro-cid-pux6a34n data-icon="fa6-solid:ellipsis-vertical">   <symbol id="ai:fa6-solid:ellipsis-vertical" viewBox="0 0 128 512"><path fill="currentColor" d="M64 360a56 56 0 1 0 0 112a56 56 0 1 0 0-112m0-160a56 56 0 1 0 0 112a56 56 0 1 0 0-112m56-104A56 56 0 1 0 8 96a56 56 0 1 0 112 0"/></symbol><use href="#ai:fa6-solid:ellipsis-vertical"></use>  </svg> </button> </div> </div> </div> <!-- Mobile menu --> <div id="mobile-menu" class="hidden md:hidden mobile-menu-panel" data-astro-cid-pux6a34n> <div class="px-2 pt-2 pb-3 space-y-1 bg-white/80 backdrop-blur-xl border-b border-white/20" data-astro-cid-pux6a34n> <a href="/" class="mobile-nav-link block px-3 py-2 rounded-lg text-base font-medium text-gray-600 hover:text-gray-900 hover:bg-white/60 transition-all duration-200" data-astro-cid-pux6a34n> Home </a><a href="/articles" class="mobile-nav-link block px-3 py-2 rounded-lg text-base font-medium text-gray-600 hover:text-gray-900 hover:bg-white/60 transition-all duration-200" data-astro-cid-pux6a34n> Articles </a><a href="/tutorials" class="mobile-nav-link block px-3 py-2 rounded-lg text-base font-medium text-gray-600 hover:text-gray-900 hover:bg-white/60 transition-all duration-200" data-astro-cid-pux6a34n> Tutorials </a><a href="/projects" class="mobile-nav-link block px-3 py-2 rounded-lg text-base font-medium text-gray-600 hover:text-gray-900 hover:bg-white/60 transition-all duration-200" data-astro-cid-pux6a34n> Projects </a><a href="/about" class="mobile-nav-link block px-3 py-2 rounded-lg text-base font-medium text-gray-600 hover:text-gray-900 hover:bg-white/60 transition-all duration-200" data-astro-cid-pux6a34n> About </a> </div> </div> </nav>    <main class="min-h-screen bg-gray-50 py-12" data-astro-cid-ovxcmftc> <!-- Project Hero Section --> <header class="bg-white border-b border-gray-200 mb-16" data-astro-cid-ovxcmftc> <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12" data-astro-cid-ovxcmftc> <div class="bg-gray-900 h-64 flex items-center justify-center rounded-lg mb-8" data-astro-cid-ovxcmftc> <img src="/images/projects/weather-dashboard.jpg" alt="Weather Dashboard Screenshot" class="max-w-full max-h-full object-contain" loading="eager" decoding="async" width="800" height="400" data-astro-cid-ovxcmftc> </div> <div class="text-center" data-astro-cid-ovxcmftc> <h1 class="text-4xl md:text-5xl font-bold mb-6 text-gray-900 leading-tight tracking-tight" data-astro-cid-ovxcmftc> Weather Dashboard </h1> <p class="text-xl text-gray-600 mb-8 max-w-3xl mx-auto leading-relaxed" data-astro-cid-ovxcmftc> A responsive weather application built with Vue.js and the OpenWeather API. Features 7-day forecasts, location search, and real-time weather updates. </p> <div class="flex flex-wrap justify-center items-center gap-6 text-sm text-gray-500 mb-6" data-astro-cid-ovxcmftc> <div class="flex items-center gap-2" data-astro-cid-ovxcmftc> <span class="inline-block text-xs px-3 py-1 rounded-full font-medium uppercase tracking-wide bg-green-100 text-green-800" data-astro-cid-ovxcmftc> completed </span> </div> <div class="flex items-center gap-2" data-astro-cid-ovxcmftc> <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" data-astro-cid-ovxcmftc> <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" data-astro-cid-ovxcmftc></path> </svg> <span data-astro-cid-ovxcmftc>December 15, 2024</span> </div> <a href="https://github.com/johndoe/weather-dashboard" target="_blank" rel="noopener noreferrer" class="text-gray-700 hover:text-black transition-colors flex items-center gap-2" data-astro-cid-ovxcmftc> <svg width="0.97em" height="1em" class="text-lg" data-astro-cid-ovxcmftc data-icon="fa6-brands:github">   <symbol id="ai:fa6-brands:github" viewBox="0 0 496 512"><path fill="currentColor" d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6c-3.3.3-5.6-1.3-5.6-3.6c0-2 2.3-3.6 5.2-3.6c3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9c2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9c.3 2 2.9 3.3 5.9 2.6c2.9-.7 4.9-2.6 4.6-4.6c-.3-1.9-3-3.2-5.9-2.9M244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2c12.8 2.3 17.3-5.6 17.3-12.1c0-6.2-.3-40.4-.3-61.4c0 0-70 15-84.7-29.8c0 0-11.4-29.1-27.8-36.6c0 0-22.9-15.7 1.6-15.4c0 0 24.9 2 38.6 25.8c21.9 38.6 58.6 27.5 72.9 20.9c2.3-16 8.8-27.1 16-33.7c-55.9-6.2-112.3-14.3-112.3-110.5c0-27.5 7.6-41.3 23.6-58.9c-2.6-6.5-11.1-33.3 2.6-67.9c20.9-6.5 69 27 69 27c20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27c13.7 34.7 5.2 61.4 2.6 67.9c16 17.7 25.8 31.5 25.8 58.9c0 96.5-58.9 104.2-114.8 110.5c9.2 7.9 17 22.9 17 46.4c0 33.7-.3 75.4-.3 83.6c0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252C496 113.3 383.5 8 244.8 8M97.2 352.9c-1.3 1-1 3.3.7 5.2c1.6 1.6 3.9 2.3 5.2 1c1.3-1 1-3.3-.7-5.2c-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9c1.6 1 3.6.7 4.3-.7c.7-1.3-.3-2.9-2.3-3.9c-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2c2.3 2.3 5.2 2.6 6.5 1c1.3-1.3.7-4.3-1.3-6.2c-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2c-1.4-2.3-4-3.3-5.6-2"/></symbol><use href="#ai:fa6-brands:github"></use>  </svg> <span data-astro-cid-ovxcmftc>GitHub</span> </a> <a href="https://weather-dashboard-demo.netlify.app" target="_blank" rel="noopener noreferrer" class="text-blue-600 hover:text-blue-700 transition-colors flex items-center gap-2" data-astro-cid-ovxcmftc> <svg width="1.25em" height="1em" class="text-lg" data-astro-cid-ovxcmftc data-icon="fa6-solid:link">   <symbol id="ai:fa6-solid:link" viewBox="0 0 640 512"><path fill="currentColor" d="M579.8 267.7c56.5-56.5 56.5-148 0-204.5c-50-50-128.8-56.5-186.3-15.4l-1.6 1.1c-14.4 10.3-17.7 30.3-7.4 44.6s30.3 17.7 44.6 7.4l1.6-1.1c32.1-22.9 76-19.3 103.8 8.6c31.5 31.5 31.5 82.5 0 114L422.3 334.8c-31.5 31.5-82.5 31.5-114 0c-27.9-27.9-31.5-71.8-8.6-103.8l1.1-1.6c10.3-14.4 6.9-34.4-7.4-44.6s-34.4-6.9-44.6 7.4l-1.1 1.6C206.5 251.2 213 330 263 380c56.5 56.5 148 56.5 204.5 0zM60.2 244.3c-56.5 56.5-56.5 148 0 204.5c50 50 128.8 56.5 186.3 15.4l1.6-1.1c14.4-10.3 17.7-30.3 7.4-44.6s-30.3-17.7-44.6-7.4l-1.6 1.1c-32.1 22.9-76 19.3-103.8-8.6C74 372 74 321 105.5 289.5l112.2-112.3c31.5-31.5 82.5-31.5 114 0c27.9 27.9 31.5 71.8 8.6 103.9l-1.1 1.6c-10.3 14.4-6.9 34.4 7.4 44.6s34.4 6.9 44.6-7.4l1.1-1.6C433.5 260.8 427 182 377 132c-56.5-56.5-148-56.5-204.5 0z"/></symbol><use href="#ai:fa6-solid:link"></use>  </svg> <span data-astro-cid-ovxcmftc>Live Demo</span> </a> </div> <!-- Tech Stack --> <div class="flex flex-wrap justify-center gap-2" data-astro-cid-ovxcmftc> <span class="bg-blue-100 text-blue-800 px-4 py-2 rounded-full text-sm font-medium hover:bg-blue-200 transition-colors" data-astro-cid-ovxcmftc> Vue.js </span><span class="bg-blue-100 text-blue-800 px-4 py-2 rounded-full text-sm font-medium hover:bg-blue-200 transition-colors" data-astro-cid-ovxcmftc> API </span><span class="bg-blue-100 text-blue-800 px-4 py-2 rounded-full text-sm font-medium hover:bg-blue-200 transition-colors" data-astro-cid-ovxcmftc> Responsive Design </span><span class="bg-blue-100 text-blue-800 px-4 py-2 rounded-full text-sm font-medium hover:bg-blue-200 transition-colors" data-astro-cid-ovxcmftc> JavaScript </span> </div> </div> </div> </header> <!-- Project Content --> <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8" data-astro-cid-ovxcmftc> <div class="grid grid-cols-1 lg:grid-cols-4 gap-8" data-astro-cid-ovxcmftc> <!-- Left Sidebar - Table of Contents --> <aside class="lg:col-span-1 lg:border-r lg:border-gray-200 lg:pr-8" data-astro-cid-ovxcmftc> <nav class="sticky top-24 max-h-[calc(100vh-7rem)] overflow-y-auto scrollbar-hide" data-astro-cid-xvrfupwn><div class="p-0" data-astro-cid-xvrfupwn><h2 class="text-lg font-semibold text-gray-900 mb-4 flex items-center gap-2" data-astro-cid-xvrfupwn><svg class="w-5 h-5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" data-astro-cid-xvrfupwn><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 10h16M4 14h16M4 18h16" data-astro-cid-xvrfupwn></path></svg><span data-astro-cid-xvrfupwn>Contents</span></h2><ul class="space-y-2 text-sm toc-links" data-astro-cid-xvrfupwn><li data-astro-cid-xvrfupwn><a href="#-features" data-toc-link class="block text-gray-700 hover:text-blue-600 transition-colors leading-relaxed font-medium" data-astro-cid-xvrfupwn>🌟 Features</a></li><li data-astro-cid-xvrfupwn><a href="#current-weather" data-toc-link class="block text-gray-700 hover:text-blue-600 transition-colors leading-relaxed pl-4 text-sm" data-astro-cid-xvrfupwn>Current Weather</a></li><li data-astro-cid-xvrfupwn><a href="#7-day-forecast" data-toc-link class="block text-gray-700 hover:text-blue-600 transition-colors leading-relaxed pl-4 text-sm" data-astro-cid-xvrfupwn>7-Day Forecast</a></li><li data-astro-cid-xvrfupwn><a href="#location-features" data-toc-link class="block text-gray-700 hover:text-blue-600 transition-colors leading-relaxed pl-4 text-sm" data-astro-cid-xvrfupwn>Location Features</a></li><li data-astro-cid-xvrfupwn><a href="#user-experience" data-toc-link class="block text-gray-700 hover:text-blue-600 transition-colors leading-relaxed pl-4 text-sm" data-astro-cid-xvrfupwn>User Experience</a></li><li data-astro-cid-xvrfupwn><a href="#️-technologies-used" data-toc-link class="block text-gray-700 hover:text-blue-600 transition-colors leading-relaxed font-medium" data-astro-cid-xvrfupwn>🛠️ Technologies Used</a></li><li data-astro-cid-xvrfupwn><a href="#frontend" data-toc-link class="block text-gray-700 hover:text-blue-600 transition-colors leading-relaxed pl-4 text-sm" data-astro-cid-xvrfupwn>Frontend</a></li><li data-astro-cid-xvrfupwn><a href="#styling" data-toc-link class="block text-gray-700 hover:text-blue-600 transition-colors leading-relaxed pl-4 text-sm" data-astro-cid-xvrfupwn>Styling</a></li><li data-astro-cid-xvrfupwn><a href="#apis--services" data-toc-link class="block text-gray-700 hover:text-blue-600 transition-colors leading-relaxed pl-4 text-sm" data-astro-cid-xvrfupwn>APIs &amp; Services</a></li><li data-astro-cid-xvrfupwn><a href="#-key-implementation-details" data-toc-link class="block text-gray-700 hover:text-blue-600 transition-colors leading-relaxed font-medium" data-astro-cid-xvrfupwn>🚀 Key Implementation Details</a></li><li data-astro-cid-xvrfupwn><a href="#api-integration" data-toc-link class="block text-gray-700 hover:text-blue-600 transition-colors leading-relaxed pl-4 text-sm" data-astro-cid-xvrfupwn>API Integration</a></li><li data-astro-cid-xvrfupwn><a href="#responsive-components" data-toc-link class="block text-gray-700 hover:text-blue-600 transition-colors leading-relaxed pl-4 text-sm" data-astro-cid-xvrfupwn>Responsive Components</a></li><li data-astro-cid-xvrfupwn><a href="#state-management" data-toc-link class="block text-gray-700 hover:text-blue-600 transition-colors leading-relaxed pl-4 text-sm" data-astro-cid-xvrfupwn>State Management</a></li><li data-astro-cid-xvrfupwn><a href="#-responsive-design" data-toc-link class="block text-gray-700 hover:text-blue-600 transition-colors leading-relaxed font-medium" data-astro-cid-xvrfupwn>📱 Responsive Design</a></li><li data-astro-cid-xvrfupwn><a href="#mobile-first-approach" data-toc-link class="block text-gray-700 hover:text-blue-600 transition-colors leading-relaxed pl-4 text-sm" data-astro-cid-xvrfupwn>Mobile-First Approach</a></li><li data-astro-cid-xvrfupwn><a href="#tablet--desktop-enhancements" data-toc-link class="block text-gray-700 hover:text-blue-600 transition-colors leading-relaxed pl-4 text-sm" data-astro-cid-xvrfupwn>Tablet &amp; Desktop Enhancements</a></li><li data-astro-cid-xvrfupwn><a href="#-performance-optimizations" data-toc-link class="block text-gray-700 hover:text-blue-600 transition-colors leading-relaxed font-medium" data-astro-cid-xvrfupwn>🔧 Performance Optimizations</a></li><li data-astro-cid-xvrfupwn><a href="#data-management" data-toc-link class="block text-gray-700 hover:text-blue-600 transition-colors leading-relaxed pl-4 text-sm" data-astro-cid-xvrfupwn>Data Management</a></li><li data-astro-cid-xvrfupwn><a href="#loading-experience" data-toc-link class="block text-gray-700 hover:text-blue-600 transition-colors leading-relaxed pl-4 text-sm" data-astro-cid-xvrfupwn>Loading Experience</a></li><li data-astro-cid-xvrfupwn><a href="#code-optimization" data-toc-link class="block text-gray-700 hover:text-blue-600 transition-colors leading-relaxed pl-4 text-sm" data-astro-cid-xvrfupwn>Code Optimization</a></li><li data-astro-cid-xvrfupwn><a href="#-testing-strategy" data-toc-link class="block text-gray-700 hover:text-blue-600 transition-colors leading-relaxed font-medium" data-astro-cid-xvrfupwn>🧪 Testing Strategy</a></li><li data-astro-cid-xvrfupwn><a href="#unit-testing" data-toc-link class="block text-gray-700 hover:text-blue-600 transition-colors leading-relaxed pl-4 text-sm" data-astro-cid-xvrfupwn>Unit Testing</a></li><li data-astro-cid-xvrfupwn><a href="#integration-testing" data-toc-link class="block text-gray-700 hover:text-blue-600 transition-colors leading-relaxed pl-4 text-sm" data-astro-cid-xvrfupwn>Integration Testing</a></li><li data-astro-cid-xvrfupwn><a href="#-accessibility-features" data-toc-link class="block text-gray-700 hover:text-blue-600 transition-colors leading-relaxed font-medium" data-astro-cid-xvrfupwn>🌍 Accessibility Features</a></li><li data-astro-cid-xvrfupwn><a href="#screen-reader-support" data-toc-link class="block text-gray-700 hover:text-blue-600 transition-colors leading-relaxed pl-4 text-sm" data-astro-cid-xvrfupwn>Screen Reader Support</a></li><li data-astro-cid-xvrfupwn><a href="#visual-accessibility" data-toc-link class="block text-gray-700 hover:text-blue-600 transition-colors leading-relaxed pl-4 text-sm" data-astro-cid-xvrfupwn>Visual Accessibility</a></li><li data-astro-cid-xvrfupwn><a href="#-deployment--cicd" data-toc-link class="block text-gray-700 hover:text-blue-600 transition-colors leading-relaxed font-medium" data-astro-cid-xvrfupwn>🚀 Deployment &amp; CI/CD</a></li><li data-astro-cid-xvrfupwn><a href="#build-process" data-toc-link class="block text-gray-700 hover:text-blue-600 transition-colors leading-relaxed pl-4 text-sm" data-astro-cid-xvrfupwn>Build Process</a></li><li data-astro-cid-xvrfupwn><a href="#-lessons-learned" data-toc-link class="block text-gray-700 hover:text-blue-600 transition-colors leading-relaxed font-medium" data-astro-cid-xvrfupwn>📈 Lessons Learned</a></li><li data-astro-cid-xvrfupwn><a href="#technical-insights" data-toc-link class="block text-gray-700 hover:text-blue-600 transition-colors leading-relaxed pl-4 text-sm" data-astro-cid-xvrfupwn>Technical Insights</a></li><li data-astro-cid-xvrfupwn><a href="#user-experience-1" data-toc-link class="block text-gray-700 hover:text-blue-600 transition-colors leading-relaxed pl-4 text-sm" data-astro-cid-xvrfupwn>User Experience</a></li><li data-astro-cid-xvrfupwn><a href="#performance" data-toc-link class="block text-gray-700 hover:text-blue-600 transition-colors leading-relaxed pl-4 text-sm" data-astro-cid-xvrfupwn>Performance</a></li><li data-astro-cid-xvrfupwn><a href="#-future-enhancements" data-toc-link class="block text-gray-700 hover:text-blue-600 transition-colors leading-relaxed font-medium" data-astro-cid-xvrfupwn>🔮 Future Enhancements</a></li><li data-astro-cid-xvrfupwn><a href="#planned-features" data-toc-link class="block text-gray-700 hover:text-blue-600 transition-colors leading-relaxed pl-4 text-sm" data-astro-cid-xvrfupwn>Planned Features</a></li><li data-astro-cid-xvrfupwn><a href="#technical-improvements" data-toc-link class="block text-gray-700 hover:text-blue-600 transition-colors leading-relaxed pl-4 text-sm" data-astro-cid-xvrfupwn>Technical Improvements</a></li></ul></div></nav> </aside> <!-- Main Content --> <article class="lg:col-span-3" data-astro-cid-ovxcmftc> <div class="px-0 py-0" data-astro-cid-ovxcmftc> <!-- Project Content --> <div class="prose prose-lg max-w-none project-content" data-astro-cid-ovxcmftc> <h1 id="weather-dashboard">Weather Dashboard</h1>
+<p>A modern, responsive weather application that provides comprehensive weather information with an intuitive user interface. Built with Vue.js 3 and powered by the OpenWeather API.</p>
+<h2 id="-features">🌟 Features</h2>
+<h3 id="current-weather">Current Weather</h3>
+<ul>
+<li><strong>Real-time weather data</strong> for any location worldwide</li>
+<li><strong>Temperature, humidity, pressure</strong> and wind information</li>
+<li><strong>Weather conditions</strong> with descriptive icons</li>
+<li><strong>Feels-like temperature</strong> and visibility data</li>
+<li><strong>UV index</strong> with safety recommendations</li>
+</ul>
+<h3 id="7-day-forecast">7-Day Forecast</h3>
+<ul>
+<li><strong>Extended weather forecast</strong> for the week ahead</li>
+<li><strong>Daily temperature ranges</strong> (min/max)</li>
+<li><strong>Precipitation probability</strong> and expected rainfall</li>
+<li><strong>Weather condition summaries</strong> for each day</li>
+</ul>
+<h3 id="location-features">Location Features</h3>
+<ul>
+<li><strong>GPS location detection</strong> for instant local weather</li>
+<li><strong>City search</strong> with autocomplete suggestions</li>
+<li><strong>Recent locations</strong> quick access</li>
+<li><strong>Favorite locations</strong> for easy switching</li>
+<li><strong>Map integration</strong> showing weather patterns</li>
+</ul>
+<h3 id="user-experience">User Experience</h3>
+<ul>
+<li><strong>Responsive design</strong> optimized for all devices</li>
+<li><strong>Clean, intuitive interface</strong></li>
+<li><strong>Celsius/Fahrenheit</strong> temperature switching</li>
+<li><strong>Offline support</strong> with cached data</li>
+<li><strong>Loading states</strong> and error handling</li>
+</ul>
+<h2 id="️-technologies-used">🛠️ Technologies Used</h2>
+<h3 id="frontend">Frontend</h3>
+<ul>
+<li><strong>Vue.js 3</strong> - Progressive JavaScript framework</li>
+<li><strong>Composition API</strong> - Modern Vue.js development approach</li>
+<li><strong>Vue Router</strong> - Client-side routing</li>
+<li><strong>Pinia</strong> - State management library</li>
+<li><strong>Vite</strong> - Fast build tool and development server</li>
+</ul>
+<h3 id="styling">Styling</h3>
+<ul>
+<li><strong>Tailwind CSS</strong> - Utility-first CSS framework</li>
+<li><strong>Headless UI</strong> - Unstyled, accessible UI components</li>
+<li><strong>Heroicons</strong> - Beautiful hand-crafted SVG icons</li>
+<li><strong>CSS Grid &#x26; Flexbox</strong> - Modern layout techniques</li>
+</ul>
+<h3 id="apis--services">APIs &#x26; Services</h3>
+<ul>
+<li><strong>OpenWeather API</strong> - Weather data provider</li>
+<li><strong>Geolocation API</strong> - Browser location detection</li>
+<li><strong>LocalStorage API</strong> - Data persistence</li>
+<li><strong>Service Worker</strong> - Offline functionality</li>
+</ul>
+<h2 id="-key-implementation-details">🚀 Key Implementation Details</h2>
+<h3 id="api-integration">API Integration</h3>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#6A737D">// Weather service with error handling and caching</span></span>
+<span class="line"><span style="color:#F97583">class</span><span style="color:#B392F0"> WeatherService</span><span style="color:#E1E4E8"> {</span></span>
+<span class="line"><span style="color:#F97583">  constructor</span><span style="color:#E1E4E8">(</span><span style="color:#FFAB70">apiKey</span><span style="color:#E1E4E8">) {</span></span>
+<span class="line"><span style="color:#79B8FF">    this</span><span style="color:#E1E4E8">.apiKey </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> apiKey;</span></span>
+<span class="line"><span style="color:#79B8FF">    this</span><span style="color:#E1E4E8">.baseUrl </span><span style="color:#F97583">=</span><span style="color:#9ECBFF"> 'https://api.openweathermap.org/data/2.5'</span><span style="color:#E1E4E8">;</span></span>
+<span class="line"><span style="color:#79B8FF">    this</span><span style="color:#E1E4E8">.cache </span><span style="color:#F97583">=</span><span style="color:#F97583"> new</span><span style="color:#B392F0"> Map</span><span style="color:#E1E4E8">();</span></span>
+<span class="line"><span style="color:#E1E4E8">  }</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#F97583">  async</span><span style="color:#B392F0"> getCurrentWeather</span><span style="color:#E1E4E8">(</span><span style="color:#FFAB70">lat</span><span style="color:#E1E4E8">, </span><span style="color:#FFAB70">lon</span><span style="color:#E1E4E8">) {</span></span>
+<span class="line"><span style="color:#F97583">    const</span><span style="color:#79B8FF"> cacheKey</span><span style="color:#F97583"> =</span><span style="color:#9ECBFF"> `current-${</span><span style="color:#E1E4E8">lat</span><span style="color:#9ECBFF">}-${</span><span style="color:#E1E4E8">lon</span><span style="color:#9ECBFF">}`</span><span style="color:#E1E4E8">;</span></span>
+<span class="line"><span style="color:#E1E4E8">    </span></span>
+<span class="line"><span style="color:#6A737D">    // Check cache first (5 minute TTL)</span></span>
+<span class="line"><span style="color:#F97583">    if</span><span style="color:#E1E4E8"> (</span><span style="color:#79B8FF">this</span><span style="color:#E1E4E8">.cache.</span><span style="color:#B392F0">has</span><span style="color:#E1E4E8">(cacheKey)) {</span></span>
+<span class="line"><span style="color:#F97583">      const</span><span style="color:#79B8FF"> cached</span><span style="color:#F97583"> =</span><span style="color:#79B8FF"> this</span><span style="color:#E1E4E8">.cache.</span><span style="color:#B392F0">get</span><span style="color:#E1E4E8">(cacheKey);</span></span>
+<span class="line"><span style="color:#F97583">      if</span><span style="color:#E1E4E8"> (Date.</span><span style="color:#B392F0">now</span><span style="color:#E1E4E8">() </span><span style="color:#F97583">-</span><span style="color:#E1E4E8"> cached.timestamp </span><span style="color:#F97583">&#x3C;</span><span style="color:#79B8FF"> 300000</span><span style="color:#E1E4E8">) {</span></span>
+<span class="line"><span style="color:#F97583">        return</span><span style="color:#E1E4E8"> cached.data;</span></span>
+<span class="line"><span style="color:#E1E4E8">      }</span></span>
+<span class="line"><span style="color:#E1E4E8">    }</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#F97583">    try</span><span style="color:#E1E4E8"> {</span></span>
+<span class="line"><span style="color:#F97583">      const</span><span style="color:#79B8FF"> response</span><span style="color:#F97583"> =</span><span style="color:#F97583"> await</span><span style="color:#B392F0"> fetch</span><span style="color:#E1E4E8">(</span></span>
+<span class="line"><span style="color:#9ECBFF">        `${</span><span style="color:#79B8FF">this</span><span style="color:#9ECBFF">.</span><span style="color:#E1E4E8">baseUrl</span><span style="color:#9ECBFF">}/weather?lat=${</span><span style="color:#E1E4E8">lat</span><span style="color:#9ECBFF">}&#x26;lon=${</span><span style="color:#E1E4E8">lon</span><span style="color:#9ECBFF">}&#x26;appid=${</span><span style="color:#79B8FF">this</span><span style="color:#9ECBFF">.</span><span style="color:#E1E4E8">apiKey</span><span style="color:#9ECBFF">}&#x26;units=metric`</span></span>
+<span class="line"><span style="color:#E1E4E8">      );</span></span>
+<span class="line"><span style="color:#E1E4E8">      </span></span>
+<span class="line"><span style="color:#F97583">      if</span><span style="color:#E1E4E8"> (</span><span style="color:#F97583">!</span><span style="color:#E1E4E8">response.ok) {</span></span>
+<span class="line"><span style="color:#F97583">        throw</span><span style="color:#F97583"> new</span><span style="color:#B392F0"> Error</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">`Weather API error: ${</span><span style="color:#E1E4E8">response</span><span style="color:#9ECBFF">.</span><span style="color:#E1E4E8">status</span><span style="color:#9ECBFF">}`</span><span style="color:#E1E4E8">);</span></span>
+<span class="line"><span style="color:#E1E4E8">      }</span></span>
+<span class="line"><span style="color:#E1E4E8">      </span></span>
+<span class="line"><span style="color:#F97583">      const</span><span style="color:#79B8FF"> data</span><span style="color:#F97583"> =</span><span style="color:#F97583"> await</span><span style="color:#E1E4E8"> response.</span><span style="color:#B392F0">json</span><span style="color:#E1E4E8">();</span></span>
+<span class="line"><span style="color:#E1E4E8">      </span></span>
+<span class="line"><span style="color:#6A737D">      // Cache the response</span></span>
+<span class="line"><span style="color:#79B8FF">      this</span><span style="color:#E1E4E8">.cache.</span><span style="color:#B392F0">set</span><span style="color:#E1E4E8">(cacheKey, {</span></span>
+<span class="line"><span style="color:#E1E4E8">        data,</span></span>
+<span class="line"><span style="color:#E1E4E8">        timestamp: Date.</span><span style="color:#B392F0">now</span><span style="color:#E1E4E8">()</span></span>
+<span class="line"><span style="color:#E1E4E8">      });</span></span>
+<span class="line"><span style="color:#E1E4E8">      </span></span>
+<span class="line"><span style="color:#F97583">      return</span><span style="color:#E1E4E8"> data;</span></span>
+<span class="line"><span style="color:#E1E4E8">    } </span><span style="color:#F97583">catch</span><span style="color:#E1E4E8"> (error) {</span></span>
+<span class="line"><span style="color:#E1E4E8">      console.</span><span style="color:#B392F0">error</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">'Error fetching weather data:'</span><span style="color:#E1E4E8">, error);</span></span>
+<span class="line"><span style="color:#F97583">      throw</span><span style="color:#E1E4E8"> error;</span></span>
+<span class="line"><span style="color:#E1E4E8">    }</span></span>
+<span class="line"><span style="color:#E1E4E8">  }</span></span>
+<span class="line"><span style="color:#E1E4E8">}</span></span>
+<span class="line"></span></code></pre>
+<h3 id="responsive-components">Responsive Components</h3>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="vue"><code><span class="line"><span style="color:#6A737D">&#x3C;!-- WeatherCard.vue --></span></span>
+<span class="line"><span style="color:#E1E4E8">&#x3C;</span><span style="color:#85E89D">template</span><span style="color:#E1E4E8">></span></span>
+<span class="line"><span style="color:#E1E4E8">  &#x3C;</span><span style="color:#85E89D">div</span><span style="color:#B392F0"> class</span><span style="color:#E1E4E8">=</span><span style="color:#9ECBFF">"weather-card bg-gradient-to-br from-blue-400 to-blue-600 rounded-xl p-6 text-white"</span><span style="color:#E1E4E8">></span></span>
+<span class="line"><span style="color:#E1E4E8">    &#x3C;</span><span style="color:#85E89D">div</span><span style="color:#B392F0"> class</span><span style="color:#E1E4E8">=</span><span style="color:#9ECBFF">"flex items-center justify-between mb-4"</span><span style="color:#E1E4E8">></span></span>
+<span class="line"><span style="color:#E1E4E8">      &#x3C;</span><span style="color:#85E89D">div</span><span style="color:#E1E4E8">></span></span>
+<span class="line"><span style="color:#E1E4E8">        &#x3C;</span><span style="color:#85E89D">h2</span><span style="color:#B392F0"> class</span><span style="color:#E1E4E8">=</span><span style="color:#9ECBFF">"text-2xl font-bold"</span><span style="color:#E1E4E8">>{{ location.name }}&#x3C;/</span><span style="color:#85E89D">h2</span><span style="color:#E1E4E8">></span></span>
+<span class="line"><span style="color:#E1E4E8">        &#x3C;</span><span style="color:#85E89D">p</span><span style="color:#B392F0"> class</span><span style="color:#E1E4E8">=</span><span style="color:#9ECBFF">"text-blue-100"</span><span style="color:#E1E4E8">>{{ </span><span style="color:#B392F0">formatDate</span><span style="color:#E1E4E8">(weather.dt) }}&#x3C;/</span><span style="color:#85E89D">p</span><span style="color:#E1E4E8">></span></span>
+<span class="line"><span style="color:#E1E4E8">      &#x3C;/</span><span style="color:#85E89D">div</span><span style="color:#E1E4E8">></span></span>
+<span class="line"><span style="color:#E1E4E8">      &#x3C;</span><span style="color:#85E89D">div</span><span style="color:#B392F0"> class</span><span style="color:#E1E4E8">=</span><span style="color:#9ECBFF">"text-right"</span><span style="color:#E1E4E8">></span></span>
+<span class="line"><span style="color:#E1E4E8">        &#x3C;</span><span style="color:#85E89D">img</span><span style="color:#E1E4E8"> </span></span>
+<span class="line"><span style="color:#E1E4E8">          :</span><span style="color:#B392F0">src</span><span style="color:#E1E4E8">=</span><span style="color:#9ECBFF">"`https://openweathermap.org/img/wn/${</span><span style="color:#E1E4E8">weather</span><span style="color:#9ECBFF">.</span><span style="color:#E1E4E8">weather</span><span style="color:#9ECBFF">[</span><span style="color:#79B8FF">0</span><span style="color:#9ECBFF">].</span><span style="color:#E1E4E8">icon</span><span style="color:#9ECBFF">}@2x.png`"</span></span>
+<span class="line"><span style="color:#E1E4E8">          :</span><span style="color:#B392F0">alt</span><span style="color:#E1E4E8">=</span><span style="color:#9ECBFF">"</span><span style="color:#E1E4E8">weather.weather[</span><span style="color:#79B8FF">0</span><span style="color:#E1E4E8">].description</span><span style="color:#9ECBFF">"</span></span>
+<span class="line"><span style="color:#B392F0">          class</span><span style="color:#E1E4E8">=</span><span style="color:#9ECBFF">"w-16 h-16"</span></span>
+<span class="line"><span style="color:#E1E4E8">        /></span></span>
+<span class="line"><span style="color:#E1E4E8">      &#x3C;/</span><span style="color:#85E89D">div</span><span style="color:#E1E4E8">></span></span>
+<span class="line"><span style="color:#E1E4E8">    &#x3C;/</span><span style="color:#85E89D">div</span><span style="color:#E1E4E8">></span></span>
+<span class="line"><span style="color:#E1E4E8">    </span></span>
+<span class="line"><span style="color:#E1E4E8">    &#x3C;</span><span style="color:#85E89D">div</span><span style="color:#B392F0"> class</span><span style="color:#E1E4E8">=</span><span style="color:#9ECBFF">"grid grid-cols-2 gap-4"</span><span style="color:#E1E4E8">></span></span>
+<span class="line"><span style="color:#E1E4E8">      &#x3C;</span><span style="color:#85E89D">div</span><span style="color:#E1E4E8">></span></span>
+<span class="line"><span style="color:#E1E4E8">        &#x3C;</span><span style="color:#85E89D">p</span><span style="color:#B392F0"> class</span><span style="color:#E1E4E8">=</span><span style="color:#9ECBFF">"text-4xl font-bold"</span><span style="color:#E1E4E8">>{{ Math.</span><span style="color:#B392F0">round</span><span style="color:#E1E4E8">(weather.main.temp) }}°&#x3C;/</span><span style="color:#85E89D">p</span><span style="color:#E1E4E8">></span></span>
+<span class="line"><span style="color:#E1E4E8">        &#x3C;</span><span style="color:#85E89D">p</span><span style="color:#B392F0"> class</span><span style="color:#E1E4E8">=</span><span style="color:#9ECBFF">"text-blue-100 capitalize"</span><span style="color:#E1E4E8">>{{ weather.weather[</span><span style="color:#79B8FF">0</span><span style="color:#E1E4E8">].description }}&#x3C;/</span><span style="color:#85E89D">p</span><span style="color:#E1E4E8">></span></span>
+<span class="line"><span style="color:#E1E4E8">      &#x3C;/</span><span style="color:#85E89D">div</span><span style="color:#E1E4E8">></span></span>
+<span class="line"><span style="color:#E1E4E8">      &#x3C;</span><span style="color:#85E89D">div</span><span style="color:#B392F0"> class</span><span style="color:#E1E4E8">=</span><span style="color:#9ECBFF">"space-y-2 text-sm"</span><span style="color:#E1E4E8">></span></span>
+<span class="line"><span style="color:#E1E4E8">        &#x3C;</span><span style="color:#85E89D">div</span><span style="color:#B392F0"> class</span><span style="color:#E1E4E8">=</span><span style="color:#9ECBFF">"flex justify-between"</span><span style="color:#E1E4E8">></span></span>
+<span class="line"><span style="color:#E1E4E8">          &#x3C;</span><span style="color:#85E89D">span</span><span style="color:#E1E4E8">>Feels like:&#x3C;/</span><span style="color:#85E89D">span</span><span style="color:#E1E4E8">></span></span>
+<span class="line"><span style="color:#E1E4E8">          &#x3C;</span><span style="color:#85E89D">span</span><span style="color:#E1E4E8">>{{ Math.</span><span style="color:#B392F0">round</span><span style="color:#E1E4E8">(weather.main.feels_like) }}°&#x3C;/</span><span style="color:#85E89D">span</span><span style="color:#E1E4E8">></span></span>
+<span class="line"><span style="color:#E1E4E8">        &#x3C;/</span><span style="color:#85E89D">div</span><span style="color:#E1E4E8">></span></span>
+<span class="line"><span style="color:#E1E4E8">        &#x3C;</span><span style="color:#85E89D">div</span><span style="color:#B392F0"> class</span><span style="color:#E1E4E8">=</span><span style="color:#9ECBFF">"flex justify-between"</span><span style="color:#E1E4E8">></span></span>
+<span class="line"><span style="color:#E1E4E8">          &#x3C;</span><span style="color:#85E89D">span</span><span style="color:#E1E4E8">>Humidity:&#x3C;/</span><span style="color:#85E89D">span</span><span style="color:#E1E4E8">></span></span>
+<span class="line"><span style="color:#E1E4E8">          &#x3C;</span><span style="color:#85E89D">span</span><span style="color:#E1E4E8">>{{ weather.main.humidity }}%&#x3C;/</span><span style="color:#85E89D">span</span><span style="color:#E1E4E8">></span></span>
+<span class="line"><span style="color:#E1E4E8">        &#x3C;/</span><span style="color:#85E89D">div</span><span style="color:#E1E4E8">></span></span>
+<span class="line"><span style="color:#E1E4E8">        &#x3C;</span><span style="color:#85E89D">div</span><span style="color:#B392F0"> class</span><span style="color:#E1E4E8">=</span><span style="color:#9ECBFF">"flex justify-between"</span><span style="color:#E1E4E8">></span></span>
+<span class="line"><span style="color:#E1E4E8">          &#x3C;</span><span style="color:#85E89D">span</span><span style="color:#E1E4E8">>Wind:&#x3C;/</span><span style="color:#85E89D">span</span><span style="color:#E1E4E8">></span></span>
+<span class="line"><span style="color:#E1E4E8">          &#x3C;</span><span style="color:#85E89D">span</span><span style="color:#E1E4E8">>{{ Math.</span><span style="color:#B392F0">round</span><span style="color:#E1E4E8">(weather.wind.speed) }} m/s&#x3C;/</span><span style="color:#85E89D">span</span><span style="color:#E1E4E8">></span></span>
+<span class="line"><span style="color:#E1E4E8">        &#x3C;/</span><span style="color:#85E89D">div</span><span style="color:#E1E4E8">></span></span>
+<span class="line"><span style="color:#E1E4E8">      &#x3C;/</span><span style="color:#85E89D">div</span><span style="color:#E1E4E8">></span></span>
+<span class="line"><span style="color:#E1E4E8">    &#x3C;/</span><span style="color:#85E89D">div</span><span style="color:#E1E4E8">></span></span>
+<span class="line"><span style="color:#E1E4E8">  &#x3C;/</span><span style="color:#85E89D">div</span><span style="color:#E1E4E8">></span></span>
+<span class="line"><span style="color:#E1E4E8">&#x3C;/</span><span style="color:#85E89D">template</span><span style="color:#E1E4E8">></span></span>
+<span class="line"></span></code></pre>
+<h3 id="state-management">State Management</h3>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#6A737D">// stores/weather.js</span></span>
+<span class="line"><span style="color:#F97583">import</span><span style="color:#E1E4E8"> { defineStore } </span><span style="color:#F97583">from</span><span style="color:#9ECBFF"> 'pinia'</span><span style="color:#E1E4E8">;</span></span>
+<span class="line"><span style="color:#F97583">import</span><span style="color:#E1E4E8"> { WeatherService } </span><span style="color:#F97583">from</span><span style="color:#9ECBFF"> '@/services/weather'</span><span style="color:#E1E4E8">;</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#F97583">export</span><span style="color:#F97583"> const</span><span style="color:#79B8FF"> useWeatherStore</span><span style="color:#F97583"> =</span><span style="color:#B392F0"> defineStore</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">'weather'</span><span style="color:#E1E4E8">, {</span></span>
+<span class="line"><span style="color:#B392F0">  state</span><span style="color:#E1E4E8">: () </span><span style="color:#F97583">=></span><span style="color:#E1E4E8"> ({</span></span>
+<span class="line"><span style="color:#E1E4E8">    currentWeather: </span><span style="color:#79B8FF">null</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#E1E4E8">    forecast: </span><span style="color:#79B8FF">null</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#E1E4E8">    favorites: </span><span style="color:#79B8FF">JSON</span><span style="color:#E1E4E8">.</span><span style="color:#B392F0">parse</span><span style="color:#E1E4E8">(localStorage.</span><span style="color:#B392F0">getItem</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">'weatherFavorites'</span><span style="color:#E1E4E8">) </span><span style="color:#F97583">||</span><span style="color:#9ECBFF"> '[]'</span><span style="color:#E1E4E8">),</span></span>
+<span class="line"><span style="color:#E1E4E8">    recentSearches: </span><span style="color:#79B8FF">JSON</span><span style="color:#E1E4E8">.</span><span style="color:#B392F0">parse</span><span style="color:#E1E4E8">(localStorage.</span><span style="color:#B392F0">getItem</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">'weatherRecent'</span><span style="color:#E1E4E8">) </span><span style="color:#F97583">||</span><span style="color:#9ECBFF"> '[]'</span><span style="color:#E1E4E8">),</span></span>
+<span class="line"><span style="color:#E1E4E8">    loading: </span><span style="color:#79B8FF">false</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#E1E4E8">    error: </span><span style="color:#79B8FF">null</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#E1E4E8">    units: localStorage.</span><span style="color:#B392F0">getItem</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">'weatherUnits'</span><span style="color:#E1E4E8">) </span><span style="color:#F97583">||</span><span style="color:#9ECBFF"> 'metric'</span></span>
+<span class="line"><span style="color:#E1E4E8">  }),</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#E1E4E8">  getters: {</span></span>
+<span class="line"><span style="color:#B392F0">    temperature</span><span style="color:#E1E4E8">: (</span><span style="color:#FFAB70">state</span><span style="color:#E1E4E8">) </span><span style="color:#F97583">=></span><span style="color:#E1E4E8"> {</span></span>
+<span class="line"><span style="color:#F97583">      if</span><span style="color:#E1E4E8"> (</span><span style="color:#F97583">!</span><span style="color:#E1E4E8">state.currentWeather) </span><span style="color:#F97583">return</span><span style="color:#79B8FF"> null</span><span style="color:#E1E4E8">;</span></span>
+<span class="line"><span style="color:#F97583">      return</span><span style="color:#E1E4E8"> state.units </span><span style="color:#F97583">===</span><span style="color:#9ECBFF"> 'metric'</span><span style="color:#E1E4E8"> </span></span>
+<span class="line"><span style="color:#F97583">        ?</span><span style="color:#9ECBFF"> `${</span><span style="color:#E1E4E8">Math</span><span style="color:#9ECBFF">.</span><span style="color:#B392F0">round</span><span style="color:#9ECBFF">(</span><span style="color:#E1E4E8">state</span><span style="color:#9ECBFF">.</span><span style="color:#E1E4E8">currentWeather</span><span style="color:#9ECBFF">.</span><span style="color:#E1E4E8">main</span><span style="color:#9ECBFF">.</span><span style="color:#E1E4E8">temp</span><span style="color:#9ECBFF">)</span><span style="color:#9ECBFF">}°C`</span></span>
+<span class="line"><span style="color:#F97583">        :</span><span style="color:#9ECBFF"> `${</span><span style="color:#E1E4E8">Math</span><span style="color:#9ECBFF">.</span><span style="color:#B392F0">round</span><span style="color:#9ECBFF">((</span><span style="color:#E1E4E8">state</span><span style="color:#9ECBFF">.</span><span style="color:#E1E4E8">currentWeather</span><span style="color:#9ECBFF">.</span><span style="color:#E1E4E8">main</span><span style="color:#9ECBFF">.</span><span style="color:#E1E4E8">temp</span><span style="color:#F97583"> *</span><span style="color:#79B8FF"> 9</span><span style="color:#F97583">/</span><span style="color:#79B8FF">5</span><span style="color:#9ECBFF">) </span><span style="color:#F97583">+</span><span style="color:#79B8FF"> 32</span><span style="color:#9ECBFF">)</span><span style="color:#9ECBFF">}°F`</span><span style="color:#E1E4E8">;</span></span>
+<span class="line"><span style="color:#E1E4E8">    },</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#B392F0">    isLocationFavorited</span><span style="color:#E1E4E8">: (</span><span style="color:#FFAB70">state</span><span style="color:#E1E4E8">) </span><span style="color:#F97583">=></span><span style="color:#E1E4E8"> (</span><span style="color:#FFAB70">location</span><span style="color:#E1E4E8">) </span><span style="color:#F97583">=></span><span style="color:#E1E4E8"> {</span></span>
+<span class="line"><span style="color:#F97583">      return</span><span style="color:#E1E4E8"> state.favorites.</span><span style="color:#B392F0">some</span><span style="color:#E1E4E8">(</span><span style="color:#FFAB70">fav</span><span style="color:#F97583"> =></span><span style="color:#E1E4E8"> </span></span>
+<span class="line"><span style="color:#E1E4E8">        fav.lat </span><span style="color:#F97583">===</span><span style="color:#E1E4E8"> location.lat </span><span style="color:#F97583">&#x26;&#x26;</span><span style="color:#E1E4E8"> fav.lon </span><span style="color:#F97583">===</span><span style="color:#E1E4E8"> location.lon</span></span>
+<span class="line"><span style="color:#E1E4E8">      );</span></span>
+<span class="line"><span style="color:#E1E4E8">    }</span></span>
+<span class="line"><span style="color:#E1E4E8">  },</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#E1E4E8">  actions: {</span></span>
+<span class="line"><span style="color:#F97583">    async</span><span style="color:#B392F0"> fetchWeatherByCoords</span><span style="color:#E1E4E8">(</span><span style="color:#FFAB70">lat</span><span style="color:#E1E4E8">, </span><span style="color:#FFAB70">lon</span><span style="color:#E1E4E8">) {</span></span>
+<span class="line"><span style="color:#79B8FF">      this</span><span style="color:#E1E4E8">.loading </span><span style="color:#F97583">=</span><span style="color:#79B8FF"> true</span><span style="color:#E1E4E8">;</span></span>
+<span class="line"><span style="color:#79B8FF">      this</span><span style="color:#E1E4E8">.error </span><span style="color:#F97583">=</span><span style="color:#79B8FF"> null</span><span style="color:#E1E4E8">;</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#F97583">      try</span><span style="color:#E1E4E8"> {</span></span>
+<span class="line"><span style="color:#F97583">        const</span><span style="color:#79B8FF"> weatherService</span><span style="color:#F97583"> =</span><span style="color:#F97583"> new</span><span style="color:#B392F0"> WeatherService</span><span style="color:#E1E4E8">();</span></span>
+<span class="line"><span style="color:#E1E4E8">        </span></span>
+<span class="line"><span style="color:#F97583">        const</span><span style="color:#E1E4E8"> [</span><span style="color:#79B8FF">currentWeather</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">forecast</span><span style="color:#E1E4E8">] </span><span style="color:#F97583">=</span><span style="color:#F97583"> await</span><span style="color:#79B8FF"> Promise</span><span style="color:#E1E4E8">.</span><span style="color:#B392F0">all</span><span style="color:#E1E4E8">([</span></span>
+<span class="line"><span style="color:#E1E4E8">          weatherService.</span><span style="color:#B392F0">getCurrentWeather</span><span style="color:#E1E4E8">(lat, lon),</span></span>
+<span class="line"><span style="color:#E1E4E8">          weatherService.</span><span style="color:#B392F0">getForecast</span><span style="color:#E1E4E8">(lat, lon)</span></span>
+<span class="line"><span style="color:#E1E4E8">        ]);</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#79B8FF">        this</span><span style="color:#E1E4E8">.currentWeather </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> currentWeather;</span></span>
+<span class="line"><span style="color:#79B8FF">        this</span><span style="color:#E1E4E8">.forecast </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> forecast;</span></span>
+<span class="line"><span style="color:#E1E4E8">        </span></span>
+<span class="line"><span style="color:#6A737D">        // Add to recent searches</span></span>
+<span class="line"><span style="color:#79B8FF">        this</span><span style="color:#E1E4E8">.</span><span style="color:#B392F0">addToRecent</span><span style="color:#E1E4E8">({</span></span>
+<span class="line"><span style="color:#E1E4E8">          name: currentWeather.name,</span></span>
+<span class="line"><span style="color:#E1E4E8">          lat,</span></span>
+<span class="line"><span style="color:#E1E4E8">          lon,</span></span>
+<span class="line"><span style="color:#E1E4E8">          country: currentWeather.sys.country</span></span>
+<span class="line"><span style="color:#E1E4E8">        });</span></span>
+<span class="line"><span style="color:#E1E4E8">        </span></span>
+<span class="line"><span style="color:#E1E4E8">      } </span><span style="color:#F97583">catch</span><span style="color:#E1E4E8"> (error) {</span></span>
+<span class="line"><span style="color:#79B8FF">        this</span><span style="color:#E1E4E8">.error </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> error.message;</span></span>
+<span class="line"><span style="color:#E1E4E8">        console.</span><span style="color:#B392F0">error</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">'Error fetching weather:'</span><span style="color:#E1E4E8">, error);</span></span>
+<span class="line"><span style="color:#E1E4E8">      } </span><span style="color:#F97583">finally</span><span style="color:#E1E4E8"> {</span></span>
+<span class="line"><span style="color:#79B8FF">        this</span><span style="color:#E1E4E8">.loading </span><span style="color:#F97583">=</span><span style="color:#79B8FF"> false</span><span style="color:#E1E4E8">;</span></span>
+<span class="line"><span style="color:#E1E4E8">      }</span></span>
+<span class="line"><span style="color:#E1E4E8">    },</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#B392F0">    toggleFavorite</span><span style="color:#E1E4E8">(</span><span style="color:#FFAB70">location</span><span style="color:#E1E4E8">) {</span></span>
+<span class="line"><span style="color:#F97583">      const</span><span style="color:#79B8FF"> index</span><span style="color:#F97583"> =</span><span style="color:#79B8FF"> this</span><span style="color:#E1E4E8">.favorites.</span><span style="color:#B392F0">findIndex</span><span style="color:#E1E4E8">(</span><span style="color:#FFAB70">fav</span><span style="color:#F97583"> =></span><span style="color:#E1E4E8"> </span></span>
+<span class="line"><span style="color:#E1E4E8">        fav.lat </span><span style="color:#F97583">===</span><span style="color:#E1E4E8"> location.lat </span><span style="color:#F97583">&#x26;&#x26;</span><span style="color:#E1E4E8"> fav.lon </span><span style="color:#F97583">===</span><span style="color:#E1E4E8"> location.lon</span></span>
+<span class="line"><span style="color:#E1E4E8">      );</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#F97583">      if</span><span style="color:#E1E4E8"> (index </span><span style="color:#F97583">>=</span><span style="color:#79B8FF"> 0</span><span style="color:#E1E4E8">) {</span></span>
+<span class="line"><span style="color:#79B8FF">        this</span><span style="color:#E1E4E8">.favorites.</span><span style="color:#B392F0">splice</span><span style="color:#E1E4E8">(index, </span><span style="color:#79B8FF">1</span><span style="color:#E1E4E8">);</span></span>
+<span class="line"><span style="color:#E1E4E8">      } </span><span style="color:#F97583">else</span><span style="color:#E1E4E8"> {</span></span>
+<span class="line"><span style="color:#79B8FF">        this</span><span style="color:#E1E4E8">.favorites.</span><span style="color:#B392F0">push</span><span style="color:#E1E4E8">(location);</span></span>
+<span class="line"><span style="color:#E1E4E8">      }</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#E1E4E8">      localStorage.</span><span style="color:#B392F0">setItem</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">'weatherFavorites'</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">JSON</span><span style="color:#E1E4E8">.</span><span style="color:#B392F0">stringify</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">this</span><span style="color:#E1E4E8">.favorites));</span></span>
+<span class="line"><span style="color:#E1E4E8">    }</span></span>
+<span class="line"><span style="color:#E1E4E8">  }</span></span>
+<span class="line"><span style="color:#E1E4E8">});</span></span>
+<span class="line"></span></code></pre>
+<h2 id="-responsive-design">📱 Responsive Design</h2>
+<h3 id="mobile-first-approach">Mobile-First Approach</h3>
+<ul>
+<li><strong>Touch-friendly interface</strong> with appropriate tap targets</li>
+<li><strong>Swipe gestures</strong> for forecast navigation</li>
+<li><strong>Optimized layouts</strong> for portrait and landscape orientations</li>
+<li><strong>Fast loading</strong> with progressive image loading</li>
+</ul>
+<h3 id="tablet--desktop-enhancements">Tablet &#x26; Desktop Enhancements</h3>
+<ul>
+<li><strong>Multi-column layouts</strong> for better space utilization</li>
+<li><strong>Hover effects</strong> and enhanced interactions</li>
+<li><strong>Keyboard navigation</strong> support</li>
+<li><strong>Larger data visualizations</strong> when space allows</li>
+</ul>
+<h2 id="-performance-optimizations">🔧 Performance Optimizations</h2>
+<h3 id="data-management">Data Management</h3>
+<ul>
+<li><strong>API response caching</strong> to reduce unnecessary requests</li>
+<li><strong>Debounced search</strong> to prevent excessive API calls</li>
+<li><strong>Background updates</strong> for favorite locations</li>
+<li><strong>Error recovery</strong> with retry mechanisms</li>
+</ul>
+<h3 id="loading-experience">Loading Experience</h3>
+<ul>
+<li><strong>Skeleton screens</strong> during data fetching</li>
+<li><strong>Progressive loading</strong> of forecast data</li>
+<li><strong>Optimistic updates</strong> for user interactions</li>
+<li><strong>Offline fallbacks</strong> with cached data</li>
+</ul>
+<h3 id="code-optimization">Code Optimization</h3>
+<ul>
+<li><strong>Lazy loading</strong> of non-critical components</li>
+<li><strong>Tree shaking</strong> to minimize bundle size</li>
+<li><strong>Image optimization</strong> with appropriate formats</li>
+<li><strong>Service worker</strong> for caching and offline support</li>
+</ul>
+<h2 id="-testing-strategy">🧪 Testing Strategy</h2>
+<h3 id="unit-testing">Unit Testing</h3>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#6A737D">// tests/components/WeatherCard.test.js</span></span>
+<span class="line"><span style="color:#F97583">import</span><span style="color:#E1E4E8"> { mount } </span><span style="color:#F97583">from</span><span style="color:#9ECBFF"> '@vue/test-utils'</span><span style="color:#E1E4E8">;</span></span>
+<span class="line"><span style="color:#F97583">import</span><span style="color:#E1E4E8"> WeatherCard </span><span style="color:#F97583">from</span><span style="color:#9ECBFF"> '@/components/WeatherCard.vue'</span><span style="color:#E1E4E8">;</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#B392F0">describe</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">'WeatherCard'</span><span style="color:#E1E4E8">, () </span><span style="color:#F97583">=></span><span style="color:#E1E4E8"> {</span></span>
+<span class="line"><span style="color:#F97583">  const</span><span style="color:#79B8FF"> mockWeatherData</span><span style="color:#F97583"> =</span><span style="color:#E1E4E8"> {</span></span>
+<span class="line"><span style="color:#E1E4E8">    name: </span><span style="color:#9ECBFF">'London'</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#E1E4E8">    main: { temp: </span><span style="color:#79B8FF">22</span><span style="color:#E1E4E8">, feels_like: </span><span style="color:#79B8FF">24</span><span style="color:#E1E4E8">, humidity: </span><span style="color:#79B8FF">65</span><span style="color:#E1E4E8"> },</span></span>
+<span class="line"><span style="color:#E1E4E8">    weather: [{ description: </span><span style="color:#9ECBFF">'partly cloudy'</span><span style="color:#E1E4E8">, icon: </span><span style="color:#9ECBFF">'02d'</span><span style="color:#E1E4E8"> }],</span></span>
+<span class="line"><span style="color:#E1E4E8">    wind: { speed: </span><span style="color:#79B8FF">3.5</span><span style="color:#E1E4E8"> },</span></span>
+<span class="line"><span style="color:#E1E4E8">    dt: </span><span style="color:#79B8FF">1640995200</span></span>
+<span class="line"><span style="color:#E1E4E8">  };</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#B392F0">  it</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">'displays weather information correctly'</span><span style="color:#E1E4E8">, () </span><span style="color:#F97583">=></span><span style="color:#E1E4E8"> {</span></span>
+<span class="line"><span style="color:#F97583">    const</span><span style="color:#79B8FF"> wrapper</span><span style="color:#F97583"> =</span><span style="color:#B392F0"> mount</span><span style="color:#E1E4E8">(WeatherCard, {</span></span>
+<span class="line"><span style="color:#E1E4E8">      props: { weather: mockWeatherData, location: { name: </span><span style="color:#9ECBFF">'London'</span><span style="color:#E1E4E8"> } }</span></span>
+<span class="line"><span style="color:#E1E4E8">    });</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#B392F0">    expect</span><span style="color:#E1E4E8">(wrapper.</span><span style="color:#B392F0">text</span><span style="color:#E1E4E8">()).</span><span style="color:#B392F0">toContain</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">'London'</span><span style="color:#E1E4E8">);</span></span>
+<span class="line"><span style="color:#B392F0">    expect</span><span style="color:#E1E4E8">(wrapper.</span><span style="color:#B392F0">text</span><span style="color:#E1E4E8">()).</span><span style="color:#B392F0">toContain</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">'22°'</span><span style="color:#E1E4E8">);</span></span>
+<span class="line"><span style="color:#B392F0">    expect</span><span style="color:#E1E4E8">(wrapper.</span><span style="color:#B392F0">text</span><span style="color:#E1E4E8">()).</span><span style="color:#B392F0">toContain</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">'partly cloudy'</span><span style="color:#E1E4E8">);</span></span>
+<span class="line"><span style="color:#B392F0">    expect</span><span style="color:#E1E4E8">(wrapper.</span><span style="color:#B392F0">text</span><span style="color:#E1E4E8">()).</span><span style="color:#B392F0">toContain</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">'65%'</span><span style="color:#E1E4E8">);</span></span>
+<span class="line"><span style="color:#E1E4E8">  });</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#B392F0">  it</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">'converts temperature units correctly'</span><span style="color:#E1E4E8">, </span><span style="color:#F97583">async</span><span style="color:#E1E4E8"> () </span><span style="color:#F97583">=></span><span style="color:#E1E4E8"> {</span></span>
+<span class="line"><span style="color:#F97583">    const</span><span style="color:#79B8FF"> wrapper</span><span style="color:#F97583"> =</span><span style="color:#B392F0"> mount</span><span style="color:#E1E4E8">(WeatherCard, {</span></span>
+<span class="line"><span style="color:#E1E4E8">      props: { weather: mockWeatherData, units: </span><span style="color:#9ECBFF">'imperial'</span><span style="color:#E1E4E8"> }</span></span>
+<span class="line"><span style="color:#E1E4E8">    });</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">    // Should show Fahrenheit when units prop is 'imperial'</span></span>
+<span class="line"><span style="color:#B392F0">    expect</span><span style="color:#E1E4E8">(wrapper.</span><span style="color:#B392F0">text</span><span style="color:#E1E4E8">()).</span><span style="color:#B392F0">toContain</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">'72°'</span><span style="color:#E1E4E8">); </span><span style="color:#6A737D">// 22°C = 72°F</span></span>
+<span class="line"><span style="color:#E1E4E8">  });</span></span>
+<span class="line"><span style="color:#E1E4E8">});</span></span>
+<span class="line"></span></code></pre>
+<h3 id="integration-testing">Integration Testing</h3>
+<ul>
+<li><strong>API integration tests</strong> with mock responses</li>
+<li><strong>User flow testing</strong> for complete weather lookup</li>
+<li><strong>Error handling verification</strong> for network failures</li>
+<li><strong>Cross-browser compatibility</strong> testing</li>
+</ul>
+<h2 id="-accessibility-features">🌍 Accessibility Features</h2>
+<h3 id="screen-reader-support">Screen Reader Support</h3>
+<ul>
+<li><strong>Semantic HTML</strong> structure</li>
+<li><strong>ARIA labels</strong> for interactive elements</li>
+<li><strong>Alt text</strong> for weather icons and images</li>
+<li><strong>Focus management</strong> for keyboard navigation</li>
+</ul>
+<h3 id="visual-accessibility">Visual Accessibility</h3>
+<ul>
+<li><strong>Clear, readable typography</strong></li>
+<li><strong>Large text</strong> support</li>
+<li><strong>Color-blind friendly</strong> color schemes</li>
+<li><strong>Reduced motion</strong> preferences respected</li>
+</ul>
+<h2 id="-deployment--cicd">🚀 Deployment &#x26; CI/CD</h2>
+<h3 id="build-process">Build Process</h3>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="yaml"><code><span class="line"><span style="color:#6A737D"># .github/workflows/deploy.yml</span></span>
+<span class="line"><span style="color:#85E89D">name</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">Deploy to Netlify</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#79B8FF">on</span><span style="color:#E1E4E8">:</span></span>
+<span class="line"><span style="color:#85E89D">  push</span><span style="color:#E1E4E8">:</span></span>
+<span class="line"><span style="color:#85E89D">    branches</span><span style="color:#E1E4E8">: [</span><span style="color:#9ECBFF">main</span><span style="color:#E1E4E8">]</span></span>
+<span class="line"><span style="color:#85E89D">  pull_request</span><span style="color:#E1E4E8">:</span></span>
+<span class="line"><span style="color:#85E89D">    branches</span><span style="color:#E1E4E8">: [</span><span style="color:#9ECBFF">main</span><span style="color:#E1E4E8">]</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#85E89D">jobs</span><span style="color:#E1E4E8">:</span></span>
+<span class="line"><span style="color:#85E89D">  build-and-deploy</span><span style="color:#E1E4E8">:</span></span>
+<span class="line"><span style="color:#85E89D">    runs-on</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">ubuntu-latest</span></span>
+<span class="line"><span style="color:#E1E4E8">    </span></span>
+<span class="line"><span style="color:#85E89D">    steps</span><span style="color:#E1E4E8">:</span></span>
+<span class="line"><span style="color:#E1E4E8">    - </span><span style="color:#85E89D">uses</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">actions/checkout@v3</span></span>
+<span class="line"><span style="color:#E1E4E8">    </span></span>
+<span class="line"><span style="color:#E1E4E8">    - </span><span style="color:#85E89D">name</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">Setup Node.js</span></span>
+<span class="line"><span style="color:#85E89D">      uses</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">actions/setup-node@v3</span></span>
+<span class="line"><span style="color:#85E89D">      with</span><span style="color:#E1E4E8">:</span></span>
+<span class="line"><span style="color:#85E89D">        node-version</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">'18'</span></span>
+<span class="line"><span style="color:#85E89D">        cache</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">'npm'</span></span>
+<span class="line"><span style="color:#E1E4E8">    </span></span>
+<span class="line"><span style="color:#E1E4E8">    - </span><span style="color:#85E89D">name</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">Install dependencies</span></span>
+<span class="line"><span style="color:#85E89D">      run</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">npm ci</span></span>
+<span class="line"><span style="color:#E1E4E8">    </span></span>
+<span class="line"><span style="color:#E1E4E8">    - </span><span style="color:#85E89D">name</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">Run tests</span></span>
+<span class="line"><span style="color:#85E89D">      run</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">npm run test:unit</span></span>
+<span class="line"><span style="color:#E1E4E8">    </span></span>
+<span class="line"><span style="color:#E1E4E8">    - </span><span style="color:#85E89D">name</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">Build application</span></span>
+<span class="line"><span style="color:#85E89D">      run</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">npm run build</span></span>
+<span class="line"><span style="color:#85E89D">      env</span><span style="color:#E1E4E8">:</span></span>
+<span class="line"><span style="color:#85E89D">        VITE_WEATHER_API_KEY</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">${{ secrets.WEATHER_API_KEY }}</span></span>
+<span class="line"><span style="color:#E1E4E8">    </span></span>
+<span class="line"><span style="color:#E1E4E8">    - </span><span style="color:#85E89D">name</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">Deploy to Netlify</span></span>
+<span class="line"><span style="color:#85E89D">      uses</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">netlify/actions/cli@master</span></span>
+<span class="line"><span style="color:#85E89D">      with</span><span style="color:#E1E4E8">:</span></span>
+<span class="line"><span style="color:#85E89D">        args</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">deploy --prod --dir=dist</span></span>
+<span class="line"><span style="color:#85E89D">      env</span><span style="color:#E1E4E8">:</span></span>
+<span class="line"><span style="color:#85E89D">        NETLIFY_AUTH_TOKEN</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">${{ secrets.NETLIFY_AUTH_TOKEN }}</span></span>
+<span class="line"><span style="color:#85E89D">        NETLIFY_SITE_ID</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">${{ secrets.NETLIFY_SITE_ID }}</span></span>
+<span class="line"></span></code></pre>
+<h2 id="-lessons-learned">📈 Lessons Learned</h2>
+<h3 id="technical-insights">Technical Insights</h3>
+<ul>
+<li><strong>Vue 3 Composition API</strong> provides better code organization for complex state</li>
+<li><strong>Pinia</strong> offers excellent TypeScript support and dev tools integration</li>
+<li><strong>API caching strategies</strong> significantly improve user experience</li>
+<li><strong>Progressive enhancement</strong> ensures functionality across all devices</li>
+</ul>
+<h3 id="user-experience-1">User Experience</h3>
+<ul>
+<li><strong>Weather data visualization</strong> benefits from clear visual hierarchy</li>
+<li><strong>Location-based features</strong> require careful permission handling</li>
+<li><strong>Offline support</strong> is crucial for weather applications</li>
+<li><strong>Loading states</strong> prevent user confusion during data fetching</li>
+</ul>
+<h3 id="performance">Performance</h3>
+<ul>
+<li><strong>Bundle size optimization</strong> is critical for mobile users</li>
+<li><strong>Image lazy loading</strong> improves initial page load times</li>
+<li><strong>Service workers</strong> enable reliable offline experiences</li>
+<li><strong>Error boundaries</strong> prevent complete application failures</li>
+</ul>
+<h2 id="-future-enhancements">🔮 Future Enhancements</h2>
+<h3 id="planned-features">Planned Features</h3>
+<ul>
+<li><strong>Weather alerts</strong> and severe weather notifications</li>
+<li><strong>Historical weather data</strong> and trends</li>
+<li><strong>Weather maps</strong> with radar and satellite imagery</li>
+<li><strong>Social sharing</strong> of weather conditions</li>
+<li><strong>Widget embeds</strong> for other websites</li>
+</ul>
+<h3 id="technical-improvements">Technical Improvements</h3>
+<ul>
+<li><strong>PWA conversion</strong> for native app-like experience</li>
+<li><strong>Push notifications</strong> for weather alerts</li>
+<li><strong>GraphQL integration</strong> for more efficient data fetching</li>
+<li><strong>Micro-frontend architecture</strong> for better scalability</li>
+</ul>
+<p>This weather dashboard demonstrates modern web development practices while solving a real-world problem. The combination of Vue.js, thoughtful UX design, and robust error handling creates a reliable and enjoyable weather application.</p> </div> </div> </article> </div> <!-- Project Footer --> <footer class="mt-12 bg-white rounded-xl shadow-sm border border-gray-200 p-8" data-astro-cid-ovxcmftc> <div class="flex items-center justify-between" data-astro-cid-ovxcmftc> <div class="text-sm text-gray-500" data-astro-cid-ovxcmftc>
+Published on December 15, 2024 </div> <div class="flex items-center space-x-4" data-astro-cid-ovxcmftc> <a href="/projects" class="text-blue-600 hover:underline text-sm font-medium" data-astro-cid-ovxcmftc>
+← Back to Projects
+</a> </div> </div> </footer> </div> <!-- Back to Top Button --> <button id="back-to-top" aria-label="Back to top" class="fixed bottom-6 right-6 z-40 inline-flex items-center justify-center w-12 h-12 rounded-full bg-black text-white shadow-lg transition-all duration-200 hover:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-offset-2 focus:ring-offset-white opacity-0 pointer-events-none" data-astro-cid-ovxcmftc> <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true" data-astro-cid-ovxcmftc> <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7" data-astro-cid-ovxcmftc></path> </svg> </button>  </main>  <footer class="bg-white border-y border-gray-200 py-8"> <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8"> <div class="flex flex-col md:flex-row justify-between items-center"> <div class="mb-4 md:mb-0"> <div class="flex items-center font-bold text-xl"> <div> <!-- <span class={logoClass}>&gt;&nbsp;</span> --> <span class="text">codersbox</span> </div> </div> <p class="text-gray-500 text-sm mt-1">© Copyright 2025. All rights reserved.</p> </div> <div class="flex space-x-6 text-xl"> <a href="#" target="_blank" class="text-gray-500 hover:text-black transition-colors"> <svg width="0.97em" height="1em" viewBox="0 0 496 512" data-icon="fa6-brands:github">   <use href="#ai:fa6-brands:github"></use>  </svg> </a> <a href="#" target="_blank" class="text-gray-500 hover:text-black transition-colors"> <svg width="1em" height="1em" data-icon="fa6-brands:twitter">   <symbol id="ai:fa6-brands:twitter" viewBox="0 0 512 512"><path fill="currentColor" d="M459.37 151.716c.325 4.548.325 9.097.325 13.645c0 138.72-105.583 298.558-298.558 298.558c-59.452 0-114.68-17.219-161.137-47.106c8.447.974 16.568 1.299 25.34 1.299c49.055 0 94.213-16.568 130.274-44.832c-46.132-.975-84.792-31.188-98.112-72.772c6.498.974 12.995 1.624 19.818 1.624c9.421 0 18.843-1.3 27.614-3.573c-48.081-9.747-84.143-51.98-84.143-102.985v-1.299c13.969 7.797 30.214 12.67 47.431 13.319c-28.264-18.843-46.781-51.005-46.781-87.391c0-19.492 5.197-37.36 14.294-52.954c51.655 63.675 129.3 105.258 216.365 109.807c-1.624-7.797-2.599-15.918-2.599-24.04c0-57.828 46.782-104.934 104.934-104.934c30.213 0 57.502 12.67 76.67 33.137c23.715-4.548 46.456-13.32 66.599-25.34c-7.798 24.366-24.366 44.833-46.132 57.827c21.117-2.273 41.584-8.122 60.426-16.243c-14.292 20.791-32.161 39.308-52.628 54.253"/></symbol><use href="#ai:fa6-brands:twitter"></use>  </svg> </a> <a href="#" target="_blank" class="text-gray-500 hover:text-black transition-colors"> <svg width="0.75em" height="1em" data-icon="fa6-brands:stack-overflow">   <symbol id="ai:fa6-brands:stack-overflow" viewBox="0 0 384 512"><path fill="currentColor" d="M290.7 311L95 269.7L86.8 309l195.7 41zm51-87L188.2 95.7l-25.5 30.8l153.5 128.3zm-31.2 39.7L129.2 179l-16.7 36.5L293.7 300zM262 32l-32 24l119.3 160.3l32-24zm20.5 328h-200v39.7h200zm39.7 80H42.7V320h-40v160h359.5V320h-40z"/></symbol><use href="#ai:fa6-brands:stack-overflow"></use>  </svg> </a> <a href="#" target="_blank" class="text-gray-500 hover:text-black transition-colors"> <svg width="1em" height="1em" data-icon="fa6-solid:envelope">   <symbol id="ai:fa6-solid:envelope" viewBox="0 0 512 512"><path fill="currentColor" d="M48 64C21.5 64 0 85.5 0 112c0 15.1 7.1 29.3 19.2 38.4l217.6 163.2c11.4 8.5 27 8.5 38.4 0l217.6-163.2c12.1-9.1 19.2-23.3 19.2-38.4c0-26.5-21.5-48-48-48zM0 176v208c0 35.3 28.7 64 64 64h384c35.3 0 64-28.7 64-64V176L294.4 339.2a63.9 63.9 0 0 1-76.8 0z"/></symbol><use href="#ai:fa6-solid:envelope"></use>  </svg> </a> </div> </div> </div> </footer> <!-- Google Analytics (replace with your tracking ID) --><!-- <script async src="https://www.googletagmanager.com/gtag/js?id=GA_TRACKING_ID"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'GA_TRACKING_ID');
+</script> --><!-- Core Web Vitals monitoring --> <!-- Service Worker for caching (optional) --> </body></html> 

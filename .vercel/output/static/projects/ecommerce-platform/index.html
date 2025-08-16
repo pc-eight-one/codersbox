@@ -1,0 +1,819 @@
+<!DOCTYPE html><html lang="en" data-astro-cid-37fxchfa> <head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><!-- SEO Meta Tags --><title>E-commerce Platform - codersbox</title><meta name="description" content="A full-stack e-commerce solution built with React, Node.js, and PostgreSQL. Features include user authentication, payment processing, and admin dashboard."><meta name="author" content="codersbox"><meta name="keywords" content="React, Node.js, PostgreSQL, Stripe, Full-Stack"><link rel="canonical" href="https://codersbox.dev/projects/ecommerce-platform/"><!-- Open Graph Tags --><meta property="og:type" content="article"><meta property="og:title" content="E-commerce Platform - codersbox"><meta property="og:description" content="A full-stack e-commerce solution built with React, Node.js, and PostgreSQL. Features include user authentication, payment processing, and admin dashboard."><meta property="og:url" content="https://codersbox.dev/projects/ecommerce-platform/"><meta property="og:site_name" content="codersbox"><meta property="og:image" content="https://codersbox.dev/images/projects/ecommerce-platform.jpg"><meta property="og:image:alt" content="E-commerce Platform - codersbox"><meta property="og:locale" content="en_US"><!-- Twitter Card Tags --><meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="E-commerce Platform - codersbox"><meta name="twitter:description" content="A full-stack e-commerce solution built with React, Node.js, and PostgreSQL. Features include user authentication, payment processing, and admin dashboard."><meta name="twitter:image" content="https://codersbox.dev/images/projects/ecommerce-platform.jpg"><meta name="twitter:image:alt" content="E-commerce Platform - codersbox"><meta name="twitter:site" content="@codersbox"><meta name="twitter:creator" content="@codersbox"><meta property="article:published_time" content="2024-11-20T00:00:00.000Z"><meta property="article:author" content="codersbox"><meta property="article:tag" content="React"><meta property="article:tag" content="Node.js"><meta property="article:tag" content="PostgreSQL"><meta property="article:tag" content="Stripe"><meta property="article:tag" content="Full-Stack"><!-- Favicon and Icons --><link rel="icon" type="image/x-icon" href="/favicon.ico"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png"><link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="manifest" href="/site.webmanifest"><!-- Performance Optimizations --><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="dns-prefetch" href="https://fonts.googleapis.com"><!-- Theme Color --><meta name="theme-color" content="#3b82f6"><meta name="msapplication-TileColor" content="#3b82f6"><!-- Structured Data --><script type="application/ld+json">
+    {JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": type === 'article' ? 'Article' : 'WebSite',
+      "name": title,
+      "description": description,
+      "url": currentUrl,
+      "publisher": {
+        "@type": "Organization",
+        "name": "codersbox",
+        "url": siteUrl,
+        "logo": {
+          "@type": "ImageObject",
+          "url": `${siteUrl}/logo.png`
+        }
+      },
+      ...(type === 'article' && publishDate && {
+        "author": {
+          "@type": "Person",
+          "name": author
+        },
+        "datePublished": publishDate.toISOString(),
+        "dateModified": publishDate.toISOString(),
+        "headline": title,
+        "image": fullImageUrl,
+        "keywords": tags.join(', ')
+      }),
+      ...(type === 'website' && {
+        "potentialAction": {
+          "@type": "SearchAction",
+          "target": {
+            "@type": "EntryPoint",
+            "urlTemplate": `${siteUrl}/search?q={search_term_string}`
+          },
+          "query-input": "required name=search_term_string"
+        }
+      })
+    })}
+  </script><!-- Critical CSS --><link rel="stylesheet" href="/_astro/about.yENWLJj_.css">
+<style>.toc-navigating[data-astro-cid-xvrfupwn]{margin:-.25rem -.5rem;border-radius:.25rem;--tw-bg-opacity: 1;background-color:rgb(239 246 255 / var(--tw-bg-opacity, 1));padding:.25rem .5rem;--tw-text-opacity: 1;color:rgb(37 99 235 / var(--tw-text-opacity, 1));transform:scale(1.02);transition:all .2s ease-in-out}.scrollbar-hide[data-astro-cid-xvrfupwn]{-ms-overflow-style:none;scrollbar-width:none}.scrollbar-hide[data-astro-cid-xvrfupwn]::-webkit-scrollbar{display:none}
+.project-content[data-astro-cid-ovxcmftc]{font-family:Inter,system-ui,sans-serif;color:#374151;line-height:1.75}.project-content[data-astro-cid-ovxcmftc] :is(h1,h2,h3,h4,h5,h6)[data-astro-cid-ovxcmftc]{scroll-margin-top:6rem;position:relative}.project-content[data-astro-cid-ovxcmftc] h1[data-astro-cid-ovxcmftc]{font-size:2.25rem;line-height:1.2;margin-top:0;margin-bottom:2rem;font-weight:800}.project-content[data-astro-cid-ovxcmftc] h2[data-astro-cid-ovxcmftc]{font-size:1.875rem;line-height:1.25;margin-top:3rem;margin-bottom:1.5rem;padding-bottom:.75rem;border-bottom:2px solid rgb(229 231 235);font-weight:700;padding-left:1.5em}.project-content[data-astro-cid-ovxcmftc] h3[data-astro-cid-ovxcmftc]{font-size:1.5rem;line-height:1.3;margin-top:2.5rem;margin-bottom:1.25rem;font-weight:700;padding-left:1.5em}.project-content[data-astro-cid-ovxcmftc] h4[data-astro-cid-ovxcmftc]{font-size:1.25rem;line-height:1.4;margin-top:2rem;margin-bottom:1rem;font-weight:600;padding-left:1.5em}.project-content[data-astro-cid-ovxcmftc] pre[data-astro-cid-ovxcmftc]{position:relative;background:#282c34!important;border:1px solid #3e4451;border-radius:.75rem;padding:1.5rem;margin:2rem 0;overflow-x:auto;box-shadow:0 4px 6px -1px #0000001a}.project-content[data-astro-cid-ovxcmftc] pre[data-astro-cid-ovxcmftc] code[data-astro-cid-ovxcmftc]{font-family:JetBrains Mono,Fira Code,Consolas,Monaco,Courier New,monospace;font-size:.875rem;line-height:1.5;color:#abb2bf!important;background:transparent!important;border:none!important;padding:0!important}.project-content[data-astro-cid-ovxcmftc] :not(pre)[data-astro-cid-ovxcmftc]>code[data-astro-cid-ovxcmftc]{font-family:JetBrains Mono,Fira Code,Consolas,Monaco,Courier New,monospace;font-size:.875em;font-weight:600;color:#ef4444!important;background:#f3f4f6!important;padding:.125rem .375rem!important;border-radius:.375rem!important;border:1px solid rgb(229 231 235)!important}.project-content[data-astro-cid-ovxcmftc] .heading-anchor[data-astro-cid-ovxcmftc]{position:absolute;left:0;top:50%;transform:translateY(-50%);display:inline-flex;align-items:center;justify-content:center;width:1em;height:1em;font-size:1em;line-height:1;color:#9ca3af;background:transparent;border:none;border-radius:.25rem;opacity:0;visibility:hidden;pointer-events:none;transition:opacity .15s ease,color .15s ease;cursor:pointer}.project-content[data-astro-cid-ovxcmftc] .heading-anchor[data-astro-cid-ovxcmftc] svg[data-astro-cid-ovxcmftc]{width:1em;height:1em}.project-content[data-astro-cid-ovxcmftc] .heading-anchor[data-astro-cid-ovxcmftc]:hover,.project-content[data-astro-cid-ovxcmftc] .heading-anchor[data-astro-cid-ovxcmftc]:focus-visible{color:#2563eb;outline:none}.project-content[data-astro-cid-ovxcmftc] :is(h2,h3,h4):hover[data-astro-cid-ovxcmftc] .heading-anchor[data-astro-cid-ovxcmftc],.project-content[data-astro-cid-ovxcmftc] :is(h2,h3,h4):focus-within[data-astro-cid-ovxcmftc] .heading-anchor[data-astro-cid-ovxcmftc]{opacity:1;visibility:visible;pointer-events:auto}.project-content[data-astro-cid-ovxcmftc] .heading-anchor[data-astro-cid-ovxcmftc].copied:after{content:"Copied!";position:absolute;top:-1.75rem;left:0;font-size:.75rem;padding:.125rem .375rem;background:#f3f4f6;color:#1f2937;border:1px solid rgb(229 231 235);border-radius:.25rem;white-space:nowrap}
+#main-navigation[data-astro-cid-pux6a34n]{backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);background:#ffffffb3;border-bottom:1px solid rgba(255,255,255,.2);box-shadow:0 8px 32px #0000001a}#main-navigation[data-astro-cid-pux6a34n].nav-scrolled{background:#ffffffd9;backdrop-filter:blur(25px);-webkit-backdrop-filter:blur(25px);box-shadow:0 8px 40px #00000026;border-bottom:1px solid rgba(255,255,255,.3)}.nav-link[data-astro-cid-pux6a34n]{position:relative;overflow:hidden}.nav-link[data-astro-cid-pux6a34n]:before{content:"";position:absolute;bottom:0;left:50%;width:0;height:2px;background:linear-gradient(90deg,#3b82f6,#1d4ed8);transform:translate(-50%);transition:width .3s ease}.nav-link[data-astro-cid-pux6a34n]:hover:before{width:80%}.nav-link[data-astro-cid-pux6a34n]:hover{background:#3b82f60d;transform:translateY(-1px)}.nav-logo-link[data-astro-cid-pux6a34n]{transition:transform .3s ease}.nav-logo-link[data-astro-cid-pux6a34n]:hover{transform:scale(1.05)}.mobile-menu-panel[data-astro-cid-pux6a34n]{opacity:0;transform:translateY(-10px);transition:all .3s cubic-bezier(.4,0,.2,1)}.mobile-menu-panel[data-astro-cid-pux6a34n]:not(.hidden){opacity:1;transform:translateY(0)}.mobile-menu-panel[data-astro-cid-pux6a34n].mobile-menu-show{animation:slideDown .3s ease-out}@keyframes slideDown{0%{opacity:0;transform:translateY(-10px)}to{opacity:1;transform:translateY(0)}}.mobile-nav-link[data-astro-cid-pux6a34n]{opacity:0;transform:translate(-20px);animation:slideInLeft .3s ease-out forwards}.mobile-nav-link[data-astro-cid-pux6a34n]:nth-child(1){animation-delay:.1s}.mobile-nav-link[data-astro-cid-pux6a34n]:nth-child(2){animation-delay:.15s}.mobile-nav-link[data-astro-cid-pux6a34n]:nth-child(3){animation-delay:.2s}.mobile-nav-link[data-astro-cid-pux6a34n]:nth-child(4){animation-delay:.25s}.mobile-nav-link[data-astro-cid-pux6a34n]:nth-child(5){animation-delay:.3s}@keyframes slideInLeft{to{opacity:1;transform:translate(0)}}#mobile-menu-toggle[data-astro-cid-pux6a34n]{backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px)}#mobile-menu-toggle[data-astro-cid-pux6a34n]:hover{transform:scale(1.1);background:#3b82f61a}#main-navigation[data-astro-cid-pux6a34n]:before{content:"";position:absolute;inset:0;background:linear-gradient(135deg,#ffffff1a,#fff0);pointer-events:none}html{visibility:hidden}html.loaded{visibility:visible}
+</style><script type="module" src="/_astro/hoisted.UwqMJ_-v.js"></script>
+<script type="module" src="/_astro/page.DsLumr9O.js"></script>
+<script>window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };
+		var script = document.createElement('script');
+		script.defer = true;
+		script.src = '/_vercel/insights/script.js';
+		var head = document.querySelector('head');
+		head.appendChild(script);
+	</script></head> <body class="bg-gray-100 text-gray-900 min-h-screen" data-astro-cid-37fxchfa> <nav id="main-navigation" class="bg-white/70 backdrop-blur-xl border-b border-white/20 shadow-lg shadow-black/5 sticky top-0 z-50 transition-all duration-300" data-astro-cid-pux6a34n> <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8" data-astro-cid-pux6a34n> <div class="flex justify-between items-center h-20" data-astro-cid-pux6a34n> <div class="flex items-center" data-astro-cid-pux6a34n> <div class="flex-shrink-0 font-extrabold text-2xl tracking-[-.1em]" data-astro-cid-pux6a34n> <a href="/" class="flex items-center nav-logo-link" data-astro-cid-pux6a34n> <div> <!-- <span class={logoClass}>&gt;&nbsp;</span> --> <span class="text-3xl">codersbox</span> </div> </a> </div> <div class="hidden md:flex ml-10 space-x-1" data-astro-cid-pux6a34n> <a href="/" class="nav-link relative px-4 py-2 text-gray-600 hover:text-gray-900 text-sm font-medium rounded-lg transition-all duration-200" data-astro-cid-pux6a34n> Home </a><a href="/articles" class="nav-link relative px-4 py-2 text-gray-600 hover:text-gray-900 text-sm font-medium rounded-lg transition-all duration-200" data-astro-cid-pux6a34n> Articles </a><a href="/tutorials" class="nav-link relative px-4 py-2 text-gray-600 hover:text-gray-900 text-sm font-medium rounded-lg transition-all duration-200" data-astro-cid-pux6a34n> Tutorials </a><a href="/projects" class="nav-link relative px-4 py-2 text-gray-600 hover:text-gray-900 text-sm font-medium rounded-lg transition-all duration-200" data-astro-cid-pux6a34n> Projects </a><a href="/about" class="nav-link relative px-4 py-2 text-gray-600 hover:text-gray-900 text-sm font-medium rounded-lg transition-all duration-200" data-astro-cid-pux6a34n> About </a> </div> </div> <div class="flex items-center" data-astro-cid-pux6a34n> <button id="mobile-menu-toggle" class="md:hidden ml-2 p-2 text-gray-600 hover:text-black transition-all duration-200 rounded-lg hover:bg-gray-100/50" aria-label="Toggle menu" data-astro-cid-pux6a34n> <svg width="0.25em" height="1em" class="text-xl" data-astro-cid-pux6a34n data-icon="fa6-solid:ellipsis-vertical">   <symbol id="ai:fa6-solid:ellipsis-vertical" viewBox="0 0 128 512"><path fill="currentColor" d="M64 360a56 56 0 1 0 0 112a56 56 0 1 0 0-112m0-160a56 56 0 1 0 0 112a56 56 0 1 0 0-112m56-104A56 56 0 1 0 8 96a56 56 0 1 0 112 0"/></symbol><use href="#ai:fa6-solid:ellipsis-vertical"></use>  </svg> </button> </div> </div> </div> <!-- Mobile menu --> <div id="mobile-menu" class="hidden md:hidden mobile-menu-panel" data-astro-cid-pux6a34n> <div class="px-2 pt-2 pb-3 space-y-1 bg-white/80 backdrop-blur-xl border-b border-white/20" data-astro-cid-pux6a34n> <a href="/" class="mobile-nav-link block px-3 py-2 rounded-lg text-base font-medium text-gray-600 hover:text-gray-900 hover:bg-white/60 transition-all duration-200" data-astro-cid-pux6a34n> Home </a><a href="/articles" class="mobile-nav-link block px-3 py-2 rounded-lg text-base font-medium text-gray-600 hover:text-gray-900 hover:bg-white/60 transition-all duration-200" data-astro-cid-pux6a34n> Articles </a><a href="/tutorials" class="mobile-nav-link block px-3 py-2 rounded-lg text-base font-medium text-gray-600 hover:text-gray-900 hover:bg-white/60 transition-all duration-200" data-astro-cid-pux6a34n> Tutorials </a><a href="/projects" class="mobile-nav-link block px-3 py-2 rounded-lg text-base font-medium text-gray-600 hover:text-gray-900 hover:bg-white/60 transition-all duration-200" data-astro-cid-pux6a34n> Projects </a><a href="/about" class="mobile-nav-link block px-3 py-2 rounded-lg text-base font-medium text-gray-600 hover:text-gray-900 hover:bg-white/60 transition-all duration-200" data-astro-cid-pux6a34n> About </a> </div> </div> </nav>    <main class="min-h-screen bg-gray-50 py-12" data-astro-cid-ovxcmftc> <!-- Project Hero Section --> <header class="bg-white border-b border-gray-200 mb-16" data-astro-cid-ovxcmftc> <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12" data-astro-cid-ovxcmftc> <div class="bg-gray-900 h-64 flex items-center justify-center rounded-lg mb-8" data-astro-cid-ovxcmftc> <img src="/images/projects/ecommerce-platform.jpg" alt="E-commerce Platform Screenshot" class="max-w-full max-h-full object-contain" loading="eager" decoding="async" width="800" height="400" data-astro-cid-ovxcmftc> </div> <div class="text-center" data-astro-cid-ovxcmftc> <h1 class="text-4xl md:text-5xl font-bold mb-6 text-gray-900 leading-tight tracking-tight" data-astro-cid-ovxcmftc> E-commerce Platform </h1> <p class="text-xl text-gray-600 mb-8 max-w-3xl mx-auto leading-relaxed" data-astro-cid-ovxcmftc> A full-stack e-commerce solution built with React, Node.js, and PostgreSQL. Features include user authentication, payment processing, and admin dashboard. </p> <div class="flex flex-wrap justify-center items-center gap-6 text-sm text-gray-500 mb-6" data-astro-cid-ovxcmftc> <div class="flex items-center gap-2" data-astro-cid-ovxcmftc> <span class="inline-block text-xs px-3 py-1 rounded-full font-medium uppercase tracking-wide bg-green-100 text-green-800" data-astro-cid-ovxcmftc> completed </span> </div> <div class="flex items-center gap-2" data-astro-cid-ovxcmftc> <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" data-astro-cid-ovxcmftc> <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" data-astro-cid-ovxcmftc></path> </svg> <span data-astro-cid-ovxcmftc>November 20, 2024</span> </div> <a href="https://github.com/johndoe/ecommerce-platform" target="_blank" rel="noopener noreferrer" class="text-gray-700 hover:text-black transition-colors flex items-center gap-2" data-astro-cid-ovxcmftc> <svg width="0.97em" height="1em" class="text-lg" data-astro-cid-ovxcmftc data-icon="fa6-brands:github">   <symbol id="ai:fa6-brands:github" viewBox="0 0 496 512"><path fill="currentColor" d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6c-3.3.3-5.6-1.3-5.6-3.6c0-2 2.3-3.6 5.2-3.6c3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9c2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9c.3 2 2.9 3.3 5.9 2.6c2.9-.7 4.9-2.6 4.6-4.6c-.3-1.9-3-3.2-5.9-2.9M244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2c12.8 2.3 17.3-5.6 17.3-12.1c0-6.2-.3-40.4-.3-61.4c0 0-70 15-84.7-29.8c0 0-11.4-29.1-27.8-36.6c0 0-22.9-15.7 1.6-15.4c0 0 24.9 2 38.6 25.8c21.9 38.6 58.6 27.5 72.9 20.9c2.3-16 8.8-27.1 16-33.7c-55.9-6.2-112.3-14.3-112.3-110.5c0-27.5 7.6-41.3 23.6-58.9c-2.6-6.5-11.1-33.3 2.6-67.9c20.9-6.5 69 27 69 27c20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27c13.7 34.7 5.2 61.4 2.6 67.9c16 17.7 25.8 31.5 25.8 58.9c0 96.5-58.9 104.2-114.8 110.5c9.2 7.9 17 22.9 17 46.4c0 33.7-.3 75.4-.3 83.6c0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252C496 113.3 383.5 8 244.8 8M97.2 352.9c-1.3 1-1 3.3.7 5.2c1.6 1.6 3.9 2.3 5.2 1c1.3-1 1-3.3-.7-5.2c-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9c1.6 1 3.6.7 4.3-.7c.7-1.3-.3-2.9-2.3-3.9c-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2c2.3 2.3 5.2 2.6 6.5 1c1.3-1.3.7-4.3-1.3-6.2c-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2c-1.4-2.3-4-3.3-5.6-2"/></symbol><use href="#ai:fa6-brands:github"></use>  </svg> <span data-astro-cid-ovxcmftc>GitHub</span> </a> <a href="https://ecommerce-demo-app.vercel.app" target="_blank" rel="noopener noreferrer" class="text-blue-600 hover:text-blue-700 transition-colors flex items-center gap-2" data-astro-cid-ovxcmftc> <svg width="1.25em" height="1em" class="text-lg" data-astro-cid-ovxcmftc data-icon="fa6-solid:link">   <symbol id="ai:fa6-solid:link" viewBox="0 0 640 512"><path fill="currentColor" d="M579.8 267.7c56.5-56.5 56.5-148 0-204.5c-50-50-128.8-56.5-186.3-15.4l-1.6 1.1c-14.4 10.3-17.7 30.3-7.4 44.6s30.3 17.7 44.6 7.4l1.6-1.1c32.1-22.9 76-19.3 103.8 8.6c31.5 31.5 31.5 82.5 0 114L422.3 334.8c-31.5 31.5-82.5 31.5-114 0c-27.9-27.9-31.5-71.8-8.6-103.8l1.1-1.6c10.3-14.4 6.9-34.4-7.4-44.6s-34.4-6.9-44.6 7.4l-1.1 1.6C206.5 251.2 213 330 263 380c56.5 56.5 148 56.5 204.5 0zM60.2 244.3c-56.5 56.5-56.5 148 0 204.5c50 50 128.8 56.5 186.3 15.4l1.6-1.1c14.4-10.3 17.7-30.3 7.4-44.6s-30.3-17.7-44.6-7.4l-1.6 1.1c-32.1 22.9-76 19.3-103.8-8.6C74 372 74 321 105.5 289.5l112.2-112.3c31.5-31.5 82.5-31.5 114 0c27.9 27.9 31.5 71.8 8.6 103.9l-1.1 1.6c-10.3 14.4-6.9 34.4 7.4 44.6s34.4 6.9 44.6-7.4l1.1-1.6C433.5 260.8 427 182 377 132c-56.5-56.5-148-56.5-204.5 0z"/></symbol><use href="#ai:fa6-solid:link"></use>  </svg> <span data-astro-cid-ovxcmftc>Live Demo</span> </a> </div> <!-- Tech Stack --> <div class="flex flex-wrap justify-center gap-2" data-astro-cid-ovxcmftc> <span class="bg-blue-100 text-blue-800 px-4 py-2 rounded-full text-sm font-medium hover:bg-blue-200 transition-colors" data-astro-cid-ovxcmftc> React </span><span class="bg-blue-100 text-blue-800 px-4 py-2 rounded-full text-sm font-medium hover:bg-blue-200 transition-colors" data-astro-cid-ovxcmftc> Node.js </span><span class="bg-blue-100 text-blue-800 px-4 py-2 rounded-full text-sm font-medium hover:bg-blue-200 transition-colors" data-astro-cid-ovxcmftc> PostgreSQL </span><span class="bg-blue-100 text-blue-800 px-4 py-2 rounded-full text-sm font-medium hover:bg-blue-200 transition-colors" data-astro-cid-ovxcmftc> Stripe </span><span class="bg-blue-100 text-blue-800 px-4 py-2 rounded-full text-sm font-medium hover:bg-blue-200 transition-colors" data-astro-cid-ovxcmftc> Full-Stack </span> </div> </div> </div> </header> <!-- Project Content --> <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8" data-astro-cid-ovxcmftc> <div class="grid grid-cols-1 lg:grid-cols-4 gap-8" data-astro-cid-ovxcmftc> <!-- Left Sidebar - Table of Contents --> <aside class="lg:col-span-1 lg:border-r lg:border-gray-200 lg:pr-8" data-astro-cid-ovxcmftc> <nav class="sticky top-24 max-h-[calc(100vh-7rem)] overflow-y-auto scrollbar-hide" data-astro-cid-xvrfupwn><div class="p-0" data-astro-cid-xvrfupwn><h2 class="text-lg font-semibold text-gray-900 mb-4 flex items-center gap-2" data-astro-cid-xvrfupwn><svg class="w-5 h-5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" data-astro-cid-xvrfupwn><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 10h16M4 14h16M4 18h16" data-astro-cid-xvrfupwn></path></svg><span data-astro-cid-xvrfupwn>Contents</span></h2><ul class="space-y-2 text-sm toc-links" data-astro-cid-xvrfupwn><li data-astro-cid-xvrfupwn><a href="#-features" data-toc-link class="block text-gray-700 hover:text-blue-600 transition-colors leading-relaxed font-medium" data-astro-cid-xvrfupwn>🛒 Features</a></li><li data-astro-cid-xvrfupwn><a href="#customer-experience" data-toc-link class="block text-gray-700 hover:text-blue-600 transition-colors leading-relaxed pl-4 text-sm" data-astro-cid-xvrfupwn>Customer Experience</a></li><li data-astro-cid-xvrfupwn><a href="#admin-dashboard" data-toc-link class="block text-gray-700 hover:text-blue-600 transition-colors leading-relaxed pl-4 text-sm" data-astro-cid-xvrfupwn>Admin Dashboard</a></li><li data-astro-cid-xvrfupwn><a href="#security--performance" data-toc-link class="block text-gray-700 hover:text-blue-600 transition-colors leading-relaxed pl-4 text-sm" data-astro-cid-xvrfupwn>Security &amp; Performance</a></li><li data-astro-cid-xvrfupwn><a href="#️-architecture" data-toc-link class="block text-gray-700 hover:text-blue-600 transition-colors leading-relaxed font-medium" data-astro-cid-xvrfupwn>🏗️ Architecture</a></li><li data-astro-cid-xvrfupwn><a href="#frontend-react" data-toc-link class="block text-gray-700 hover:text-blue-600 transition-colors leading-relaxed pl-4 text-sm" data-astro-cid-xvrfupwn>Frontend (React)</a></li><li data-astro-cid-xvrfupwn><a href="#backend-nodejs" data-toc-link class="block text-gray-700 hover:text-blue-600 transition-colors leading-relaxed pl-4 text-sm" data-astro-cid-xvrfupwn>Backend (Node.js)</a></li><li data-astro-cid-xvrfupwn><a href="#infrastructure" data-toc-link class="block text-gray-700 hover:text-blue-600 transition-colors leading-relaxed pl-4 text-sm" data-astro-cid-xvrfupwn>Infrastructure</a></li><li data-astro-cid-xvrfupwn><a href="#-technical-implementation" data-toc-link class="block text-gray-700 hover:text-blue-600 transition-colors leading-relaxed font-medium" data-astro-cid-xvrfupwn>🔧 Technical Implementation</a></li><li data-astro-cid-xvrfupwn><a href="#database-design" data-toc-link class="block text-gray-700 hover:text-blue-600 transition-colors leading-relaxed pl-4 text-sm" data-astro-cid-xvrfupwn>Database Design</a></li><li data-astro-cid-xvrfupwn><a href="#api-architecture" data-toc-link class="block text-gray-700 hover:text-blue-600 transition-colors leading-relaxed pl-4 text-sm" data-astro-cid-xvrfupwn>API Architecture</a></li><li data-astro-cid-xvrfupwn><a href="#authentication-system" data-toc-link class="block text-gray-700 hover:text-blue-600 transition-colors leading-relaxed pl-4 text-sm" data-astro-cid-xvrfupwn>Authentication System</a></li><li data-astro-cid-xvrfupwn><a href="#payment-processing" data-toc-link class="block text-gray-700 hover:text-blue-600 transition-colors leading-relaxed pl-4 text-sm" data-astro-cid-xvrfupwn>Payment Processing</a></li><li data-astro-cid-xvrfupwn><a href="#react-frontend-components" data-toc-link class="block text-gray-700 hover:text-blue-600 transition-colors leading-relaxed pl-4 text-sm" data-astro-cid-xvrfupwn>React Frontend Components</a></li><li data-astro-cid-xvrfupwn><a href="#state-management" data-toc-link class="block text-gray-700 hover:text-blue-600 transition-colors leading-relaxed pl-4 text-sm" data-astro-cid-xvrfupwn>State Management</a></li><li data-astro-cid-xvrfupwn><a href="#-performance-optimizations" data-toc-link class="block text-gray-700 hover:text-blue-600 transition-colors leading-relaxed font-medium" data-astro-cid-xvrfupwn>📊 Performance Optimizations</a></li><li data-astro-cid-xvrfupwn><a href="#database-optimization" data-toc-link class="block text-gray-700 hover:text-blue-600 transition-colors leading-relaxed pl-4 text-sm" data-astro-cid-xvrfupwn>Database Optimization</a></li><li data-astro-cid-xvrfupwn><a href="#frontend-performance" data-toc-link class="block text-gray-700 hover:text-blue-600 transition-colors leading-relaxed pl-4 text-sm" data-astro-cid-xvrfupwn>Frontend Performance</a></li><li data-astro-cid-xvrfupwn><a href="#api-optimization" data-toc-link class="block text-gray-700 hover:text-blue-600 transition-colors leading-relaxed pl-4 text-sm" data-astro-cid-xvrfupwn>API Optimization</a></li><li data-astro-cid-xvrfupwn><a href="#-security-measures" data-toc-link class="block text-gray-700 hover:text-blue-600 transition-colors leading-relaxed font-medium" data-astro-cid-xvrfupwn>🔒 Security Measures</a></li><li data-astro-cid-xvrfupwn><a href="#authentication--authorization" data-toc-link class="block text-gray-700 hover:text-blue-600 transition-colors leading-relaxed pl-4 text-sm" data-astro-cid-xvrfupwn>Authentication &amp; Authorization</a></li><li data-astro-cid-xvrfupwn><a href="#data-protection" data-toc-link class="block text-gray-700 hover:text-blue-600 transition-colors leading-relaxed pl-4 text-sm" data-astro-cid-xvrfupwn>Data Protection</a></li><li data-astro-cid-xvrfupwn><a href="#payment-security" data-toc-link class="block text-gray-700 hover:text-blue-600 transition-colors leading-relaxed pl-4 text-sm" data-astro-cid-xvrfupwn>Payment Security</a></li><li data-astro-cid-xvrfupwn><a href="#-testing-strategy" data-toc-link class="block text-gray-700 hover:text-blue-600 transition-colors leading-relaxed font-medium" data-astro-cid-xvrfupwn>🧪 Testing Strategy</a></li><li data-astro-cid-xvrfupwn><a href="#backend-testing" data-toc-link class="block text-gray-700 hover:text-blue-600 transition-colors leading-relaxed pl-4 text-sm" data-astro-cid-xvrfupwn>Backend Testing</a></li><li data-astro-cid-xvrfupwn><a href="#frontend-testing" data-toc-link class="block text-gray-700 hover:text-blue-600 transition-colors leading-relaxed pl-4 text-sm" data-astro-cid-xvrfupwn>Frontend Testing</a></li><li data-astro-cid-xvrfupwn><a href="#-analytics--monitoring" data-toc-link class="block text-gray-700 hover:text-blue-600 transition-colors leading-relaxed font-medium" data-astro-cid-xvrfupwn>📈 Analytics &amp; Monitoring</a></li><li data-astro-cid-xvrfupwn><a href="#business-analytics" data-toc-link class="block text-gray-700 hover:text-blue-600 transition-colors leading-relaxed pl-4 text-sm" data-astro-cid-xvrfupwn>Business Analytics</a></li><li data-astro-cid-xvrfupwn><a href="#technical-monitoring" data-toc-link class="block text-gray-700 hover:text-blue-600 transition-colors leading-relaxed pl-4 text-sm" data-astro-cid-xvrfupwn>Technical Monitoring</a></li><li data-astro-cid-xvrfupwn><a href="#-deployment-pipeline" data-toc-link class="block text-gray-700 hover:text-blue-600 transition-colors leading-relaxed font-medium" data-astro-cid-xvrfupwn>🚀 Deployment Pipeline</a></li><li data-astro-cid-xvrfupwn><a href="#-mobile-experience" data-toc-link class="block text-gray-700 hover:text-blue-600 transition-colors leading-relaxed font-medium" data-astro-cid-xvrfupwn>📱 Mobile Experience</a></li><li data-astro-cid-xvrfupwn><a href="#progressive-web-app-features" data-toc-link class="block text-gray-700 hover:text-blue-600 transition-colors leading-relaxed pl-4 text-sm" data-astro-cid-xvrfupwn>Progressive Web App Features</a></li><li data-astro-cid-xvrfupwn><a href="#touch-optimization" data-toc-link class="block text-gray-700 hover:text-blue-600 transition-colors leading-relaxed pl-4 text-sm" data-astro-cid-xvrfupwn>Touch Optimization</a></li><li data-astro-cid-xvrfupwn><a href="#-future-enhancements" data-toc-link class="block text-gray-700 hover:text-blue-600 transition-colors leading-relaxed font-medium" data-astro-cid-xvrfupwn>🔮 Future Enhancements</a></li><li data-astro-cid-xvrfupwn><a href="#planned-features" data-toc-link class="block text-gray-700 hover:text-blue-600 transition-colors leading-relaxed pl-4 text-sm" data-astro-cid-xvrfupwn>Planned Features</a></li><li data-astro-cid-xvrfupwn><a href="#technical-roadmap" data-toc-link class="block text-gray-700 hover:text-blue-600 transition-colors leading-relaxed pl-4 text-sm" data-astro-cid-xvrfupwn>Technical Roadmap</a></li></ul></div></nav> </aside> <!-- Main Content --> <article class="lg:col-span-3" data-astro-cid-ovxcmftc> <div class="px-0 py-0" data-astro-cid-ovxcmftc> <!-- Project Content --> <div class="prose prose-lg max-w-none project-content" data-astro-cid-ovxcmftc> <h1 id="e-commerce-platform">E-commerce Platform</h1>
+<p>A comprehensive full-stack e-commerce solution designed for modern online businesses. Built with React, Node.js, and PostgreSQL, featuring secure payment processing, inventory management, and a powerful admin dashboard.</p>
+<h2 id="-features">🛒 Features</h2>
+<h3 id="customer-experience">Customer Experience</h3>
+<ul>
+<li><strong>Product catalog</strong> with advanced filtering and search</li>
+<li><strong>Shopping cart</strong> with persistent sessions</li>
+<li><strong>Secure checkout</strong> with multiple payment options</li>
+<li><strong>User accounts</strong> with order history and wishlist</li>
+<li><strong>Product reviews</strong> and ratings system</li>
+<li><strong>Responsive design</strong> optimized for all devices</li>
+</ul>
+<h3 id="admin-dashboard">Admin Dashboard</h3>
+<ul>
+<li><strong>Product management</strong> with bulk operations</li>
+<li><strong>Order processing</strong> and fulfillment tracking</li>
+<li><strong>Customer management</strong> and support tools</li>
+<li><strong>Analytics dashboard</strong> with sales insights</li>
+<li><strong>Inventory tracking</strong> with low-stock alerts</li>
+<li><strong>Content management</strong> for pages and promotions</li>
+</ul>
+<h3 id="security--performance">Security &#x26; Performance</h3>
+<ul>
+<li><strong>JWT authentication</strong> with refresh tokens</li>
+<li><strong>Payment security</strong> via Stripe integration</li>
+<li><strong>Data encryption</strong> for sensitive information</li>
+<li><strong>Rate limiting</strong> and DDoS protection</li>
+<li><strong>Optimized queries</strong> and database indexing</li>
+<li><strong>CDN integration</strong> for fast asset delivery</li>
+</ul>
+<h2 id="️-architecture">🏗️ Architecture</h2>
+<h3 id="frontend-react">Frontend (React)</h3>
+<ul>
+<li><strong>React 18</strong> with Hooks and Context API</li>
+<li><strong>React Router</strong> for client-side routing</li>
+<li><strong>Redux Toolkit</strong> for complex state management</li>
+<li><strong>Material-UI</strong> for consistent design system</li>
+<li><strong>React Query</strong> for server state management</li>
+<li><strong>Formik &#x26; Yup</strong> for form handling and validation</li>
+</ul>
+<h3 id="backend-nodejs">Backend (Node.js)</h3>
+<ul>
+<li><strong>Express.js</strong> REST API with middleware</li>
+<li><strong>PostgreSQL</strong> with Prisma ORM</li>
+<li><strong>JWT</strong> authentication with refresh tokens</li>
+<li><strong>Stripe</strong> payment processing integration</li>
+<li><strong>Nodemailer</strong> for email notifications</li>
+<li><strong>Cloudinary</strong> for image storage and optimization</li>
+</ul>
+<h3 id="infrastructure">Infrastructure</h3>
+<ul>
+<li><strong>Docker</strong> containerization for development</li>
+<li><strong>Vercel</strong> frontend deployment</li>
+<li><strong>Railway</strong> backend and database hosting</li>
+<li><strong>GitHub Actions</strong> for CI/CD pipeline</li>
+<li><strong>Sentry</strong> for error monitoring</li>
+</ul>
+<h2 id="-technical-implementation">🔧 Technical Implementation</h2>
+<h3 id="database-design">Database Design</h3>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="sql"><code><span class="line"><span style="color:#6A737D">-- Core e-commerce tables</span></span>
+<span class="line"><span style="color:#F97583">CREATE</span><span style="color:#F97583"> TABLE</span><span style="color:#B392F0"> users</span><span style="color:#E1E4E8"> (</span></span>
+<span class="line"><span style="color:#E1E4E8">  id </span><span style="color:#F97583">SERIAL</span><span style="color:#F97583"> PRIMARY KEY</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#E1E4E8">  email </span><span style="color:#F97583">VARCHAR</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">255</span><span style="color:#E1E4E8">) </span><span style="color:#F97583">UNIQUE</span><span style="color:#F97583"> NOT NULL</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#E1E4E8">  password_hash </span><span style="color:#F97583">VARCHAR</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">255</span><span style="color:#E1E4E8">) </span><span style="color:#F97583">NOT NULL</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#E1E4E8">  first_name </span><span style="color:#F97583">VARCHAR</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">100</span><span style="color:#E1E4E8">) </span><span style="color:#F97583">NOT NULL</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#E1E4E8">  last_name </span><span style="color:#F97583">VARCHAR</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">100</span><span style="color:#E1E4E8">) </span><span style="color:#F97583">NOT NULL</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#F97583">  role</span><span style="color:#E1E4E8"> user_role </span><span style="color:#F97583">DEFAULT</span><span style="color:#9ECBFF"> 'customer'</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#E1E4E8">  email_verified </span><span style="color:#F97583">BOOLEAN</span><span style="color:#F97583"> DEFAULT</span><span style="color:#E1E4E8"> false,</span></span>
+<span class="line"><span style="color:#E1E4E8">  created_at </span><span style="color:#F97583">TIMESTAMP</span><span style="color:#F97583"> DEFAULT</span><span style="color:#F97583"> NOW</span><span style="color:#E1E4E8">(),</span></span>
+<span class="line"><span style="color:#E1E4E8">  updated_at </span><span style="color:#F97583">TIMESTAMP</span><span style="color:#F97583"> DEFAULT</span><span style="color:#F97583"> NOW</span><span style="color:#E1E4E8">()</span></span>
+<span class="line"><span style="color:#E1E4E8">);</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#F97583">CREATE</span><span style="color:#F97583"> TABLE</span><span style="color:#B392F0"> products</span><span style="color:#E1E4E8"> (</span></span>
+<span class="line"><span style="color:#E1E4E8">  id </span><span style="color:#F97583">SERIAL</span><span style="color:#F97583"> PRIMARY KEY</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#F97583">  name</span><span style="color:#F97583"> VARCHAR</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">255</span><span style="color:#E1E4E8">) </span><span style="color:#F97583">NOT NULL</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#F97583">  description</span><span style="color:#F97583"> TEXT</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#E1E4E8">  price </span><span style="color:#F97583">DECIMAL</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">10</span><span style="color:#E1E4E8">,</span><span style="color:#79B8FF">2</span><span style="color:#E1E4E8">) </span><span style="color:#F97583">NOT NULL</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#E1E4E8">  sale_price </span><span style="color:#F97583">DECIMAL</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">10</span><span style="color:#E1E4E8">,</span><span style="color:#79B8FF">2</span><span style="color:#E1E4E8">),</span></span>
+<span class="line"><span style="color:#E1E4E8">  sku </span><span style="color:#F97583">VARCHAR</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">100</span><span style="color:#E1E4E8">) </span><span style="color:#F97583">UNIQUE</span><span style="color:#F97583"> NOT NULL</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#E1E4E8">  inventory_count </span><span style="color:#F97583">INTEGER</span><span style="color:#F97583"> DEFAULT</span><span style="color:#79B8FF"> 0</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#E1E4E8">  category_id </span><span style="color:#F97583">INTEGER</span><span style="color:#F97583"> REFERENCES</span><span style="color:#E1E4E8"> categories(id),</span></span>
+<span class="line"><span style="color:#F97583">  status</span><span style="color:#E1E4E8"> product_status </span><span style="color:#F97583">DEFAULT</span><span style="color:#9ECBFF"> 'active'</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#E1E4E8">  images JSONB,</span></span>
+<span class="line"><span style="color:#E1E4E8">  attributes JSONB,</span></span>
+<span class="line"><span style="color:#E1E4E8">  created_at </span><span style="color:#F97583">TIMESTAMP</span><span style="color:#F97583"> DEFAULT</span><span style="color:#F97583"> NOW</span><span style="color:#E1E4E8">(),</span></span>
+<span class="line"><span style="color:#E1E4E8">  updated_at </span><span style="color:#F97583">TIMESTAMP</span><span style="color:#F97583"> DEFAULT</span><span style="color:#F97583"> NOW</span><span style="color:#E1E4E8">()</span></span>
+<span class="line"><span style="color:#E1E4E8">);</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#F97583">CREATE</span><span style="color:#F97583"> TABLE</span><span style="color:#B392F0"> orders</span><span style="color:#E1E4E8"> (</span></span>
+<span class="line"><span style="color:#E1E4E8">  id </span><span style="color:#F97583">SERIAL</span><span style="color:#F97583"> PRIMARY KEY</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#E1E4E8">  user_id </span><span style="color:#F97583">INTEGER</span><span style="color:#F97583"> REFERENCES</span><span style="color:#E1E4E8"> users(id),</span></span>
+<span class="line"><span style="color:#F97583">  status</span><span style="color:#E1E4E8"> order_status </span><span style="color:#F97583">DEFAULT</span><span style="color:#9ECBFF"> 'pending'</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#E1E4E8">  total_amount </span><span style="color:#F97583">DECIMAL</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">10</span><span style="color:#E1E4E8">,</span><span style="color:#79B8FF">2</span><span style="color:#E1E4E8">) </span><span style="color:#F97583">NOT NULL</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#E1E4E8">  shipping_address JSONB </span><span style="color:#F97583">NOT NULL</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#E1E4E8">  billing_address JSONB </span><span style="color:#F97583">NOT NULL</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#E1E4E8">  payment_intent_id </span><span style="color:#F97583">VARCHAR</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">255</span><span style="color:#E1E4E8">),</span></span>
+<span class="line"><span style="color:#E1E4E8">  tracking_number </span><span style="color:#F97583">VARCHAR</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">255</span><span style="color:#E1E4E8">),</span></span>
+<span class="line"><span style="color:#E1E4E8">  created_at </span><span style="color:#F97583">TIMESTAMP</span><span style="color:#F97583"> DEFAULT</span><span style="color:#F97583"> NOW</span><span style="color:#E1E4E8">(),</span></span>
+<span class="line"><span style="color:#E1E4E8">  updated_at </span><span style="color:#F97583">TIMESTAMP</span><span style="color:#F97583"> DEFAULT</span><span style="color:#F97583"> NOW</span><span style="color:#E1E4E8">()</span></span>
+<span class="line"><span style="color:#E1E4E8">);</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#F97583">CREATE</span><span style="color:#F97583"> TABLE</span><span style="color:#B392F0"> order_items</span><span style="color:#E1E4E8"> (</span></span>
+<span class="line"><span style="color:#E1E4E8">  id </span><span style="color:#F97583">SERIAL</span><span style="color:#F97583"> PRIMARY KEY</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#E1E4E8">  order_id </span><span style="color:#F97583">INTEGER</span><span style="color:#F97583"> REFERENCES</span><span style="color:#E1E4E8"> orders(id) </span><span style="color:#F97583">ON DELETE CASCADE</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#E1E4E8">  product_id </span><span style="color:#F97583">INTEGER</span><span style="color:#F97583"> REFERENCES</span><span style="color:#E1E4E8"> products(id),</span></span>
+<span class="line"><span style="color:#E1E4E8">  quantity </span><span style="color:#F97583">INTEGER</span><span style="color:#F97583"> NOT NULL</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#E1E4E8">  unit_price </span><span style="color:#F97583">DECIMAL</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">10</span><span style="color:#E1E4E8">,</span><span style="color:#79B8FF">2</span><span style="color:#E1E4E8">) </span><span style="color:#F97583">NOT NULL</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#E1E4E8">  total_price </span><span style="color:#F97583">DECIMAL</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">10</span><span style="color:#E1E4E8">,</span><span style="color:#79B8FF">2</span><span style="color:#E1E4E8">) </span><span style="color:#F97583">NOT NULL</span></span>
+<span class="line"><span style="color:#E1E4E8">);</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">-- Indexes for performance</span></span>
+<span class="line"><span style="color:#F97583">CREATE</span><span style="color:#F97583"> INDEX</span><span style="color:#B392F0"> idx_products_category</span><span style="color:#F97583"> ON</span><span style="color:#E1E4E8"> products(category_id);</span></span>
+<span class="line"><span style="color:#F97583">CREATE</span><span style="color:#F97583"> INDEX</span><span style="color:#B392F0"> idx_products_status</span><span style="color:#F97583"> ON</span><span style="color:#E1E4E8"> products(</span><span style="color:#F97583">status</span><span style="color:#E1E4E8">);</span></span>
+<span class="line"><span style="color:#F97583">CREATE</span><span style="color:#F97583"> INDEX</span><span style="color:#B392F0"> idx_orders_user</span><span style="color:#F97583"> ON</span><span style="color:#E1E4E8"> orders(user_id);</span></span>
+<span class="line"><span style="color:#F97583">CREATE</span><span style="color:#F97583"> INDEX</span><span style="color:#B392F0"> idx_orders_status</span><span style="color:#F97583"> ON</span><span style="color:#E1E4E8"> orders(</span><span style="color:#F97583">status</span><span style="color:#E1E4E8">);</span></span>
+<span class="line"><span style="color:#F97583">CREATE</span><span style="color:#F97583"> INDEX</span><span style="color:#B392F0"> idx_order_items_order</span><span style="color:#F97583"> ON</span><span style="color:#E1E4E8"> order_items(order_id);</span></span>
+<span class="line"></span></code></pre>
+<h3 id="api-architecture">API Architecture</h3>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#6A737D">// Express.js API structure</span></span>
+<span class="line"><span style="color:#F97583">const</span><span style="color:#79B8FF"> express</span><span style="color:#F97583"> =</span><span style="color:#B392F0"> require</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">'express'</span><span style="color:#E1E4E8">);</span></span>
+<span class="line"><span style="color:#F97583">const</span><span style="color:#79B8FF"> cors</span><span style="color:#F97583"> =</span><span style="color:#B392F0"> require</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">'cors'</span><span style="color:#E1E4E8">);</span></span>
+<span class="line"><span style="color:#F97583">const</span><span style="color:#79B8FF"> helmet</span><span style="color:#F97583"> =</span><span style="color:#B392F0"> require</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">'helmet'</span><span style="color:#E1E4E8">);</span></span>
+<span class="line"><span style="color:#F97583">const</span><span style="color:#79B8FF"> rateLimit</span><span style="color:#F97583"> =</span><span style="color:#B392F0"> require</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">'express-rate-limit'</span><span style="color:#E1E4E8">);</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#F97583">const</span><span style="color:#79B8FF"> app</span><span style="color:#F97583"> =</span><span style="color:#B392F0"> express</span><span style="color:#E1E4E8">();</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// Security middleware</span></span>
+<span class="line"><span style="color:#E1E4E8">app.</span><span style="color:#B392F0">use</span><span style="color:#E1E4E8">(</span><span style="color:#B392F0">helmet</span><span style="color:#E1E4E8">());</span></span>
+<span class="line"><span style="color:#E1E4E8">app.</span><span style="color:#B392F0">use</span><span style="color:#E1E4E8">(</span><span style="color:#B392F0">cors</span><span style="color:#E1E4E8">({</span></span>
+<span class="line"><span style="color:#E1E4E8">  origin: process.env.</span><span style="color:#79B8FF">FRONTEND_URL</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#E1E4E8">  credentials: </span><span style="color:#79B8FF">true</span></span>
+<span class="line"><span style="color:#E1E4E8">}));</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// Rate limiting</span></span>
+<span class="line"><span style="color:#F97583">const</span><span style="color:#79B8FF"> limiter</span><span style="color:#F97583"> =</span><span style="color:#B392F0"> rateLimit</span><span style="color:#E1E4E8">({</span></span>
+<span class="line"><span style="color:#E1E4E8">  windowMs: </span><span style="color:#79B8FF">15</span><span style="color:#F97583"> *</span><span style="color:#79B8FF"> 60</span><span style="color:#F97583"> *</span><span style="color:#79B8FF"> 1000</span><span style="color:#E1E4E8">, </span><span style="color:#6A737D">// 15 minutes</span></span>
+<span class="line"><span style="color:#E1E4E8">  max: </span><span style="color:#79B8FF">100</span><span style="color:#E1E4E8">, </span><span style="color:#6A737D">// limit each IP to 100 requests per windowMs</span></span>
+<span class="line"><span style="color:#E1E4E8">  message: </span><span style="color:#9ECBFF">'Too many requests from this IP'</span></span>
+<span class="line"><span style="color:#E1E4E8">});</span></span>
+<span class="line"><span style="color:#E1E4E8">app.</span><span style="color:#B392F0">use</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">'/api/'</span><span style="color:#E1E4E8">, limiter);</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// Routes</span></span>
+<span class="line"><span style="color:#E1E4E8">app.</span><span style="color:#B392F0">use</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">'/api/auth'</span><span style="color:#E1E4E8">, </span><span style="color:#B392F0">require</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">'./routes/auth'</span><span style="color:#E1E4E8">));</span></span>
+<span class="line"><span style="color:#E1E4E8">app.</span><span style="color:#B392F0">use</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">'/api/products'</span><span style="color:#E1E4E8">, </span><span style="color:#B392F0">require</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">'./routes/products'</span><span style="color:#E1E4E8">));</span></span>
+<span class="line"><span style="color:#E1E4E8">app.</span><span style="color:#B392F0">use</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">'/api/orders'</span><span style="color:#E1E4E8">, </span><span style="color:#B392F0">require</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">'./routes/orders'</span><span style="color:#E1E4E8">));</span></span>
+<span class="line"><span style="color:#E1E4E8">app.</span><span style="color:#B392F0">use</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">'/api/users'</span><span style="color:#E1E4E8">, </span><span style="color:#B392F0">require</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">'./routes/users'</span><span style="color:#E1E4E8">));</span></span>
+<span class="line"><span style="color:#E1E4E8">app.</span><span style="color:#B392F0">use</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">'/api/admin'</span><span style="color:#E1E4E8">, </span><span style="color:#B392F0">require</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">'./routes/admin'</span><span style="color:#E1E4E8">));</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// Error handling middleware</span></span>
+<span class="line"><span style="color:#E1E4E8">app.</span><span style="color:#B392F0">use</span><span style="color:#E1E4E8">((</span><span style="color:#FFAB70">error</span><span style="color:#E1E4E8">, </span><span style="color:#FFAB70">req</span><span style="color:#E1E4E8">, </span><span style="color:#FFAB70">res</span><span style="color:#E1E4E8">, </span><span style="color:#FFAB70">next</span><span style="color:#E1E4E8">) </span><span style="color:#F97583">=></span><span style="color:#E1E4E8"> {</span></span>
+<span class="line"><span style="color:#E1E4E8">  console.</span><span style="color:#B392F0">error</span><span style="color:#E1E4E8">(error);</span></span>
+<span class="line"><span style="color:#E1E4E8">  </span></span>
+<span class="line"><span style="color:#F97583">  if</span><span style="color:#E1E4E8"> (error.name </span><span style="color:#F97583">===</span><span style="color:#9ECBFF"> 'ValidationError'</span><span style="color:#E1E4E8">) {</span></span>
+<span class="line"><span style="color:#F97583">    return</span><span style="color:#E1E4E8"> res.</span><span style="color:#B392F0">status</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">400</span><span style="color:#E1E4E8">).</span><span style="color:#B392F0">json</span><span style="color:#E1E4E8">({</span></span>
+<span class="line"><span style="color:#E1E4E8">      error: </span><span style="color:#9ECBFF">'Validation Error'</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#E1E4E8">      details: error.details</span></span>
+<span class="line"><span style="color:#E1E4E8">    });</span></span>
+<span class="line"><span style="color:#E1E4E8">  }</span></span>
+<span class="line"><span style="color:#E1E4E8">  </span></span>
+<span class="line"><span style="color:#F97583">  if</span><span style="color:#E1E4E8"> (error.name </span><span style="color:#F97583">===</span><span style="color:#9ECBFF"> 'UnauthorizedError'</span><span style="color:#E1E4E8">) {</span></span>
+<span class="line"><span style="color:#F97583">    return</span><span style="color:#E1E4E8"> res.</span><span style="color:#B392F0">status</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">401</span><span style="color:#E1E4E8">).</span><span style="color:#B392F0">json</span><span style="color:#E1E4E8">({</span></span>
+<span class="line"><span style="color:#E1E4E8">      error: </span><span style="color:#9ECBFF">'Unauthorized'</span></span>
+<span class="line"><span style="color:#E1E4E8">    });</span></span>
+<span class="line"><span style="color:#E1E4E8">  }</span></span>
+<span class="line"><span style="color:#E1E4E8">  </span></span>
+<span class="line"><span style="color:#E1E4E8">  res.</span><span style="color:#B392F0">status</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">500</span><span style="color:#E1E4E8">).</span><span style="color:#B392F0">json</span><span style="color:#E1E4E8">({</span></span>
+<span class="line"><span style="color:#E1E4E8">    error: </span><span style="color:#9ECBFF">'Internal Server Error'</span></span>
+<span class="line"><span style="color:#E1E4E8">  });</span></span>
+<span class="line"><span style="color:#E1E4E8">});</span></span>
+<span class="line"></span></code></pre>
+<h3 id="authentication-system">Authentication System</h3>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#6A737D">// JWT authentication with refresh tokens</span></span>
+<span class="line"><span style="color:#F97583">const</span><span style="color:#79B8FF"> jwt</span><span style="color:#F97583"> =</span><span style="color:#B392F0"> require</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">'jsonwebtoken'</span><span style="color:#E1E4E8">);</span></span>
+<span class="line"><span style="color:#F97583">const</span><span style="color:#79B8FF"> bcrypt</span><span style="color:#F97583"> =</span><span style="color:#B392F0"> require</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">'bcrypt'</span><span style="color:#E1E4E8">);</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#F97583">class</span><span style="color:#B392F0"> AuthService</span><span style="color:#E1E4E8"> {</span></span>
+<span class="line"><span style="color:#F97583">  static</span><span style="color:#B392F0"> generateTokens</span><span style="color:#E1E4E8">(</span><span style="color:#FFAB70">user</span><span style="color:#E1E4E8">) {</span></span>
+<span class="line"><span style="color:#F97583">    const</span><span style="color:#79B8FF"> payload</span><span style="color:#F97583"> =</span><span style="color:#E1E4E8"> {</span></span>
+<span class="line"><span style="color:#E1E4E8">      userId: user.id,</span></span>
+<span class="line"><span style="color:#E1E4E8">      email: user.email,</span></span>
+<span class="line"><span style="color:#E1E4E8">      role: user.role</span></span>
+<span class="line"><span style="color:#E1E4E8">    };</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#F97583">    const</span><span style="color:#79B8FF"> accessToken</span><span style="color:#F97583"> =</span><span style="color:#E1E4E8"> jwt.</span><span style="color:#B392F0">sign</span><span style="color:#E1E4E8">(payload, process.env.</span><span style="color:#79B8FF">JWT_SECRET</span><span style="color:#E1E4E8">, {</span></span>
+<span class="line"><span style="color:#E1E4E8">      expiresIn: </span><span style="color:#9ECBFF">'15m'</span></span>
+<span class="line"><span style="color:#E1E4E8">    });</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#F97583">    const</span><span style="color:#79B8FF"> refreshToken</span><span style="color:#F97583"> =</span><span style="color:#E1E4E8"> jwt.</span><span style="color:#B392F0">sign</span><span style="color:#E1E4E8">(payload, process.env.</span><span style="color:#79B8FF">JWT_REFRESH_SECRET</span><span style="color:#E1E4E8">, {</span></span>
+<span class="line"><span style="color:#E1E4E8">      expiresIn: </span><span style="color:#9ECBFF">'7d'</span></span>
+<span class="line"><span style="color:#E1E4E8">    });</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#F97583">    return</span><span style="color:#E1E4E8"> { accessToken, refreshToken };</span></span>
+<span class="line"><span style="color:#E1E4E8">  }</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#F97583">  static</span><span style="color:#F97583"> async</span><span style="color:#B392F0"> verifyToken</span><span style="color:#E1E4E8">(</span><span style="color:#FFAB70">token</span><span style="color:#E1E4E8">) {</span></span>
+<span class="line"><span style="color:#F97583">    try</span><span style="color:#E1E4E8"> {</span></span>
+<span class="line"><span style="color:#F97583">      return</span><span style="color:#E1E4E8"> jwt.</span><span style="color:#B392F0">verify</span><span style="color:#E1E4E8">(token, process.env.</span><span style="color:#79B8FF">JWT_SECRET</span><span style="color:#E1E4E8">);</span></span>
+<span class="line"><span style="color:#E1E4E8">    } </span><span style="color:#F97583">catch</span><span style="color:#E1E4E8"> (error) {</span></span>
+<span class="line"><span style="color:#F97583">      throw</span><span style="color:#F97583"> new</span><span style="color:#B392F0"> Error</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">'Invalid token'</span><span style="color:#E1E4E8">);</span></span>
+<span class="line"><span style="color:#E1E4E8">    }</span></span>
+<span class="line"><span style="color:#E1E4E8">  }</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#F97583">  static</span><span style="color:#F97583"> async</span><span style="color:#B392F0"> hashPassword</span><span style="color:#E1E4E8">(</span><span style="color:#FFAB70">password</span><span style="color:#E1E4E8">) {</span></span>
+<span class="line"><span style="color:#F97583">    return</span><span style="color:#E1E4E8"> bcrypt.</span><span style="color:#B392F0">hash</span><span style="color:#E1E4E8">(password, </span><span style="color:#79B8FF">12</span><span style="color:#E1E4E8">);</span></span>
+<span class="line"><span style="color:#E1E4E8">  }</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#F97583">  static</span><span style="color:#F97583"> async</span><span style="color:#B392F0"> comparePassword</span><span style="color:#E1E4E8">(</span><span style="color:#FFAB70">password</span><span style="color:#E1E4E8">, </span><span style="color:#FFAB70">hash</span><span style="color:#E1E4E8">) {</span></span>
+<span class="line"><span style="color:#F97583">    return</span><span style="color:#E1E4E8"> bcrypt.</span><span style="color:#B392F0">compare</span><span style="color:#E1E4E8">(password, hash);</span></span>
+<span class="line"><span style="color:#E1E4E8">  }</span></span>
+<span class="line"><span style="color:#E1E4E8">}</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// Authentication middleware</span></span>
+<span class="line"><span style="color:#F97583">const</span><span style="color:#B392F0"> authenticateToken</span><span style="color:#F97583"> =</span><span style="color:#F97583"> async</span><span style="color:#E1E4E8"> (</span><span style="color:#FFAB70">req</span><span style="color:#E1E4E8">, </span><span style="color:#FFAB70">res</span><span style="color:#E1E4E8">, </span><span style="color:#FFAB70">next</span><span style="color:#E1E4E8">) </span><span style="color:#F97583">=></span><span style="color:#E1E4E8"> {</span></span>
+<span class="line"><span style="color:#F97583">  const</span><span style="color:#79B8FF"> authHeader</span><span style="color:#F97583"> =</span><span style="color:#E1E4E8"> req.headers[</span><span style="color:#9ECBFF">'authorization'</span><span style="color:#E1E4E8">];</span></span>
+<span class="line"><span style="color:#F97583">  const</span><span style="color:#79B8FF"> token</span><span style="color:#F97583"> =</span><span style="color:#E1E4E8"> authHeader </span><span style="color:#F97583">&#x26;&#x26;</span><span style="color:#E1E4E8"> authHeader.</span><span style="color:#B392F0">split</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">' '</span><span style="color:#E1E4E8">)[</span><span style="color:#79B8FF">1</span><span style="color:#E1E4E8">];</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#F97583">  if</span><span style="color:#E1E4E8"> (</span><span style="color:#F97583">!</span><span style="color:#E1E4E8">token) {</span></span>
+<span class="line"><span style="color:#F97583">    return</span><span style="color:#E1E4E8"> res.</span><span style="color:#B392F0">status</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">401</span><span style="color:#E1E4E8">).</span><span style="color:#B392F0">json</span><span style="color:#E1E4E8">({ error: </span><span style="color:#9ECBFF">'Access token required'</span><span style="color:#E1E4E8"> });</span></span>
+<span class="line"><span style="color:#E1E4E8">  }</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#F97583">  try</span><span style="color:#E1E4E8"> {</span></span>
+<span class="line"><span style="color:#F97583">    const</span><span style="color:#79B8FF"> decoded</span><span style="color:#F97583"> =</span><span style="color:#F97583"> await</span><span style="color:#E1E4E8"> AuthService.</span><span style="color:#B392F0">verifyToken</span><span style="color:#E1E4E8">(token);</span></span>
+<span class="line"><span style="color:#E1E4E8">    req.user </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> decoded;</span></span>
+<span class="line"><span style="color:#B392F0">    next</span><span style="color:#E1E4E8">();</span></span>
+<span class="line"><span style="color:#E1E4E8">  } </span><span style="color:#F97583">catch</span><span style="color:#E1E4E8"> (error) {</span></span>
+<span class="line"><span style="color:#F97583">    return</span><span style="color:#E1E4E8"> res.</span><span style="color:#B392F0">status</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">403</span><span style="color:#E1E4E8">).</span><span style="color:#B392F0">json</span><span style="color:#E1E4E8">({ error: </span><span style="color:#9ECBFF">'Invalid or expired token'</span><span style="color:#E1E4E8"> });</span></span>
+<span class="line"><span style="color:#E1E4E8">  }</span></span>
+<span class="line"><span style="color:#E1E4E8">};</span></span>
+<span class="line"></span></code></pre>
+<h3 id="payment-processing">Payment Processing</h3>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#6A737D">// Stripe integration for secure payments</span></span>
+<span class="line"><span style="color:#F97583">const</span><span style="color:#79B8FF"> stripe</span><span style="color:#F97583"> =</span><span style="color:#B392F0"> require</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">'stripe'</span><span style="color:#E1E4E8">)(process.env.</span><span style="color:#79B8FF">STRIPE_SECRET_KEY</span><span style="color:#E1E4E8">);</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#F97583">class</span><span style="color:#B392F0"> PaymentService</span><span style="color:#E1E4E8"> {</span></span>
+<span class="line"><span style="color:#F97583">  static</span><span style="color:#F97583"> async</span><span style="color:#B392F0"> createPaymentIntent</span><span style="color:#E1E4E8">(</span><span style="color:#FFAB70">amount</span><span style="color:#E1E4E8">, </span><span style="color:#FFAB70">currency</span><span style="color:#F97583"> =</span><span style="color:#9ECBFF"> 'usd'</span><span style="color:#E1E4E8">, </span><span style="color:#FFAB70">metadata</span><span style="color:#F97583"> =</span><span style="color:#E1E4E8"> {}) {</span></span>
+<span class="line"><span style="color:#F97583">    try</span><span style="color:#E1E4E8"> {</span></span>
+<span class="line"><span style="color:#F97583">      const</span><span style="color:#79B8FF"> paymentIntent</span><span style="color:#F97583"> =</span><span style="color:#F97583"> await</span><span style="color:#E1E4E8"> stripe.paymentIntents.</span><span style="color:#B392F0">create</span><span style="color:#E1E4E8">({</span></span>
+<span class="line"><span style="color:#E1E4E8">        amount: Math.</span><span style="color:#B392F0">round</span><span style="color:#E1E4E8">(amount </span><span style="color:#F97583">*</span><span style="color:#79B8FF"> 100</span><span style="color:#E1E4E8">), </span><span style="color:#6A737D">// Convert to cents</span></span>
+<span class="line"><span style="color:#E1E4E8">        currency,</span></span>
+<span class="line"><span style="color:#E1E4E8">        metadata,</span></span>
+<span class="line"><span style="color:#E1E4E8">        automatic_payment_methods: {</span></span>
+<span class="line"><span style="color:#E1E4E8">          enabled: </span><span style="color:#79B8FF">true</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#E1E4E8">        },</span></span>
+<span class="line"><span style="color:#E1E4E8">      });</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#F97583">      return</span><span style="color:#E1E4E8"> paymentIntent;</span></span>
+<span class="line"><span style="color:#E1E4E8">    } </span><span style="color:#F97583">catch</span><span style="color:#E1E4E8"> (error) {</span></span>
+<span class="line"><span style="color:#E1E4E8">      console.</span><span style="color:#B392F0">error</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">'Stripe error:'</span><span style="color:#E1E4E8">, error);</span></span>
+<span class="line"><span style="color:#F97583">      throw</span><span style="color:#F97583"> new</span><span style="color:#B392F0"> Error</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">'Payment processing failed'</span><span style="color:#E1E4E8">);</span></span>
+<span class="line"><span style="color:#E1E4E8">    }</span></span>
+<span class="line"><span style="color:#E1E4E8">  }</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#F97583">  static</span><span style="color:#F97583"> async</span><span style="color:#B392F0"> confirmPayment</span><span style="color:#E1E4E8">(</span><span style="color:#FFAB70">paymentIntentId</span><span style="color:#E1E4E8">) {</span></span>
+<span class="line"><span style="color:#F97583">    try</span><span style="color:#E1E4E8"> {</span></span>
+<span class="line"><span style="color:#F97583">      const</span><span style="color:#79B8FF"> paymentIntent</span><span style="color:#F97583"> =</span><span style="color:#F97583"> await</span><span style="color:#E1E4E8"> stripe.paymentIntents.</span><span style="color:#B392F0">retrieve</span><span style="color:#E1E4E8">(paymentIntentId);</span></span>
+<span class="line"><span style="color:#E1E4E8">      </span></span>
+<span class="line"><span style="color:#F97583">      if</span><span style="color:#E1E4E8"> (paymentIntent.status </span><span style="color:#F97583">===</span><span style="color:#9ECBFF"> 'succeeded'</span><span style="color:#E1E4E8">) {</span></span>
+<span class="line"><span style="color:#F97583">        return</span><span style="color:#E1E4E8"> { success: </span><span style="color:#79B8FF">true</span><span style="color:#E1E4E8">, paymentIntent };</span></span>
+<span class="line"><span style="color:#E1E4E8">      } </span><span style="color:#F97583">else</span><span style="color:#E1E4E8"> {</span></span>
+<span class="line"><span style="color:#F97583">        return</span><span style="color:#E1E4E8"> { success: </span><span style="color:#79B8FF">false</span><span style="color:#E1E4E8">, status: paymentIntent.status };</span></span>
+<span class="line"><span style="color:#E1E4E8">      }</span></span>
+<span class="line"><span style="color:#E1E4E8">    } </span><span style="color:#F97583">catch</span><span style="color:#E1E4E8"> (error) {</span></span>
+<span class="line"><span style="color:#E1E4E8">      console.</span><span style="color:#B392F0">error</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">'Payment confirmation error:'</span><span style="color:#E1E4E8">, error);</span></span>
+<span class="line"><span style="color:#F97583">      throw</span><span style="color:#F97583"> new</span><span style="color:#B392F0"> Error</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">'Payment confirmation failed'</span><span style="color:#E1E4E8">);</span></span>
+<span class="line"><span style="color:#E1E4E8">    }</span></span>
+<span class="line"><span style="color:#E1E4E8">  }</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#F97583">  static</span><span style="color:#F97583"> async</span><span style="color:#B392F0"> handleWebhook</span><span style="color:#E1E4E8">(</span><span style="color:#FFAB70">rawBody</span><span style="color:#E1E4E8">, </span><span style="color:#FFAB70">signature</span><span style="color:#E1E4E8">) {</span></span>
+<span class="line"><span style="color:#F97583">    try</span><span style="color:#E1E4E8"> {</span></span>
+<span class="line"><span style="color:#F97583">      const</span><span style="color:#79B8FF"> event</span><span style="color:#F97583"> =</span><span style="color:#E1E4E8"> stripe.webhooks.</span><span style="color:#B392F0">constructEvent</span><span style="color:#E1E4E8">(</span></span>
+<span class="line"><span style="color:#E1E4E8">        rawBody,</span></span>
+<span class="line"><span style="color:#E1E4E8">        signature,</span></span>
+<span class="line"><span style="color:#E1E4E8">        process.env.</span><span style="color:#79B8FF">STRIPE_WEBHOOK_SECRET</span></span>
+<span class="line"><span style="color:#E1E4E8">      );</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#F97583">      switch</span><span style="color:#E1E4E8"> (event.type) {</span></span>
+<span class="line"><span style="color:#F97583">        case</span><span style="color:#9ECBFF"> 'payment_intent.succeeded'</span><span style="color:#E1E4E8">:</span></span>
+<span class="line"><span style="color:#F97583">          await</span><span style="color:#79B8FF"> this</span><span style="color:#E1E4E8">.</span><span style="color:#B392F0">handleSuccessfulPayment</span><span style="color:#E1E4E8">(event.data.object);</span></span>
+<span class="line"><span style="color:#F97583">          break</span><span style="color:#E1E4E8">;</span></span>
+<span class="line"><span style="color:#F97583">        case</span><span style="color:#9ECBFF"> 'payment_intent.payment_failed'</span><span style="color:#E1E4E8">:</span></span>
+<span class="line"><span style="color:#F97583">          await</span><span style="color:#79B8FF"> this</span><span style="color:#E1E4E8">.</span><span style="color:#B392F0">handleFailedPayment</span><span style="color:#E1E4E8">(event.data.object);</span></span>
+<span class="line"><span style="color:#F97583">          break</span><span style="color:#E1E4E8">;</span></span>
+<span class="line"><span style="color:#F97583">        default</span><span style="color:#E1E4E8">:</span></span>
+<span class="line"><span style="color:#E1E4E8">          console.</span><span style="color:#B392F0">log</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">`Unhandled event type: ${</span><span style="color:#E1E4E8">event</span><span style="color:#9ECBFF">.</span><span style="color:#E1E4E8">type</span><span style="color:#9ECBFF">}`</span><span style="color:#E1E4E8">);</span></span>
+<span class="line"><span style="color:#E1E4E8">      }</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#F97583">      return</span><span style="color:#E1E4E8"> { success: </span><span style="color:#79B8FF">true</span><span style="color:#E1E4E8"> };</span></span>
+<span class="line"><span style="color:#E1E4E8">    } </span><span style="color:#F97583">catch</span><span style="color:#E1E4E8"> (error) {</span></span>
+<span class="line"><span style="color:#E1E4E8">      console.</span><span style="color:#B392F0">error</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">'Webhook error:'</span><span style="color:#E1E4E8">, error);</span></span>
+<span class="line"><span style="color:#F97583">      throw</span><span style="color:#F97583"> new</span><span style="color:#B392F0"> Error</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">'Webhook processing failed'</span><span style="color:#E1E4E8">);</span></span>
+<span class="line"><span style="color:#E1E4E8">    }</span></span>
+<span class="line"><span style="color:#E1E4E8">  }</span></span>
+<span class="line"><span style="color:#E1E4E8">}</span></span>
+<span class="line"></span></code></pre>
+<h3 id="react-frontend-components">React Frontend Components</h3>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="jsx"><code><span class="line"><span style="color:#6A737D">// ProductCard component with optimistic updates</span></span>
+<span class="line"><span style="color:#F97583">import</span><span style="color:#E1E4E8"> React </span><span style="color:#F97583">from</span><span style="color:#9ECBFF"> 'react'</span><span style="color:#E1E4E8">;</span></span>
+<span class="line"><span style="color:#F97583">import</span><span style="color:#E1E4E8"> { useCart } </span><span style="color:#F97583">from</span><span style="color:#9ECBFF"> '../hooks/useCart'</span><span style="color:#E1E4E8">;</span></span>
+<span class="line"><span style="color:#F97583">import</span><span style="color:#E1E4E8"> { useWishlist } </span><span style="color:#F97583">from</span><span style="color:#9ECBFF"> '../hooks/useWishlist'</span><span style="color:#E1E4E8">;</span></span>
+<span class="line"><span style="color:#F97583">import</span><span style="color:#E1E4E8"> { Card, CardMedia, CardContent, Typography, Button, IconButton } </span><span style="color:#F97583">from</span><span style="color:#9ECBFF"> '@mui/material'</span><span style="color:#E1E4E8">;</span></span>
+<span class="line"><span style="color:#F97583">import</span><span style="color:#E1E4E8"> { FavoriteIcon, ShoppingCartIcon } </span><span style="color:#F97583">from</span><span style="color:#9ECBFF"> '@mui/icons-material'</span><span style="color:#E1E4E8">;</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#F97583">const</span><span style="color:#B392F0"> ProductCard</span><span style="color:#F97583"> =</span><span style="color:#E1E4E8"> ({ </span><span style="color:#FFAB70">product</span><span style="color:#E1E4E8"> }) </span><span style="color:#F97583">=></span><span style="color:#E1E4E8"> {</span></span>
+<span class="line"><span style="color:#F97583">  const</span><span style="color:#E1E4E8"> { </span><span style="color:#79B8FF">addToCart</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">isInCart</span><span style="color:#E1E4E8"> } </span><span style="color:#F97583">=</span><span style="color:#B392F0"> useCart</span><span style="color:#E1E4E8">();</span></span>
+<span class="line"><span style="color:#F97583">  const</span><span style="color:#E1E4E8"> { </span><span style="color:#79B8FF">addToWishlist</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">removeFromWishlist</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">isInWishlist</span><span style="color:#E1E4E8"> } </span><span style="color:#F97583">=</span><span style="color:#B392F0"> useWishlist</span><span style="color:#E1E4E8">();</span></span>
+<span class="line"><span style="color:#E1E4E8">  </span></span>
+<span class="line"><span style="color:#F97583">  const</span><span style="color:#E1E4E8"> [</span><span style="color:#79B8FF">isAddingToCart</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">setIsAddingToCart</span><span style="color:#E1E4E8">] </span><span style="color:#F97583">=</span><span style="color:#B392F0"> useState</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">false</span><span style="color:#E1E4E8">);</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#F97583">  const</span><span style="color:#B392F0"> handleAddToCart</span><span style="color:#F97583"> =</span><span style="color:#F97583"> async</span><span style="color:#E1E4E8"> () </span><span style="color:#F97583">=></span><span style="color:#E1E4E8"> {</span></span>
+<span class="line"><span style="color:#B392F0">    setIsAddingToCart</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">true</span><span style="color:#E1E4E8">);</span></span>
+<span class="line"><span style="color:#F97583">    try</span><span style="color:#E1E4E8"> {</span></span>
+<span class="line"><span style="color:#F97583">      await</span><span style="color:#B392F0"> addToCart</span><span style="color:#E1E4E8">({</span></span>
+<span class="line"><span style="color:#E1E4E8">        productId: product.id,</span></span>
+<span class="line"><span style="color:#E1E4E8">        quantity: </span><span style="color:#79B8FF">1</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#E1E4E8">        price: product.salePrice </span><span style="color:#F97583">||</span><span style="color:#E1E4E8"> product.price</span></span>
+<span class="line"><span style="color:#E1E4E8">      });</span></span>
+<span class="line"><span style="color:#E1E4E8">    } </span><span style="color:#F97583">catch</span><span style="color:#E1E4E8"> (error) {</span></span>
+<span class="line"><span style="color:#E1E4E8">      console.</span><span style="color:#B392F0">error</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">'Error adding to cart:'</span><span style="color:#E1E4E8">, error);</span></span>
+<span class="line"><span style="color:#6A737D">      // Show error toast</span></span>
+<span class="line"><span style="color:#E1E4E8">    } </span><span style="color:#F97583">finally</span><span style="color:#E1E4E8"> {</span></span>
+<span class="line"><span style="color:#B392F0">      setIsAddingToCart</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">false</span><span style="color:#E1E4E8">);</span></span>
+<span class="line"><span style="color:#E1E4E8">    }</span></span>
+<span class="line"><span style="color:#E1E4E8">  };</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#F97583">  const</span><span style="color:#B392F0"> handleWishlistToggle</span><span style="color:#F97583"> =</span><span style="color:#E1E4E8"> () </span><span style="color:#F97583">=></span><span style="color:#E1E4E8"> {</span></span>
+<span class="line"><span style="color:#F97583">    if</span><span style="color:#E1E4E8"> (</span><span style="color:#B392F0">isInWishlist</span><span style="color:#E1E4E8">(product.id)) {</span></span>
+<span class="line"><span style="color:#B392F0">      removeFromWishlist</span><span style="color:#E1E4E8">(product.id);</span></span>
+<span class="line"><span style="color:#E1E4E8">    } </span><span style="color:#F97583">else</span><span style="color:#E1E4E8"> {</span></span>
+<span class="line"><span style="color:#B392F0">      addToWishlist</span><span style="color:#E1E4E8">(product);</span></span>
+<span class="line"><span style="color:#E1E4E8">    }</span></span>
+<span class="line"><span style="color:#E1E4E8">  };</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#F97583">  return</span><span style="color:#E1E4E8"> (</span></span>
+<span class="line"><span style="color:#E1E4E8">    &#x3C;</span><span style="color:#79B8FF">Card</span><span style="color:#B392F0"> className</span><span style="color:#F97583">=</span><span style="color:#9ECBFF">"product-card"</span><span style="color:#B392F0"> sx</span><span style="color:#F97583">=</span><span style="color:#E1E4E8">{{ maxWidth: </span><span style="color:#79B8FF">345</span><span style="color:#E1E4E8">, position: </span><span style="color:#9ECBFF">'relative'</span><span style="color:#E1E4E8"> }}></span></span>
+<span class="line"><span style="color:#E1E4E8">      &#x3C;</span><span style="color:#79B8FF">CardMedia</span></span>
+<span class="line"><span style="color:#B392F0">        component</span><span style="color:#F97583">=</span><span style="color:#9ECBFF">"img"</span></span>
+<span class="line"><span style="color:#B392F0">        height</span><span style="color:#F97583">=</span><span style="color:#9ECBFF">"200"</span></span>
+<span class="line"><span style="color:#B392F0">        image</span><span style="color:#F97583">=</span><span style="color:#E1E4E8">{product.images?.[</span><span style="color:#79B8FF">0</span><span style="color:#E1E4E8">] </span><span style="color:#F97583">||</span><span style="color:#9ECBFF"> '/placeholder-product.jpg'</span><span style="color:#E1E4E8">}</span></span>
+<span class="line"><span style="color:#B392F0">        alt</span><span style="color:#F97583">=</span><span style="color:#E1E4E8">{product.name}</span></span>
+<span class="line"><span style="color:#B392F0">        loading</span><span style="color:#F97583">=</span><span style="color:#9ECBFF">"lazy"</span></span>
+<span class="line"><span style="color:#E1E4E8">      /></span></span>
+<span class="line"><span style="color:#E1E4E8">      </span></span>
+<span class="line"><span style="color:#E1E4E8">      &#x3C;</span><span style="color:#79B8FF">IconButton</span></span>
+<span class="line"><span style="color:#B392F0">        className</span><span style="color:#F97583">=</span><span style="color:#9ECBFF">"wishlist-btn"</span></span>
+<span class="line"><span style="color:#B392F0">        onClick</span><span style="color:#F97583">=</span><span style="color:#E1E4E8">{handleWishlistToggle}</span></span>
+<span class="line"><span style="color:#B392F0">        sx</span><span style="color:#F97583">=</span><span style="color:#E1E4E8">{{</span></span>
+<span class="line"><span style="color:#E1E4E8">          position: </span><span style="color:#9ECBFF">'absolute'</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#E1E4E8">          top: </span><span style="color:#79B8FF">8</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#E1E4E8">          right: </span><span style="color:#79B8FF">8</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#E1E4E8">          backgroundColor: </span><span style="color:#9ECBFF">'rgba(255, 255, 255, 0.9)'</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#9ECBFF">          '&#x26;:hover'</span><span style="color:#E1E4E8">: { backgroundColor: </span><span style="color:#9ECBFF">'rgba(255, 255, 255, 1)'</span><span style="color:#E1E4E8"> }</span></span>
+<span class="line"><span style="color:#E1E4E8">        }}</span></span>
+<span class="line"><span style="color:#E1E4E8">      ></span></span>
+<span class="line"><span style="color:#E1E4E8">        &#x3C;</span><span style="color:#79B8FF">FavoriteIcon</span><span style="color:#E1E4E8"> </span></span>
+<span class="line"><span style="color:#B392F0">          color</span><span style="color:#F97583">=</span><span style="color:#E1E4E8">{</span><span style="color:#B392F0">isInWishlist</span><span style="color:#E1E4E8">(product.id) </span><span style="color:#F97583">?</span><span style="color:#9ECBFF"> 'error'</span><span style="color:#F97583"> :</span><span style="color:#9ECBFF"> 'action'</span><span style="color:#E1E4E8">} </span></span>
+<span class="line"><span style="color:#E1E4E8">        /></span></span>
+<span class="line"><span style="color:#E1E4E8">      &#x3C;/</span><span style="color:#79B8FF">IconButton</span><span style="color:#E1E4E8">></span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#E1E4E8">      &#x3C;</span><span style="color:#79B8FF">CardContent</span><span style="color:#E1E4E8">></span></span>
+<span class="line"><span style="color:#E1E4E8">        &#x3C;</span><span style="color:#79B8FF">Typography</span><span style="color:#B392F0"> gutterBottom</span><span style="color:#B392F0"> variant</span><span style="color:#F97583">=</span><span style="color:#9ECBFF">"h6"</span><span style="color:#B392F0"> component</span><span style="color:#F97583">=</span><span style="color:#9ECBFF">"h3"</span><span style="color:#B392F0"> noWrap</span><span style="color:#E1E4E8">></span></span>
+<span class="line"><span style="color:#E1E4E8">          {product.name}</span></span>
+<span class="line"><span style="color:#E1E4E8">        &#x3C;/</span><span style="color:#79B8FF">Typography</span><span style="color:#E1E4E8">></span></span>
+<span class="line"><span style="color:#E1E4E8">        </span></span>
+<span class="line"><span style="color:#E1E4E8">        &#x3C;</span><span style="color:#79B8FF">Typography</span><span style="color:#B392F0"> variant</span><span style="color:#F97583">=</span><span style="color:#9ECBFF">"body2"</span><span style="color:#B392F0"> color</span><span style="color:#F97583">=</span><span style="color:#9ECBFF">"text.secondary"</span><span style="color:#B392F0"> sx</span><span style="color:#F97583">=</span><span style="color:#E1E4E8">{{ mb: </span><span style="color:#79B8FF">2</span><span style="color:#E1E4E8"> }}></span></span>
+<span class="line"><span style="color:#E1E4E8">          {product.description}</span></span>
+<span class="line"><span style="color:#E1E4E8">        &#x3C;/</span><span style="color:#79B8FF">Typography</span><span style="color:#E1E4E8">></span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#E1E4E8">        &#x3C;</span><span style="color:#85E89D">div</span><span style="color:#B392F0"> className</span><span style="color:#F97583">=</span><span style="color:#9ECBFF">"price-section"</span><span style="color:#E1E4E8">></span></span>
+<span class="line"><span style="color:#E1E4E8">          {product.salePrice </span><span style="color:#F97583">?</span><span style="color:#E1E4E8"> (</span></span>
+<span class="line"><span style="color:#E1E4E8">            &#x3C;></span></span>
+<span class="line"><span style="color:#E1E4E8">              &#x3C;</span><span style="color:#79B8FF">Typography</span><span style="color:#B392F0"> variant</span><span style="color:#F97583">=</span><span style="color:#9ECBFF">"h6"</span><span style="color:#B392F0"> color</span><span style="color:#F97583">=</span><span style="color:#9ECBFF">"error"</span><span style="color:#B392F0"> component</span><span style="color:#F97583">=</span><span style="color:#9ECBFF">"span"</span><span style="color:#E1E4E8">></span></span>
+<span class="line"><span style="color:#E1E4E8">                ${product.salePrice}</span></span>
+<span class="line"><span style="color:#E1E4E8">              &#x3C;/</span><span style="color:#79B8FF">Typography</span><span style="color:#E1E4E8">></span></span>
+<span class="line"><span style="color:#E1E4E8">              &#x3C;</span><span style="color:#79B8FF">Typography</span></span>
+<span class="line"><span style="color:#B392F0">                variant</span><span style="color:#F97583">=</span><span style="color:#9ECBFF">"body2"</span></span>
+<span class="line"><span style="color:#B392F0">                color</span><span style="color:#F97583">=</span><span style="color:#9ECBFF">"text.secondary"</span></span>
+<span class="line"><span style="color:#B392F0">                component</span><span style="color:#F97583">=</span><span style="color:#9ECBFF">"span"</span></span>
+<span class="line"><span style="color:#B392F0">                sx</span><span style="color:#F97583">=</span><span style="color:#E1E4E8">{{ textDecoration: </span><span style="color:#9ECBFF">'line-through'</span><span style="color:#E1E4E8">, ml: </span><span style="color:#79B8FF">1</span><span style="color:#E1E4E8"> }}</span></span>
+<span class="line"><span style="color:#E1E4E8">              ></span></span>
+<span class="line"><span style="color:#E1E4E8">                ${product.price}</span></span>
+<span class="line"><span style="color:#E1E4E8">              &#x3C;/</span><span style="color:#79B8FF">Typography</span><span style="color:#E1E4E8">></span></span>
+<span class="line"><span style="color:#E1E4E8">            &#x3C;/></span></span>
+<span class="line"><span style="color:#E1E4E8">          ) </span><span style="color:#F97583">:</span><span style="color:#E1E4E8"> (</span></span>
+<span class="line"><span style="color:#E1E4E8">            &#x3C;</span><span style="color:#79B8FF">Typography</span><span style="color:#B392F0"> variant</span><span style="color:#F97583">=</span><span style="color:#9ECBFF">"h6"</span><span style="color:#B392F0"> component</span><span style="color:#F97583">=</span><span style="color:#9ECBFF">"span"</span><span style="color:#E1E4E8">></span></span>
+<span class="line"><span style="color:#E1E4E8">              ${product.price}</span></span>
+<span class="line"><span style="color:#E1E4E8">            &#x3C;/</span><span style="color:#79B8FF">Typography</span><span style="color:#E1E4E8">></span></span>
+<span class="line"><span style="color:#E1E4E8">          )}</span></span>
+<span class="line"><span style="color:#E1E4E8">        &#x3C;/</span><span style="color:#85E89D">div</span><span style="color:#E1E4E8">></span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#E1E4E8">        &#x3C;</span><span style="color:#79B8FF">Button</span></span>
+<span class="line"><span style="color:#B392F0">          variant</span><span style="color:#F97583">=</span><span style="color:#9ECBFF">"contained"</span></span>
+<span class="line"><span style="color:#B392F0">          fullWidth</span></span>
+<span class="line"><span style="color:#B392F0">          startIcon</span><span style="color:#F97583">=</span><span style="color:#E1E4E8">{&#x3C;</span><span style="color:#79B8FF">ShoppingCartIcon</span><span style="color:#E1E4E8"> />}</span></span>
+<span class="line"><span style="color:#B392F0">          onClick</span><span style="color:#F97583">=</span><span style="color:#E1E4E8">{handleAddToCart}</span></span>
+<span class="line"><span style="color:#B392F0">          disabled</span><span style="color:#F97583">=</span><span style="color:#E1E4E8">{isAddingToCart </span><span style="color:#F97583">||</span><span style="color:#E1E4E8"> product.inventoryCount </span><span style="color:#F97583">===</span><span style="color:#79B8FF"> 0</span><span style="color:#E1E4E8">}</span></span>
+<span class="line"><span style="color:#B392F0">          sx</span><span style="color:#F97583">=</span><span style="color:#E1E4E8">{{ mt: </span><span style="color:#79B8FF">2</span><span style="color:#E1E4E8"> }}</span></span>
+<span class="line"><span style="color:#E1E4E8">        ></span></span>
+<span class="line"><span style="color:#E1E4E8">          {isAddingToCart </span><span style="color:#F97583">?</span><span style="color:#9ECBFF"> 'Adding...'</span><span style="color:#F97583"> :</span><span style="color:#E1E4E8"> </span></span>
+<span class="line"><span style="color:#B392F0">           isInCart</span><span style="color:#E1E4E8">(product.id) </span><span style="color:#F97583">?</span><span style="color:#9ECBFF"> 'In Cart'</span><span style="color:#F97583"> :</span><span style="color:#E1E4E8"> </span></span>
+<span class="line"><span style="color:#E1E4E8">           product.inventoryCount </span><span style="color:#F97583">===</span><span style="color:#79B8FF"> 0</span><span style="color:#F97583"> ?</span><span style="color:#9ECBFF"> 'Out of Stock'</span><span style="color:#F97583"> :</span><span style="color:#E1E4E8"> </span></span>
+<span class="line"><span style="color:#9ECBFF">           'Add to Cart'</span><span style="color:#E1E4E8">}</span></span>
+<span class="line"><span style="color:#E1E4E8">        &#x3C;/</span><span style="color:#79B8FF">Button</span><span style="color:#E1E4E8">></span></span>
+<span class="line"><span style="color:#E1E4E8">      &#x3C;/</span><span style="color:#79B8FF">CardContent</span><span style="color:#E1E4E8">></span></span>
+<span class="line"><span style="color:#E1E4E8">    &#x3C;/</span><span style="color:#79B8FF">Card</span><span style="color:#E1E4E8">></span></span>
+<span class="line"><span style="color:#E1E4E8">  );</span></span>
+<span class="line"><span style="color:#E1E4E8">};</span></span>
+<span class="line"></span></code></pre>
+<h3 id="state-management">State Management</h3>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#6A737D">// Redux Toolkit store configuration</span></span>
+<span class="line"><span style="color:#F97583">import</span><span style="color:#E1E4E8"> { configureStore } </span><span style="color:#F97583">from</span><span style="color:#9ECBFF"> '@reduxjs/toolkit'</span><span style="color:#E1E4E8">;</span></span>
+<span class="line"><span style="color:#F97583">import</span><span style="color:#E1E4E8"> authSlice </span><span style="color:#F97583">from</span><span style="color:#9ECBFF"> './slices/authSlice'</span><span style="color:#E1E4E8">;</span></span>
+<span class="line"><span style="color:#F97583">import</span><span style="color:#E1E4E8"> cartSlice </span><span style="color:#F97583">from</span><span style="color:#9ECBFF"> './slices/cartSlice'</span><span style="color:#E1E4E8">;</span></span>
+<span class="line"><span style="color:#F97583">import</span><span style="color:#E1E4E8"> productsSlice </span><span style="color:#F97583">from</span><span style="color:#9ECBFF"> './slices/productsSlice'</span><span style="color:#E1E4E8">;</span></span>
+<span class="line"><span style="color:#F97583">import</span><span style="color:#E1E4E8"> ordersSlice </span><span style="color:#F97583">from</span><span style="color:#9ECBFF"> './slices/ordersSlice'</span><span style="color:#E1E4E8">;</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#F97583">export</span><span style="color:#F97583"> const</span><span style="color:#79B8FF"> store</span><span style="color:#F97583"> =</span><span style="color:#B392F0"> configureStore</span><span style="color:#E1E4E8">({</span></span>
+<span class="line"><span style="color:#E1E4E8">  reducer: {</span></span>
+<span class="line"><span style="color:#E1E4E8">    auth: authSlice,</span></span>
+<span class="line"><span style="color:#E1E4E8">    cart: cartSlice,</span></span>
+<span class="line"><span style="color:#E1E4E8">    products: productsSlice,</span></span>
+<span class="line"><span style="color:#E1E4E8">    orders: ordersSlice,</span></span>
+<span class="line"><span style="color:#E1E4E8">  },</span></span>
+<span class="line"><span style="color:#B392F0">  middleware</span><span style="color:#E1E4E8">: (</span><span style="color:#FFAB70">getDefaultMiddleware</span><span style="color:#E1E4E8">) </span><span style="color:#F97583">=></span></span>
+<span class="line"><span style="color:#B392F0">    getDefaultMiddleware</span><span style="color:#E1E4E8">({</span></span>
+<span class="line"><span style="color:#E1E4E8">      serializableCheck: {</span></span>
+<span class="line"><span style="color:#E1E4E8">        ignoredActions: [</span><span style="color:#9ECBFF">'persist/PERSIST'</span><span style="color:#E1E4E8">],</span></span>
+<span class="line"><span style="color:#E1E4E8">      },</span></span>
+<span class="line"><span style="color:#E1E4E8">    }),</span></span>
+<span class="line"><span style="color:#E1E4E8">});</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// Cart slice with optimistic updates</span></span>
+<span class="line"><span style="color:#F97583">import</span><span style="color:#E1E4E8"> { createSlice, createAsyncThunk } </span><span style="color:#F97583">from</span><span style="color:#9ECBFF"> '@reduxjs/toolkit'</span><span style="color:#E1E4E8">;</span></span>
+<span class="line"><span style="color:#F97583">import</span><span style="color:#E1E4E8"> { cartAPI } </span><span style="color:#F97583">from</span><span style="color:#9ECBFF"> '../api/cart'</span><span style="color:#E1E4E8">;</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#F97583">export</span><span style="color:#F97583"> const</span><span style="color:#79B8FF"> addToCart</span><span style="color:#F97583"> =</span><span style="color:#B392F0"> createAsyncThunk</span><span style="color:#E1E4E8">(</span></span>
+<span class="line"><span style="color:#9ECBFF">  'cart/addItem'</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#F97583">  async</span><span style="color:#E1E4E8"> ({ </span><span style="color:#FFAB70">productId</span><span style="color:#E1E4E8">, </span><span style="color:#FFAB70">quantity</span><span style="color:#E1E4E8">, </span><span style="color:#FFAB70">price</span><span style="color:#E1E4E8"> }, { </span><span style="color:#FFAB70">rejectWithValue</span><span style="color:#E1E4E8"> }) </span><span style="color:#F97583">=></span><span style="color:#E1E4E8"> {</span></span>
+<span class="line"><span style="color:#F97583">    try</span><span style="color:#E1E4E8"> {</span></span>
+<span class="line"><span style="color:#F97583">      const</span><span style="color:#79B8FF"> response</span><span style="color:#F97583"> =</span><span style="color:#F97583"> await</span><span style="color:#E1E4E8"> cartAPI.</span><span style="color:#B392F0">addItem</span><span style="color:#E1E4E8">(productId, quantity, price);</span></span>
+<span class="line"><span style="color:#F97583">      return</span><span style="color:#E1E4E8"> response.data;</span></span>
+<span class="line"><span style="color:#E1E4E8">    } </span><span style="color:#F97583">catch</span><span style="color:#E1E4E8"> (error) {</span></span>
+<span class="line"><span style="color:#F97583">      return</span><span style="color:#B392F0"> rejectWithValue</span><span style="color:#E1E4E8">(error.response.data);</span></span>
+<span class="line"><span style="color:#E1E4E8">    }</span></span>
+<span class="line"><span style="color:#E1E4E8">  }</span></span>
+<span class="line"><span style="color:#E1E4E8">);</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#F97583">const</span><span style="color:#79B8FF"> cartSlice</span><span style="color:#F97583"> =</span><span style="color:#B392F0"> createSlice</span><span style="color:#E1E4E8">({</span></span>
+<span class="line"><span style="color:#E1E4E8">  name: </span><span style="color:#9ECBFF">'cart'</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#E1E4E8">  initialState: {</span></span>
+<span class="line"><span style="color:#E1E4E8">    items: [],</span></span>
+<span class="line"><span style="color:#E1E4E8">    total: </span><span style="color:#79B8FF">0</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#E1E4E8">    loading: </span><span style="color:#79B8FF">false</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#E1E4E8">    error: </span><span style="color:#79B8FF">null</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#E1E4E8">  },</span></span>
+<span class="line"><span style="color:#E1E4E8">  reducers: {</span></span>
+<span class="line"><span style="color:#B392F0">    updateQuantityOptimistic</span><span style="color:#E1E4E8">: (</span><span style="color:#FFAB70">state</span><span style="color:#E1E4E8">, </span><span style="color:#FFAB70">action</span><span style="color:#E1E4E8">) </span><span style="color:#F97583">=></span><span style="color:#E1E4E8"> {</span></span>
+<span class="line"><span style="color:#F97583">      const</span><span style="color:#E1E4E8"> { </span><span style="color:#79B8FF">productId</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">quantity</span><span style="color:#E1E4E8"> } </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> action.payload;</span></span>
+<span class="line"><span style="color:#F97583">      const</span><span style="color:#79B8FF"> item</span><span style="color:#F97583"> =</span><span style="color:#E1E4E8"> state.items.</span><span style="color:#B392F0">find</span><span style="color:#E1E4E8">(</span><span style="color:#FFAB70">item</span><span style="color:#F97583"> =></span><span style="color:#E1E4E8"> item.productId </span><span style="color:#F97583">===</span><span style="color:#E1E4E8"> productId);</span></span>
+<span class="line"><span style="color:#F97583">      if</span><span style="color:#E1E4E8"> (item) {</span></span>
+<span class="line"><span style="color:#E1E4E8">        item.quantity </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> quantity;</span></span>
+<span class="line"><span style="color:#E1E4E8">        state.total </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> state.items.</span><span style="color:#B392F0">reduce</span><span style="color:#E1E4E8">((</span><span style="color:#FFAB70">sum</span><span style="color:#E1E4E8">, </span><span style="color:#FFAB70">item</span><span style="color:#E1E4E8">) </span><span style="color:#F97583">=></span><span style="color:#E1E4E8"> sum </span><span style="color:#F97583">+</span><span style="color:#E1E4E8"> (item.price </span><span style="color:#F97583">*</span><span style="color:#E1E4E8"> item.quantity), </span><span style="color:#79B8FF">0</span><span style="color:#E1E4E8">);</span></span>
+<span class="line"><span style="color:#E1E4E8">      }</span></span>
+<span class="line"><span style="color:#E1E4E8">    },</span></span>
+<span class="line"><span style="color:#B392F0">    removeItemOptimistic</span><span style="color:#E1E4E8">: (</span><span style="color:#FFAB70">state</span><span style="color:#E1E4E8">, </span><span style="color:#FFAB70">action</span><span style="color:#E1E4E8">) </span><span style="color:#F97583">=></span><span style="color:#E1E4E8"> {</span></span>
+<span class="line"><span style="color:#F97583">      const</span><span style="color:#79B8FF"> productId</span><span style="color:#F97583"> =</span><span style="color:#E1E4E8"> action.payload;</span></span>
+<span class="line"><span style="color:#E1E4E8">      state.items </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> state.items.</span><span style="color:#B392F0">filter</span><span style="color:#E1E4E8">(</span><span style="color:#FFAB70">item</span><span style="color:#F97583"> =></span><span style="color:#E1E4E8"> item.productId </span><span style="color:#F97583">!==</span><span style="color:#E1E4E8"> productId);</span></span>
+<span class="line"><span style="color:#E1E4E8">      state.total </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> state.items.</span><span style="color:#B392F0">reduce</span><span style="color:#E1E4E8">((</span><span style="color:#FFAB70">sum</span><span style="color:#E1E4E8">, </span><span style="color:#FFAB70">item</span><span style="color:#E1E4E8">) </span><span style="color:#F97583">=></span><span style="color:#E1E4E8"> sum </span><span style="color:#F97583">+</span><span style="color:#E1E4E8"> (item.price </span><span style="color:#F97583">*</span><span style="color:#E1E4E8"> item.quantity), </span><span style="color:#79B8FF">0</span><span style="color:#E1E4E8">);</span></span>
+<span class="line"><span style="color:#E1E4E8">    },</span></span>
+<span class="line"><span style="color:#E1E4E8">  },</span></span>
+<span class="line"><span style="color:#B392F0">  extraReducers</span><span style="color:#E1E4E8">: (</span><span style="color:#FFAB70">builder</span><span style="color:#E1E4E8">) </span><span style="color:#F97583">=></span><span style="color:#E1E4E8"> {</span></span>
+<span class="line"><span style="color:#E1E4E8">    builder</span></span>
+<span class="line"><span style="color:#E1E4E8">      .</span><span style="color:#B392F0">addCase</span><span style="color:#E1E4E8">(addToCart.pending, (</span><span style="color:#FFAB70">state</span><span style="color:#E1E4E8">) </span><span style="color:#F97583">=></span><span style="color:#E1E4E8"> {</span></span>
+<span class="line"><span style="color:#E1E4E8">        state.loading </span><span style="color:#F97583">=</span><span style="color:#79B8FF"> true</span><span style="color:#E1E4E8">;</span></span>
+<span class="line"><span style="color:#E1E4E8">        state.error </span><span style="color:#F97583">=</span><span style="color:#79B8FF"> null</span><span style="color:#E1E4E8">;</span></span>
+<span class="line"><span style="color:#E1E4E8">      })</span></span>
+<span class="line"><span style="color:#E1E4E8">      .</span><span style="color:#B392F0">addCase</span><span style="color:#E1E4E8">(addToCart.fulfilled, (</span><span style="color:#FFAB70">state</span><span style="color:#E1E4E8">, </span><span style="color:#FFAB70">action</span><span style="color:#E1E4E8">) </span><span style="color:#F97583">=></span><span style="color:#E1E4E8"> {</span></span>
+<span class="line"><span style="color:#E1E4E8">        state.loading </span><span style="color:#F97583">=</span><span style="color:#79B8FF"> false</span><span style="color:#E1E4E8">;</span></span>
+<span class="line"><span style="color:#E1E4E8">        state.items </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> action.payload.items;</span></span>
+<span class="line"><span style="color:#E1E4E8">        state.total </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> action.payload.total;</span></span>
+<span class="line"><span style="color:#E1E4E8">      })</span></span>
+<span class="line"><span style="color:#E1E4E8">      .</span><span style="color:#B392F0">addCase</span><span style="color:#E1E4E8">(addToCart.rejected, (</span><span style="color:#FFAB70">state</span><span style="color:#E1E4E8">, </span><span style="color:#FFAB70">action</span><span style="color:#E1E4E8">) </span><span style="color:#F97583">=></span><span style="color:#E1E4E8"> {</span></span>
+<span class="line"><span style="color:#E1E4E8">        state.loading </span><span style="color:#F97583">=</span><span style="color:#79B8FF"> false</span><span style="color:#E1E4E8">;</span></span>
+<span class="line"><span style="color:#E1E4E8">        state.error </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> action.payload?.message </span><span style="color:#F97583">||</span><span style="color:#9ECBFF"> 'Failed to add item to cart'</span><span style="color:#E1E4E8">;</span></span>
+<span class="line"><span style="color:#E1E4E8">      });</span></span>
+<span class="line"><span style="color:#E1E4E8">  },</span></span>
+<span class="line"><span style="color:#E1E4E8">});</span></span>
+<span class="line"></span></code></pre>
+<h2 id="-performance-optimizations">📊 Performance Optimizations</h2>
+<h3 id="database-optimization">Database Optimization</h3>
+<ul>
+<li><strong>Indexed queries</strong> for fast product searches</li>
+<li><strong>Connection pooling</strong> for efficient database connections</li>
+<li><strong>Query optimization</strong> with EXPLAIN ANALYZE</li>
+<li><strong>Read replicas</strong> for scaling read operations</li>
+<li><strong>Caching layer</strong> with Redis for frequent queries</li>
+</ul>
+<h3 id="frontend-performance">Frontend Performance</h3>
+<ul>
+<li><strong>Code splitting</strong> by route and component</li>
+<li><strong>Image optimization</strong> with next-gen formats</li>
+<li><strong>Lazy loading</strong> for non-critical components</li>
+<li><strong>Service worker</strong> for offline functionality</li>
+<li><strong>Bundle analysis</strong> and optimization</li>
+</ul>
+<h3 id="api-optimization">API Optimization</h3>
+<ul>
+<li><strong>Response caching</strong> with appropriate TTL</li>
+<li><strong>Request deduplication</strong> to prevent duplicate calls</li>
+<li><strong>Pagination</strong> for large data sets</li>
+<li><strong>Compression</strong> for reduced payload sizes</li>
+<li><strong>CDN</strong> for static asset delivery</li>
+</ul>
+<h2 id="-security-measures">🔒 Security Measures</h2>
+<h3 id="authentication--authorization">Authentication &#x26; Authorization</h3>
+<ul>
+<li><strong>JWT tokens</strong> with short expiration times</li>
+<li><strong>Refresh token rotation</strong> for enhanced security</li>
+<li><strong>Role-based access control</strong> (RBAC)</li>
+<li><strong>Password hashing</strong> with bcrypt</li>
+<li><strong>Account lockout</strong> after failed attempts</li>
+</ul>
+<h3 id="data-protection">Data Protection</h3>
+<ul>
+<li><strong>SQL injection prevention</strong> with parameterized queries</li>
+<li><strong>XSS protection</strong> with input sanitization</li>
+<li><strong>CSRF protection</strong> with tokens</li>
+<li><strong>Rate limiting</strong> to prevent abuse</li>
+<li><strong>HTTPS enforcement</strong> for all connections</li>
+</ul>
+<h3 id="payment-security">Payment Security</h3>
+<ul>
+<li><strong>PCI DSS compliance</strong> through Stripe</li>
+<li><strong>No card data storage</strong> on our servers</li>
+<li><strong>Webhook signature verification</strong></li>
+<li><strong>Fraud detection</strong> with Stripe Radar</li>
+<li><strong>3D Secure</strong> authentication when required</li>
+</ul>
+<h2 id="-testing-strategy">🧪 Testing Strategy</h2>
+<h3 id="backend-testing">Backend Testing</h3>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#6A737D">// Jest + Supertest API testing</span></span>
+<span class="line"><span style="color:#B392F0">describe</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">'Products API'</span><span style="color:#E1E4E8">, () </span><span style="color:#F97583">=></span><span style="color:#E1E4E8"> {</span></span>
+<span class="line"><span style="color:#F97583">  let</span><span style="color:#E1E4E8"> authToken;</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#B392F0">  beforeAll</span><span style="color:#E1E4E8">(</span><span style="color:#F97583">async</span><span style="color:#E1E4E8"> () </span><span style="color:#F97583">=></span><span style="color:#E1E4E8"> {</span></span>
+<span class="line"><span style="color:#6A737D">    // Setup test database and get auth token</span></span>
+<span class="line"><span style="color:#E1E4E8">    authToken </span><span style="color:#F97583">=</span><span style="color:#F97583"> await</span><span style="color:#B392F0"> getTestAuthToken</span><span style="color:#E1E4E8">();</span></span>
+<span class="line"><span style="color:#E1E4E8">  });</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#B392F0">  describe</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">'GET /api/products'</span><span style="color:#E1E4E8">, () </span><span style="color:#F97583">=></span><span style="color:#E1E4E8"> {</span></span>
+<span class="line"><span style="color:#B392F0">    test</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">'should return paginated products'</span><span style="color:#E1E4E8">, </span><span style="color:#F97583">async</span><span style="color:#E1E4E8"> () </span><span style="color:#F97583">=></span><span style="color:#E1E4E8"> {</span></span>
+<span class="line"><span style="color:#F97583">      const</span><span style="color:#79B8FF"> response</span><span style="color:#F97583"> =</span><span style="color:#F97583"> await</span><span style="color:#B392F0"> request</span><span style="color:#E1E4E8">(app)</span></span>
+<span class="line"><span style="color:#E1E4E8">        .</span><span style="color:#B392F0">get</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">'/api/products?page=1&#x26;limit=10'</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#E1E4E8">        .</span><span style="color:#B392F0">expect</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">200</span><span style="color:#E1E4E8">);</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#B392F0">      expect</span><span style="color:#E1E4E8">(response.body).</span><span style="color:#B392F0">toHaveProperty</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">'products'</span><span style="color:#E1E4E8">);</span></span>
+<span class="line"><span style="color:#B392F0">      expect</span><span style="color:#E1E4E8">(response.body).</span><span style="color:#B392F0">toHaveProperty</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">'pagination'</span><span style="color:#E1E4E8">);</span></span>
+<span class="line"><span style="color:#B392F0">      expect</span><span style="color:#E1E4E8">(response.body.products).</span><span style="color:#B392F0">toHaveLength</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">10</span><span style="color:#E1E4E8">);</span></span>
+<span class="line"><span style="color:#E1E4E8">    });</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#B392F0">    test</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">'should filter products by category'</span><span style="color:#E1E4E8">, </span><span style="color:#F97583">async</span><span style="color:#E1E4E8"> () </span><span style="color:#F97583">=></span><span style="color:#E1E4E8"> {</span></span>
+<span class="line"><span style="color:#F97583">      const</span><span style="color:#79B8FF"> response</span><span style="color:#F97583"> =</span><span style="color:#F97583"> await</span><span style="color:#B392F0"> request</span><span style="color:#E1E4E8">(app)</span></span>
+<span class="line"><span style="color:#E1E4E8">        .</span><span style="color:#B392F0">get</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">'/api/products?category=electronics'</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#E1E4E8">        .</span><span style="color:#B392F0">expect</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">200</span><span style="color:#E1E4E8">);</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#E1E4E8">      response.body.products.</span><span style="color:#B392F0">forEach</span><span style="color:#E1E4E8">(</span><span style="color:#FFAB70">product</span><span style="color:#F97583"> =></span><span style="color:#E1E4E8"> {</span></span>
+<span class="line"><span style="color:#B392F0">        expect</span><span style="color:#E1E4E8">(product.category.name).</span><span style="color:#B392F0">toBe</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">'Electronics'</span><span style="color:#E1E4E8">);</span></span>
+<span class="line"><span style="color:#E1E4E8">      });</span></span>
+<span class="line"><span style="color:#E1E4E8">    });</span></span>
+<span class="line"><span style="color:#E1E4E8">  });</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#B392F0">  describe</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">'POST /api/products'</span><span style="color:#E1E4E8">, () </span><span style="color:#F97583">=></span><span style="color:#E1E4E8"> {</span></span>
+<span class="line"><span style="color:#B392F0">    test</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">'should create product with admin auth'</span><span style="color:#E1E4E8">, </span><span style="color:#F97583">async</span><span style="color:#E1E4E8"> () </span><span style="color:#F97583">=></span><span style="color:#E1E4E8"> {</span></span>
+<span class="line"><span style="color:#F97583">      const</span><span style="color:#79B8FF"> productData</span><span style="color:#F97583"> =</span><span style="color:#E1E4E8"> {</span></span>
+<span class="line"><span style="color:#E1E4E8">        name: </span><span style="color:#9ECBFF">'Test Product'</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#E1E4E8">        description: </span><span style="color:#9ECBFF">'Test Description'</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#E1E4E8">        price: </span><span style="color:#79B8FF">29.99</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#E1E4E8">        sku: </span><span style="color:#9ECBFF">'TEST-001'</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#E1E4E8">        categoryId: </span><span style="color:#79B8FF">1</span></span>
+<span class="line"><span style="color:#E1E4E8">      };</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#F97583">      const</span><span style="color:#79B8FF"> response</span><span style="color:#F97583"> =</span><span style="color:#F97583"> await</span><span style="color:#B392F0"> request</span><span style="color:#E1E4E8">(app)</span></span>
+<span class="line"><span style="color:#E1E4E8">        .</span><span style="color:#B392F0">post</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">'/api/products'</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#E1E4E8">        .</span><span style="color:#B392F0">set</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">'Authorization'</span><span style="color:#E1E4E8">, </span><span style="color:#9ECBFF">`Bearer ${</span><span style="color:#E1E4E8">authToken</span><span style="color:#9ECBFF">}`</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#E1E4E8">        .</span><span style="color:#B392F0">send</span><span style="color:#E1E4E8">(productData)</span></span>
+<span class="line"><span style="color:#E1E4E8">        .</span><span style="color:#B392F0">expect</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">201</span><span style="color:#E1E4E8">);</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#B392F0">      expect</span><span style="color:#E1E4E8">(response.body.product).</span><span style="color:#B392F0">toMatchObject</span><span style="color:#E1E4E8">(productData);</span></span>
+<span class="line"><span style="color:#E1E4E8">    });</span></span>
+<span class="line"><span style="color:#E1E4E8">  });</span></span>
+<span class="line"><span style="color:#E1E4E8">});</span></span>
+<span class="line"></span></code></pre>
+<h3 id="frontend-testing">Frontend Testing</h3>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#6A737D">// React Testing Library + Jest</span></span>
+<span class="line"><span style="color:#F97583">import</span><span style="color:#E1E4E8"> { render, screen, fireEvent, waitFor } </span><span style="color:#F97583">from</span><span style="color:#9ECBFF"> '@testing-library/react'</span><span style="color:#E1E4E8">;</span></span>
+<span class="line"><span style="color:#F97583">import</span><span style="color:#E1E4E8"> { Provider } </span><span style="color:#F97583">from</span><span style="color:#9ECBFF"> 'react-redux'</span><span style="color:#E1E4E8">;</span></span>
+<span class="line"><span style="color:#F97583">import</span><span style="color:#E1E4E8"> { store } </span><span style="color:#F97583">from</span><span style="color:#9ECBFF"> '../store'</span><span style="color:#E1E4E8">;</span></span>
+<span class="line"><span style="color:#F97583">import</span><span style="color:#E1E4E8"> ProductCard </span><span style="color:#F97583">from</span><span style="color:#9ECBFF"> '../components/ProductCard'</span><span style="color:#E1E4E8">;</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#F97583">const</span><span style="color:#79B8FF"> mockProduct</span><span style="color:#F97583"> =</span><span style="color:#E1E4E8"> {</span></span>
+<span class="line"><span style="color:#E1E4E8">  id: </span><span style="color:#79B8FF">1</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#E1E4E8">  name: </span><span style="color:#9ECBFF">'Test Product'</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#E1E4E8">  price: </span><span style="color:#79B8FF">29.99</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#E1E4E8">  description: </span><span style="color:#9ECBFF">'Test description'</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#E1E4E8">  images: [</span><span style="color:#9ECBFF">'/test-image.jpg'</span><span style="color:#E1E4E8">],</span></span>
+<span class="line"><span style="color:#E1E4E8">  inventoryCount: </span><span style="color:#79B8FF">10</span></span>
+<span class="line"><span style="color:#E1E4E8">};</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#F97583">const</span><span style="color:#B392F0"> renderWithStore</span><span style="color:#F97583"> =</span><span style="color:#E1E4E8"> (</span><span style="color:#FFAB70">component</span><span style="color:#E1E4E8">) </span><span style="color:#F97583">=></span><span style="color:#E1E4E8"> {</span></span>
+<span class="line"><span style="color:#F97583">  return</span><span style="color:#B392F0"> render</span><span style="color:#E1E4E8">(</span></span>
+<span class="line"><span style="color:#E1E4E8">    &#x3C;</span><span style="color:#79B8FF">Provider</span><span style="color:#B392F0"> store</span><span style="color:#F97583">=</span><span style="color:#E1E4E8">{store}></span></span>
+<span class="line"><span style="color:#E1E4E8">      {component}</span></span>
+<span class="line"><span style="color:#E1E4E8">    &#x3C;/</span><span style="color:#79B8FF">Provider</span><span style="color:#E1E4E8">></span></span>
+<span class="line"><span style="color:#E1E4E8">  );</span></span>
+<span class="line"><span style="color:#E1E4E8">};</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#B392F0">describe</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">'ProductCard'</span><span style="color:#E1E4E8">, () </span><span style="color:#F97583">=></span><span style="color:#E1E4E8"> {</span></span>
+<span class="line"><span style="color:#B392F0">  test</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">'renders product information correctly'</span><span style="color:#E1E4E8">, () </span><span style="color:#F97583">=></span><span style="color:#E1E4E8"> {</span></span>
+<span class="line"><span style="color:#B392F0">    renderWithStore</span><span style="color:#E1E4E8">(&#x3C;</span><span style="color:#79B8FF">ProductCard</span><span style="color:#B392F0"> product</span><span style="color:#F97583">=</span><span style="color:#E1E4E8">{mockProduct} />);</span></span>
+<span class="line"><span style="color:#E1E4E8">    </span></span>
+<span class="line"><span style="color:#B392F0">    expect</span><span style="color:#E1E4E8">(screen.</span><span style="color:#B392F0">getByText</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">'Test Product'</span><span style="color:#E1E4E8">)).</span><span style="color:#B392F0">toBeInTheDocument</span><span style="color:#E1E4E8">();</span></span>
+<span class="line"><span style="color:#B392F0">    expect</span><span style="color:#E1E4E8">(screen.</span><span style="color:#B392F0">getByText</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">'$29.99'</span><span style="color:#E1E4E8">)).</span><span style="color:#B392F0">toBeInTheDocument</span><span style="color:#E1E4E8">();</span></span>
+<span class="line"><span style="color:#B392F0">    expect</span><span style="color:#E1E4E8">(screen.</span><span style="color:#B392F0">getByText</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">'Test description'</span><span style="color:#E1E4E8">)).</span><span style="color:#B392F0">toBeInTheDocument</span><span style="color:#E1E4E8">();</span></span>
+<span class="line"><span style="color:#E1E4E8">  });</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#B392F0">  test</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">'adds product to cart when button clicked'</span><span style="color:#E1E4E8">, </span><span style="color:#F97583">async</span><span style="color:#E1E4E8"> () </span><span style="color:#F97583">=></span><span style="color:#E1E4E8"> {</span></span>
+<span class="line"><span style="color:#B392F0">    renderWithStore</span><span style="color:#E1E4E8">(&#x3C;</span><span style="color:#79B8FF">ProductCard</span><span style="color:#B392F0"> product</span><span style="color:#F97583">=</span><span style="color:#E1E4E8">{mockProduct} />);</span></span>
+<span class="line"><span style="color:#E1E4E8">    </span></span>
+<span class="line"><span style="color:#F97583">    const</span><span style="color:#79B8FF"> addToCartButton</span><span style="color:#F97583"> =</span><span style="color:#E1E4E8"> screen.</span><span style="color:#B392F0">getByText</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">'Add to Cart'</span><span style="color:#E1E4E8">);</span></span>
+<span class="line"><span style="color:#E1E4E8">    fireEvent.</span><span style="color:#B392F0">click</span><span style="color:#E1E4E8">(addToCartButton);</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#F97583">    await</span><span style="color:#B392F0"> waitFor</span><span style="color:#E1E4E8">(() </span><span style="color:#F97583">=></span><span style="color:#E1E4E8"> {</span></span>
+<span class="line"><span style="color:#B392F0">      expect</span><span style="color:#E1E4E8">(screen.</span><span style="color:#B392F0">getByText</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">'Adding...'</span><span style="color:#E1E4E8">)).</span><span style="color:#B392F0">toBeInTheDocument</span><span style="color:#E1E4E8">();</span></span>
+<span class="line"><span style="color:#E1E4E8">    });</span></span>
+<span class="line"><span style="color:#E1E4E8">  });</span></span>
+<span class="line"><span style="color:#E1E4E8">});</span></span>
+<span class="line"></span></code></pre>
+<h2 id="-analytics--monitoring">📈 Analytics &#x26; Monitoring</h2>
+<h3 id="business-analytics">Business Analytics</h3>
+<ul>
+<li><strong>Sales tracking</strong> with revenue and conversion metrics</li>
+<li><strong>Product performance</strong> analysis</li>
+<li><strong>Customer behavior</strong> insights</li>
+<li><strong>Inventory turnover</strong> rates</li>
+<li><strong>Abandoned cart</strong> recovery tracking</li>
+</ul>
+<h3 id="technical-monitoring">Technical Monitoring</h3>
+<ul>
+<li><strong>Error tracking</strong> with Sentry</li>
+<li><strong>Performance monitoring</strong> with Web Vitals</li>
+<li><strong>API response times</strong> and error rates</li>
+<li><strong>Database query performance</strong></li>
+<li><strong>Infrastructure metrics</strong> with uptime monitoring</li>
+</ul>
+<h2 id="-deployment-pipeline">🚀 Deployment Pipeline</h2>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="yaml"><code><span class="line"><span style="color:#6A737D"># GitHub Actions CI/CD</span></span>
+<span class="line"><span style="color:#85E89D">name</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">Deploy E-commerce Platform</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#79B8FF">on</span><span style="color:#E1E4E8">:</span></span>
+<span class="line"><span style="color:#85E89D">  push</span><span style="color:#E1E4E8">:</span></span>
+<span class="line"><span style="color:#85E89D">    branches</span><span style="color:#E1E4E8">: [</span><span style="color:#9ECBFF">main</span><span style="color:#E1E4E8">]</span></span>
+<span class="line"><span style="color:#85E89D">  pull_request</span><span style="color:#E1E4E8">:</span></span>
+<span class="line"><span style="color:#85E89D">    branches</span><span style="color:#E1E4E8">: [</span><span style="color:#9ECBFF">main</span><span style="color:#E1E4E8">]</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#85E89D">jobs</span><span style="color:#E1E4E8">:</span></span>
+<span class="line"><span style="color:#85E89D">  test</span><span style="color:#E1E4E8">:</span></span>
+<span class="line"><span style="color:#85E89D">    runs-on</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">ubuntu-latest</span></span>
+<span class="line"><span style="color:#E1E4E8">    </span></span>
+<span class="line"><span style="color:#85E89D">    services</span><span style="color:#E1E4E8">:</span></span>
+<span class="line"><span style="color:#85E89D">      postgres</span><span style="color:#E1E4E8">:</span></span>
+<span class="line"><span style="color:#85E89D">        image</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">postgres:13</span></span>
+<span class="line"><span style="color:#85E89D">        env</span><span style="color:#E1E4E8">:</span></span>
+<span class="line"><span style="color:#85E89D">          POSTGRES_PASSWORD</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">test</span></span>
+<span class="line"><span style="color:#85E89D">          POSTGRES_DB</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">ecommerce_test</span></span>
+<span class="line"><span style="color:#85E89D">        options</span><span style="color:#E1E4E8">: </span><span style="color:#F97583">>-</span></span>
+<span class="line"><span style="color:#9ECBFF">          --health-cmd pg_isready</span></span>
+<span class="line"><span style="color:#9ECBFF">          --health-interval 10s</span></span>
+<span class="line"><span style="color:#9ECBFF">          --health-timeout 5s</span></span>
+<span class="line"><span style="color:#9ECBFF">          --health-retries 5</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#85E89D">    steps</span><span style="color:#E1E4E8">:</span></span>
+<span class="line"><span style="color:#E1E4E8">    - </span><span style="color:#85E89D">uses</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">actions/checkout@v3</span></span>
+<span class="line"><span style="color:#E1E4E8">    </span></span>
+<span class="line"><span style="color:#E1E4E8">    - </span><span style="color:#85E89D">name</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">Setup Node.js</span></span>
+<span class="line"><span style="color:#85E89D">      uses</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">actions/setup-node@v3</span></span>
+<span class="line"><span style="color:#85E89D">      with</span><span style="color:#E1E4E8">:</span></span>
+<span class="line"><span style="color:#85E89D">        node-version</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">'18'</span></span>
+<span class="line"><span style="color:#85E89D">        cache</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">'npm'</span></span>
+<span class="line"><span style="color:#E1E4E8">    </span></span>
+<span class="line"><span style="color:#E1E4E8">    - </span><span style="color:#85E89D">name</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">Install dependencies</span></span>
+<span class="line"><span style="color:#85E89D">      run</span><span style="color:#E1E4E8">: </span><span style="color:#F97583">|</span></span>
+<span class="line"><span style="color:#9ECBFF">        npm ci</span></span>
+<span class="line"><span style="color:#9ECBFF">        cd client &#x26;&#x26; npm ci</span></span>
+<span class="line"><span style="color:#9ECBFF">    </span></span>
+<span class="line"><span style="color:#E1E4E8">    - </span><span style="color:#85E89D">name</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">Run backend tests</span></span>
+<span class="line"><span style="color:#85E89D">      run</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">npm run test</span></span>
+<span class="line"><span style="color:#85E89D">      env</span><span style="color:#E1E4E8">:</span></span>
+<span class="line"><span style="color:#85E89D">        DATABASE_URL</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">postgresql://postgres:test@localhost:5432/ecommerce_test</span></span>
+<span class="line"><span style="color:#E1E4E8">    </span></span>
+<span class="line"><span style="color:#E1E4E8">    - </span><span style="color:#85E89D">name</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">Run frontend tests</span></span>
+<span class="line"><span style="color:#85E89D">      run</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">cd client &#x26;&#x26; npm run test -- --coverage --watchAll=false</span></span>
+<span class="line"><span style="color:#E1E4E8">    </span></span>
+<span class="line"><span style="color:#E1E4E8">    - </span><span style="color:#85E89D">name</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">Build frontend</span></span>
+<span class="line"><span style="color:#85E89D">      run</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">cd client &#x26;&#x26; npm run build</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#85E89D">  deploy</span><span style="color:#E1E4E8">:</span></span>
+<span class="line"><span style="color:#85E89D">    needs</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">test</span></span>
+<span class="line"><span style="color:#85E89D">    runs-on</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">ubuntu-latest</span></span>
+<span class="line"><span style="color:#85E89D">    if</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">github.ref == 'refs/heads/main'</span></span>
+<span class="line"><span style="color:#E1E4E8">    </span></span>
+<span class="line"><span style="color:#85E89D">    steps</span><span style="color:#E1E4E8">:</span></span>
+<span class="line"><span style="color:#E1E4E8">    - </span><span style="color:#85E89D">uses</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">actions/checkout@v3</span></span>
+<span class="line"><span style="color:#E1E4E8">    </span></span>
+<span class="line"><span style="color:#E1E4E8">    - </span><span style="color:#85E89D">name</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">Deploy backend to Railway</span></span>
+<span class="line"><span style="color:#85E89D">      uses</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">railway/cli@v2</span></span>
+<span class="line"><span style="color:#85E89D">      with</span><span style="color:#E1E4E8">:</span></span>
+<span class="line"><span style="color:#85E89D">        command</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">up</span></span>
+<span class="line"><span style="color:#85E89D">      env</span><span style="color:#E1E4E8">:</span></span>
+<span class="line"><span style="color:#85E89D">        RAILWAY_TOKEN</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">${{ secrets.RAILWAY_TOKEN }}</span></span>
+<span class="line"><span style="color:#E1E4E8">    </span></span>
+<span class="line"><span style="color:#E1E4E8">    - </span><span style="color:#85E89D">name</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">Deploy frontend to Vercel</span></span>
+<span class="line"><span style="color:#85E89D">      uses</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">vercel/action@v1</span></span>
+<span class="line"><span style="color:#85E89D">      with</span><span style="color:#E1E4E8">:</span></span>
+<span class="line"><span style="color:#85E89D">        vercel-token</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">${{ secrets.VERCEL_TOKEN }}</span></span>
+<span class="line"><span style="color:#85E89D">        vercel-project-id</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">${{ secrets.VERCEL_PROJECT_ID }}</span></span>
+<span class="line"><span style="color:#85E89D">        vercel-org-id</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">${{ secrets.VERCEL_ORG_ID }}</span></span>
+<span class="line"></span></code></pre>
+<h2 id="-mobile-experience">📱 Mobile Experience</h2>
+<h3 id="progressive-web-app-features">Progressive Web App Features</h3>
+<ul>
+<li><strong>App-like experience</strong> with PWA manifest</li>
+<li><strong>Offline browsing</strong> of previously viewed products</li>
+<li><strong>Add to home screen</strong> capability</li>
+<li><strong>Push notifications</strong> for order updates</li>
+<li><strong>Background sync</strong> for cart updates</li>
+</ul>
+<h3 id="touch-optimization">Touch Optimization</h3>
+<ul>
+<li><strong>Touch-friendly interface</strong> with appropriate tap targets</li>
+<li><strong>Swipe gestures</strong> for product image galleries</li>
+<li><strong>Pull-to-refresh</strong> functionality</li>
+<li><strong>Smooth scrolling</strong> and transitions</li>
+</ul>
+<h2 id="-future-enhancements">🔮 Future Enhancements</h2>
+<h3 id="planned-features">Planned Features</h3>
+<ul>
+<li><strong>Multi-vendor marketplace</strong> support</li>
+<li><strong>Advanced search</strong> with AI-powered recommendations</li>
+<li><strong>Social commerce</strong> integration</li>
+<li><strong>Subscription products</strong> and recurring billing</li>
+<li><strong>International expansion</strong> with multi-currency support</li>
+</ul>
+<h3 id="technical-roadmap">Technical Roadmap</h3>
+<ul>
+<li><strong>Microservices architecture</strong> for better scalability</li>
+<li><strong>GraphQL API</strong> for more efficient data fetching</li>
+<li><strong>Real-time features</strong> with WebSocket integration</li>
+<li><strong>AI/ML recommendations</strong> engine</li>
+<li><strong>Advanced analytics</strong> with custom dashboards</li>
+</ul>
+<p>This e-commerce platform demonstrates enterprise-level architecture while maintaining clean, maintainable code. The combination of modern technologies, security best practices, and user-centered design creates a robust foundation for online retail success.</p> </div> </div> </article> </div> <!-- Project Footer --> <footer class="mt-12 bg-white rounded-xl shadow-sm border border-gray-200 p-8" data-astro-cid-ovxcmftc> <div class="flex items-center justify-between" data-astro-cid-ovxcmftc> <div class="text-sm text-gray-500" data-astro-cid-ovxcmftc>
+Published on November 20, 2024 </div> <div class="flex items-center space-x-4" data-astro-cid-ovxcmftc> <a href="/projects" class="text-blue-600 hover:underline text-sm font-medium" data-astro-cid-ovxcmftc>
+← Back to Projects
+</a> </div> </div> </footer> </div> <!-- Back to Top Button --> <button id="back-to-top" aria-label="Back to top" class="fixed bottom-6 right-6 z-40 inline-flex items-center justify-center w-12 h-12 rounded-full bg-black text-white shadow-lg transition-all duration-200 hover:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-offset-2 focus:ring-offset-white opacity-0 pointer-events-none" data-astro-cid-ovxcmftc> <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true" data-astro-cid-ovxcmftc> <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7" data-astro-cid-ovxcmftc></path> </svg> </button>  </main>  <footer class="bg-white border-y border-gray-200 py-8"> <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8"> <div class="flex flex-col md:flex-row justify-between items-center"> <div class="mb-4 md:mb-0"> <div class="flex items-center font-bold text-xl"> <div> <!-- <span class={logoClass}>&gt;&nbsp;</span> --> <span class="text">codersbox</span> </div> </div> <p class="text-gray-500 text-sm mt-1">© Copyright 2025. All rights reserved.</p> </div> <div class="flex space-x-6 text-xl"> <a href="#" target="_blank" class="text-gray-500 hover:text-black transition-colors"> <svg width="0.97em" height="1em" viewBox="0 0 496 512" data-icon="fa6-brands:github">   <use href="#ai:fa6-brands:github"></use>  </svg> </a> <a href="#" target="_blank" class="text-gray-500 hover:text-black transition-colors"> <svg width="1em" height="1em" data-icon="fa6-brands:twitter">   <symbol id="ai:fa6-brands:twitter" viewBox="0 0 512 512"><path fill="currentColor" d="M459.37 151.716c.325 4.548.325 9.097.325 13.645c0 138.72-105.583 298.558-298.558 298.558c-59.452 0-114.68-17.219-161.137-47.106c8.447.974 16.568 1.299 25.34 1.299c49.055 0 94.213-16.568 130.274-44.832c-46.132-.975-84.792-31.188-98.112-72.772c6.498.974 12.995 1.624 19.818 1.624c9.421 0 18.843-1.3 27.614-3.573c-48.081-9.747-84.143-51.98-84.143-102.985v-1.299c13.969 7.797 30.214 12.67 47.431 13.319c-28.264-18.843-46.781-51.005-46.781-87.391c0-19.492 5.197-37.36 14.294-52.954c51.655 63.675 129.3 105.258 216.365 109.807c-1.624-7.797-2.599-15.918-2.599-24.04c0-57.828 46.782-104.934 104.934-104.934c30.213 0 57.502 12.67 76.67 33.137c23.715-4.548 46.456-13.32 66.599-25.34c-7.798 24.366-24.366 44.833-46.132 57.827c21.117-2.273 41.584-8.122 60.426-16.243c-14.292 20.791-32.161 39.308-52.628 54.253"/></symbol><use href="#ai:fa6-brands:twitter"></use>  </svg> </a> <a href="#" target="_blank" class="text-gray-500 hover:text-black transition-colors"> <svg width="0.75em" height="1em" data-icon="fa6-brands:stack-overflow">   <symbol id="ai:fa6-brands:stack-overflow" viewBox="0 0 384 512"><path fill="currentColor" d="M290.7 311L95 269.7L86.8 309l195.7 41zm51-87L188.2 95.7l-25.5 30.8l153.5 128.3zm-31.2 39.7L129.2 179l-16.7 36.5L293.7 300zM262 32l-32 24l119.3 160.3l32-24zm20.5 328h-200v39.7h200zm39.7 80H42.7V320h-40v160h359.5V320h-40z"/></symbol><use href="#ai:fa6-brands:stack-overflow"></use>  </svg> </a> <a href="#" target="_blank" class="text-gray-500 hover:text-black transition-colors"> <svg width="1em" height="1em" data-icon="fa6-solid:envelope">   <symbol id="ai:fa6-solid:envelope" viewBox="0 0 512 512"><path fill="currentColor" d="M48 64C21.5 64 0 85.5 0 112c0 15.1 7.1 29.3 19.2 38.4l217.6 163.2c11.4 8.5 27 8.5 38.4 0l217.6-163.2c12.1-9.1 19.2-23.3 19.2-38.4c0-26.5-21.5-48-48-48zM0 176v208c0 35.3 28.7 64 64 64h384c35.3 0 64-28.7 64-64V176L294.4 339.2a63.9 63.9 0 0 1-76.8 0z"/></symbol><use href="#ai:fa6-solid:envelope"></use>  </svg> </a> </div> </div> </div> </footer> <!-- Google Analytics (replace with your tracking ID) --><!-- <script async src="https://www.googletagmanager.com/gtag/js?id=GA_TRACKING_ID"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'GA_TRACKING_ID');
+</script> --><!-- Core Web Vitals monitoring --> <!-- Service Worker for caching (optional) --> </body></html> 
