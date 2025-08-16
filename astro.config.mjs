@@ -35,7 +35,15 @@ export default defineConfig({
   ],
   site: 'https://codersbox.dev',
   output: 'hybrid',
-  adapter: vercel(),
+  adapter: vercel({
+    webAnalytics: {
+      enabled: true,
+    },
+    speedInsights: {
+      enabled: true,
+    },
+    functionPerRoute: false,
+  }),
   srcDir: './src',
   publicDir: './public',
   
