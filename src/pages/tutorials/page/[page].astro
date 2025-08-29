@@ -162,21 +162,21 @@ const nextUrl = currentPage < totalPages ? `/tutorials/page/${currentPage + 1}` 
             <div id="tutorials-grid" class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-12">
             {paginatedSeries.map((series) => (
               <article 
-                class="tutorial-item bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 overflow-hidden shadow-sm hover:shadow-md transition-all duration-300 h-full flex"
+                class="tutorial-item bg-white rounded-lg border border-gray-200 overflow-hidden shadow-sm hover:shadow-md transition-all duration-300 h-full flex"
                 data-title={series.name.toLowerCase()}
                 data-description={series.description.toLowerCase()}
                 data-tags={JSON.stringify(series.tags || [])}
                 data-difficulty={series.difficulty}
                 data-date={series.latestPublishDate.getTime()}
               >
-                <div class="w-2 bg-gray-900 dark:bg-gray-600"></div>
+                <div class="w-2 bg-gray-900"></div>
                 <div class="p-6 flex-grow flex flex-col">
                   <div class="flex items-center justify-between mb-4">
                     <div class="flex items-center gap-3">
                       <span class={`inline-block text-xs px-3 py-1 rounded-full font-medium uppercase tracking-wide ${
-                        series.difficulty === 'beginner' ? 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200' :
-                        series.difficulty === 'intermediate' ? 'bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-200' :
-                        'bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-200'
+                        series.difficulty === 'beginner' ? 'bg-green-100 text-green-800' :
+                        series.difficulty === 'intermediate' ? 'bg-yellow-100 text-yellow-800' :
+                        'bg-red-100 text-red-800'
                       }`}>
                         {series.difficulty}
                       </span>

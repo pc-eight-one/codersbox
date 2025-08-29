@@ -144,7 +144,6 @@ const fullImageUrl = image.startsWith('http') ? image : `${siteUrl}${image}`;
     /* Prevent FOUC */
     html { visibility: hidden; }
     html.loaded { visibility: visible; }
-    .dark { color-scheme: dark; }
   </style>
   
   <script>
@@ -152,17 +151,13 @@ const fullImageUrl = image.startsWith('http') ? image : `${siteUrl}${image}`;
     (function() {
       try {
         const stored = localStorage.getItem('theme');
-        const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-        if (stored === 'dark' || (!stored && prefersDark)) {
-          document.documentElement.classList.add('dark');
-        }
       } catch (e) {}
       // Prevent FOUC
       document.documentElement.classList.add('loaded');
     })();
   </script>
 </head>
-<body class="bg-gray-100 text-gray-900 dark:bg-gray-900 dark:text-gray-100 min-h-screen">
+<body class="bg-gray-100 text-gray-900 min-h-screen">
   <Navigation title="codersbox" nav={navItems} />
   <slot />
   <Footer />
