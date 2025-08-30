@@ -8,83 +8,51 @@ export interface Props {
 const { id = `mermaid-${Math.random().toString(36).substring(2, 15)}`, diagram, class: className = '' } = Astro.props;
 ---
 
-<div id={id} class={`mermaid-diagram ${className}`} data-diagram={diagram}>
+<div id={id} class={`mermaid-container ${className}`}>
   <pre class="mermaid">{diagram}</pre>
 </div>
 
 <script>
-  import mermaid from 'mermaid';
+  document.addEventListener('DOMContentLoaded', async () => {
+    try {
+      const mermaid = await import('mermaid');
+      
+      // Initialize mermaid
+      mermaid.default.initialize({
+        startOnLoad: false,
+        theme: 'default',
+        securityLevel: 'loose',
+        fontFamily: 'Inter, system-ui, sans-serif',
+        flowchart: {
+          htmlLabels: true,
+          curve: 'basis'
+        }
+      });
 
-  // Initialize mermaid with configuration
-  mermaid.initialize({
-    startOnLoad: true,
-    theme: 'default',
-    securityLevel: 'loose',
-    fontFamily: 'Inter, system-ui, sans-serif',
-    flowchart: {
-      htmlLabels: true,
-      curve: 'basis'
-    },
-    sequence: {
-      diagramMarginX: 50,
-      diagramMarginY: 10,
-      actorMargin: 50,
-      width: 150,
-      height: 65,
-      boxMargin: 10,
-      boxTextMargin: 5,
-      noteMargin: 10,
-      messageMargin: 35,
-      mirrorActors: true,
-      bottomMarginAdj: 1,
-      useMaxWidth: true,
-      rightAngles: false,
-      showSequenceNumbers: false
-    },
-    gantt: {
-      titleTopMargin: 25,
-      barHeight: 20,
-      fontStyle: 'normal',
-      fontSize: 11,
-      fontFamily: 'Inter, system-ui, sans-serif',
-      section: 0,
-      numberSectionStyles: 4,
-      axisFormat: '%Y-%m-%d',
-      topAxis: false
+      // Render all mermaid diagrams
+      const mermaidElements = document.querySelectorAll('.mermaid');
+      for (let i = 0; i < mermaidElements.length; i++) {
+        const element = mermaidElements[i];
+        const diagram = element.textContent;
+        
+        if (diagram) {
+          try {
+            const { svg } = await mermaid.default.render(`mermaid-${i}-${Date.now()}`, diagram);
+            element.innerHTML = svg;
+          } catch (error) {
+            console.error('Mermaid rendering error:', error);
+            element.innerHTML = `<div class="text-red-500 p-4 border border-red-300 rounded bg-red-50">Error rendering diagram</div>`;
+          }
+        }
+      }
+    } catch (error) {
+      console.error('Failed to load mermaid:', error);
     }
   });
-
-  // Function to render mermaid diagrams
-  function renderMermaidDiagrams() {
-    const mermaidDiagrams = document.querySelectorAll('.mermaid-diagram');
-    
-    mermaidDiagrams.forEach((element, index) => {
-      const diagram = element.getAttribute('data-diagram');
-      const mermaidElement = element.querySelector('.mermaid');
-      
-      if (diagram && mermaidElement) {
-        // Render the diagram
-        mermaid.render(`mermaid-${index}-${Date.now()}`, diagram)
-          .then((result) => {
-            mermaidElement.innerHTML = result.svg;
-          })
-          .catch((error) => {
-            console.error('Mermaid rendering error:', error);
-            mermaidElement.innerHTML = `<div class="text-red-500 p-4 border border-red-300 rounded">Error rendering diagram: ${error.message}</div>`;
-          });
-      }
-    });
-  }
-
-  // Render diagrams when page loads
-  document.addEventListener('DOMContentLoaded', renderMermaidDiagrams);
-  
-  // Re-render diagrams after page navigation (for SPAs)
-  document.addEventListener('astro:page-load', renderMermaidDiagrams);
 </script>
 
 <style>
-  .mermaid-diagram {
+  .mermaid-container {
     margin: 2rem 0;
     text-align: center;
   }
@@ -104,16 +72,9 @@ const { id = `mermaid-${Math.random().toString(36).substring(2, 15)}`, diagram, 
     font-family: Inter, system-ui, sans-serif;
   }
 
-  /* Dark mode support */
-  @media (prefers-color-scheme: dark) {
-    .mermaid svg {
-      filter: invert(1) hue-rotate(180deg);
-    }
-  }
-
   /* Responsive adjustments */
   @media (max-width: 768px) {
-    .mermaid-diagram {
+    .mermaid-container {
       margin: 1rem 0;
     }
     

@@ -2,7 +2,6 @@ import { defineConfig } from 'astro/config';
 import tailwind from '@astrojs/tailwind';
 import icon from 'astro-icon';
 import mdx from '@astrojs/mdx';
-import remarkMermaid from 'remark-mermaid';
 
 // https://astro.build/config
 export default defineConfig({
@@ -21,7 +20,7 @@ export default defineConfig({
     mdx({
       // Optimize MDX processing
       optimize: true,
-      remarkPlugins: [remarkMermaid],
+      remarkPlugins: [],
       rehypePlugins: [],
     }),
   ],
@@ -76,8 +75,6 @@ export default defineConfig({
     },
     // Enable syntax highlighting optimization
     syntaxHighlight: 'shiki',
-    // Add remark plugins for markdown processing
-    remarkPlugins: [remarkMermaid],
   },
   
   // Server optimizations for development

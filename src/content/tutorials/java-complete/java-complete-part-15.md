@@ -1746,6 +1746,4 @@ The Java Collections Framework provides powerful tools for data management:
 
 ## Next Steps
 
-<function_calls>
-<invoke name="TodoWrite">
-<parameter name="todos">[{"content": "Create Tutorial 12: Packages and Modularity", "status": "completed", "activeForm": "Creating Tutorial 12: Packages and Modularity"}, {"content": "Create Tutorial 13: Exception Handling", "status": "completed", "activeForm": "Creating Tutorial 13: Exception Handling"}, {"content": "Create Tutorial 14: Input/Output (I/O) Streams", "status": "completed", "activeForm": "Creating Tutorial 14: Input/Output (I/O) Streams"}, {"content": "Create Tutorial 15: Collections Framework", "status": "completed", "activeForm": "Creating Tutorial 15: Collections Framework"}, {"content": "Create Tutorial 16: Generics", "status": "pending", "activeForm": "Creating Tutorial 16: Generics"}]
+In the next part, we’ll explore Generics (type parameters, bounds, and wildcards), which pair naturally with collections for type-safe APIs.

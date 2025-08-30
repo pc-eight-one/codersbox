@@ -35,16 +35,21 @@ const sortedSeriesTutorials = seriesTutorials.sort((a, b) => a.data.part - b.dat
 {showSidebar && (
   <nav class="sticky top-24 max-h-[calc(100vh-7rem)] overflow-y-auto scrollbar-hide">
     <div class="space-y-8">
-      <!-- Series Navigation -->
+      <!-- Series Navigation (Project Topics) -->
       {hasSeries && (
         <div>
-          <h2 class="text-lg font-semibold text-gray-900 mb-4 flex items-center gap-2">
-            <svg class="w-5 h-5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"></path>
+          <button type="button" class="w-full text-left text-lg font-semibold text-gray-900 mb-2 flex items-center justify-between gap-2 group" aria-controls="series-section" aria-expanded="false" data-collapse-toggle="series">
+            <span class="flex items-center gap-2">
+              <svg class="w-5 h-5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"></path>
+              </svg>
+              <span>{currentTutorial?.data.series || 'Series'}</span>
+            </span>
+            <svg class="w-4 h-4 text-gray-500 transition-transform group-aria-expanded:rotate-180" viewBox="0 0 24 24" fill="none" stroke="currentColor" aria-hidden="true">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
             </svg>
-            <span>{currentTutorial?.data.series || 'Series'}</span>
-          </h2>
-          <ul class="space-y-1 text-sm">
+          </button>
+          <ul id="series-section" class="space-y-1 text-sm hidden collapsible">
             {sortedSeriesTutorials.map((tutorial) => (
               <li>
                 <a 
@@ -70,16 +75,21 @@ const sortedSeriesTutorials = seriesTutorials.sort((a, b) => a.data.part - b.dat
         </div>
       )}
       
-      <!-- Table of Contents -->
+      <!-- Table of Contents (Article Topics) -->
       {hasToc && (
         <div>
-          <h2 class="text-lg font-semibold text-gray-900 mb-4 flex items-center gap-2">
-            <svg class="w-5 h-5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 10h16M4 14h16M4 18h16"></path>
+          <button type="button" class="w-full text-left text-lg font-semibold text-gray-900 mb-2 flex items-center justify-between gap-2 group" aria-controls="toc-section" aria-expanded="true" data-collapse-toggle="toc">
+            <span class="flex items-center gap-2">
+              <svg class="w-5 h-5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 10h16M4 14h16M4 18h16"></path>
+              </svg>
+              <span>Contents</span>
+            </span>
+            <svg class="w-4 h-4 text-gray-500 transition-transform group-aria-expanded:rotate-180" viewBox="0 0 24 24" fill="none" stroke="currentColor" aria-hidden="true">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
             </svg>
-            <span>Contents</span>
-          </h2>
-          <ul class="space-y-2 text-sm">
+          </button>
+          <ul id="toc-section" class="space-y-2 text-sm collapsible">
             {toc.map((h) => (
               <li>
                 <a 
@@ -143,14 +153,116 @@ const sortedSeriesTutorials = seriesTutorials.sort((a, b) => a.data.part - b.dat
     });
   }
   
-  // Initialize on page load
-  document.addEventListener('DOMContentLoaded', initTutorialTOCNavigation);
+
+  // Collapsible sections (independent): series (project nav) and toc (article topics)
+  function initCollapsibles() {
+    const seriesBtn = document.querySelector('[data-collapse-toggle="series"]');
+    const seriesList = document.getElementById('series-section');
+    const tocBtn = document.querySelector('[data-collapse-toggle="toc"]');
+    const tocList = document.getElementById('toc-section');
+
+    // Default states per requirement
+    const defaultSeriesExpanded = false;
+    const defaultTocExpanded = true;
+
+    const storageAvailable = (() => {
+      try { const x = '__cbx__'; localStorage.setItem(x, x); localStorage.removeItem(x); return true; } catch { return false; }
+    })();
+
+    function getStoredState(key, fallback) {
+      if (!storageAvailable) return fallback;
+      let raw = null;
+      try {
+        raw = localStorage.getItem(key);
+      } catch {
+        return fallback;
+      }
+      if (raw !== 'true' && raw !== 'false') return fallback;
+      return raw === 'true';
+    }
+
+    function setExpanded(btn, list, expanded, key) {
+      if (!btn || !list) return;
+      btn.setAttribute('aria-expanded', String(expanded));
+      const isAnimating = list.classList.contains('animating');
+      const finishCollapse = () => {
+        list.classList.add('hidden');
+        list.classList.remove('animating');
+      };
+      if (expanded) {
+        // Expand: unhide first to measure/animate
+        list.classList.remove('hidden');
+        // Trigger reflow to apply transition cleanly
+        // eslint-disable-next-line @typescript-eslint/no-unused-expressions
+        list.offsetHeight;
+        list.classList.add('is-open');
+        btn.classList.add('aria-expanded');
+        // Ensure animating cleared so further toggles are allowed
+        list.classList.remove('animating');
+      } else {
+        // Collapse: animate then hide when transition ends
+        list.classList.add('animating');
+        list.classList.remove('is-open');
+        btn.classList.remove('aria-expanded');
+        const onEnd = (e) => {
+          if (e.target !== list) return;
+          list.removeEventListener('transitionend', onEnd);
+          // Ensure aria-expanded reflects final collapsed state
+          btn.setAttribute('aria-expanded', 'false');
+          finishCollapse();
+        };
+        list.addEventListener('transitionend', onEnd, { once: true });
+        // Fallback: ensure hidden after 300ms in case 'transitionend' doesn't fire
+        setTimeout(() => { 
+          if (!list.classList.contains('is-open')) {
+            btn.setAttribute('aria-expanded', 'false');
+            finishCollapse();
+          }
+        }, 320);
+      }
+      if (storageAvailable && key) localStorage.setItem(key, String(expanded));
+    }
+
+    // Initialize states (load from storage if available)
+    const seriesKey = 'cbx:seriesExpanded';
+    const tocKey = 'cbx:tocExpanded';
+    const initialSeries = getStoredState(seriesKey, defaultSeriesExpanded);
+    const initialToc = getStoredState(tocKey, defaultTocExpanded);
+
+    setExpanded(seriesBtn, seriesList, initialSeries, seriesKey);
+    setExpanded(tocBtn, tocList, initialToc, tocKey);
+
+    // Toggle handlers (click and keyboard)
+    function onActivate(btn, list, key) {
+      // Ignore toggles while animating to prevent race conditions
+      if (list?.classList.contains('animating')) return;
+      const expanded = btn.getAttribute('aria-expanded') === 'true';
+      setExpanded(btn, list, !expanded, key);
+    }
+
+    seriesBtn?.addEventListener('click', () => onActivate(seriesBtn, seriesList, seriesKey));
+    tocBtn?.addEventListener('click', () => onActivate(tocBtn, tocList, tocKey));
+
+    // Keyboard support: Enter/Space triggers toggle
+    [seriesBtn, tocBtn].forEach((btn, idx) => {
+      if (!btn) return;
+      btn.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          onActivate(btn, idx === 0 ? seriesList : tocList, idx === 0 ? seriesKey : tocKey);
+        }
+      });
+    });
+  }
+
   
   // Reinitialize if the script runs after DOM is already loaded
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', initTutorialTOCNavigation);
+    document.addEventListener('DOMContentLoaded', initCollapsibles);
   } else {
     initTutorialTOCNavigation();
+    initCollapsibles();
   }
 </script>
 
@@ -169,5 +281,31 @@ const sortedSeriesTutorials = seriesTutorials.sort((a, b) => a.data.part - b.dat
   
   .scrollbar-hide::-webkit-scrollbar {
     display: none;  /* Safari and Chrome */
+  }
+  .rotate-180 { transform: rotate(180deg); }
+
+  /* Rotate chevrons when expanded (robust, no Tailwind variant needed) */
+  button[aria-controls="series-section"][aria-expanded="true"] > svg:last-child,
+  button[aria-controls="toc-section"][aria-expanded="true"] > svg:last-child {
+    transform: rotate(180deg);
+    transition: transform 0.18s ease-out;
+  }
+
+  /* Subtle expand/collapse animation */
+  .collapsible {
+    overflow: hidden;
+    max-height: 0;
+    opacity: 0;
+    transition: max-height 0.18s ease-out, opacity 0.18s ease-out;
+  }
+  .collapsible.is-open {
+    max-height: 800px; /* large enough for typical lists */
+    opacity: 1;
+  }
+  /* When hidden is applied at the end of collapse, ensure no layout flash */
+  .collapsible.hidden { max-height: 0 !important; opacity: 0 !important; }
+
+  @media (prefers-reduced-motion: reduce) {
+    .collapsible { transition: none; }
   }
 </style>

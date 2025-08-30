@@ -17,10 +17,12 @@ featured: false
 A quick mental model for expression evaluation and operator precedence:
 ```mermaid
 flowchart LR
-    EXPR[a + b * c] --> MUL[b * c]
-    MUL --> ADD[add a]
+    EXPR[a + b * c] --> MUL[b * c first]
+    MUL --> ADD[then add a]
     ADD --> RESULT[result]
-    note right of EXPR: '*' has higher precedence than '+'
+    
+    style MUL fill:#e1f5fe
+    style ADD fill:#f3e5f5
 ```
 
 Operators are the verbs of programming - they perform actions on data. Java provides a rich set of operators that let you manipulate numbers, compare values, combine conditions, and control program flow. Understanding how operators work together in expressions is fundamental to writing effective Java programs.

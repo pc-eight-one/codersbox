@@ -136,7 +136,7 @@ A mental model of compile → run with packages:
 ```mermaid
 flowchart LR
     A[.java sources] -->|javac| B[.class bytecode]
-    B -->|organized by package dirs| C[jar (optional)]
+    B -->|organized by package dirs| C[jar file]
     B -->|java com.codersbox.app.Main| D[Program runs]
 ```
 
