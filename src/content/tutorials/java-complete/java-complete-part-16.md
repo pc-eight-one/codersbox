@@ -21,6 +21,18 @@ Generics enable types (classes and interfaces) to be parameters when defining cl
 
 ## Understanding Generics
 
+A quick visual for type parameters and bounds:
+```mermaid
+classDiagram
+    class Box~T~ {
+      -value: T
+      +get(): T
+      +set(T)
+    }
+    class NumberBox~T extends Number~
+    Box <|-- NumberBox
+```
+
 ### Before and After Generics
 
 ```java

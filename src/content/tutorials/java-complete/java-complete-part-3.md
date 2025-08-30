@@ -79,10 +79,10 @@ When you run this program:
 ```
 === Investment Analysis ===
 Initial investment: $10,000.00
-Annual interest rate: 70%
+Annual interest rate: 7%
 Investment period: 5 years
-Final amount: $33,592.84
-Total gain: $23,592.84
+Final amount: $14,025.52
+Total gain: $4,025.52
 Calculated at: 2025-01-29T10:30:45.123
 ```
 

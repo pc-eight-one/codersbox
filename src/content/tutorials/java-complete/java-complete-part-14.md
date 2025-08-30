@@ -17,6 +17,13 @@ prerequisites: ["Java Complete Parts 1-13"]
 
 # Input/Output (I/O) Streams
 
+Data flow at a glance (byte vs character):
+```mermaid
+flowchart LR
+    File --> FIS[FileInputStream] --> BIS[BufferedInputStream] --> App[Your code]
+    FileTXT[Text File] --> FR[FileReader] --> BR[BufferedReader] --> App
+```
+
 Java I/O provides a comprehensive system for reading from and writing to various data sources including files, network connections, and memory buffers. Understanding I/O streams is essential for building applications that interact with external data.
 
 ## Understanding I/O Streams

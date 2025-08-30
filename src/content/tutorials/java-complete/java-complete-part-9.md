@@ -60,6 +60,26 @@ public class Calculator {
 
 A **class** is a blueprint for creating objects. An **object** is an instance of a class.
 
+A quick visual of object relationships in this section:
+```mermaid
+classDiagram
+    class BankAccount {
+      -accountNumber
+      -accountHolder
+      -balance
+      -accountType
+      +deposit(amount)
+      +withdraw(amount)
+      +getBalance()
+    }
+    class Library {
+      -books: Book[]
+      +addBook(book)
+      +findBookByIsbn(isbn)
+    }
+    Book --> Library : contained in
+```
+
 ### Bank Account Example
 
 ```java

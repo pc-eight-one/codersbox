@@ -18,6 +18,14 @@ Arrays and strings are the backbone of data processing in Java. Arrays let you s
 
 ## Arrays: The Foundation
 
+Visualizing an array in memory:
+```mermaid
+flowchart LR
+    A0[0] --- A1[1] --- A2[2] --- A3[3] --- A4[4]
+    classDef idx fill:#eef,stroke:#99f,color:#000;
+    class A0,A1,A2,A3,A4 idx;
+```
+
 An array is a container that holds multiple values of the same type. Think of it as a row of numbered boxes, where each box can store one value:
 
 ```java

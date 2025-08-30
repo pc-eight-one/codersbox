@@ -17,6 +17,17 @@ prerequisites: ["Java Complete Parts 1-12"]
 
 # Exception Handling
 
+A simplified view of the exception hierarchy:
+```mermaid
+classDiagram
+    Throwable <|-- Error
+    Throwable <|-- Exception
+    Exception <|-- RuntimeException
+    Exception <|-- IOException
+    RuntimeException <|-- NullPointerException
+    RuntimeException <|-- IllegalArgumentException
+```
+
 Exception handling is Java's mechanism for dealing with runtime errors and exceptional conditions. It allows programs to gracefully handle errors, recover when possible, and provide meaningful feedback to users.
 
 ## Understanding Exceptions

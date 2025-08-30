@@ -17,6 +17,23 @@ prerequisites: ["Java Complete Parts 1-10"]
 
 # Abstraction and Interfaces
 
+At a glance, how abstract classes and interfaces relate:
+```mermaid
+classDiagram
+    class BankAccount {
+      <<abstract>>
+      +deposit()
+      +withdraw()
+      +calculateInterest()*
+    }
+    BankAccount <|-- SavingsAccount
+    BankAccount <|-- CheckingAccount
+    interface Payable {
+      +pay(amount)
+    }
+    Invoice ..|> Payable
+```
+
 Abstraction hides implementation details while exposing essential functionality. Interfaces define contracts that classes must fulfill, enabling multiple inheritance of type and creating flexible, maintainable designs.
 
 ## Abstract Classes

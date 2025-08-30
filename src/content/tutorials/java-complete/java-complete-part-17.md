@@ -21,6 +21,15 @@ Java 8 introduced functional programming features that revolutionized how we wri
 
 ## Lambda Expressions
 
+At a glance, how data flows through a stream pipeline:
+```mermaid
+flowchart LR
+    A[Collection] --> B[stream()]
+    B --> C[filter]
+    C --> D[map]
+    D --> E[collect]
+```
+
 ### Understanding Lambda Syntax
 
 ```java

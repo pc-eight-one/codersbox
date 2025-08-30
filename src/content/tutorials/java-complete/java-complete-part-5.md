@@ -18,6 +18,16 @@ Programs become powerful when they can make decisions. Control flow statements l
 
 ## The if Statement
 
+A quick mental model of branching:
+```mermaid
+flowchart TD
+    A[Input] --> B{condition?}
+    B -- true --> C[then-branch]
+    B -- false --> D[else-branch]
+    C --> E[next]
+    D --> E[next]
+```
+
 The `if` statement is the foundation of conditional programming. It executes code only when a condition is true:
 
 ```java

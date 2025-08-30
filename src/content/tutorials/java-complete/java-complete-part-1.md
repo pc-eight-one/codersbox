@@ -52,6 +52,16 @@ Understanding Java means understanding its three core components:
 - Manages memory
 - Handles platform-specific operations
 
+A quick visual map:
+```mermaid
+flowchart TB
+    JDK[Developer installs JDK] -->|includes| JRE
+    JDK -->|includes| Tools[javac, jar, javadoc]
+    JRE[End user installs JRE] --> JVM
+    JVM -->|executes| Bytecode[.class bytecode]
+    Source[.java source] -->|compiled by javac| Bytecode
+```
+
 ## Java's Key Characteristics
 
 ### Platform Independence

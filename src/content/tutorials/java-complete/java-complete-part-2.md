@@ -22,61 +22,50 @@ Before exploring IDEs, let's master the fundamental command-line tools. This kno
 
 ### The Java Compiler: javac
 
-Create a file named `Calculator.java`:
+Start with the smallest possible program to learn compile/run:
+
+Create a file named `Hello.java`:
 
 ```java
-public class Calculator {
-    private double result;
-    
-    public void add(double number) {
-        result += number;
-    }
-    
-    public void subtract(double number) {
-        result -= number;
-    }
-    
-    public void multiply(double number) {
-        result *= number;
-    }
-    
-    public void divide(double number) {
-        if (number != 0) {
-            result /= number;
-        } else {
-            System.err.println("Error: Division by zero");
-        }
-    }
-    
-    public double getResult() {
-        return result;
-    }
-    
-    public void clear() {
-        result = 0;
-    }
-    
+public class Hello {
     public static void main(String[] args) {
-        Calculator calc = new Calculator();
-        calc.add(10);
-        calc.multiply(5);
-        calc.subtract(3);
-        System.out.println("Result: " + calc.getResult());
-        
-        calc.divide(0); // Test error handling
-        calc.clear();
-        System.out.println("After clear: " + calc.getResult());
+        System.out.println("Hello, tools!");
     }
 }
 ```
 
 Compile and run:
 ```bash
-$ javac Calculator.java
-$ java Calculator
-Result: 47.0
-Error: Division by zero
-After clear: 0.0
+$ javac Hello.java
+$ java Hello
+Hello, tools!
+```
+
+Why this minimal example? It isolates the compile/run workflow without extra logic getting in the way.
+
+Now a tiny class example to see multiple files:
+
+Create `Adder.java`:
+```java
+public class Adder {
+    public static int add(int a, int b) { return a + b; }
+}
+```
+
+Create `UseAdder.java`:
+```java
+public class UseAdder {
+    public static void main(String[] args) {
+        System.out.println(Adder.add(2, 3)); // 5
+    }
+}
+```
+
+Compile and run two files:
+```bash
+$ javac Adder.java UseAdder.java
+$ java UseAdder
+5
 ```
 
 ### Compilation Options
@@ -102,72 +91,53 @@ javac -g Calculator.java
 
 ### Working with Packages
 
-Real applications organize classes into packages. Create this directory structure:
+Real applications organize classes into packages. Keep the example tiny and focused:
+
+Directory structure:
 ```
 com/
   codersbox/
-    math/
-      Calculator.java
     util/
       MathHelper.java
-```
-
-Update `Calculator.java` to use packages:
-
-```java
-package com.codersbox.math;
-
-import com.codersbox.util.MathHelper;
-
-public class Calculator {
-    private double result;
-    
-    // ... existing methods ...
-    
-    public void power(double exponent) {
-        result = MathHelper.power(result, exponent);
-    }
-    
-    public static void main(String[] args) {
-        Calculator calc = new Calculator();
-        calc.add(2);
-        calc.power(3);
-        System.out.println("2^3 = " + calc.getResult());
-    }
-}
+    app/
+      Main.java
 ```
 
 Create `com/codersbox/util/MathHelper.java`:
-
 ```java
 package com.codersbox.util;
 
 public class MathHelper {
-    public static double power(double base, double exponent) {
-        return Math.pow(base, exponent);
-    }
-    
-    public static boolean isPrime(int n) {
-        if (n < 2) return false;
-        for (int i = 2; i * i <= n; i++) {
-            if (n % i == 0) return false;
-        }
-        return true;
-    }
-    
-    public static int factorial(int n) {
-        if (n < 0) throw new IllegalArgumentException("Factorial undefined for negative numbers");
-        if (n <= 1) return 1;
-        return n * factorial(n - 1);
+    public static int doubleIt(int x) { return x * 2; }
+}
+```
+
+Create `com/codersbox/app/Main.java`:
+```java
+package com.codersbox.app;
+
+import com.codersbox.util.MathHelper;
+
+public class Main {
+    public static void main(String[] args) {
+        System.out.println(MathHelper.doubleIt(21)); // 42
     }
 }
 ```
 
-Compile the entire package structure:
+Compile and run with packages:
 ```bash
-$ javac com/codersbox/math/Calculator.java com/codersbox/util/MathHelper.java
-$ java com.codersbox.math.Calculator
-2^3 = 8.0
+$ javac com/codersbox/util/MathHelper.java com/codersbox/app/Main.java
+$ java com.codersbox.app.Main
+42
+```
+
+A mental model of compile → run with packages:
+```mermaid
+flowchart LR
+    A[.java sources] -->|javac| B[.class bytecode]
+    B -->|organized by package dirs| C[jar (optional)]
+    B -->|java com.codersbox.app.Main| D[Program runs]
 ```
 
 ## Creating JAR Files
@@ -175,15 +145,15 @@ $ java com.codersbox.math.Calculator
 JAR (Java Archive) files package your classes for distribution:
 
 ```bash
-# Create a JAR file
-jar cf calculator.jar com/
+# Create a JAR file from compiled classes (assumes current dir is project root)
+jar cf app.jar com/
 
-# Create an executable JAR with manifest
-echo "Main-Class: com.codersbox.math.Calculator" > manifest.txt
-jar cfm calculator.jar manifest.txt com/
+# Create an executable JAR with manifest (entry point is our Main class)
+echo "Main-Class: com.codersbox.app.Main" > manifest.txt
+jar cfm app.jar manifest.txt com/
 
 # Run the JAR
-java -jar calculator.jar
+java -jar app.jar
 ```
 
 ## Choosing an IDE

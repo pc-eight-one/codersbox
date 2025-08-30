@@ -25,6 +25,15 @@ Inheritance models "is-a" relationships. A `Dog` is an `Animal`, a `SavingsAccou
 
 ### Basic Inheritance Syntax
 
+A quick visual of the class relationships:
+```mermaid
+classDiagram
+    Animal <|-- Dog
+    Animal <|-- Cat
+    Vehicle <|-- Car
+    Vehicle <|-- Motorcycle
+```
+
 ```java
 // Base class (superclass/parent class)
 public class Animal {
@@ -655,6 +664,19 @@ public class CastingDemo {
 ```
 
 ## Practical Application: Shape Hierarchy
+
+A visual of the hierarchy we'll implement:
+```mermaid
+classDiagram
+    Shape <|-- Circle
+    Shape <|-- Rectangle
+    Rectangle <|-- Square
+    class Shape{
+      <<abstract>>
+      +calculateArea()
+      +calculatePerimeter()
+    }
+```
 
 ```java
 public abstract class Shape {

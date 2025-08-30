@@ -17,6 +17,20 @@ prerequisites: ["Java Complete Parts 1-11"]
 
 # Packages and Modularity
 
+Two mental models to keep things straight:
+```mermaid
+flowchart TD
+    A[Classes] --> B[Packages]
+    B --> C[JAR]
+    C --> D[Modules]
+```
+
+```mermaid
+flowchart LR
+    App[App Module] -->|requires| Core[Core Module]
+    Core -->|exports| API[Public Packages]
+```
+
 Packages organize classes into logical groups and provide namespace management, while the module system (Java 9+) offers higher-level organization and dependency management for large applications.
 
 ## Understanding Packages
@@ -1080,6 +1094,4 @@ public class GoodDesign {
 
 ## Next Steps
 
-<function_calls>
-<invoke name="TodoWrite">
-<parameter name="todos">[{"content": "Create Tutorial 12: Packages and Modularity", "status": "completed", "activeForm": "Creating Tutorial 12: Packages and Modularity"}, {"content": "Create Tutorial 13: Exception Handling", "status": "in_progress", "activeForm": "Creating Tutorial 13: Exception Handling"}, {"content": "Create Tutorial 14: Input/Output (I/O) Streams", "status": "pending", "activeForm": "Creating Tutorial 14: Input/Output (I/O) Streams"}, {"content": "Create Tutorial 15: Collections Framework", "status": "pending", "activeForm": "Creating Tutorial 15: Collections Framework"}]
+In the next part, we’ll move into Exception Handling and then I/O Streams, building on how packages and modules structure your code and dependencies.

@@ -17,6 +17,18 @@ prerequisites: ["Java Complete Parts 1-14"]
 
 # Collections Framework
 
+At a glance, the main interfaces and common implementations:
+```mermaid
+classDiagram
+    Collection <|-- List
+    Collection <|-- Set
+    Collection <|-- Queue
+    Map <|.. HashMap
+    List <|.. ArrayList
+    Set <|.. HashSet
+    Queue <|.. LinkedList
+```
+
 The Java Collections Framework provides a unified architecture for storing and manipulating groups of objects. It includes interfaces, implementations, and algorithms that make data manipulation efficient and intuitive.
 
 ## Collections Hierarchy Overview

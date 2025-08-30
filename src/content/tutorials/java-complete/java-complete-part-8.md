@@ -14,6 +14,15 @@ featured: false
 
 # Java Complete - Part 8: Methods and Functions
 
+How calls move through the call stack:
+```mermaid
+sequenceDiagram
+    participant M as main()
+    participant A as addTwoNumbers(a,b)
+    M->>A: call
+    A-->>M: return sum
+```
+
 Methods are the building blocks of organized code. They let you break complex problems into smaller, manageable pieces, avoid repetition, and create reusable functionality. In Java, every piece of executable code belongs to a method - even your `main` method is just a special method that starts your program.
 
 ## Understanding Methods

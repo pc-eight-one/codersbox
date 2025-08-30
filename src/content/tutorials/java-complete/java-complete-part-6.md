@@ -14,6 +14,15 @@ featured: false
 
 # Java Complete - Part 6: Loops
 
+Minimal loop flow (applies to while/for):
+```mermaid
+flowchart TD
+    A[Start] --> B{condition?}
+    B -- true --> C[body]
+    C --> B
+    B -- false --> D[End]
+```
+
 Loops are the workhorses of programming - they let you repeat operations efficiently, process collections of data, and implement algorithms. Java provides several types of loops, each optimized for different scenarios. Understanding when and how to use each type is crucial for writing efficient, readable code.
 
 ## The while Loop
