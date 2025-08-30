@@ -1,7 +1,7 @@
 ---
 title: "SQLite CRUD - Part 2: Updates, Deletes, and Migrations"
 description: "Perform updates/deletes safely and add simple SQL migrations."
-publishDate: 2025-01-30
+publishDate: 2025-08-29
 tags: ["SQLite", "Database", "Migrations"]
 difficulty: "beginner"
 series: "SQLite CRUD"
