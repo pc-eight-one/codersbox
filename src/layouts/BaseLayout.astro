@@ -164,6 +164,148 @@ const fullImageUrl = image.startsWith('http') ? image : `${siteUrl}${image}`;
   <Analytics />
   
   <!-- Mermaid Initialization -->
-  <script type="module" src="/src/scripts/mermaid-init.js"></script>
+  <script type="module">
+    import mermaid from 'mermaid';
+
+    // Configure Mermaid with optimized settings
+    mermaid.initialize({
+      startOnLoad: false, // We'll manually control initialization
+      theme: 'default',
+      securityLevel: 'loose',
+      fontFamily: 'Inter, system-ui, sans-serif',
+      themeVariables: {
+        primaryColor: '#3b82f6',
+        primaryTextColor: '#1f2937',
+        primaryBorderColor: '#e5e7eb',
+        lineColor: '#6b7280',
+        secondaryColor: '#f3f4f6',
+        tertiaryColor: '#ffffff'
+      },
+      flowchart: {
+        htmlLabels: true,
+        curve: 'basis',
+        useMaxWidth: true,
+        padding: 20
+      },
+      sequence: {
+        useMaxWidth: true,
+        wrap: true,
+        actorMargin: 50,
+        boxMargin: 10,
+        boxTextMargin: 5,
+        noteMargin: 10,
+        messageMargin: 35
+      }
+    });
+
+    // Function to render Mermaid diagrams
+    async function renderMermaidDiagrams() {
+      console.log('Looking for mermaid diagrams...');
+
+      // Try multiple selectors to find mermaid code blocks
+      const selectors = [
+        'pre code.language-mermaid',
+        'code.language-mermaid',
+        'pre[class*="language-mermaid"]',
+        '.mermaid'
+      ];
+      
+      // Collect potential code blocks across selectors
+      const codeSet = new Set();
+      for (const selector of selectors) {
+        try {
+          const found = document.querySelectorAll(selector);
+          if (found.length > 0) {
+            console.log(`Found ${found.length} elements with selector: ${selector}`);
+            found.forEach(el => codeSet.add(el));
+          }
+        } catch (e) {
+          continue;
+        }
+      }
+
+      // Also look for any pre element containing typical mermaid keywords
+      const allPres = document.querySelectorAll('pre');
+      allPres.forEach(pre => {
+        if (pre.dataset.mermaidProcessed === 'true') return;
+        const text = pre.textContent || pre.innerText;
+        if (text && (
+          /^(\s*%%.*\n)*\s*(flowchart|graph|sequenceDiagram|classDiagram|stateDiagram)/i.test(text)
+        )) {
+          console.log('Found potential mermaid diagram in <pre>');
+          const codeEl = pre.querySelector('code') || pre;
+          codeSet.add(codeEl);
+        }
+      });
+      
+      const codeBlocks = Array.from(codeSet);
+      console.log(`Processing ${codeBlocks.length} mermaid diagrams...`);
+      
+      for (let i = 0; i < codeBlocks.length; i++) {
+        const element = codeBlocks[i];
+        let diagram = element.textContent || element.innerText;
+        
+        // If it's a code element inside pre, get the parent pre
+        let targetElement = element;
+        if (element.tagName && element.tagName.toLowerCase() === 'code') {
+          const preParent = element.closest('pre');
+          if (preParent) {
+            targetElement = preParent;
+            diagram = element.textContent || element.innerText;
+          }
+        }
+        
+        // Skip if already processed
+        if (targetElement && targetElement.dataset && targetElement.dataset.mermaidProcessed === 'true') {
+          continue;
+        }
+
+        if (diagram && diagram.trim()) {
+          try {
+            const { svg } = await mermaid.render(`mermaid-${i}-${Date.now()}`, diagram.trim());
+            
+            // Create a container div
+            const container = document.createElement('div');
+            container.className = 'mermaid-container';
+            container.style.cssText = 'display: flex; justify-content: center; align-items: center; margin: 2rem 0; text-align: center;';
+            container.innerHTML = svg;
+            
+            // Replace the target element with our container
+            if (targetElement.parentNode) {
+              targetElement.parentNode.replaceChild(container, targetElement);
+              container.setAttribute('data-mermaid-processed', 'true');
+              console.log(`Successfully rendered diagram ${i + 1}`);
+            }
+            
+          } catch (error) {
+            console.error('Mermaid rendering error:', error);
+            // Show error in place of diagram
+            const errorDiv = document.createElement('div');
+            errorDiv.style.cssText = 'color: #dc2626; padding: 1rem; border: 1px solid #fca5a5; border-radius: 0.375rem; background-color: #fef2f2; margin: 2rem 0;';
+            errorDiv.innerHTML = `<strong>Error rendering diagram:</strong> ${error.message}<br><details><summary>Show diagram source</summary><pre style="margin-top: 0.5rem; font-size: 0.75rem; overflow-x: auto;">${diagram}</pre></details>`;
+            
+            if (targetElement.parentNode) {
+              targetElement.parentNode.replaceChild(errorDiv, targetElement);
+            }
+          }
+        }
+      }
+    }
+
+    // Initialize when DOM is ready
+    function initializeMermaid() {
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', renderMermaidDiagrams);
+      } else {
+        renderMermaidDiagrams();
+      }
+    }
+
+    // Initialize on page load
+    initializeMermaid();
+
+    // Re-initialize on navigation (for Astro view transitions)
+    document.addEventListener('astro:page-load', renderMermaidDiagrams);
+  </script>
 </body>
 </html>
