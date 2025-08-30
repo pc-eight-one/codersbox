@@ -1,0 +1,126 @@
+---
+import Mermaid from './Mermaid.astro';
+---
+
+<!-- Example usage of Mermaid diagrams in Astro -->
+
+<div class="prose prose-gray max-w-none">
+  <h2>Mermaid Diagram Examples</h2>
+  
+  <h3>1. Flowchart</h3>
+  <Mermaid diagram={`
+flowchart TD
+    A[Start] --> B{Is it working?}
+    B -->|Yes| C[Great!]
+    B -->|No| D[Debug]
+    D --> B
+    C --> E[End]
+  `} />
+
+  <h3>2. Sequence Diagram</h3>
+  <Mermaid diagram={`
+sequenceDiagram
+    participant User
+    participant Browser
+    participant Server
+    participant Database
+    
+    User->>Browser: Enter URL
+    Browser->>Server: HTTP Request
+    Server->>Database: Query Data
+    Database-->>Server: Return Data
+    Server-->>Browser: HTTP Response
+    Browser-->>User: Display Page
+  `} />
+
+  <h3>3. Class Diagram (Java)</h3>
+  <Mermaid diagram={`
+classDiagram
+    class Animal {
+        -String name
+        -int age
+        +getName() String
+        +setName(String name) void
+        +makeSound() void
+    }
+    
+    class Dog {
+        -String breed
+        +makeSound() void
+        +fetch() void
+    }
+    
+    class Cat {
+        -boolean indoor
+        +makeSound() void
+        +climb() void
+    }
+    
+    Animal <|-- Dog
+    Animal <|-- Cat
+  `} />
+
+  <h3>4. Git Flow</h3>
+  <Mermaid diagram={`
+gitgraph
+    commit id: "Initial commit"
+    branch develop
+    commit id: "Add feature A"
+    commit id: "Add feature B"
+    checkout main
+    merge develop
+    commit id: "Release v1.0"
+    branch hotfix
+    commit id: "Fix critical bug"
+    checkout main
+    merge hotfix
+    commit id: "Release v1.0.1"
+  `} />
+
+  <h3>5. Entity Relationship Diagram</h3>
+  <Mermaid diagram={`
+erDiagram
+    USER {
+        int id PK
+        string email
+        string name
+        datetime created_at
+    }
+    
+    POST {
+        int id PK
+        string title
+        text content
+        int user_id FK
+        datetime published_at
+    }
+    
+    COMMENT {
+        int id PK
+        text content
+        int post_id FK
+        int user_id FK
+        datetime created_at
+    }
+    
+    USER ||--o{ POST : "creates"
+    POST ||--o{ COMMENT : "has"
+    USER ||--o{ COMMENT : "writes"
+  `} />
+
+  <h3>6. State Diagram</h3>
+  <Mermaid diagram={`
+stateDiagram-v2
+    [*] --> Idle
+    
+    Idle --> Processing : start()
+    Processing --> Idle : complete()
+    Processing --> Error : fail()
+    Error --> Processing : retry()
+    Error --> Idle : reset()
+    
+    Processing --> Paused : pause()
+    Paused --> Processing : resume()
+    Paused --> Idle : cancel()
+  `} />
+</div>
