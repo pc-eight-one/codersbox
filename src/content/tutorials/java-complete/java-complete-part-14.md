@@ -17,14 +17,36 @@ prerequisites: ["Java Complete Parts 1-13"]
 
 # Input/Output (I/O) Streams
 
-Data flow at a glance (byte vs character):
+**Why This Matters**: I/O operations are fundamental to real applications - reading configuration files, processing data, saving user information, network communication, and database interactions. Every production Java application uses I/O extensively.
+
+**Core Concepts**:
+- **Byte Streams**: Handle binary data (images, videos, executables)
+- **Character Streams**: Handle text data (files, user input, logs)  
+- **Buffered Streams**: Improve performance by reducing system calls
+- **Modern NIO**: Non-blocking, high-performance I/O for servers
+
 ```mermaid
-flowchart LR
-    File --> FIS[FileInputStream] --> BIS[BufferedInputStream] --> App[Your code]
-    FileTXT[Text File] --> FR[FileReader] --> BR[BufferedReader] --> App
+flowchart TD
+    A[Data Sources] --> B[Files]
+    A --> C[Network]
+    A --> D[Memory]
+    
+    B --> E[Byte Streams<br/>FileInputStream/OutputStream]
+    B --> F[Character Streams<br/>FileReader/Writer]
+    
+    E --> G[Buffered<br/>Performance Boost]
+    F --> H[Buffered<br/>Performance Boost]
+    
+    G --> I[Your Application]
+    H --> I
+    
+    style E fill:#ffebee
+    style F fill:#e3f2fd
+    style G fill:#e8f5e8
+    style H fill:#fff3e0
 ```
 
-Java I/O provides a comprehensive system for reading from and writing to various data sources including files, network connections, and memory buffers. Understanding I/O streams is essential for building applications that interact with external data.
+I/O streams provide a unified way to handle data from any source with consistent APIs.
 
 ## Understanding I/O Streams
 

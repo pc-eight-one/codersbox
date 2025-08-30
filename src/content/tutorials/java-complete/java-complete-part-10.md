@@ -17,11 +17,30 @@ prerequisites: ["Java Complete Parts 1-9"]
 
 # Inheritance and Polymorphism
 
-Inheritance allows classes to inherit properties and methods from other classes, promoting code reuse and establishing hierarchical relationships. Polymorphism enables objects of different types to be treated uniformly through a common interface.
+**Why This Matters**: Inheritance prevents code duplication and models real-world hierarchies. Polymorphism enables writing flexible code that works with multiple types. Together, they're the foundation of frameworks, libraries, and scalable application architectures.
+
+**Core Concepts**:
+- **Inheritance**: Child classes inherit properties and behaviors from parent classes
+- **Polymorphism**: One interface, multiple implementations - same method call, different behaviors
 
 ## Understanding Inheritance
 
-Inheritance models "is-a" relationships. A `Dog` is an `Animal`, a `SavingsAccount` is a `BankAccount`, a `Manager` is an `Employee`.
+**Key Principle**: Inheritance models **"is-a"** relationships in the real world.
+
+```mermaid
+graph TD
+    A["Animal: eat(), sleep(), makeSound()"] --> B["Dog: bark(), wagTail()"]
+    A --> C["Cat: meow(), scratch()"]
+    A --> D["Bird: fly(), chirp()"]
+    
+    E["Vehicle: start(), stop()"] --> F["Car: openTrunk()"]
+    E --> G["Motorcycle: popWheelie()"]
+    
+    style A fill:#e3f2fd
+    style E fill:#e3f2fd
+```
+
+**Benefits**: Code reuse, logical organization, easier maintenance, extensibility.
 
 ### Basic Inheritance Syntax
 

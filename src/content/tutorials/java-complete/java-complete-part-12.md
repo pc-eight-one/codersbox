@@ -17,21 +17,39 @@ prerequisites: ["Java Complete Parts 1-11"]
 
 # Packages and Modularity
 
-Two mental models to keep things straight:
+**Why This Matters**: Packages are essential for organizing large applications, preventing naming conflicts, and controlling access. The module system enables building maintainable, secure applications with explicit dependencies. Critical for enterprise development and library creation.
+
+**Core Concepts**:
+- **Packages**: Organize classes, prevent naming conflicts, control access
+- **Modules**: Group packages, declare dependencies explicitly, improve security
+- **Encapsulation**: Hide internal implementation, expose only public APIs
+
 ```mermaid
 flowchart TD
-    A[Classes] --> B[Packages]
-    B --> C[JAR]
-    C --> D[Modules]
+    A[Individual Classes<br/>Person.java, Account.java] --> B[Packages<br/>com.bank.model, com.bank.service]
+    B --> C[JAR Files<br/>bank-core.jar, bank-api.jar]
+    C --> D[Modules<br/>bank.core, bank.web]
+    D --> E[Applications<br/>Modular Java Apps]
+    
+    style A fill:#ffebee
+    style B fill:#e3f2fd
+    style C fill:#e8f5e8
+    style D fill:#fff3e0
 ```
 
 ```mermaid
-flowchart LR
-    App[App Module] -->|requires| Core[Core Module]
-    Core -->|exports| API[Public Packages]
+graph LR
+    A[banking.app module] -->|requires| B[banking.core module]
+    A -->|requires| C[banking.ui module]
+    B -->|exports| D[com.bank.model]
+    B -->|exports| E[com.bank.service]
+    
+    style A fill:#e3f2fd
+    style B fill:#e8f5e8
+    style C fill:#fff3e0
 ```
 
-Packages organize classes into logical groups and provide namespace management, while the module system (Java 9+) offers higher-level organization and dependency management for large applications.
+Packages and modules create clean architectural boundaries and explicit dependency management.
 
 ## Understanding Packages
 
@@ -40,7 +58,7 @@ Packages group related classes and interfaces, prevent naming conflicts, and pro
 ### Package Declaration and Structure
 
 ```java
-// File: com/codersbox/banking/Account.java
+// File: dev/codersbox/banking/Account.java
 package com.codersbox.banking;
 
 import java.util.Date;
@@ -77,7 +95,7 @@ public class Account {
     }
 }
 
-// File: com/codersbox/banking/BankingService.java
+// File: dev/codersbox/banking/BankingService.java
 package com.codersbox.banking;
 
 import java.util.*;
@@ -141,7 +159,7 @@ public class BankingService {
     }
 }
 
-// File: com/codersbox/banking/TransactionRecord.java
+// File: dev/codersbox/banking/TransactionRecord.java
 package com.codersbox.banking;
 
 import java.util.Date;
@@ -176,7 +194,7 @@ class TransactionRecord {
     }
 }
 
-// File: com/codersbox/banking/TransactionType.java
+// File: dev/codersbox/banking/TransactionType.java
 package com.codersbox.banking;
 
 public enum TransactionType {
@@ -200,7 +218,7 @@ public enum TransactionType {
 ### Using Different Packages
 
 ```java
-// File: com/codersbox/ui/BankingApp.java
+// File: dev/codersbox/ui/BankingApp.java
 package com.codersbox.ui;
 
 // Import specific classes
@@ -322,7 +340,7 @@ public class BankingApp {
     }
 }
 
-// File: com/codersbox/util/StringHelper.java
+// File: dev/codersbox/util/StringHelper.java
 package com.codersbox.util;
 
 public class StringHelper {
@@ -351,7 +369,7 @@ public class StringHelper {
     }
 }
 
-// File: com/codersbox/util/DateHelper.java
+// File: dev/codersbox/util/DateHelper.java
 package com.codersbox.util;
 
 import java.text.SimpleDateFormat;
@@ -473,7 +491,7 @@ public class ImportBestPractices {
 ### Access Modifier Summary
 
 ```java
-// File: com/codersbox/access/AccessDemo.java
+// File: dev/codersbox/access/AccessDemo.java
 package com.codersbox.access;
 
 public class AccessDemo {
@@ -512,7 +530,7 @@ public class AccessDemo {
     }
 }
 
-// File: com/codersbox/access/SamePackageAccess.java
+// File: dev/codersbox/access/SamePackageAccess.java
 package com.codersbox.access;
 
 public class SamePackageAccess {
@@ -535,7 +553,7 @@ public class SamePackageAccess {
 ### Different Package Access
 
 ```java
-// File: com/codersbox/external/ExternalAccess.java
+// File: dev/codersbox/external/ExternalAccess.java
 package com.codersbox.external;
 
 import com.codersbox.access.AccessDemo;
@@ -556,7 +574,7 @@ public class ExternalAccess {
     }
 }
 
-// File: com/codersbox/external/SubclassAccess.java
+// File: dev/codersbox/external/SubclassAccess.java
 package com.codersbox.external;
 
 import com.codersbox.access.AccessDemo;
@@ -582,7 +600,7 @@ public class SubclassAccess extends AccessDemo {
 
 ```bash
 # Compile all Java files
-javac -d build src/com/codersbox/*/*.java
+javac -d build src/dev/codersbox/*/*.java
 
 # Create JAR file with manifest
 jar cfm banking-app.jar manifest.txt -C build .
@@ -616,7 +634,7 @@ jar xf banking-app.jar
 ### Programmatic JAR Creation
 
 ```java
-// File: com/codersbox/build/JarBuilder.java
+// File: dev/codersbox/build/JarBuilder.java
 package com.codersbox.build;
 
 import java.io.*;
@@ -711,19 +729,19 @@ banking-system/
 ├── banking-core/
 │   └── src/
 │       ├── module-info.java
-│       └── com/codersbox/banking/
+│       └── dev/codersbox/banking/
 ├── banking-ui/
 │   └── src/
 │       ├── module-info.java
-│       └── com/codersbox/banking/ui/
+│       └── dev/codersbox/banking/ui/
 ├── banking-persistence/
 │   └── src/
 │       ├── module-info.java
-│       └── com/codersbox/banking/persistence/
+│       └── dev/codersbox/banking/persistence/
 └── banking-app/
     └── src/
         ├── module-info.java
-        └── com/codersbox/banking/app/
+        └── dev/codersbox/banking/app/
 ```
 
 ### Banking Core Module
@@ -739,7 +757,7 @@ module com.codersbox.banking.core {
     requires transitive java.sql; // Clients also get java.sql
 }
 
-// File: banking-core/src/com/codersbox/banking/core/model/Account.java
+// File: banking-core/src/dev/codersbox/banking/core/model/Account.java
 package com.codersbox.banking.core.model;
 
 import java.math.BigDecimal;
@@ -807,7 +825,7 @@ public class Account {
     }
 }
 
-// File: banking-core/src/com/codersbox/banking/core/service/BankingService.java
+// File: banking-core/src/dev/codersbox/banking/core/service/BankingService.java
 package com.codersbox.banking.core.service;
 
 import com.codersbox.banking.core.model.Account;
@@ -878,7 +896,7 @@ module com.codersbox.banking.ui {
     exports com.codersbox.banking.ui;
 }
 
-// File: banking-ui/src/com/codersbox/banking/ui/BankingUI.java
+// File: banking-ui/src/dev/codersbox/banking/ui/BankingUI.java
 package com.codersbox.banking.ui;
 
 import com.codersbox.banking.core.model.Account;

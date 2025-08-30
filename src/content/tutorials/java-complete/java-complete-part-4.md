@@ -14,164 +14,113 @@ featured: false
 
 # Java Complete - Part 4: Operators and Expressions
 
-A quick mental model for expression evaluation and operator precedence:
+**Why This Matters**: Operators are the building blocks of all computations. Mastering precedence rules prevents bugs, while understanding different operator types enables complex logic and calculations.
+
 ```mermaid
 flowchart LR
-    EXPR[a + b * c] --> MUL[b * c first]
-    MUL --> ADD[then add a]
-    ADD --> RESULT[result]
+    EXPR[a + b * c] --> MUL[b * c first<br/>precedence]
+    MUL --> ADD[then + a<br/>left-to-right]
+    ADD --> RESULT[final result]
     
     style MUL fill:#e1f5fe
     style ADD fill:#f3e5f5
+    style RESULT fill:#e8f5e8
 ```
 
-Operators are the verbs of programming - they perform actions on data. Java provides a rich set of operators that let you manipulate numbers, compare values, combine conditions, and control program flow. Understanding how operators work together in expressions is fundamental to writing effective Java programs.
+Operators are the verbs of programming - they perform actions on data. Java provides a rich set of operators for arithmetic, comparison, logic, and assignment operations.
 
 ## Arithmetic Operators
 
-The basic arithmetic operators work as you'd expect from mathematics, but with some important computer-specific behaviors:
+**Core Operations**: `+` `-` `*` `/` `%` work as expected, but Java has specific rules for integer division and modulo.
 
 ```java
-public class ArithmeticOperators {
-    public static void main(String[] args) {
-        int a = 15, b = 4;
-        
-        // Basic arithmetic
-        System.out.println("a = " + a + ", b = " + b);
-        System.out.println("a + b = " + (a + b));    // Addition: 19
-        System.out.println("a - b = " + (a - b));    // Subtraction: 11
-        System.out.println("a * b = " + (a * b));    // Multiplication: 60
-        System.out.println("a / b = " + (a / b));    // Integer division: 3
-        System.out.println("a % b = " + (a % b));    // Remainder (modulo): 3
-        
-        // Division behavior with different types
-        double preciseResult = (double) a / b;
-        System.out.println("Precise division: " + preciseResult); // 3.75
-        
-        // Demonstration of integer division pitfall
-        int result1 = 3 / 4;          // 0 (integer division)
-        double result2 = 3.0 / 4;     // 0.75 (floating-point division)
-        double result3 = 3 / 4.0;     // 0.75
-        double result4 = (double) 3 / 4; // 0.75 (explicit cast)
-        
-        System.out.println("3 / 4 (int): " + result1);
-        System.out.println("3.0 / 4: " + result2);
-        System.out.println("3 / 4.0: " + result3);
-        System.out.println("(double) 3 / 4: " + result4);
-        
-        // Modulo with negative numbers
-        System.out.println("15 % 4 = " + (15 % 4));   // 3
-        System.out.println("-15 % 4 = " + (-15 % 4)); // -3
-        System.out.println("15 % -4 = " + (15 % -4)); // 3
-        System.out.println("-15 % -4 = " + (-15 % -4)); // -3
-        
-        // Practical use: checking if number is even
-        int number = 42;
-        boolean isEven = (number % 2) == 0;
-        System.out.println(number + " is even: " + isEven);
-    }
-}
+// Basic arithmetic - straightforward
+int a = 15, b = 4;
+System.out.println(a + b);    // Addition: 19
+System.out.println(a - b);    // Subtraction: 11  
+System.out.println(a * b);    // Multiplication: 60
+System.out.println(a / b);    // Integer division: 3 (not 3.75!)
+System.out.println(a % b);    // Remainder: 3
+```
+
+### Critical Integer Division Rule
+```java
+int result1 = 3 / 4;           // 0 (integers → integer result)
+double result2 = 3.0 / 4;      // 0.75 (double involved → double result)
+double result3 = (double)3/4;  // 0.75 (cast forces double division)
+```
+
+### Modulo Operator Uses
+```java
+// Check if even/odd
+boolean isEven = (number % 2) == 0;
+
+// Cycle through values (0, 1, 2, 0, 1, 2...)
+int cycleValue = counter % 3;
+
+// Negative numbers keep sign of dividend
+System.out.println(-15 % 4);   // -3 (not 1!)
 ```
 
 ### Unary Operators
 
-Unary operators work on a single operand:
+**Single Operand**: Work on one value. The critical difference is **when** the increment/decrement happens.
 
 ```java
-public class UnaryOperators {
-    public static void main(String[] args) {
-        int x = 5;
-        
-        System.out.println("Original x: " + x);
-        System.out.println("+x: " + (+x));  // Unary plus: 5
-        System.out.println("-x: " + (-x));  // Unary minus: -5
-        System.out.println("x is still: " + x); // x unchanged: 5
-        
-        // Increment and decrement
-        int a = 10;
-        System.out.println("a starts at: " + a);
-        
-        // Pre-increment: increment first, then use
-        System.out.println("++a: " + (++a));     // 11
-        System.out.println("a is now: " + a);    // 11
-        
-        // Post-increment: use first, then increment
-        System.out.println("a++: " + (a++));     // 11
-        System.out.println("a is now: " + a);    // 12
-        
-        // Pre-decrement: decrement first, then use
-        System.out.println("--a: " + (--a));     // 11
-        System.out.println("a is now: " + a);    // 11
-        
-        // Post-decrement: use first, then decrement
-        System.out.println("a--: " + (a--));     // 11
-        System.out.println("a is now: " + a);    // 10
-        
-        // Practical example: loop counter
-        System.out.println("Counting down:");
-        int countdown = 5;
-        while (countdown > 0) {
-            System.out.println(countdown--);
-        }
-        
-        // Boolean negation
-        boolean flag = true;
-        System.out.println("flag: " + flag);      // true
-        System.out.println("!flag: " + (!flag));  // false
-        System.out.println("flag is still: " + flag); // true
-    }
+int x = 5;
+System.out.println(+x);    // Unary plus: 5 (rarely used)
+System.out.println(-x);    // Unary minus: -5 (x still 5)
+System.out.println(!true); // Boolean NOT: false
+```
+
+### Increment/Decrement: Before vs After
+
+```java
+int a = 10;
+
+// Pre-increment: change FIRST, then use
+int result1 = ++a;  // a becomes 11, result1 gets 11
+
+// Post-increment: use FIRST, then change  
+int result2 = a++;  // result2 gets 11, then a becomes 12
+```
+
+**Common Usage**: Loop counters
+```java
+// Pre-increment in condition (common pattern)
+for (int i = 0; i < 10; ++i) { /* faster by tiny amount */ }
+
+// Post-increment when you need original value
+while (countdown > 0) {
+    System.out.println(countdown--);  // print, then decrement
 }
 ```
 
 ## Assignment Operators
 
-Assignment operators not only assign values but can perform operations simultaneously:
+**Compound Assignment**: Perform operation and assignment in one step. More concise and often more efficient.
 
 ```java
-public class AssignmentOperators {
-    public static void main(String[] args) {
-        int balance = 1000;
+int balance = 1000;
+
+// Compound assignment - shorthand for common operations
+balance += 250;     // Same as: balance = balance + 250
+balance -= 100;     // Same as: balance = balance - 100  
+balance *= 2;       // Same as: balance = balance * 2
+balance /= 3;       // Same as: balance = balance / 3
+balance %= 100;     // Same as: balance = balance % 100
+
+// Works with other operators too
+String message = "Hello";
+message += " World";  // String concatenation: "Hello World"
         
-        System.out.println("Initial balance: $" + balance);
-        
-        // Compound assignment operators
-        balance += 250;    // Same as: balance = balance + 250
-        System.out.println("After deposit: $" + balance);
-        
-        balance -= 100;    // Same as: balance = balance - 100
-        System.out.println("After withdrawal: $" + balance);
-        
-        balance *= 1.05;   // Same as: balance = (int)(balance * 1.05)
-        System.out.println("After 5% interest: $" + balance);
-        
-        balance /= 2;      // Same as: balance = balance / 2
-        System.out.println("After splitting: $" + balance);
-        
-        balance %= 100;    // Same as: balance = balance % 100
-        System.out.println("Remainder after dividing by 100: $" + balance);
-        
-        // Bitwise compound assignment
-        int flags = 0b1010;  // Binary: 1010
-        System.out.println("Initial flags: " + Integer.toBinaryString(flags));
-        
-        flags |= 0b0101;   // Bitwise OR assignment
-        System.out.println("After OR with 0101: " + Integer.toBinaryString(flags));
-        
-        flags &= 0b1100;   // Bitwise AND assignment
-        System.out.println("After AND with 1100: " + Integer.toBinaryString(flags));
-        
-        flags ^= 0b0011;   // Bitwise XOR assignment
-        System.out.println("After XOR with 0011: " + Integer.toBinaryString(flags));
-        
-        // Shift assignment
-        int value = 8;
-        value <<= 2;       // Left shift by 2 positions (multiply by 4)
-        System.out.println("8 << 2 = " + value);  // 32
-        
-        value >>= 3;       // Right shift by 3 positions (divide by 8)
-        System.out.println("32 >> 3 = " + value); // 4
-    }
-}
+// Shift assignment
+int value = 8;
+value <<= 2;       // Left shift by 2 positions (multiply by 4)
+System.out.println("8 << 2 = " + value);  // 32
+
+value >>= 3;       // Right shift by 3 positions (divide by 8)
+System.out.println("32 >> 3 = " + value); // 4
 ```
 
 ## Comparison Operators
@@ -485,23 +434,44 @@ public class TernaryOperator {
 
 ## Operator Precedence and Associativity
 
-Understanding how operators are evaluated prevents subtle bugs:
+**Critical for Bug Prevention**: Java evaluates expressions in a specific order. Knowing precedence rules prevents logic errors and unexpected results.
+
+```mermaid
+graph TD
+    A[Highest Priority] --> B["Postfix: ++ --"]
+    B --> C["Unary: + - ! ~ ++ --"]
+    C --> D["Multiplicative: * / %"]  
+    D --> E["Additive: + -"]
+    E --> F["Relational: < <= > >="]
+    F --> G["Equality: == !="]
+    G --> H["Logical AND: &&"]
+    H --> I["Logical OR: double pipe"]
+    I --> J["Ternary: ? :"]
+    J --> K["Assignment: = += -= *="]
+    K --> L[Lowest Priority]
+    
+    style D fill:#e3f2fd
+    style E fill:#e3f2fd  
+    style F fill:#fff3e0
+    style G fill:#fff3e0
+```
+
+**Memory Aid**: **Math** (*, /, %) → **Add/Sub** (+, -) → **Compare** (<, >=, ==) → **Logic** (&&, ||) → **Assign** (=)
+
+### Essential Precedence Examples
 
 ```java
-public class OperatorPrecedence {
-    public static void main(String[] args) {
-        // Arithmetic precedence: *, /, % before +, -
-        int result1 = 2 + 3 * 4;        // 14, not 20
-        int result2 = (2 + 3) * 4;      // 20
-        System.out.println("2 + 3 * 4 = " + result1);
-        System.out.println("(2 + 3) * 4 = " + result2);
-        
-        // Logical precedence: && before ||
-        boolean a = true, b = false, c = true;
-        boolean result3 = a || b && c;   // true || (false && true) = true
-        boolean result4 = (a || b) && c; // (true || false) && true = true
-        System.out.println("a || b && c = " + result3);
-        System.out.println("(a || b) && c = " + result4);
+// Math operators first: *, /, % before +, -
+int result1 = 2 + 3 * 4;        // 14, not 20 (3*4 first, then +2)
+int result2 = (2 + 3) * 4;      // 20 (parentheses override precedence)
+
+// Comparison before logic: <, >= before &&, ||
+boolean valid1 = age >= 18 && score > 60;        // Safe: compares first
+boolean valid2 = age >= 18 && score > 60 || vip; // (age>=18 && score>60) || vip
+
+// Logic order: && before ||
+boolean result = true || false && false;  // true (false && false first)
+boolean result2 = (true || false) && false; // false (parentheses change it)
         
         // Comparison vs. logical operators
         int x = 5, y = 10, z = 15;

@@ -88,21 +88,32 @@ Calculated at: 2025-01-29T10:30:45.123
 
 ## Java Program Structure
 
+Java programs follow a strict hierarchical structure that promotes organization and clarity:
+
+```mermaid
+flowchart TD
+    A[Java Source File .java] --> B[Package Declaration]
+    A --> C[Import Statements]
+    A --> D[Class Declaration]
+    D --> E[Class Variables]
+    D --> F[Constructors]
+    D --> G[Methods]
+    G --> H[Local Variables]
+    G --> I[Method Logic]
+```
+
 ### Package Declaration
 ```java
 package com.codersbox.basics;
 ```
-
-Packages organize related classes and prevent naming conflicts. The package name typically follows your domain name in reverse (like `com.company.project`). This must be the first non-comment line in your file.
+**Purpose**: Organizes classes and prevents naming conflicts. Must be first non-comment line.
 
 ### Import Statements
 ```java
-import java.time.LocalDateTime;
-import java.text.NumberFormat;
-import java.util.*;  // Wildcard import (use sparingly)
+import java.time.LocalDateTime;    // Specific import (preferred)
+import java.util.*;               // Wildcard import (use sparingly)
 ```
-
-Imports make classes from other packages available. Prefer specific imports over wildcards for clarity.
+**Purpose**: Makes classes from other packages available without fully qualified names.
 
 ### Class Declaration
 ```java
@@ -110,38 +121,32 @@ public class InvestmentCalculator {
     // class body
 }
 ```
-
-Every Java program needs at least one class. The filename must match the public class name exactly.
+**Key Rule**: Filename must match public class name exactly (`InvestmentCalculator.java`).
 
 ## Variables and Identifiers
 
-Variables store data that your program manipulates. Java requires you to declare variables before using them:
+Variables are named storage locations that hold data. Java enforces **declare before use**:
 
 ```java
-public class VariableDemo {
-    public static void main(String[] args) {
-        // Declaration and initialization
-        int age = 25;
-        String name = "Alice";
-        double salary = 75000.50;
-        boolean isActive = true;
-        
-        // Declaration without initialization
-        int count;
-        count = 10;  // Must initialize before use
-        
-        // Multiple variables of same type
-        int width = 800, height = 600;
-        
-        // Final variables (constants)
-        final double PI = 3.14159265359;
-        final String COMPANY_NAME = "TechCorp";
-        
-        System.out.println(name + " is " + age + " years old");
-        System.out.println("Salary: $" + salary);
-        System.out.println("Status: " + (isActive ? "Active" : "Inactive"));
-    }
-}
+// Basic variable patterns
+int age = 25;                    // Declaration + initialization
+String name;                     // Declaration only
+name = "Alice";                  // Assignment (must happen before use)
+
+// Multiple variables
+int width = 800, height = 600;   // Same type, same line
+
+// Constants
+final double PI = 3.14159;       // Cannot be reassigned
+```
+
+### Variable Lifecycle
+```mermaid
+graph LR
+    A[Declare] --> B[Initialize]
+    B --> C[Use/Modify]
+    C --> D[Out of Scope]
+    D --> E[Garbage Collected]
 ```
 
 ### Identifier Rules
@@ -173,172 +178,131 @@ Java follows consistent naming patterns:
 
 ## Primitive Data Types
 
-Java provides eight primitive types that store data efficiently:
+Java provides 8 primitive types that store data efficiently in memory. Understanding their ranges prevents overflow errors:
 
-### Integer Types
+```mermaid
+graph TB
+    subgraph "Integer Types"
+        A[byte: 8 bits<br/>-128 to 127]
+        B[short: 16 bits<br/>-32,768 to 32,767]  
+        C[int: 32 bits<br/>-2³¹ to 2³¹-1]
+        D[long: 64 bits<br/>-2⁶³ to 2⁶³-1]
+    end
+    subgraph "Floating-Point"
+        E[float: 32 bits<br/>IEEE 754]
+        F[double: 64 bits<br/>IEEE 754]
+    end
+    subgraph "Other"
+        G[char: 16 bits<br/>Unicode 0-65535]
+        H[boolean<br/>true/false]
+    end
+```
+
+### Integer Types - Essential Patterns
 
 ```java
-public class IntegerTypes {
-    public static void main(String[] args) {
-        byte smallNumber = 127;        // 8 bits: -128 to 127
-        short mediumNumber = 32767;    // 16 bits: -32,768 to 32,767
-        int regularNumber = 2147483647; // 32 bits: -2^31 to 2^31-1
-        long largeNumber = 9223372036854775807L; // 64 bits: -2^63 to 2^63-1
-        
-        // Numeric literals
-        int decimal = 42;
-        int hex = 0x2A;        // Hexadecimal
-        int octal = 052;       // Octal (rarely used)
-        int binary = 0b101010; // Binary (Java 7+)
-        
-        // Underscores for readability (Java 7+)
-        long population = 7_800_000_000L;
-        int bankBalance = 1_000_000;
-        
-        System.out.println("Decimal: " + decimal);
-        System.out.println("Hex: " + hex);
-        System.out.println("Binary: " + binary);
-        System.out.println("Population: " + population);
-        
-        // Demonstrate overflow
-        int maxInt = Integer.MAX_VALUE;
-        System.out.println("Max int: " + maxInt);
-        System.out.println("Max int + 1: " + (maxInt + 1)); // Overflow!
-    }
-}
+// Common declarations
+int count = 42;                    // Most common integer type
+long distance = 9_460_730_472_580_800L; // Light year in meters
+byte flags = 0b10110011;           // Binary representation
+int hex = 0xFF00FF;                // Hexadecimal color
+
+// Critical: Overflow behavior
+int maxInt = Integer.MAX_VALUE;    // 2,147,483,647
+int overflow = maxInt + 1;         // Wraps to -2,147,483,648!
 ```
 
-Output:
-```
-Decimal: 42
-Hex: 42
-Binary: 42
-Population: 7800000000
-Max int: 2147483647
-Max int + 1: -2147483648
-```
+**Key Insight**: Integer overflow wraps around silently. Use `Math.addExact()` to detect overflow.
 
-### Floating-Point Types
+### Floating-Point Types - Critical Precision Rules
 
 ```java
-public class FloatingPointTypes {
-    public static void main(String[] args) {
-        float precision = 3.14159f;    // 32-bit IEEE 754
-        double highPrecision = 3.141592653589793; // 64-bit IEEE 754
-        
-        // Scientific notation
-        double avogadro = 6.022e23;
-        double electronMass = 9.109e-31;
-        
-        // Special values
-        double positive = Double.POSITIVE_INFINITY;
-        double negative = Double.NEGATIVE_INFINITY;
-        double notANumber = Double.NaN;
-        
-        System.out.println("Float precision: " + precision);
-        System.out.println("Double precision: " + highPrecision);
-        System.out.println("Avogadro's number: " + avogadro);
-        
-        // Floating-point arithmetic peculiarities
-        double result = 0.1 + 0.2;
-        System.out.println("0.1 + 0.2 = " + result);
-        System.out.println("Equals 0.3? " + (result == 0.3));
-        
-        // Use BigDecimal for exact decimal arithmetic
-        java.math.BigDecimal bd1 = new java.math.BigDecimal("0.1");
-        java.math.BigDecimal bd2 = new java.math.BigDecimal("0.2");
-        java.math.BigDecimal bdResult = bd1.add(bd2);
-        System.out.println("BigDecimal result: " + bdResult);
-    }
-}
+// Basic declarations
+float f = 3.14159f;               // 32-bit, requires 'f' suffix
+double d = 3.141592653589793;     // 64-bit, default for decimals
+
+// Scientific notation
+double avogadro = 6.022e23;       // 6.022 × 10²³
+double planck = 6.626e-34;        // 6.626 × 10⁻³⁴
+
+// The floating-point precision trap
+double result = 0.1 + 0.2;        // NOT exactly 0.3!
+boolean isEqual = result == 0.3;   // false - never use == with floats
+```
+
+**Critical Warning**: Floating-point arithmetic is approximate. For exact decimal calculations, use `BigDecimal`:
+
+```java
+BigDecimal exact = new BigDecimal("0.1").add(new BigDecimal("0.2"));
+// Result: exactly 0.3
 ```
 
 ### Character and Boolean Types
 
 ```java
-public class CharAndBoolean {
-    public static void main(String[] args) {
-        // Character type
-        char letter = 'A';
-        char digit = '9';
-        char unicode = '\u0041';  // Unicode for 'A'
-        char newline = '\n';      // Escape sequence
-        char tab = '\t';
-        
-        System.out.println("Letter: " + letter);
-        System.out.println("Unicode A: " + unicode);
-        System.out.println("Character to int: " + (int) letter);
-        
-        // Boolean type
-        boolean isJavaFun = true;
-        boolean isPythonBetter = false;
-        boolean result = isJavaFun && !isPythonBetter;
-        
-        System.out.println("Java is fun: " + isJavaFun);
-        System.out.println("Combined result: " + result);
-        
-        // Characters in arithmetic
-        char firstChar = 'A';
-        char secondChar = 'B';
-        int difference = secondChar - firstChar;
-        System.out.println("'B' - 'A' = " + difference);
-    }
-}
+// Character - 16-bit Unicode
+char letter = 'A';               // Single quotes for char literals
+char unicode = '\u0041';         // Unicode escape (also 'A')
+char newline = '\n';             // Escape sequences
+char tab = '\t';
+
+// Characters are numbers underneath
+int asciiValue = (char) 'A';     // 65
+char fromNumber = (char) 66;     // 'B'
+
+// Boolean - only true or false
+boolean isActive = true;
+boolean isComplete = false;
+boolean result = isActive && !isComplete;  // true
 ```
+
+**Important**: `char` is unsigned (0 to 65,535), unlike other integer types which are signed.
 
 ## Type Conversion and Casting
 
-Java performs automatic conversions when safe, but requires explicit casting for potentially lossy conversions:
+Java's type system enforces safety through automatic widening and explicit narrowing:
 
-```java
-public class TypeConversion {
-    public static void main(String[] args) {
-        // Automatic widening conversions (safe)
-        int intValue = 100;
-        long longValue = intValue;        // int → long
-        double doubleValue = longValue;   // long → double
-        
-        System.out.println("Int: " + intValue);
-        System.out.println("Long: " + longValue);
-        System.out.println("Double: " + doubleValue);
-        
-        // Explicit narrowing conversions (potentially lossy)
-        double pi = 3.14159;
-        int intPi = (int) pi;            // Truncates decimal part
-        byte bytePi = (byte) intPi;      // May lose data if too large
-        
-        System.out.println("Original pi: " + pi);
-        System.out.println("Int pi: " + intPi);
-        System.out.println("Byte pi: " + bytePi);
-        
-        // Dangerous narrowing
-        int bigNumber = 1000;
-        byte smallByte = (byte) bigNumber;
-        System.out.println("1000 as byte: " + smallByte); // -24 (overflow)
-        
-        // String conversions
-        int age = 25;
-        String ageString = String.valueOf(age);
-        String ageString2 = Integer.toString(age);
-        String ageString3 = "" + age;  // Concatenation trick
-        
-        // Parse strings to numbers
-        String numberStr = "42";
-        int parsedInt = Integer.parseInt(numberStr);
-        double parsedDouble = Double.parseDouble("3.14");
-        
-        System.out.println("Parsed int: " + parsedInt);
-        System.out.println("Parsed double: " + parsedDouble);
-        
-        // Handle parsing errors
-        try {
-            int invalidNumber = Integer.parseInt("not a number");
-        } catch (NumberFormatException e) {
-            System.out.println("Failed to parse: " + e.getMessage());
-        }
-    }
-}
+```mermaid
+graph LR
+    A[byte] --> B[short]
+    B --> C[int] 
+    C --> D[long]
+    C --> E[float]
+    D --> E
+    E --> F[double]
+    G[char] --> C
+    
+    style A fill:#e1f5fe
+    style F fill:#fff3e0
 ```
+
+### Automatic Widening (Safe)
+```java
+int num = 100;
+long bigNum = num;           // int → long (automatic)
+double decimal = bigNum;     // long → double (automatic)
+```
+
+### Explicit Narrowing (Potentially Lossy)
+```java
+double pi = 3.14159;
+int truncated = (int) pi;    // 3 (decimal part lost)
+byte small = (byte) 1000;    // -24 (overflow wraparound!)
+```
+
+### String Conversions
+```java
+// To String
+String s1 = String.valueOf(42);    // "42"
+String s2 = Integer.toString(42);  // "42"  
+String s3 = "" + 42;              // "42" (concat trick)
+
+// From String
+int parsed = Integer.parseInt("42");      // 42
+double d = Double.parseDouble("3.14");    // 3.14
+```
+
+**Critical Rule**: Always handle `NumberFormatException` when parsing user input.
 
 ## Wrapper Classes and Autoboxing
 
@@ -458,278 +422,123 @@ public class Constants {
 
 ## Variable Scope and Lifetime
 
-Understanding scope prevents common errors and helps you write cleaner code:
+Java variables have different lifetimes based on where they're declared:
+
+```mermaid
+graph TD
+    A[Class Variables<br/>static fields] --> B[Instance Variables<br/>object fields]
+    B --> C[Method Parameters<br/>method scope]
+    C --> D[Local Variables<br/>block scope]
+    D --> E[Loop Variables<br/>loop scope]
+    
+    A1[Program lifetime] --> A
+    B1[Object lifetime] --> B
+    C1[Method call lifetime] --> C
+    D1[Block execution] --> D
+    E1[Loop iteration] --> E
+```
+
+### Scope Rules in Action
 
 ```java
-public class VariableScope {
-    // Class (static) variables - live for entire program
-    private static int classCounter = 0;
+public class ScopeDemo {
+    static int classVar = 1;        // Accessible everywhere
+    int instanceVar = 2;            // Accessible in instance methods
     
-    // Instance variables - live as long as object exists
-    private String instanceName;
-    private int instanceId;
-    
-    public VariableScope(String name) {
-        this.instanceName = name;
-        this.instanceId = ++classCounter;  // Increment and assign
-    }
-    
-    public void demonstrateScope() {
-        // Method parameter and local variables
-        int localVariable = 10;
-        
-        if (localVariable > 5) {
-            // Block scope variable
-            String blockVariable = "I exist only in this block";
-            int anotherLocal = 20;
-            
-            System.out.println("Block variable: " + blockVariable);
-            System.out.println("Can access local: " + localVariable);
-            System.out.println("Can access instance: " + instanceName);
-        }
-        
-        // blockVariable not accessible here
-        // System.out.println(blockVariable);  // Compile error
-        
-        // Loop variables
-        for (int i = 0; i < 3; i++) {
-            System.out.println("Loop iteration: " + i);
-        }
-        
-        // i is not accessible here
-        // System.out.println(i);  // Compile error
-    }
-    
-    public void shadowingExample() {
-        int value = 100;  // Local variable
+    public void method(int param) { // param: method scope
+        int local = 3;              // local: method scope
         
         if (true) {
-            // This shadows the outer 'value'
-            String value = "I'm a string now";
-            System.out.println("Inner value: " + value);
+            int blockVar = 4;       // blockVar: block scope only
+            // Can access: classVar, instanceVar, param, local, blockVar
         }
+        // blockVar not accessible here - compile error
         
-        System.out.println("Outer value: " + value);
-    }
-    
-    // Static method can only access static variables
-    public static void staticMethodExample() {
-        System.out.println("Class counter: " + classCounter);
-        // System.out.println(instanceName);  // Compile error
-    }
-    
-    public static void main(String[] args) {
-        VariableScope obj1 = new VariableScope("First Object");
-        VariableScope obj2 = new VariableScope("Second Object");
-        
-        obj1.demonstrateScope();
-        obj2.demonstrateScope();
-        obj1.shadowingExample();
-        
-        System.out.println("Total objects created: " + classCounter);
-        
-        staticMethodExample();
+        for (int i = 0; i < 5; i++) {  // i: loop scope only
+            // Can access: classVar, instanceVar, param, local, i
+        }
+        // i not accessible here - compile error
     }
 }
 ```
+
+**Key Rule**: Inner scopes can access outer scope variables, but not vice versa.
 
 ## Practical Example: Temperature Converter
 
-Let's build a practical program that demonstrates these concepts:
+Here's a focused example demonstrating key concepts:
 
 ```java
-package com.codersbox.basics;
-
-import java.util.Scanner;
-import java.text.DecimalFormat;
-
-/**
- * Temperature converter demonstrating Java basics:
- * - Data types and variables
- * - Type conversion
- * - Constants
- * - Input/output
- * - Method parameters
- */
 public class TemperatureConverter {
-    // Mathematical constants
-    private static final double CELSIUS_TO_KELVIN_OFFSET = 273.15;
-    private static final double FAHRENHEIT_TO_CELSIUS_RATIO = 5.0 / 9.0;
-    private static final double CELSIUS_TO_FAHRENHEIT_RATIO = 9.0 / 5.0;
-    private static final int FAHRENHEIT_OFFSET = 32;
-    
-    // Display formatting
-    private static final DecimalFormat TEMPERATURE_FORMAT = new DecimalFormat("#.##");
+    // Constants demonstrate final variables
+    private static final double KELVIN_OFFSET = 273.15;
+    private static final double FAHRENHEIT_RATIO = 9.0 / 5.0;
     
     public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
-        boolean continueConverting = true;
+        // Primitive types in action
+        double celsius = 25.0;        // double for precision
+        boolean isHot = celsius > 30; // boolean for logic
         
-        System.out.println("=== Temperature Converter ===");
+        // Type conversion and calculations
+        double fahrenheit = celsiusToFahrenheit(celsius);
+        double kelvin = celsius + KELVIN_OFFSET;
         
-        while (continueConverting) {
-            displayMenu();
-            int choice = getValidChoice(scanner);
-            
-            if (choice == 4) {
-                continueConverting = false;
-                System.out.println("Goodbye!");
-                continue;
-            }
-            
-            System.out.print("Enter temperature value: ");
-            double temperature = scanner.nextDouble();
-            
-            performConversion(choice, temperature);
-            
-            System.out.print("Convert another temperature? (y/n): ");
-            String response = scanner.next().toLowerCase();
-            continueConverting = response.startsWith("y");
+        // String formatting and output
+        System.out.printf("%.1f°C = %.1f°F = %.1fK%n", 
+                         celsius, fahrenheit, kelvin);
+        System.out.println("Is hot? " + isHot);
+        
+        // Demonstrate scope
+        demonstrateScope();
+    }
+    
+    private static double celsiusToFahrenheit(double c) {
+        return c * FAHRENHEIT_RATIO + 32;  // Method parameter scope
+    }
+    
+    private static void demonstrateScope() {
+        int outerVar = 10;           // Method scope
+        
+        for (int i = 0; i < 3; i++) {    // Loop variable scope
+            int innerVar = i * 2;        // Block scope
+            System.out.println("Loop " + i + ": " + innerVar);
         }
+        // i and innerVar not accessible here
         
-        scanner.close();
-    }
-    
-    private static void displayMenu() {
-        System.out.println("\nChoose conversion:");
-        System.out.println("1. Celsius to Fahrenheit");
-        System.out.println("2. Fahrenheit to Celsius");
-        System.out.println("3. Celsius to Kelvin");
-        System.out.println("4. Exit");
-        System.out.print("Your choice (1-4): ");
-    }
-    
-    private static int getValidChoice(Scanner scanner) {
-        int choice;
-        do {
-            while (!scanner.hasNextInt()) {
-                System.out.print("Please enter a valid number (1-4): ");
-                scanner.next(); // Clear invalid input
-            }
-            choice = scanner.nextInt();
-            
-            if (choice < 1 || choice > 4) {
-                System.out.print("Please enter a number between 1 and 4: ");
-            }
-        } while (choice < 1 || choice > 4);
-        
-        return choice;
-    }
-    
-    private static void performConversion(int choice, double temperature) {
-        double result;
-        String fromUnit, toUnit;
-        
-        switch (choice) {
-            case 1:
-                result = celsiusToFahrenheit(temperature);
-                fromUnit = "°C";
-                toUnit = "°F";
-                break;
-            case 2:
-                result = fahrenheitToCelsius(temperature);
-                fromUnit = "°F";
-                toUnit = "°C";
-                break;
-            case 3:
-                result = celsiusToKelvin(temperature);
-                fromUnit = "°C";
-                toUnit = "K";
-                break;
-            default:
-                return; // Should never reach here due to validation
-        }
-        
-        System.out.printf("%s%s = %s%s%n", 
-            TEMPERATURE_FORMAT.format(temperature), fromUnit,
-            TEMPERATURE_FORMAT.format(result), toUnit);
-            
-        // Add contextual information
-        addContext(choice, temperature, result);
-    }
-    
-    private static double celsiusToFahrenheit(double celsius) {
-        return celsius * CELSIUS_TO_FAHRENHEIT_RATIO + FAHRENHEIT_OFFSET;
-    }
-    
-    private static double fahrenheitToCelsius(double fahrenheit) {
-        return (fahrenheit - FAHRENHEIT_OFFSET) * FAHRENHEIT_TO_CELSIUS_RATIO;
-    }
-    
-    private static double celsiusToKelvin(double celsius) {
-        return celsius + CELSIUS_TO_KELVIN_OFFSET;
-    }
-    
-    private static void addContext(int conversionType, double original, double converted) {
-        if (conversionType == 1 || conversionType == 2) {
-            // Celsius/Fahrenheit context
-            if (original == 0 && conversionType == 1) {
-                System.out.println("(Water freezing point)");
-            } else if (original == 100 && conversionType == 1) {
-                System.out.println("(Water boiling point)");
-            } else if (original == 32 && conversionType == 2) {
-                System.out.println("(Water freezing point)");
-            } else if (original == 212 && conversionType == 2) {
-                System.out.println("(Water boiling point)");
-            }
-        } else if (conversionType == 3) {
-            // Kelvin context
-            if (converted == CELSIUS_TO_KELVIN_OFFSET) {
-                System.out.println("(Water freezing point)");
-            } else if (converted == 373.15) {
-                System.out.println("(Water boiling point)");
-            } else if (converted == 0) {
-                System.out.println("(Absolute zero - impossible!)");
-            }
-        }
+        System.out.println("Outer variable: " + outerVar);
     }
 }
 ```
 
-This program demonstrates:
-- All primitive data types in action
-- Constants for mathematical values
-- Type conversion and formatting
-- Variable scope in different methods
-- Input validation and error handling
+**Key Concepts Demonstrated**:
+- Constants with meaningful names
+- Primitive types for specific purposes
+- Method parameters and local variables
+- Variable scope boundaries
+- Type conversions in calculations
 
-## Common Pitfalls and Best Practices
+## Critical Pitfalls to Avoid
 
-### 1. Integer Overflow
+### Integer Overflow (Silent Failure)
 ```java
-int maxValue = Integer.MAX_VALUE;
-int overflow = maxValue + 1;  // Wraps to Integer.MIN_VALUE
+int maxInt = Integer.MAX_VALUE;  // 2,147,483,647
+int overflow = maxInt + 1;       // -2,147,483,648 (wraps around!)
 ```
+**Solution**: Use `long` for large numbers or `Math.addExact()` to detect overflow.
 
-**Solution**: Use appropriate data types or check bounds:
+### Floating-Point Precision Loss
 ```java
-if (maxValue > Integer.MAX_VALUE - 1) {
-    // Handle potential overflow
-    long result = (long) maxValue + 1;
-}
+double result = 0.1 + 0.2;      // 0.30000000000000004 (not 0.3!)
+boolean wrong = result == 0.3;  // false
 ```
+**Solution**: Use `BigDecimal` for exact decimal arithmetic or epsilon comparison.
 
-### 2. Floating-Point Precision
+### Null Wrapper Unboxing
 ```java
-double result = 0.1 + 0.2;  // Not exactly 0.3!
+Integer wrapper = null;
+int primitive = wrapper;        // NullPointerException at runtime
 ```
-
-**Solution**: Use BigDecimal for exact decimal arithmetic or epsilon comparisons:
-```java
-final double EPSILON = 1e-10;
-boolean isEqual = Math.abs(result - 0.3) < EPSILON;
-```
-
-### 3. Unboxing Null Wrappers
-```java
-Integer value = null;
-int primitive = value;  // NullPointerException
-```
-
-**Solution**: Always check for null before unboxing:
-```java
-int primitive = (value != null) ? value : 0;
-```
+**Solution**: Null-check before unboxing: `int safe = wrapper != null ? wrapper : 0;`
 
 ## Looking Ahead
 

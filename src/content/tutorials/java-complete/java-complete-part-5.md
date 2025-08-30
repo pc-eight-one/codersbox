@@ -14,7 +14,9 @@ featured: false
 
 # Java Complete - Part 5: Control Flow Statements
 
-Programs become powerful when they can make decisions. Control flow statements let your code choose different paths based on data, user input, or computed results.
+**Why This Matters**: Control flow is what makes programs intelligent. Without conditionals, every program would execute the same way every time. Mastering if-else and switch statements enables your code to respond to different situations and user inputs.
+
+Programs become powerful when they can make decisions based on data, user input, or computed results.
 
 ## The if Statement
 
@@ -28,35 +30,29 @@ flowchart TD
     D --> E[continue]
 ```
 
-The `if` statement executes code only when a condition is true:
+**Basic Pattern**: `if (condition) { code }` - executes code only when condition is true.
 
 ```java
-public class BasicConditions {
-    public static void main(String[] args) {
-        int temperature = 75;
-        boolean isSunny = true;
-        
-        // Simple condition
-        if (temperature > 70) {
-            System.out.println("It's warm today!");
-        }
-        
-        // Compound condition with logical AND
-        if (temperature > 70 && isSunny) {
-            System.out.println("Perfect weather!");
-        }
-        
-        // Complex condition with OR and AND
-        int age = 16;
-        boolean hasLicense = false;
-        boolean hasParentPermission = true;
-        
-        if (age >= 18 || (age >= 16 && hasLicense && hasParentPermission)) {
-            System.out.println("Can drive legally.");
-        }
-    }
+int temperature = 75;
+boolean isSunny = true;
+
+// Simple condition
+if (temperature > 70) {
+    System.out.println("It's warm today!");
+}
+
+// Compound conditions
+if (temperature > 70 && isSunny) {
+    System.out.println("Perfect weather!");
+}
+
+// Complex logic with parentheses for clarity
+if (age >= 18 || (hasLicense && hasParentPermission)) {
+    System.out.println("Can drive legally.");
 }
 ```
+
+**Key Rule**: Use parentheses to make complex conditions clear, even when not required by precedence.
 
 ## if-else Chains
 
@@ -78,27 +74,25 @@ flowchart TD
     style H fill:#f44336
 ```
 
+**Pattern**: Chain conditions from most specific to most general.
+
 ```java
-public class GradeEvaluation {
-    public static void main(String[] args) {
-        int grade = 87;
-        String result;
-        
-        if (grade >= 90) {
-            result = "A - Outstanding!";
-        } else if (grade >= 80) {
-            result = "B - Good work!";
-        } else if (grade >= 70) {
-            result = "C - Satisfactory";
-        } else if (grade >= 60) {
-            result = "D - Needs improvement";
-        } else {
-            result = "F - Must retake";
-        }
-        
-        System.out.println("Grade " + grade + ": " + result);
-    }
+int grade = 87;
+String result;
+
+if (grade >= 90) {
+    result = "A - Outstanding!";
+} else if (grade >= 80) {    // Only checked if grade < 90
+    result = "B - Good work!";
+} else if (grade >= 70) {    // Only checked if grade < 80  
+    result = "C - Satisfactory";
+} else if (grade >= 60) {    // Only checked if grade < 70
+    result = "D - Needs improvement";
+} else {                     // Everything else (grade < 60)
+    result = "F - Must retake";
 }
+
+System.out.println("Grade " + grade + ": " + result);
 ```
 
 ## Switch Statements
@@ -125,76 +119,54 @@ flowchart TD
     style K fill:#e3f2fd
 ```
 
-### Traditional Switch
+### Traditional Switch (Before Java 14)
+
+**Critical Rule**: Always include `break;` or cases will "fall through" to the next case!
 
 ```java
-public class DayOfWeek {
-    public static void main(String[] args) {
-        int day = 3;
-        String dayName;
-        
-        switch (day) {
-            case 1:
-                dayName = "Monday";
-                break;
-            case 2:
-                dayName = "Tuesday";
-                break;
-            case 3:
-                dayName = "Wednesday";
-                break;
-            case 4:
-                dayName = "Thursday";
-                break;
-            case 5:
-                dayName = "Friday";
-                break;
-            case 6:
-            case 7:
-                dayName = "Weekend";
-                break;
-            default:
-                dayName = "Invalid day";
-        }
-        
-        System.out.println("Day " + day + " is " + dayName);
-    }
+int day = 3;
+String dayName;
+
+switch (day) {
+    case 1:
+        dayName = "Monday";
+        break;                  // Essential! Without this, execution continues
+    case 2:
+        dayName = "Tuesday";
+        break;
+    case 3:
+        dayName = "Wednesday";
+        break;
+    case 6:                     // Fall-through is sometimes useful
+    case 7:
+        dayName = "Weekend";    // Both case 6 and 7 execute this
+        break;
+    default:
+        dayName = "Invalid day";
 }
 ```
 
 ### Modern Switch Expressions (Java 14+)
 
+**Advantages**: No `break` needed, can return values directly, more concise.
+
 ```java
-public class ModernSwitch {
-    public static void main(String[] args) {
-        int day = 3;
-        
-        // Switch expression - cleaner and safer
-        String dayType = switch (day) {
-            case 1, 2, 3, 4, 5 -> "Weekday";
-            case 6, 7 -> "Weekend";
-            default -> "Invalid";
-        };
-        
-        System.out.println("Day " + day + " is a " + dayType);
-        
-        // Switch with complex logic using yield
-        String priority = switch (day) {
-            case 1 -> {
-                System.out.println("Start of work week");
-                yield "High priority";
-            }
-            case 5 -> {
-                System.out.println("End of work week");
-                yield "Medium priority";
-            }
-            case 6, 7 -> "Low priority";
-            default -> "Normal priority";
-        };
-        
-        System.out.println("Priority: " + priority);
+// Switch expression - cleaner and safer
+String dayType = switch (day) {
+    case 1, 2, 3, 4, 5 -> "Weekday";    // Multiple cases in one line
+    case 6, 7 -> "Weekend";
+    default -> "Invalid";
+};
+
+// For complex logic, use yield
+String workload = switch (day) {
+    case 1 -> {
+        System.out.println("Monday blues!");
+        yield "Heavy";                    // yield returns the value
     }
-}
+    case 6, 7 -> "Light";
+    default -> "Normal";
+};
 ```
 
 ## Nested Conditions and Logic Patterns

@@ -17,7 +17,23 @@ prerequisites: ["Java Complete Parts 1-8", "Level 1 Project"]
 
 # Object-Oriented Programming (OOP) Basics
 
-Object-oriented programming transforms how we think about code organization. Instead of procedures operating on data, we model real-world entities as objects that contain both data and the methods to manipulate that data.
+**Why This Matters**: OOP is the foundation of professional Java development. It enables building scalable applications, code reuse, team collaboration, and modeling real-world systems. Understanding OOP unlocks frameworks like Spring, Android development, and enterprise Java.
+
+**Core Concept**: Instead of separate functions and data, OOP bundles related data and behavior together into objects that model real-world entities.
+
+```mermaid
+graph TD
+    A[Real World: Car] --> B[OOP Object: Car]
+    B --> C[Data: color, speed, fuel]
+    B --> D["Behavior: start(), accelerate(), brake()"]
+    
+    E[Real World: Bank Account] --> F[OOP Object: BankAccount]
+    F --> G[Data: balance, accountNumber, owner]
+    F --> H["Behavior: deposit(), withdraw(), getBalance()"]
+    
+    style B fill:#e3f2fd
+    style F fill:#e3f2fd
+```
 
 ## The Paradigm Shift
 

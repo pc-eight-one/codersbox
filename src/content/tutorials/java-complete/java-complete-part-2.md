@@ -14,19 +14,18 @@ featured: false
 
 # Java Complete - Part 2: Setting Up Development Environment
 
-A craftsman is only as good as their tools. While you can write Java programs in any text editor, a well-configured development environment dramatically improves your productivity and helps you write better code. This tutorial will establish a professional setup that serves you throughout this series and beyond.
+**Why This Matters**: Professional developers are 5-10x more productive with proper tooling. The right IDE, build tools, and debugging setup can mean the difference between struggling with code and enjoying the development process.
+
+A craftsman is only as good as their tools. This tutorial establishes a professional development environment that will serve you throughout your Java journey.
 
 ## Command Line Mastery
 
-Before exploring IDEs, let's master the fundamental command-line tools. This knowledge proves invaluable for automation, server deployment, and troubleshooting.
+**Essential Skill**: Command-line tools are fundamental - IDEs use them behind the scenes, servers require them, and automation depends on them.
 
-### The Java Compiler: javac
-
-Start with the smallest possible program to learn compile/run:
-
-Create a file named `Hello.java`:
+### Core Workflow: Compile → Run
 
 ```java
+// Hello.java - minimal starting point
 public class Hello {
     public static void main(String[] args) {
         System.out.println("Hello, tools!");
@@ -34,37 +33,31 @@ public class Hello {
 }
 ```
 
-Compile and run:
 ```bash
-$ javac Hello.java
-$ java Hello
+$ javac Hello.java    # Compile: source → bytecode  
+$ java Hello          # Run: bytecode → execution
 Hello, tools!
 ```
 
-Why this minimal example? It isolates the compile/run workflow without extra logic getting in the way.
+### Multi-File Projects
 
-Now a tiny class example to see multiple files:
-
-Create `Adder.java`:
 ```java
+// Adder.java
 public class Adder {
     public static int add(int a, int b) { return a + b; }
 }
-```
 
-Create `UseAdder.java`:
-```java
+// UseAdder.java  
 public class UseAdder {
     public static void main(String[] args) {
-        System.out.println(Adder.add(2, 3)); // 5
+        System.out.println(Adder.add(2, 3));
     }
 }
 ```
 
-Compile and run two files:
 ```bash
-$ javac Adder.java UseAdder.java
-$ java UseAdder
+$ javac *.java        # Compile all Java files
+$ java UseAdder       # Run main class
 5
 ```
 
@@ -91,33 +84,18 @@ javac -g Calculator.java
 
 ### Working with Packages
 
-Real applications organize classes into packages. Keep the example tiny and focused:
+**Purpose**: Packages organize code and prevent naming conflicts, like folders for classes.
 
-Directory structure:
-```
-com/
-  codersbox/
-    util/
-      MathHelper.java
-    app/
-      Main.java
-```
-
-Create `com/codersbox/util/MathHelper.java`:
 ```java
+// dev/codersbox/util/MathHelper.java
 package com.codersbox.util;
-
 public class MathHelper {
     public static int doubleIt(int x) { return x * 2; }
 }
-```
 
-Create `com/codersbox/app/Main.java`:
-```java
+// dev/codersbox/app/Main.java  
 package com.codersbox.app;
-
 import com.codersbox.util.MathHelper;
-
 public class Main {
     public static void main(String[] args) {
         System.out.println(MathHelper.doubleIt(21)); // 42
@@ -125,19 +103,17 @@ public class Main {
 }
 ```
 
-Compile and run with packages:
 ```bash
-$ javac com/codersbox/util/MathHelper.java com/codersbox/app/Main.java
-$ java com.codersbox.app.Main
+$ javac dev/codersbox/**/*.java    # Compile all packages
+$ java com.codersbox.app.Main      # Run with full package name
 42
 ```
 
-A mental model of compile → run with packages:
-```mermaid
+```mermaid  
 flowchart LR
-    A[.java sources] -->|javac| B[.class bytecode]
-    B -->|organized by package dirs| C[jar file]
-    B -->|java com.codersbox.app.Main| D[Program runs]
+    A[Source Files<br/>dev/codersbox/...] -->|javac| B[Bytecode Files<br/>same structure]
+    B -->|java com.package.Class| C[JVM Execution]
+    B -->|jar cf app.jar com/| D[JAR Distribution]
 ```
 
 ## Creating JAR Files
@@ -158,93 +134,74 @@ java -jar app.jar
 
 ## Choosing an IDE
 
-While command-line tools are essential, IDEs boost productivity through code completion, debugging, refactoring, and project management. Let's explore the top options:
+**Why IDEs Matter**: Code completion saves 40% of typing, real-time error detection prevents bugs, and integrated debugging speeds up problem-solving dramatically.
 
-### IntelliJ IDEA
+### IDE Comparison
 
-IntelliJ IDEA offers the most sophisticated Java support. The Community Edition is free and excellent for learning.
+```mermaid
+graph TD
+    subgraph "IntelliJ IDEA"
+        A1[✓ Best Java support]
+        A2[✓ Intelligent completion] 
+        A3[✓ Powerful refactoring]
+        A4[× Learning curve]
+    end
+    subgraph "Eclipse"
+        B1[✓ Enterprise standard]
+        B2[✓ Large plugin ecosystem]
+        B3[✓ Free and mature]
+        B4[× Complex interface]
+    end
+    subgraph "VS Code"
+        C1[✓ Lightweight]
+        C2[✓ Multi-language]
+        C3[✓ Great extensions]
+        C4[× Less Java-specific]
+    end
+```
 
-**Installation:**
-- Download from [jetbrains.com/idea](https://www.jetbrains.com/idea/)
-- Install and launch
-- Select "New Project" → "Java" → "Command Line App"
+### Recommended: IntelliJ IDEA Community
 
-**Key Features:**
-- Intelligent code completion
-- Powerful refactoring tools
-- Integrated debugger and profiler
-- Built-in version control
-- Plugin ecosystem
+**Why IntelliJ?** Best-in-class Java support, free Community Edition, used by most professional Java developers.
 
-**Creating Our Calculator Project:**
+**Quick Setup:**
+1. Download from [jetbrains.com/idea](https://www.jetbrains.com/idea/)
+2. Create New Project → Java → Choose JDK 21
+3. Project name: "JavaPractice"
 
-1. New Project → Java → Project SDK: choose your Java 21
-2. Project name: "JavaCalculator"
-3. IntelliJ creates the project structure automatically
-
-Replace the generated code with our Calculator class. Notice how IntelliJ:
-- Highlights syntax errors in red
-- Suggests imports with Alt+Enter
-- Provides code completion with Ctrl+Space
-- Shows parameter hints as you type
-
-### Eclipse IDE
-
-Eclipse remains popular in enterprise environments:
-
-**Installation:**
-- Download Eclipse IDE for Java Developers
-- Extract and run
-- Choose workspace directory
-
-**Creating a Project:**
-1. File → New → Java Project
-2. Project name: "JavaCalculator"
-3. Right-click src → New → Class
-4. Name: "Calculator", check "public static void main"
-
-### Visual Studio Code
-
-VS Code with Java extensions provides a lightweight alternative:
-
-**Setup:**
-1. Install VS Code
-2. Install "Extension Pack for Java"
-3. Open folder with your Java files
-4. VS Code automatically detects the project structure
+**Instant Productivity Boost:**
+- `Ctrl+Space` - Code completion
+- `Alt+Enter` - Quick fixes and imports
+- `Ctrl+B` - Go to definition
+- `Shift+F10` - Run current class
 
 ## Debugging Techniques
 
-Debugging is a crucial skill. Let's introduce a subtle bug into our Calculator:
+**Critical Skill**: Professional developers spend 50% of their time debugging. Mastering debugging tools is essential for productivity.
+
+### Debugging a Buggy Calculator
 
 ```java
-public class CalculatorWithBug {
-    private double result;
+public class BuggyCalculator {
+    private double result = 1000; // Starting amount
     
-    public void divide(double number) {
-        result /= number; // Bug: no check for zero
-    }
-    
-    public void calculateCompoundInterest(double principal, double rate, int years) {
-        result = principal;
-        for (int i = 0; i <= years; i++) { // Bug: should be < years
+    public void applyInterest(double rate, int years) {
+        for (int i = 0; i <= years; i++) {  // Bug: should be < years  
             result *= (1 + rate);
         }
     }
     
     public static void main(String[] args) {
-        CalculatorWithBug calc = new CalculatorWithBug();
+        BuggyCalculator calc = new BuggyCalculator();
+        calc.applyInterest(0.05, 5);  // 5% for 5 years
         
-        // This will produce Infinity
-        calc.divide(0);
-        System.out.println("Division by zero result: " + calc.getResult());
-        
-        // This calculates one extra year of interest
-        calc.calculateCompoundInterest(1000, 0.05, 5);
-        System.out.println("$1000 at 5% for 5 years: $" + calc.getResult());
+        // Expected: $1276.28, Actual: $1340.10 (too high!)
+        System.out.println("Result: $" + calc.result);
     }
 }
 ```
+
+**The Bug**: Loop runs 6 times instead of 5 (`i <= years` should be `i < years`)
 
 ### Command-Line Debugging
 
@@ -266,96 +223,45 @@ number = 0.0
 result = Infinity
 ```
 
-### IDE Debugging
+### IDE Debugging (Recommended)
 
-In IntelliJ IDEA:
-1. Click in the left margin to set a breakpoint at line 6
-2. Right-click → "Debug CalculatorWithBug"
-3. When execution pauses, examine variables in the debugger pane
-4. Use "Step Over" (F8) to execute line by line
-5. Use "Evaluate Expression" to test potential fixes
+**IntelliJ Debugging Steps:**
+1. Click left margin on line 189 to set breakpoint (red dot)
+2. Right-click → "Debug BuggyCalculator"
+3. When paused, examine Variables panel
+4. Use `F8` (Step Over) to execute line by line
+5. Watch `i` go from 0→5 (6 iterations, not 5!)
 
-Set a breakpoint in the loop and observe how `i` affects the calculation:
-- Watch variables: `i`, `years`, `result`
-- Notice `i` goes from 0 to 5 (inclusive), giving us 6 iterations instead of 5
+**Pro Tip**: Use "Evaluate Expression" (`Alt+F8`) to test fixes before changing code.
 
-## Project Structure and Build Tools
+## Build Tools: Maven 
 
-As projects grow, manual compilation becomes unwieldy. Build tools automate compilation, dependency management, and testing.
+**Why Build Tools?** Manual compilation breaks down with 10+ classes. Build tools handle dependencies, testing, packaging, and deployment automatically.
 
-### Maven Project Structure
+### Maven Project Structure (Industry Standard)
 
-Maven follows convention over configuration:
-```
-my-java-app/
-  pom.xml
-  src/
-    main/
-      java/
-        com/codersbox/Calculator.java
-      resources/
-        application.properties
-    test/
-      java/
-        com/codersbox/CalculatorTest.java
-  target/
-    classes/
-    test-classes/
+```mermaid
+graph TD
+    A[my-java-app/] --> B[pom.xml - Project config]
+    A --> C[src/main/java/ - Source code]
+    A --> D[src/test/java/ - Unit tests] 
+    A --> E[target/ - Generated files]
+    
+    C --> C1[dev/codersbox/Calculator.java]
+    D --> D1[dev/codersbox/CalculatorTest.java]
+    E --> E1[classes/ - Compiled bytecode]
+    E --> E2[calculator-1.0.jar - Final JAR]
 ```
 
-Create `pom.xml`:
-```xml
-<?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0"
-         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 
-         http://maven.apache.org/xsd/maven-4.0.0.xsd">
-    <modelVersion>4.0.0</modelVersion>
-    
-    <groupId>com.codersbox</groupId>
-    <artifactId>calculator</artifactId>
-    <version>1.0.0</version>
-    <packaging>jar</packaging>
-    
-    <properties>
-        <maven.compiler.source>21</maven.compiler.source>
-        <maven.compiler.target>21</maven.compiler.target>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    </properties>
-    
-    <dependencies>
-        <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-            <version>4.13.2</version>
-            <scope>test</scope>
-        </dependency>
-    </dependencies>
-    
-    <build>
-        <plugins>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.11.0</version>
-                <configuration>
-                    <source>21</source>
-                    <target>21</target>
-                </configuration>
-            </plugin>
-        </plugins>
-    </build>
-</project>
-```
-
-Maven commands:
+### Essential Maven Commands
 ```bash
-mvn compile      # Compile source code
-mvn test         # Run tests
-mvn package      # Create JAR file
-mvn clean        # Remove generated files
-mvn install      # Install to local repository
+mvn compile      # Compile all source files
+mvn test         # Run all unit tests  
+mvn package      # Create distributable JAR
+mvn clean        # Remove all generated files
 ```
+
+**Key Benefit**: `mvn test` automatically downloads test libraries, compiles code, runs tests, and reports results.
 
 ## Version Control with Git
 
@@ -470,9 +376,9 @@ Essential shortcuts:
 - `F9` - Resume program (debugging)
 - `F8` - Step over (debugging)
 
-## Exercise: Building a Text File Processor
+## Hands-On Exercise: File Word Counter
 
-Apply your new environment skills by building a utility that counts words in text files:
+**Apply Your Skills**: Build a practical utility demonstrating IDE features, debugging, and command-line tools.
 
 ```java
 package com.codersbox.textutil;
@@ -485,64 +391,46 @@ public class WordCounter {
     private Map<String, Integer> wordCounts = new HashMap<>();
     
     public void processFile(String filename) throws IOException {
-        Path path = Paths.get(filename);
-        if (!Files.exists(path)) {
-            throw new FileNotFoundException("File not found: " + filename);
-        }
-        
-        try (BufferedReader reader = Files.newBufferedReader(path)) {
-            String line;
-            while ((line = reader.readLine()) != null) {
-                processLine(line);
-            }
+        try (BufferedReader reader = Files.newBufferedReader(Paths.get(filename))) {
+            reader.lines()
+                  .flatMap(line -> Arrays.stream(line.toLowerCase()
+                                                   .replaceAll("[^a-zA-Z\\s]", "")
+                                                   .split("\\s+")))
+                  .filter(word -> !word.isEmpty())
+                  .forEach(word -> wordCounts.merge(word, 1, Integer::sum));
         }
     }
     
-    private void processLine(String line) {
-        String[] words = line.toLowerCase()
-                            .replaceAll("[^a-zA-Z\\s]", "")
-                            .split("\\s+");
-        
-        for (String word : words) {
-            if (!word.isEmpty()) {
-                wordCounts.merge(word, 1, Integer::sum);
-            }
-        }
-    }
-    
-    public void printResults() {
-        System.out.println("Word frequency:");
-        wordCounts.entrySet()
-                 .stream()
+    public void printTop10() {
+        wordCounts.entrySet().stream()
                  .sorted(Map.Entry.<String, Integer>comparingByValue().reversed())
                  .limit(10)
-                 .forEach(entry -> 
-                     System.out.printf("%s: %d%n", entry.getKey(), entry.getValue()));
+                 .forEach(entry -> System.out.printf("%s: %d%n", 
+                                                   entry.getKey(), entry.getValue()));
     }
     
     public static void main(String[] args) {
         if (args.length == 0) {
-            System.err.println("Usage: java WordCounter <filename>");
+            System.out.println("Usage: java WordCounter <filename>");
             return;
         }
         
-        WordCounter counter = new WordCounter();
         try {
+            WordCounter counter = new WordCounter();
             counter.processFile(args[0]);
-            counter.printResults();
+            counter.printTop10();
         } catch (IOException e) {
-            System.err.println("Error processing file: " + e.getMessage());
+            System.err.println("Error: " + e.getMessage());
         }
     }
 }
 ```
 
 **Practice Tasks:**
-1. Create the project in your IDE
-2. Set breakpoints and debug the file processing
-3. Add error handling for different edge cases
-4. Use the profiler to analyze performance with large files
-5. Package it as an executable JAR
+1. Create project in IntelliJ with proper package structure
+2. Set breakpoint in `processFile` method and debug execution
+3. Use "Evaluate Expression" to test different regex patterns
+4. Package as executable JAR and run from command line
 
 ## Next Steps
 
