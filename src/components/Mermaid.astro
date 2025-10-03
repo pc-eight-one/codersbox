@@ -8,48 +8,10 @@ export interface Props {
 const { id = `mermaid-${Math.random().toString(36).substring(2, 15)}`, diagram, class: className = '' } = Astro.props;
 ---
 
+<!-- Passive Mermaid component: emits a code block that the global renderer will process -->
 <div id={id} class={`mermaid-container ${className}`}>
-  <pre class="mermaid">{diagram}</pre>
+  <pre><code class="language-mermaid">{diagram}</code></pre>
 </div>
-
-<script>
-  document.addEventListener('DOMContentLoaded', async () => {
-    try {
-      const mermaid = await import('mermaid');
-      
-      // Initialize mermaid
-      mermaid.default.initialize({
-        startOnLoad: false,
-        theme: 'default',
-        securityLevel: 'loose',
-        fontFamily: 'Inter, system-ui, sans-serif',
-        flowchart: {
-          htmlLabels: true,
-          curve: 'basis'
-        }
-      });
-
-      // Render all mermaid diagrams
-      const mermaidElements = document.querySelectorAll('.mermaid');
-      for (let i = 0; i < mermaidElements.length; i++) {
-        const element = mermaidElements[i];
-        const diagram = element.textContent;
-        
-        if (diagram) {
-          try {
-            const { svg } = await mermaid.default.render(`mermaid-${i}-${Date.now()}`, diagram);
-            element.innerHTML = svg;
-          } catch (error) {
-            console.error('Mermaid rendering error:', error);
-            element.innerHTML = `<div class="text-red-500 p-4 border border-red-300 rounded bg-red-50">Error rendering diagram</div>`;
-          }
-        }
-      }
-    } catch (error) {
-      console.error('Failed to load mermaid:', error);
-    }
-  });
-</script>
 
 <style>
   .mermaid-container {
@@ -57,16 +19,12 @@ const { id = `mermaid-${Math.random().toString(36).substring(2, 15)}`, diagram, 
     text-align: center;
   }
 
-  .mermaid {
+  pre, code {
     background: transparent;
     border: none;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 200px;
   }
 
-  .mermaid svg {
+  .mermaid-container svg {
     max-width: 100%;
     height: auto;
     font-family: Inter, system-ui, sans-serif;
@@ -78,7 +36,7 @@ const { id = `mermaid-${Math.random().toString(36).substring(2, 15)}`, diagram, 
       margin: 1rem 0;
     }
     
-    .mermaid svg {
+    .mermaid-container svg {
       font-size: 12px;
     }
   }

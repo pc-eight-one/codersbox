@@ -12,7 +12,10 @@ const tutorials = await getCollection('tutorials', ({ data }) => {
 const seriesMap = new Map();
 
 tutorials.forEach(tutorial => {
-  const seriesName = tutorial.data.series;
+  const seriesName = typeof tutorial.data.series === 'string' ? tutorial.data.series.trim() : '';
+  // Skip tutorials that are not part of a named series
+  if (!seriesName) return;
+
   if (!seriesMap.has(seriesName)) {
     seriesMap.set(seriesName, {
       name: seriesName,
@@ -22,22 +25,24 @@ tutorials.forEach(tutorial => {
       difficulty: tutorial.data.difficulty,
       tags: tutorial.data.tags || [],
       firstPartSlug: '',
-      latestPublishDate: tutorial.data.publishDate
+      latestPublishDate: new Date(tutorial.data.publishDate)
     });
   }
   
   const series = seriesMap.get(seriesName);
   series.parts.push(tutorial);
   
-  // Use the first part's description and slug
-  if (tutorial.data.part === 1) {
-    series.description = tutorial.data.description;
+  // Use the first part's description and slug when available
+  if (Number(tutorial.data.part) === 1) {
+    series.description = tutorial.data.description || '';
     series.firstPartSlug = tutorial.slug;
   }
   
   // Update latest publish date
-  if (new Date(tutorial.data.publishDate) > new Date(series.latestPublishDate)) {
-    series.latestPublishDate = tutorial.data.publishDate;
+  const tDate = new Date(tutorial.data.publishDate);
+  const sDate = new Date(series.latestPublishDate);
+  if (tDate > sDate) {
+    series.latestPublishDate = tDate;
   }
 });
 

@@ -159,6 +159,13 @@ declare module 'astro:content' {
   collection: "articles";
   data: InferEntrySchema<"articles">
 } & { render(): Render[".md"] };
+"kotlin-caching-from-scratch.md": {
+	id: "kotlin-caching-from-scratch.md";
+  slug: "kotlin-caching-from-scratch";
+  body: string;
+  collection: "articles";
+  data: InferEntrySchema<"articles">
+} & { render(): Render[".md"] };
 };
 "projects": {
 "ecommerce-platform.md": {
@@ -327,6 +334,104 @@ declare module 'astro:content' {
 "java-complete/java-complete-part-9.md": {
 	id: "java-complete/java-complete-part-9.md";
   slug: "java-complete-part-9";
+  body: string;
+  collection: "tutorials";
+  data: InferEntrySchema<"tutorials">
+} & { render(): Render[".md"] };
+"kafka-concepts/kafka-concepts-part-1.md": {
+	id: "kafka-concepts/kafka-concepts-part-1.md";
+  slug: "kafka-concepts/kafka-concepts-part-1";
+  body: string;
+  collection: "tutorials";
+  data: InferEntrySchema<"tutorials">
+} & { render(): Render[".md"] };
+"kafka-concepts/kafka-concepts-part-2.md": {
+	id: "kafka-concepts/kafka-concepts-part-2.md";
+  slug: "kafka-concepts/kafka-concepts-part-2";
+  body: string;
+  collection: "tutorials";
+  data: InferEntrySchema<"tutorials">
+} & { render(): Render[".md"] };
+"kafka-concepts/kafka-concepts-part-3.md": {
+	id: "kafka-concepts/kafka-concepts-part-3.md";
+  slug: "kafka-concepts/kafka-concepts-part-3";
+  body: string;
+  collection: "tutorials";
+  data: InferEntrySchema<"tutorials">
+} & { render(): Render[".md"] };
+"kafka-concepts/kafka-concepts-part-4.md": {
+	id: "kafka-concepts/kafka-concepts-part-4.md";
+  slug: "kafka-concepts/kafka-concepts-part-4";
+  body: string;
+  collection: "tutorials";
+  data: InferEntrySchema<"tutorials">
+} & { render(): Render[".md"] };
+"kafka-concepts/kafka-concepts-part-5.md": {
+	id: "kafka-concepts/kafka-concepts-part-5.md";
+  slug: "kafka-concepts/kafka-concepts-part-5";
+  body: string;
+  collection: "tutorials";
+  data: InferEntrySchema<"tutorials">
+} & { render(): Render[".md"] };
+"kafka-concepts/kafka-concepts-part-6.md": {
+	id: "kafka-concepts/kafka-concepts-part-6.md";
+  slug: "kafka-concepts/kafka-concepts-part-6";
+  body: string;
+  collection: "tutorials";
+  data: InferEntrySchema<"tutorials">
+} & { render(): Render[".md"] };
+"kafka-concepts/kafka-concepts-part-7.md": {
+	id: "kafka-concepts/kafka-concepts-part-7.md";
+  slug: "kafka-concepts/kafka-concepts-part-7";
+  body: string;
+  collection: "tutorials";
+  data: InferEntrySchema<"tutorials">
+} & { render(): Render[".md"] };
+"kafka-concepts/kafka-concepts-part-8.md": {
+	id: "kafka-concepts/kafka-concepts-part-8.md";
+  slug: "kafka-concepts/kafka-concepts-part-8";
+  body: string;
+  collection: "tutorials";
+  data: InferEntrySchema<"tutorials">
+} & { render(): Render[".md"] };
+"kafka-java/kafka-java-part-1.md": {
+	id: "kafka-java/kafka-java-part-1.md";
+  slug: "kafka-java/kafka-java-part-1";
+  body: string;
+  collection: "tutorials";
+  data: InferEntrySchema<"tutorials">
+} & { render(): Render[".md"] };
+"kafka-java/kafka-java-part-2.md": {
+	id: "kafka-java/kafka-java-part-2.md";
+  slug: "kafka-java/kafka-java-part-2";
+  body: string;
+  collection: "tutorials";
+  data: InferEntrySchema<"tutorials">
+} & { render(): Render[".md"] };
+"kafka-java/kafka-java-part-3.md": {
+	id: "kafka-java/kafka-java-part-3.md";
+  slug: "kafka-java/kafka-java-part-3";
+  body: string;
+  collection: "tutorials";
+  data: InferEntrySchema<"tutorials">
+} & { render(): Render[".md"] };
+"kafka-java/kafka-java-part-4.md": {
+	id: "kafka-java/kafka-java-part-4.md";
+  slug: "kafka-java/kafka-java-part-4";
+  body: string;
+  collection: "tutorials";
+  data: InferEntrySchema<"tutorials">
+} & { render(): Render[".md"] };
+"kafka-java/kafka-java-part-5.md": {
+	id: "kafka-java/kafka-java-part-5.md";
+  slug: "kafka-java/kafka-java-part-5";
+  body: string;
+  collection: "tutorials";
+  data: InferEntrySchema<"tutorials">
+} & { render(): Render[".md"] };
+"kafka-java/kafka-java-part-6.md": {
+	id: "kafka-java/kafka-java-part-6.md";
+  slug: "kafka-java/kafka-java-part-6";
   body: string;
   collection: "tutorials";
   data: InferEntrySchema<"tutorials">
