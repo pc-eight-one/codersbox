@@ -2,7 +2,7 @@
 title: "ThreadLocal in Spring Boot: Solving Real-World Problems with Thread-Confined Storage"
 description: "Master ThreadLocal in Spring Boot applications. Learn how to handle user context, distributed tracing, transaction management, and tenant isolation with practical examples and best practices."
 publishDate: 2025-01-08
-author: "codersbox"
+author: "Prashant Chaturvedi"
 tags: ["Java", "Spring Boot", "ThreadLocal", "Concurrency", "Multi-threading", "Backend", "Best Practices"]
 readTime: "25 min read"
 difficulty: "intermediate"

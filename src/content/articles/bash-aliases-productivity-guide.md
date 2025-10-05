@@ -2,7 +2,7 @@
 title: "Bash Aliases for Developers"
 description: "A collection of bash aliases for faster terminal navigation, Docker/Git commands, and development workflows."
 publishDate: 2025-01-06
-author: "codersbox"
+author: "Prashant Chaturvedi"
 tags: ["Bash", "Linux", "Productivity", "Terminal", "DevOps", "Workflow", "Aliases", "Shell"]
 readTime: "10 min read"
 difficulty: "beginner"

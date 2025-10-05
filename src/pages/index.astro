@@ -327,11 +327,11 @@ const recentProjects = await getCollection('projects', ({ data }) => {
         const typeLabel = suggestion.type === 'content' ? suggestion.contentType : 'search';
         
         return `
-          <div class="suggestion-item flex items-center px-4 py-3 hover:bg-gray-100 dark:hover:bg-gray-700 cursor-pointer border-b border-gray-100 dark:border-gray-700 last:border-b-0" data-index="${index}">
-            <span class="mr-3 text-sm">${typeIcon}</span>
+          <div class="suggestion-item flex items-center px-4 py-3 hover:bg-blue-50 cursor-pointer border-b border-gray-200 last:border-b-0 transition-colors" data-index="${index}">
+            <span class="mr-3 text-lg">${typeIcon}</span>
             <div class="flex-grow">
-              <div class="text-sm font-medium text-gray-900 dark:text-gray-100">${suggestion.text}</div>
-              <div class="text-xs text-gray-500 dark:text-gray-400 capitalize">${typeLabel}</div>
+              <div class="text-sm font-semibold text-gray-900">${suggestion.text}</div>
+              <div class="text-xs text-gray-600 capitalize">${typeLabel}</div>
             </div>
           </div>
         `;
@@ -365,9 +365,9 @@ const recentProjects = await getCollection('projects', ({ data }) => {
     function highlightSuggestion(index) {
       document.querySelectorAll('.suggestion-item').forEach((item, i) => {
         if (i === index) {
-          item.classList.add('bg-gray-100', 'dark:bg-gray-700');
+          item.classList.add('bg-blue-50');
         } else {
-          item.classList.remove('bg-gray-100', 'dark:bg-gray-700');
+          item.classList.remove('bg-blue-50');
         }
       });
     }

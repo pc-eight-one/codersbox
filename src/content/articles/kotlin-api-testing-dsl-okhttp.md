@@ -2,7 +2,7 @@
 title: "Building an API Testing Library with Kotlin DSL and OkHttp"
 description: "Create a reusable API automation testing library using Kotlin DSLs and OkHttp. Build a clean, type-safe interface for REST API testing that works across projects."
 publishDate: 2025-10-05
-author: "codersbox"
+author: "Prashant Chaturvedi"
 tags: ["Kotlin", "Testing", "API", "OkHttp", "DSL", "Maven", "REST", "Automation"]
 readTime: "20 min read"
 difficulty: "intermediate"

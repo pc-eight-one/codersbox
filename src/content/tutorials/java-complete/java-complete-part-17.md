@@ -6,7 +6,7 @@ publishDate: 2025-08-29
 publishedAt: 2025-01-30
 tags: ["java", "tutorial", "intermediate", "lambda", "streams", "optional", "functional-programming"]
 category: Tutorial
-author: "codersbox"
+author: "Prashant Chaturvedi"
 series: "Java Complete"
 part: 17
 difficulty: "intermediate"

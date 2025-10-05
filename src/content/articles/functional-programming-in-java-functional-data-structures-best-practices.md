@@ -5,7 +5,7 @@ publishDate: 2025-08-30
 tags: ["Java", "Functional Programming", "Data Structures", "Streams", "Immutability", "Best Practices"]
 readTime: "25–35 min read"
 featured: true
-author: "codersbox"
+author: "Prashant Chaturvedi"
 ---
 
 # Functional Programming in Java: Functional Data Structures and Best Practices

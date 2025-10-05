@@ -187,6 +187,13 @@ declare module 'astro:content' {
   collection: "articles";
   data: any
 } & { render(): Render[".md"] };
+"maven-build-tool-guide.md": {
+	id: "maven-build-tool-guide.md";
+  slug: "maven-build-tool-guide";
+  body: string;
+  collection: "articles";
+  data: any
+} & { render(): Render[".md"] };
 "neovim-intellij-keymaps-setup.md": {
 	id: "neovim-intellij-keymaps-setup.md";
   slug: "neovim-intellij-keymaps-setup";

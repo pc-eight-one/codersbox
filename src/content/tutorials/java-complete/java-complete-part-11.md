@@ -6,7 +6,7 @@ publishDate: 2025-08-29
 publishedAt: 2025-08-29
 tags: ["java", "tutorial", "intermediate", "abstraction", "interfaces", "lambda", "functional"]
 category: Tutorial
-author: "codersbox"
+author: "Prashant Chaturvedi"
 series: "Java Complete"
 part: 11
 difficulty: "intermediate"

@@ -2,7 +2,7 @@
 title: "Kitty Terminal Configuration for Developers"
 description: "A keyboard-driven Kitty terminal configuration with splits, tabs, and smart keybindings for faster development workflows."
 publishDate: 2025-01-07
-author: "codersbox"
+author: "Prashant Chaturvedi"
 tags: ["Kitty", "Terminal", "Productivity", "Linux", "DevOps", "Workflow", "Configuration", "Developer Tools"]
 readTime: "8 min read"
 difficulty: "beginner"
