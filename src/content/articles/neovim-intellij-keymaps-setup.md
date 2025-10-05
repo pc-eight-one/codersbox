@@ -1,690 +1,173 @@
 ---
-title: "Neovim with IntelliJ IDEA Keymaps: Complete Setup Guide"
-description: "Transform Neovim into an IntelliJ-like IDE with familiar keymaps, smart navigation, refactoring tools, and debugging. Complete configuration for Java/Kotlin developers."
+title: "Neovim with IntelliJ Keymaps"
+description: "Configure Neovim with IntelliJ IDEA keybindings for Java/Kotlin development: LSP, refactoring, and familiar shortcuts."
 publishDate: 2025-01-05
 author: "codersbox"
 tags: ["Neovim", "IntelliJ IDEA", "IDE", "Vim", "Development", "Java", "Kotlin", "LSP", "Keymaps"]
-readTime: "30 min read"
+readTime: "15 min read"
 difficulty: "intermediate"
-estimatedTime: "90 minutes"
+estimatedTime: "45 minutes"
 featured: true
 ---
 
-# Neovim with IntelliJ IDEA Keymaps: Complete Setup Guide
+# Neovim with IntelliJ Keymaps
 
-If you're a Java/Kotlin developer comfortable with IntelliJ IDEA but want the speed and efficiency of Neovim, this guide is for you. We'll transform Neovim into an IntelliJ-like IDE with familiar keymaps, intelligent code navigation, refactoring capabilities, and debugging support.
+Neovim with IntelliJ-style keybindings: keep your muscle memory while gaining Vim's speed. This setup provides LSP for Java/Kotlin, code navigation, refactoring, and debugging.
 
-## Why Neovim with IntelliJ Keymaps?
+**Requirements:** Neovim 0.9+, Node.js 16+, basic Vim knowledge.
 
-**Benefits:**
-- Lightning-fast startup and performance
-- Muscle memory from IntelliJ IDEA
-- Terminal-based workflow
-- Highly customizable
-- Lower resource usage
-- Remote development friendly
-
-**What You'll Get:**
-- IntelliJ-style keybindings (`Ctrl+N`, `Ctrl+Shift+N`, `Alt+Enter`, etc.)
-- Smart code navigation (Go to Definition, Find Usages, File Structure)
-- Refactoring tools (Rename, Extract Method, Optimize Imports)
-- Code completion and LSP integration
-- Integrated debugging
-- Git integration similar to IntelliJ
-- Project explorer and fuzzy finding
-
-## Prerequisites
-
-- Neovim 0.9+ installed (`nvim --version`)
-- Basic Vim/Neovim knowledge
-- Node.js 16+ (for LSP servers)
-- Git
-- A terminal with true color support
-
-## Table of Contents
-
-1. [Neovim Setup and Configuration Structure](#1-neovim-setup-and-configuration-structure)
-2. [Plugin Manager - lazy.nvim](#2-plugin-manager-lazynvim)
-3. [Core IntelliJ-like Plugins](#3-core-intellij-like-plugins)
-4. [LSP Configuration for Java/Kotlin](#4-lsp-configuration-for-javakotlin)
-5. [IntelliJ Keymap Configuration](#5-intellij-keymap-configuration)
-6. [File Navigation and Search](#6-file-navigation-and-search)
-7. [Code Actions and Refactoring](#7-code-actions-and-refactoring)
-8. [Debugging Setup](#8-debugging-setup)
-9. [Git Integration](#9-git-integration)
-10. [Additional IDE Features](#10-additional-ide-features)
-11. [Complete Configuration](#11-complete-configuration)
-
----
-
-## 1. Neovim Setup and Configuration Structure
-
-First, create the Neovim configuration directory:
+## Configuration Structure
 
 ```bash
-# Linux/macOS
 mkdir -p ~/.config/nvim/{lua/config,lua/plugins}
-
-# Windows (PowerShell)
-New-Item -ItemType Directory -Force -Path "$env:LOCALAPPDATA\nvim\lua\config"
-New-Item -ItemType Directory -Force -Path "$env:LOCALAPPDATA\nvim\lua\plugins"
 ```
 
-**Recommended structure:**
+Directory layout:
 
 ```
 ~/.config/nvim/
-├── init.lua                 # Entry point
-├── lua/
-│   ├── config/
-│   │   ├── options.lua      # Vim options
-│   │   ├── keymaps.lua      # Global keymaps
-│   │   └── autocmds.lua     # Autocommands
-│   └── plugins/
-│       ├── lsp.lua          # LSP configuration
-│       ├── completion.lua   # Completion setup
-│       ├── telescope.lua    # Fuzzy finder
-│       ├── treesitter.lua   # Syntax highlighting
-│       └── dap.lua          # Debugging
+├── init.lua
+├── lua/config/
+│   ├── options.lua
+│   ├── keymaps.lua
+│   └── autocmds.lua
+└── lua/plugins/
+    ├── lsp.lua
+    ├── completion.lua
+    └── telescope.lua
 ```
 
-Create `~/.config/nvim/init.lua`:
+**init.lua** - Bootstrap lazy.nvim and load configuration:
 
 ```lua
--- Bootstrap lazy.nvim plugin manager
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 if not vim.loop.fs_stat(lazypath) then
   vim.fn.system({
-    "git",
-    "clone",
-    "--filter=blob:none",
+    "git", "clone", "--filter=blob:none",
     "https://github.com/folke/lazy.nvim.git",
-    "--branch=stable",
-    lazypath,
+    "--branch=stable", lazypath,
   })
 end
 vim.opt.rtp:prepend(lazypath)
 
--- Load configuration
 require("config.options")
 require("config.keymaps")
 require("config.autocmds")
-
--- Load plugins
-require("lazy").setup("plugins", {
-  change_detection = {
-    enabled = true,
-    notify = false,
-  },
-})
+require("lazy").setup("plugins")
 ```
 
----
+## Options
 
-## 2. Plugin Manager - lazy.nvim
-
-Create `~/.config/nvim/lua/config/options.lua`:
+**lua/config/options.lua** - IntelliJ-style settings:
 
 ```lua
--- General settings similar to IntelliJ
 local opt = vim.opt
 
--- Line numbers
 opt.number = true
 opt.relativenumber = true
-
--- Tabs and indentation (similar to IntelliJ defaults)
 opt.tabstop = 4
 opt.shiftwidth = 4
 opt.expandtab = true
-opt.autoindent = true
 opt.smartindent = true
 
--- Search settings
 opt.ignorecase = true
 opt.smartcase = true
-opt.hlsearch = true
-opt.incsearch = true
-
--- Appearance
 opt.termguicolors = true
-opt.background = "dark"
 opt.signcolumn = "yes"
-opt.cursorline = true
-
--- Clipboard (system clipboard like IntelliJ)
 opt.clipboard = "unnamedplus"
 
--- Backspace behavior
-opt.backspace = "indent,eol,start"
-
--- Split windows
 opt.splitright = true
 opt.splitbelow = true
-
--- Undo and backup
 opt.undofile = true
-opt.undodir = vim.fn.stdpath("data") .. "/undo"
-opt.backup = false
-opt.writebackup = false
 opt.swapfile = false
 
--- Performance
 opt.updatetime = 300
-opt.timeoutlen = 500
-
--- Mouse support
 opt.mouse = "a"
-
--- Completion menu height
-opt.pumheight = 10
-
--- Show matching brackets
-opt.showmatch = true
 ```
 
----
+## Core Plugins
 
-## 3. Core IntelliJ-like Plugins
-
-Create `~/.config/nvim/lua/plugins/init.lua`:
+**lua/plugins/init.lua** - Essential plugins for IDE features:
 
 ```lua
 return {
-  -- Color scheme (IntelliJ Darcula-like)
-  {
-    "folke/tokyonight.nvim",
-    lazy = false,
-    priority = 1000,
-    config = function()
-      require("tokyonight").setup({
-        style = "night",
-        transparent = false,
-        styles = {
-          sidebars = "dark",
-          floats = "dark",
-        },
-      })
-      vim.cmd([[colorscheme tokyonight-night]])
-    end,
-  },
-
-  -- File explorer (like IntelliJ Project view)
-  {
-    "nvim-neo-tree/neo-tree.nvim",
-    branch = "v3.x",
-    dependencies = {
-      "nvim-lua/plenary.nvim",
-      "nvim-tree/nvim-web-devicons",
-      "MunifTanjim/nui.nvim",
-    },
-    config = function()
-      require("neo-tree").setup({
-        close_if_last_window = true,
-        window = {
-          position = "left",
-          width = 30,
-        },
-        filesystem = {
-          follow_current_file = {
-            enabled = true,
-          },
-          use_libuv_file_watcher = true,
-        },
-      })
-    end,
-  },
-
-  -- Status line
-  {
-    "nvim-lualine/lualine.nvim",
-    dependencies = { "nvim-tree/nvim-web-devicons" },
-    config = function()
-      require("lualine").setup({
-        options = {
-          theme = "tokyonight",
-          component_separators = { left = "|", right = "|" },
-          section_separators = { left = "", right = "" },
-        },
-      })
-    end,
-  },
-
-  -- Buffer line (like IntelliJ tabs)
-  {
-    "akinsho/bufferline.nvim",
-    version = "*",
-    dependencies = "nvim-tree/nvim-web-devicons",
-    config = function()
-      require("bufferline").setup({
-        options = {
-          mode = "buffers",
-          close_command = "bdelete! %d",
-          right_mouse_command = "bdelete! %d",
-          offsets = {
-            {
-              filetype = "neo-tree",
-              text = "File Explorer",
-              highlight = "Directory",
-              text_align = "left",
-            },
-          },
-          diagnostics = "nvim_lsp",
-          separator_style = "thin",
-          show_buffer_close_icons = true,
-          show_close_icon = true,
-        },
-      })
-    end,
-  },
-
-  -- Treesitter for syntax highlighting
-  {
-    "nvim-treesitter/nvim-treesitter",
-    build = ":TSUpdate",
-    event = { "BufReadPost", "BufNewFile" },
-    dependencies = {
-      "nvim-treesitter/nvim-treesitter-textobjects",
-    },
-    config = function()
-      require("plugins.treesitter")
-    end,
-  },
-
-  -- Which-key for keymap hints (like IntelliJ's help)
-  {
-    "folke/which-key.nvim",
-    event = "VeryLazy",
-    config = function()
-      vim.o.timeout = true
-      vim.o.timeoutlen = 500
-      require("which-key").setup({})
-    end,
-  },
-
-  -- Auto pairs
-  {
-    "windwp/nvim-autopairs",
-    event = "InsertEnter",
-    config = true,
-  },
-
-  -- Comment plugin
-  {
-    "numToStr/Comment.nvim",
-    event = { "BufReadPost", "BufNewFile" },
-    config = true,
-  },
-
-  -- Indent guides
-  {
-    "lukas-reineke/indent-blankline.nvim",
-    main = "ibl",
-    event = { "BufReadPost", "BufNewFile" },
-    config = function()
-      require("ibl").setup({
-        indent = { char = "│" },
-        scope = { enabled = false },
-      })
-    end,
-  },
-
-  -- Git signs (like IntelliJ's gutter)
-  {
-    "lewis6991/gitsigns.nvim",
-    event = { "BufReadPost", "BufNewFile" },
-    config = function()
-      require("gitsigns").setup({
-        signs = {
-          add = { text = "│" },
-          change = { text = "│" },
-          delete = { text = "_" },
-          topdelete = { text = "‾" },
-          changedelete = { text = "~" },
-          untracked = { text = "┆" },
-        },
-      })
-    end,
-  },
+  "folke/tokyonight.nvim",           -- Dark theme
+  "nvim-neo-tree/neo-tree.nvim",     -- File explorer
+  "nvim-lualine/lualine.nvim",       -- Status line
+  "akinsho/bufferline.nvim",         -- Tab line
+  "nvim-treesitter/nvim-treesitter", -- Syntax highlighting
+  "folke/which-key.nvim",            -- Keymap hints
+  "windwp/nvim-autopairs",           -- Auto pairs
+  "numToStr/Comment.nvim",           -- Comments
+  "lewis6991/gitsigns.nvim",         -- Git indicators
 }
 ```
 
----
+Full plugin configuration with settings is in the Complete Configuration section at the end.
 
-## 4. LSP Configuration for Java/Kotlin
+## LSP for Java/Kotlin
 
-Create `~/.config/nvim/lua/plugins/lsp.lua`:
+**lua/plugins/lsp.lua** - Language server setup:
 
 ```lua
 return {
-  -- LSP Configuration
-  {
-    "neovim/nvim-lspconfig",
-    event = { "BufReadPost", "BufNewFile" },
-    dependencies = {
-      "williamboman/mason.nvim",
-      "williamboman/mason-lspconfig.nvim",
-      "hrsh7th/cmp-nvim-lsp",
-    },
-    config = function()
-      local lspconfig = require("lspconfig")
-      local cmp_nvim_lsp = require("cmp_nvim_lsp")
-
-      -- Mason setup for automatic LSP installation
-      require("mason").setup()
-      require("mason-lspconfig").setup({
-        ensure_installed = {
-          "jdtls",        -- Java
-          "kotlin_language_server", -- Kotlin
-          "lua_ls",       -- Lua
-          "pyright",      -- Python
-          "tsserver",     -- TypeScript
-        },
-        automatic_installation = true,
-      })
-
-      -- Capabilities for completion
-      local capabilities = cmp_nvim_lsp.default_capabilities()
-
-      -- Keymaps for LSP (IntelliJ-style)
-      local on_attach = function(client, bufnr)
-        local opts = { buffer = bufnr, silent = true }
-
-        -- Navigation (IntelliJ Ctrl+B, Ctrl+Alt+B)
-        vim.keymap.set("n", "gd", vim.lsp.buf.definition, opts) -- Ctrl+B equivalent
-        vim.keymap.set("n", "gD", vim.lsp.buf.declaration, opts)
-        vim.keymap.set("n", "gi", vim.lsp.buf.implementation, opts) -- Ctrl+Alt+B
-        vim.keymap.set("n", "gr", vim.lsp.buf.references, opts) -- Alt+F7
-        vim.keymap.set("n", "K", vim.lsp.buf.hover, opts) -- Ctrl+Q
-
-        -- Code actions (IntelliJ Alt+Enter)
-        vim.keymap.set({ "n", "v" }, "<leader>ca", vim.lsp.buf.code_action, opts)
-
-        -- Rename (IntelliJ Shift+F6)
-        vim.keymap.set("n", "<leader>rn", vim.lsp.buf.rename, opts)
-
-        -- Format (IntelliJ Ctrl+Alt+L)
-        vim.keymap.set("n", "<leader>f", function()
-          vim.lsp.buf.format({ async = true })
-        end, opts)
-
-        -- Diagnostics (IntelliJ F2, Shift+F2)
-        vim.keymap.set("n", "[d", vim.diagnostic.goto_prev, opts)
-        vim.keymap.set("n", "]d", vim.diagnostic.goto_next, opts)
-        vim.keymap.set("n", "<leader>e", vim.diagnostic.open_float, opts)
-        vim.keymap.set("n", "<leader>q", vim.diagnostic.setloclist, opts)
-      end
-
-      -- Java LSP (jdtls) - Basic config
-      -- For advanced Java, use nvim-jdtls plugin
-      lspconfig.jdtls.setup({
-        capabilities = capabilities,
-        on_attach = on_attach,
-      })
-
-      -- Kotlin LSP
-      lspconfig.kotlin_language_server.setup({
-        capabilities = capabilities,
-        on_attach = on_attach,
-      })
-
-      -- Lua LSP (for Neovim config)
-      lspconfig.lua_ls.setup({
-        capabilities = capabilities,
-        on_attach = on_attach,
-        settings = {
-          Lua = {
-            diagnostics = {
-              globals = { "vim" },
-            },
-            workspace = {
-              library = vim.api.nvim_get_runtime_file("", true),
-            },
-          },
-        },
-      })
-
-      -- Configure diagnostic display
-      vim.diagnostic.config({
-        virtual_text = {
-          prefix = "●",
-        },
-        signs = true,
-        underline = true,
-        update_in_insert = false,
-        severity_sort = true,
-      })
-
-      -- Diagnostic signs (like IntelliJ)
-      local signs = { Error = " ", Warn = " ", Hint = " ", Info = " " }
-      for type, icon in pairs(signs) do
-        local hl = "DiagnosticSign" .. type
-        vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = hl })
-      end
-    end,
-  },
-
-  -- Advanced Java support
-  {
-    "mfussenegger/nvim-jdtls",
-    ft = "java",
-    config = function()
-      -- Will be configured per-project
-      -- See dedicated Java config section below
-    end,
-  },
-
-  -- Mason (LSP installer)
-  {
-    "williamboman/mason.nvim",
-    build = ":MasonUpdate",
-  },
-
-  {
-    "williamboman/mason-lspconfig.nvim",
-  },
+  "neovim/nvim-lspconfig",
+  "williamboman/mason.nvim",
+  "williamboman/mason-lspconfig.nvim",
+  "mfussenegger/nvim-jdtls",  -- Advanced Java
 }
 ```
 
----
-
-## 5. IntelliJ Keymap Configuration
-
-Create `~/.config/nvim/lua/config/keymaps.lua`:
+Mason installs language servers automatically. Configure keymaps in `on_attach`:
 
 ```lua
--- Set leader key (like IntelliJ's Ctrl/Cmd)
+local on_attach = function(client, bufnr)
+  local opts = { buffer = bufnr, silent = true }
+
+  vim.keymap.set("n", "gd", vim.lsp.buf.definition, opts)
+  vim.keymap.set("n", "gr", vim.lsp.buf.references, opts)
+  vim.keymap.set("n", "K", vim.lsp.buf.hover, opts)
+  vim.keymap.set("n", "<leader>ca", vim.lsp.buf.code_action, opts)
+  vim.keymap.set("n", "<leader>rn", vim.lsp.buf.rename, opts)
+  vim.keymap.set("n", "<leader>f", vim.lsp.buf.format, opts)
+  vim.keymap.set("n", "[d", vim.diagnostic.goto_prev, opts)
+  vim.keymap.set("n", "]d", vim.diagnostic.goto_next, opts)
+end
+```
+
+## IntelliJ Keymaps
+
+**lua/config/keymaps.lua** - Key IntelliJ shortcuts:
+
+```lua
 vim.g.mapleader = " "
-vim.g.maplocalleader = " "
 
-local keymap = vim.keymap.set
-local opts = { silent = true }
+local k = vim.keymap.set
+local o = { silent = true }
 
--- ============================================
--- INTELLIJ IDEA KEYMAP EQUIVALENTS
--- ============================================
+-- Navigation
+k("n", "<C-n>", ":Telescope find_files<CR>", o)     -- Find class
+k("n", "<C-S-f>", ":Telescope live_grep<CR>", o)    -- Find in files
+k("n", "<C-e>", ":Telescope oldfiles<CR>", o)       -- Recent files
+k("n", "<C-F12>", ":Telescope lsp_document_symbols<CR>", o) -- File structure
 
--- Project Explorer (Alt+1)
-keymap("n", "<A-1>", ":Neotree toggle<CR>", opts)
-keymap("n", "<leader>e", ":Neotree toggle<CR>", opts)
+-- Project
+k("n", "<A-1>", ":Neotree toggle<CR>", o)           -- Project explorer
 
--- Navigate to Class (Ctrl+N)
-keymap("n", "<C-n>", ":Telescope find_files<CR>", opts)
+-- Code Actions
+k("n", "<A-CR>", vim.lsp.buf.code_action, o)       -- Quick fix
+k("n", "<S-F6>", vim.lsp.buf.rename, o)             -- Rename
+k("n", "<C-A-l>", vim.lsp.buf.format, o)            -- Reformat
 
--- Navigate to File (Ctrl+Shift+N)
-keymap("n", "<C-S-n>", ":Telescope find_files<CR>", opts)
+-- Debugging
+k("n", "<S-F9>", ":DapToggleBreakpoint<CR>", o)    -- Toggle breakpoint
+k("n", "<F8>", ":DapStepOver<CR>", o)               -- Step over
+k("n", "<F7>", ":DapStepInto<CR>", o)               -- Step into
+k("n", "<F9>", ":DapContinue<CR>", o)               -- Resume
 
--- Find in Files (Ctrl+Shift+F)
-keymap("n", "<C-S-f>", ":Telescope live_grep<CR>", opts)
-
--- Recent Files (Ctrl+E)
-keymap("n", "<C-e>", ":Telescope oldfiles<CR>", opts)
-
--- Go to Declaration (Ctrl+B) - handled by LSP 'gd'
--- Find Usages (Alt+F7) - handled by LSP 'gr'
-
--- File Structure (Ctrl+F12)
-keymap("n", "<C-F12>", ":Telescope lsp_document_symbols<CR>", opts)
-keymap("n", "<leader>o", ":Telescope lsp_document_symbols<CR>", opts)
-
--- Go to Implementation (Ctrl+Alt+B) - handled by LSP 'gi'
-
--- Navigate Back/Forward (Ctrl+Alt+Left/Right)
-keymap("n", "<C-A-Left>", "<C-o>", opts)
-keymap("n", "<C-A-Right>", "<C-i>", opts)
-
--- Quick Fix / Show Intentions (Alt+Enter)
-keymap("n", "<A-CR>", vim.lsp.buf.code_action, opts)
-keymap("n", "<leader>ca", vim.lsp.buf.code_action, opts)
-
--- Rename (Shift+F6)
-keymap("n", "<S-F6>", vim.lsp.buf.rename, opts)
-keymap("n", "<leader>rn", vim.lsp.buf.rename, opts)
-
--- Reformat Code (Ctrl+Alt+L)
-keymap("n", "<C-A-l>", function()
-  vim.lsp.buf.format({ async = true })
-end, opts)
-keymap("n", "<leader>f", function()
-  vim.lsp.buf.format({ async = true })
-end, opts)
-
--- Optimize Imports (Ctrl+Alt+O)
-keymap("n", "<C-A-o>", ":OrganizeImports<CR>", opts)
-keymap("n", "<leader>oi", ":OrganizeImports<CR>", opts)
-
--- Duplicate Line (Ctrl+D)
-keymap("n", "<C-d>", "yyp", opts)
-
--- Delete Line (Ctrl+Y in IntelliJ, but dd in Vim)
-keymap("n", "<C-y>", "dd", opts)
-
--- Comment Line (Ctrl+/)
-keymap("n", "<C-/>", "gcc", { remap = true })
-keymap("v", "<C-/>", "gc", { remap = true })
-keymap("n", "<leader>/", "gcc", { remap = true })
-keymap("v", "<leader>/", "gc", { remap = true })
-
--- Move Lines Up/Down (Alt+Shift+Up/Down)
-keymap("n", "<A-S-Up>", ":m .-2<CR>==", opts)
-keymap("n", "<A-S-Down>", ":m .+1<CR>==", opts)
-keymap("v", "<A-S-Up>", ":m '<-2<CR>gv=gv", opts)
-keymap("v", "<A-S-Down>", ":m '>+1<CR>gv=gv", opts)
-
--- Select All (Ctrl+A)
-keymap("n", "<C-a>", "ggVG", opts)
-
--- Run (Shift+F10) - will be configured with DAP
-keymap("n", "<S-F10>", ":DapContinue<CR>", opts)
-
--- Debug (Shift+F9)
-keymap("n", "<S-F9>", ":DapToggleBreakpoint<CR>", opts)
-
--- Toggle Breakpoint (Ctrl+F8)
-keymap("n", "<C-F8>", ":DapToggleBreakpoint<CR>", opts)
-
--- Step Over (F8)
-keymap("n", "<F8>", ":DapStepOver<CR>", opts)
-
--- Step Into (F7)
-keymap("n", "<F7>", ":DapStepInto<CR>", opts)
-
--- Step Out (Shift+F8)
-keymap("n", "<S-F8>", ":DapStepOut<CR>", opts)
-
--- Resume Program (F9)
-keymap("n", "<F9>", ":DapContinue<CR>", opts)
-
--- Show Errors (Ctrl+F1)
-keymap("n", "<C-F1>", vim.diagnostic.open_float, opts)
-
--- Next Error (F2)
-keymap("n", "<F2>", vim.diagnostic.goto_next, opts)
-
--- Previous Error (Shift+F2)
-keymap("n", "<S-F2>", vim.diagnostic.goto_prev, opts)
-
--- Terminal (Alt+F12)
-keymap("n", "<A-F12>", ":ToggleTerm<CR>", opts)
-keymap("n", "<leader>t", ":ToggleTerm<CR>", opts)
-
--- Close Tab (Ctrl+F4)
-keymap("n", "<C-F4>", ":bd<CR>", opts)
-
--- ============================================
--- BUFFER NAVIGATION (like IntelliJ tabs)
--- ============================================
-
--- Next/Previous Buffer (Alt+Right/Left)
-keymap("n", "<A-Right>", ":BufferLineCycleNext<CR>", opts)
-keymap("n", "<A-Left>", ":BufferLineCyclePrev<CR>", opts)
-
--- Close buffer
-keymap("n", "<leader>bd", ":bd<CR>", opts)
-keymap("n", "<leader>bD", ":bd!<CR>", opts)
-
--- ============================================
--- WINDOW NAVIGATION
--- ============================================
-
--- Navigate windows (Ctrl+h/j/k/l)
-keymap("n", "<C-h>", "<C-w>h", opts)
-keymap("n", "<C-j>", "<C-w>j", opts)
-keymap("n", "<C-k>", "<C-w>k", opts)
-keymap("n", "<C-l>", "<C-w>l", opts)
-
--- Resize windows
-keymap("n", "<C-Up>", ":resize +2<CR>", opts)
-keymap("n", "<C-Down>", ":resize -2<CR>", opts)
-keymap("n", "<C-Left>", ":vertical resize -2<CR>", opts)
-keymap("n", "<C-Right>", ":vertical resize +2<CR>", opts)
-
--- ============================================
--- VISUAL MODE
--- ============================================
-
--- Stay in indent mode
-keymap("v", "<", "<gv", opts)
-keymap("v", ">", ">gv", opts)
-
--- Move text up and down
-keymap("v", "J", ":m '>+1<CR>gv=gv", opts)
-keymap("v", "K", ":m '<-2<CR>gv=gv", opts)
-
--- ============================================
--- SEARCH AND REPLACE (like IntelliJ)
--- ============================================
-
--- Clear search highlight (Escape)
-keymap("n", "<Esc>", ":noh<CR>", opts)
-
--- Find (Ctrl+F) - use / in Vim, or:
-keymap("n", "<C-f>", "/", { silent = false })
-
--- Replace in File (Ctrl+R)
-keymap("n", "<C-r>", ":%s/", { silent = false })
-
--- ============================================
--- GIT (like IntelliJ VCS)
--- ============================================
-
--- Git status (similar to Alt+9)
-keymap("n", "<leader>gs", ":Git<CR>", opts)
-
--- Git blame
-keymap("n", "<leader>gb", ":Git blame<CR>", opts)
-
--- Git diff
-keymap("n", "<leader>gd", ":Gitsigns diffthis<CR>", opts)
-
--- Stage hunk
-keymap("n", "<leader>hs", ":Gitsigns stage_hunk<CR>", opts)
-
--- Undo stage hunk
-keymap("n", "<leader>hu", ":Gitsigns undo_stage_hunk<CR>", opts)
-
--- Reset hunk
-keymap("n", "<leader>hr", ":Gitsigns reset_hunk<CR>", opts)
+-- Errors
+k("n", "<F2>", vim.diagnostic.goto_next, o)         -- Next error
+k("n", "<S-F2>", vim.diagnostic.goto_prev, o)       -- Previous error
 
 -- Preview hunk
 keymap("n", "<leader>hp", ":Gitsigns preview_hunk<CR>", opts)

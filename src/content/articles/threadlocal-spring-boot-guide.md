@@ -10,11 +10,11 @@ estimatedTime: "60 minutes"
 featured: true
 ---
 
-# ThreadLocal in Spring Boot: Solving Real-World Problems with Thread-Confined Storage
+# ThreadLocal in Spring Boot: Solving Real-World Problems
 
-ThreadLocal is one of Java's most powerful yet misunderstood concurrency utilities. In Spring Boot applications, it's the secret weapon for managing request-scoped data, implementing distributed tracing, handling multi-tenancy, and solving numerous other challenges where you need thread-confined storage.
+ThreadLocal gives each thread its own copy of a variable. In Spring Boot, this solves real problems: user context, distributed tracing, multi-tenancy, and request-scoped caching—all without passing objects through every method call.
 
-This comprehensive guide explores ThreadLocal through real-world Spring Boot problems, showing you when to use it, how to implement it correctly, and—crucially—how to avoid the memory leaks that have plagued countless production applications.
+This guide shows practical uses and, more importantly, how to avoid the memory leaks that destroy production applications.
 
 ## Table of Contents
 
@@ -35,106 +35,54 @@ This comprehensive guide explores ThreadLocal through real-world Spring Boot pro
 
 ## What is ThreadLocal?
 
-ThreadLocal provides thread-confined variables—each thread accessing a ThreadLocal variable has its own, independently initialized copy of the variable.
-
-### Basic Concept
+A ThreadLocal variable gives each thread its own independent copy. Thread 1 sets "alice", Thread 2 sets "bob"—neither sees the other's value.
 
 ```java
-public class ThreadLocalExample {
-    private static ThreadLocal<String> userContext = new ThreadLocal<>();
+public class UserContext {
+    private static ThreadLocal<String> user = new ThreadLocal<>();
 
     public static void setUser(String username) {
-        userContext.set(username);
+        user.set(username);
     }
 
     public static String getUser() {
-        return userContext.get();
+        return user.get();
     }
 
     public static void clear() {
-        userContext.remove(); // Critical: prevents memory leaks
+        user.remove();
     }
 }
 ```
 
-**How it works:**
-- Each thread gets its own copy of the variable
-- Setting a value in one thread doesn't affect other threads
-- Values are isolated per thread
-- Memory is reclaimed when thread dies (if properly cleaned)
-
-### Visual Representation
-
-```
-Thread-1                    Thread-2                    Thread-3
-┌──────────┐               ┌──────────┐               ┌──────────┐
-│ User:    │               │ User:    │               │ User:    │
-│ "alice"  │               │ "bob"    │               │ "charlie"│
-└──────────┘               └──────────┘               └──────────┘
-     ↓                          ↓                          ↓
-ThreadLocal<String>        ThreadLocal<String>        ThreadLocal<String>
-     ↓                          ↓                          ↓
-  Same variable, different values per thread
-```
+The `clear()` method matters. Without it, you leak memory. More on that later.
 
 ---
 
 ## The Problem ThreadLocal Solves
 
-### The Challenge
+Suppose you need the current user in a service method deep in your call stack. You could pass it through every method, but that's tedious:
 
-In Spring Boot applications, you often need to:
-- Track which user made a request
-- Propagate correlation IDs for logging
-- Manage tenant context in multi-tenant apps
-- Store transaction metadata
-- Cache data for the request lifecycle
-
-**Without ThreadLocal**, you'd have to:
-1. Pass context objects through every method
-2. Store in servlet request attributes (limited to web layer)
-3. Use global static variables (not thread-safe)
-
-### The Solution
-
-ThreadLocal provides clean, thread-safe context propagation without method parameter pollution.
-
-**Problem: Passing user context everywhere**
 ```java
-// Without ThreadLocal - Parameter drilling
 public void processOrder(Order order, User user) {
     validateOrder(order, user);
     calculateTotal(order, user);
     applyDiscounts(order, user);
-    saveOrder(order, user);
-}
-
-private void applyDiscounts(Order order, User user) {
-    // Need user in every method
-    if (user.isPremium()) {
-        order.applyDiscount(10);
-    }
 }
 ```
 
-**Solution: ThreadLocal context**
+Every method needs the user parameter. With ThreadLocal:
+
 ```java
-// With ThreadLocal - Clean methods
 public void processOrder(Order order) {
     User user = UserContext.getCurrentUser();
     validateOrder(order);
     calculateTotal(order);
     applyDiscounts(order);
-    saveOrder(order);
-}
-
-private void applyDiscounts(Order order) {
-    User user = UserContext.getCurrentUser();
-    if (user.isPremium()) {
-        order.applyDiscount(10);
-    }
 }
 ```
+
+The user comes from thread-local storage. Any method can retrieve it without parameters.
 
 ---
 
@@ -166,11 +114,7 @@ Let's dive into each use case with practical implementations.
 
 ## User Context Management
 
-### The Problem
-
-In a typical Spring Boot REST API, you need the authenticated user's information across service layers, repositories, and even utilities. Passing `User` or `Authentication` objects through every method is verbose and pollutes your code.
-
-### The Solution
+Store the current user in a ThreadLocal so any method can access it:
 
 ```java
 @Component
@@ -195,7 +139,7 @@ public class UserContext {
 }
 ```
 
-### Implementation with Filter
+A filter sets the user at the start of each request and cleans up afterward:
 
 ```java
 @Component
@@ -211,97 +155,64 @@ public class UserContextFilter extends OncePerRequestFilter {
                                     FilterChain filterChain)
             throws ServletException, IOException {
         try {
-            // Extract user from JWT/session/header
             String username = extractUsername(request);
             UserDetails user = userService.loadUserByUsername(username);
-
-            // Set in ThreadLocal
             UserContext.setCurrentUser(user);
-
-            // Continue filter chain
             filterChain.doFilter(request, response);
         } finally {
-            // CRITICAL: Clean up
             UserContext.clear();
         }
     }
 
     private String extractUsername(HttpServletRequest request) {
-        // Extract from JWT token, session, or header
         String token = request.getHeader("Authorization");
         return jwtUtils.extractUsername(token);
     }
 }
 ```
 
-### Usage in Service Layer
+Now any service can access the user:
 
 ```java
 @Service
 public class OrderService {
 
-    @Autowired
-    private OrderRepository orderRepository;
-
-    @Autowired
-    private AuditService auditService;
-
     public Order createOrder(OrderRequest request) {
-        // No need to pass user as parameter
-        UserDetails currentUser = UserContext.getCurrentUser();
+        UserDetails user = UserContext.getCurrentUser();
 
         Order order = new Order();
-        order.setUserId(currentUser.getUserId());
+        order.setUserId(user.getUserId());
         order.setItems(request.getItems());
 
-        Order saved = orderRepository.save(order);
-
-        // Audit log automatically knows the user
-        auditService.logOrderCreation(saved);
-
-        return saved;
+        return orderRepository.save(order);
     }
 }
+```
 
+No user parameter needed. The audit service gets it the same way:
+
+```java
 @Service
 public class AuditService {
 
     public void logOrderCreation(Order order) {
         UserDetails user = UserContext.getCurrentUser();
 
-        AuditLog log = AuditLog.builder()
-            .action("ORDER_CREATED")
-            .userId(user.getUserId())
-            .username(user.getUsername())
-            .orderId(order.getId())
-            .timestamp(Instant.now())
-            .build();
+        AuditLog log = new AuditLog("ORDER_CREATED",
+            user.getUserId(), order.getId(), Instant.now());
 
         auditRepository.save(log);
     }
 }
 ```
 
-### Benefits
-
-✅ **Clean Code**: No user parameter in every method
-✅ **Layer Independence**: Service doesn't depend on web layer
-✅ **Easy Testing**: Mock UserContext in tests
-✅ **Audit Trail**: Automatic user tracking
-
 ---
 
-## Distributed Tracing Implementation
+## Distributed Tracing
 
-### The Problem
+Tracking requests across microservices needs correlation IDs. The ID must travel with the request through all services and appear in every log entry. ThreadLocal handles this elegantly.
 
-In microservices, tracking a request across multiple services requires correlation IDs. You need to:
-1. Generate correlation ID for incoming requests
-2. Include it in all logs
-3. Pass it to downstream services
-4. Maintain it through async operations
-
-### The Solution
+**Store the correlation ID per thread:**
 
 ```java
 @Component
@@ -316,51 +227,39 @@ public class CorrelationIdContext {
         return correlationId.get();
     }
 
-    public static String getOrGenerate() {
-        String id = correlationId.get();
-        if (id == null) {
-            id = UUID.randomUUID().toString();
-            correlationId.set(id);
-        }
-        return id;
-    }
-
     public static void clear() {
         correlationId.remove();
     }
 }
 ```
 
-### Filter Implementation
+**Extract or generate the ID in a filter:**
+
+The filter runs first (`@Order(0)`), before other filters. It checks for an existing correlation ID in the request header. If absent, it generates one. The ID goes into ThreadLocal and also into SLF4J's MDC (Mapped Diagnostic Context) for automatic logging.
 
 ```java
 @Component
-@Order(0) // Execute before other filters
+@Order(0)
 public class CorrelationIdFilter extends OncePerRequestFilter {
 
-    private static final String CORRELATION_ID_HEADER = "X-Correlation-ID";
+    private static final String HEADER = "X-Correlation-ID";
 
     @Override
     protected void doFilterInternal(HttpServletRequest request,
                                     HttpServletResponse response,
-                                    FilterChain filterChain)
+                                    FilterChain chain)
             throws ServletException, IOException {
         try {
-            // Get from header or generate new
-            String correlationId = request.getHeader(CORRELATION_ID_HEADER);
-            if (correlationId == null) {
-                correlationId = UUID.randomUUID().toString();
+            String id = request.getHeader(HEADER);
+            if (id == null) {
+                id = UUID.randomUUID().toString();
             }
 
-            CorrelationIdContext.setCorrelationId(correlationId);
+            CorrelationIdContext.setCorrelationId(id);
+            response.setHeader(HEADER, id);
+            MDC.put("correlationId", id);
 
-            // Add to response for client tracking
-            response.setHeader(CORRELATION_ID_HEADER, correlationId);
-
-            // Add to MDC for logging
-            MDC.put("correlationId", correlationId);
-
-            filterChain.doFilter(request, response);
+            chain.doFilter(request, response);
         } finally {
             MDC.remove("correlationId");
             CorrelationIdContext.clear();
@@ -369,7 +268,9 @@ public class CorrelationIdFilter extends OncePerRequestFilter {
 }
 ```
 
-### RestTemplate Integration
+**Propagate to downstream services:**
+
+When calling other services, add an interceptor to RestTemplate. It reads the correlation ID from ThreadLocal and adds it to outgoing requests.
 
 ```java
 @Configuration
@@ -377,18 +278,17 @@ public class RestTemplateConfig {
 
     @Bean
     public RestTemplate restTemplate() {
-        RestTemplate restTemplate = new RestTemplate();
+        RestTemplate template = new RestTemplate();
 
-        // Add interceptor to propagate correlation ID
-        restTemplate.getInterceptors().add((request, body, execution) -> {
-            String correlationId = CorrelationIdContext.getCorrelationId();
-            if (correlationId != null) {
-                request.getHeaders().add("X-Correlation-ID", correlationId);
+        template.getInterceptors().add((request, body, execution) -> {
+            String id = CorrelationIdContext.getCorrelationId();
+            if (id != null) {
+                request.getHeaders().add("X-Correlation-ID", id);
             }
             return execution.execute(request, body);
         });
 
-        return restTemplate;
+        return template;
     }
 }
 ```
@@ -699,16 +599,13 @@ public class OrderService {
 
 ---
 
-## Request Scoped Caching
+## Request-Scoped Caching
 
-### The Problem
+Sometimes you call the same method multiple times in a single request. Instead of hitting the database each time, cache the result for the request duration. ThreadLocal provides a simple solution without Spring's `@RequestScope` complexity.
 
-You need to cache data for the duration of a request to avoid repeated database queries, but:
-- Spring's `@RequestScope` is complex
-- Don't want to use servlet request attributes
-- Need to work outside web layer
+**Create a request-scoped cache:**
 
-### The Solution
+The cache is a `Map` stored in ThreadLocal. Use `withInitial()` to create an empty map for each thread automatically.
 
 ```java
 @Component
@@ -716,16 +613,7 @@ public class RequestCache {
     private static final ThreadLocal<Map<String, Object>> cache =
         ThreadLocal.withInitial(HashMap::new);
 
-    public static <T> T get(String key, Class<T> type) {
-        return type.cast(cache.get().get(key));
-    }
-
-    public static void put(String key, Object value) {
-        cache.get().put(key, value);
-    }
-
-    public static <T> T getOrCompute(String key, Class<T> type,
-                                      Supplier<T> supplier) {
+    public static <T> T getOrCompute(String key, Class<T> type, Supplier<T> supplier) {
         Map<String, Object> map = cache.get();
         if (!map.containsKey(key)) {
             T value = supplier.get();
@@ -742,11 +630,13 @@ public class RequestCache {
 }
 ```
 
-### Filter to Clear Cache
+**Clear the cache after each request:**
+
+Run this filter last (`@Order(100)`) to clean up after all processing finishes.
 
 ```java
 @Component
-@Order(100) // Execute last
+@Order(100)
 public class RequestCacheFilter extends OncePerRequestFilter {
 
     @Override
@@ -1174,27 +1064,28 @@ public class AdminController {
 
 ## Common Pitfalls and Memory Leaks
 
-### Pitfall 1: Not Cleaning Up ThreadLocal
+### The Forgotten Cleanup
 
-**Problem:**
+Application servers like Tomcat use thread pools. A thread serves Request A, then Request B, then Request C. If you forget to clear ThreadLocal, Request B sees data from Request A. Worse, memory leaks until the JVM crashes.
+
+**The mistake:**
+
 ```java
-// DANGEROUS - Memory leak!
 public class UserContext {
     private static ThreadLocal<User> user = new ThreadLocal<>();
 
     public static void setUser(User u) {
         user.set(u);
-        // No cleanup method!
     }
 }
 ```
 
-**In application servers (Tomcat, Jetty), threads are pooled. If you don't clean ThreadLocal:**
-- Old data persists across requests
-- Memory leak grows over time
-- Can cause `OutOfMemoryError`
+No `clear()` method. The data stays forever.
 
-**Solution:**
+**The fix:**
+
+Always use a finally block in your filter:
+
 ```java
 @Component
 public class CleanupFilter extends OncePerRequestFilter {
@@ -1202,38 +1093,43 @@ public class CleanupFilter extends OncePerRequestFilter {
     @Override
     protected void doFilterInternal(HttpServletRequest request,
                                     HttpServletResponse response,
-                                    FilterChain filterChain)
+                                    FilterChain chain)
             throws ServletException, IOException {
         try {
-            filterChain.doFilter(request, response);
+            chain.doFilter(request, response);
         } finally {
-            // Clean ALL ThreadLocals
             UserContext.clear();
             TenantContext.clear();
             CorrelationIdContext.clear();
             RequestCache.clear();
-            // ... clean all contexts
         }
     }
 }
 ```
 
-### Pitfall 2: ThreadLocal in Async Methods
+The finally block runs even if the request throws an exception. Every ThreadLocal gets cleaned.
 
-**Problem:**
+### Async Methods Lose Context
+
+Spring's `@Async` runs methods in a different thread. ThreadLocal doesn't transfer automatically—the new thread sees null.
+
+**The problem:**
+
 ```java
 @Service
 public class NotificationService {
 
     @Async
     public void sendEmail() {
-        // NULL! ThreadLocal doesn't propagate to new thread
-        User user = UserContext.getCurrentUser();
+        User user = UserContext.getCurrentUser();  // Returns null!
     }
 }
 ```
 
-**Solution: Task Decorator**
+**The solution:**
+
+Use a TaskDecorator to capture and restore ThreadLocal values:
+
 ```java
 @Configuration
 @EnableAsync
@@ -1244,18 +1140,13 @@ public class AsyncConfig implements AsyncConfigurer {
         ThreadPoolTaskExecutor executor = new ThreadPoolTaskExecutor();
 
         executor.setTaskDecorator(runnable -> {
-            // Capture ThreadLocal values
             User currentUser = UserContext.getCurrentUser();
             String tenantId = TenantContext.getTenantId();
-            String correlationId = CorrelationIdContext.getCorrelationId();
 
             return () -> {
                 try {
-                    // Restore in new thread
                     UserContext.setCurrentUser(currentUser);
                     TenantContext.setTenantId(tenantId);
-                    CorrelationIdContext.setCorrelationId(correlationId);
-
                     runnable.run();
                 } finally {
                     // Clean up in new thread
@@ -1322,97 +1213,66 @@ public void processOrders() {
 
 ## Best Practices
 
-### 1. Always Clean Up
+### Use try-finally Every Time
+
+Never set a ThreadLocal without a corresponding clear() in a finally block. This isn't optional—it's mandatory.
 
 ```java
-// Pattern: try-finally in filters
 @Component
 public class ContextFilter extends OncePerRequestFilter {
 
     @Override
-    protected void doFilterInternal(...) {
+    protected void doFilterInternal(HttpServletRequest request,
+                                    HttpServletResponse response,
+                                    FilterChain chain)
+            throws ServletException, IOException {
         try {
-            // Set context
             UserContext.setCurrentUser(user);
-            filterChain.doFilter(request, response);
+            chain.doFilter(request, response);
         } finally {
-            // ALWAYS clean up
             UserContext.clear();
         }
     }
 }
 ```
 
-### 2. Use `withInitial()` for Default Values
+### Initialize with Defaults
+
+Use `withInitial()` to avoid null checks:
 
 ```java
-// Good - prevents NPE
 private static ThreadLocal<Map<String, Object>> cache =
     ThreadLocal.withInitial(HashMap::new);
-
-// Bad - can return null
-private static ThreadLocal<Map<String, Object>> cache = new ThreadLocal<>();
 ```
 
-### 3. Create Wrapper Classes
+Now `cache.get()` never returns null—it creates an empty map automatically.
 
-```java
-// Encapsulate ThreadLocal logic
-@Component
-public class RequestContext {
-    private static final ThreadLocal<Map<String, Object>> attributes =
-        ThreadLocal.withInitial(HashMap::new);
+### Document the Lifecycle
 
-    public static <T> void setAttribute(String key, T value) {
-        attributes.get().put(key, value);
-    }
-
-    public static <T> T getAttribute(String key, Class<T> type) {
-        return type.cast(attributes.get().get(key));
-    }
-
-    public static void clear() {
-        attributes.get().clear();
-        attributes.remove();
-    }
-}
-```
-
-### 4. Document Lifecycle
+Future maintainers need to know when the value gets set and cleared:
 
 ```java
 /**
- * Stores tenant context for current request.
+ * Stores tenant ID for the current request.
  *
- * Lifecycle:
- * - Set by TenantFilter at request start
- * - Available throughout request processing
- * - Cleared by TenantFilter in finally block
- *
- * Thread Safety: Yes (ThreadLocal)
- * Memory: Cleaned per request
+ * Set by: TenantFilter at request start
+ * Cleared by: TenantFilter in finally block
+ * Thread-safe: Yes (ThreadLocal)
  */
 @Component
 public class TenantContext {
-    // ...
-}
-```
+    private static final ThreadLocal<String> tenantId = new ThreadLocal<>();
 
-### 5. Monitor for Leaks
+    public static void setTenantId(String id) {
+        tenantId.set(id);
+    }
 
-```java
-@Component
-@Slf4j
-public class ThreadLocalMonitor {
+    public static String getTenantId() {
+        return tenantId.get();
+    }
 
-    @Scheduled(fixedRate = 60000) // Every minute
-    public void checkForLeaks() {
-        // Use tools like JProfiler, YourKit, or custom logic
-        int threadCount = Thread.activeCount();
-
-        if (threadCount > 1000) {
-            log.warn("High thread count: {}. Check for ThreadLocal leaks!", threadCount);
-        }
+    public static void clear() {
+        tenantId.remove();
     }
 }
 ```
@@ -1421,7 +1281,7 @@ public class ThreadLocalMonitor {
 
 ## Testing ThreadLocal Code
 
-### Unit Tests
+Set up and tear down ThreadLocal in test methods:
 
 ```java
 @ExtendWith(MockitoExtension.class)
@@ -1435,33 +1295,28 @@ class UserServiceTest {
 
     @BeforeEach
     void setUp() {
-        // Set up ThreadLocal before each test
         UserDetails user = new UserDetails("testuser", "test@example.com");
         UserContext.setCurrentUser(user);
     }
 
     @AfterEach
     void tearDown() {
-        // Clean up after each test
         UserContext.clear();
     }
 
     @Test
     void shouldCreateOrderWithCurrentUser() {
-        // Arrange
         OrderRequest request = new OrderRequest();
         request.setItems(List.of("item1", "item2"));
 
-        // Act
         Order order = userService.createOrder(request);
 
-        // Assert
         assertThat(order.getUserId()).isEqualTo("testuser");
     }
 }
 ```
 
-### Integration Tests
+For integration tests, the filter handles setup and cleanup automatically:
 
 ```java
 @SpringBootTest
@@ -1472,29 +1327,13 @@ class OrderControllerIntegrationTest {
     private MockMvc mockMvc;
 
     @Test
-    void shouldHandleRequestWithTenantContext() throws Exception {
+    void shouldHandleTenantContext() throws Exception {
         mockMvc.perform(post("/api/orders")
                 .header("X-Tenant-ID", "tenant-123")
-                .header("Authorization", "Bearer token")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content("{\"items\": [\"item1\"]}"))
             .andExpect(status().isOk())
             .andExpect(jsonPath("$.tenantId").value("tenant-123"));
-    }
-
-    @Test
-    void shouldClearContextAfterRequest() throws Exception {
-        // First request
-        mockMvc.perform(get("/api/orders")
-                .header("X-Tenant-ID", "tenant-123"))
-            .andExpect(status().isOk());
-
-        // Verify context is cleared (second request with different tenant)
-        mockMvc.perform(get("/api/orders")
-                .header("X-Tenant-ID", "tenant-456"))
-            .andExpect(status().isOk());
-
-        // Should not have data from previous request
     }
 }
 ```
@@ -1538,43 +1377,14 @@ void shouldIsolateThreadLocalAcrossThreads() throws Exception {
 
 ThreadLocal is a powerful tool in Spring Boot applications for managing request-scoped context without polluting method signatures. When used correctly, it enables clean, maintainable code for:
 
-✅ **User context management** - Access current user anywhere
-✅ **Distributed tracing** - Correlation IDs across services
-✅ **Multi-tenancy** - Automatic tenant isolation
-✅ **Request caching** - Avoid repeated queries
-✅ **Transaction context** - Propagate metadata
-✅ **Security context** - Custom authentication schemes
+ThreadLocal solves real problems: user context, distributed tracing, multi-tenancy, request caching, and transaction propagation. It keeps code clean—no parameter drilling through every method.
 
-### Key Takeaways
+But it demands discipline. Always clean up in a finally block. Every time. No exceptions. Forget once and you leak memory. In a thread pool, that leak compounds until the JVM dies.
 
-1. **Always clean up** - Use try-finally blocks
-2. **Handle async carefully** - Use TaskDecorator
-3. **Document lifecycle** - Make it clear when context is set/cleared
-4. **Monitor for leaks** - Use profiling tools
-5. **Test thoroughly** - Unit and integration tests
-6. **Consider alternatives** - ScopedValue for virtual threads (Java 21+)
+For async methods, use a TaskDecorator to propagate values. For Java 21's virtual threads, consider ScopedValue instead—it's designed for lightweight threads.
 
-### When NOT to Use ThreadLocal
+Don't use ThreadLocal to share data across threads. Don't use it in long-lived background threads. Don't use it to avoid proper dependency injection.
 
-❌ Don't use for:
-- Sharing data across threads
-- Long-lived background threads
-- Replacing proper dependency injection
-- Avoiding proper architecture
+**The rule:** Every `set()` needs a `remove()` in a finally block.
 
-### Final Thoughts
-
-ThreadLocal is like a sharp knife—incredibly useful when wielded correctly, dangerous when misused. Master the cleanup patterns, understand the pitfalls, and you'll have a powerful tool for building clean, maintainable Spring Boot applications.
-
-Remember: **Every `ThreadLocal.set()` must have a corresponding `ThreadLocal.remove()`** in a finally block. Make this your mantra, and you'll avoid 99% of ThreadLocal-related issues.
-
----
-
-## Additional Resources
-
-- [Java ThreadLocal Documentation](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/ThreadLocal.html)
-- [Spring Security SecurityContextHolder](https://docs.spring.io/spring-security/reference/servlet/authentication/architecture.html)
-- [JEP 429: Scoped Values (Java 21)](https://openjdk.org/jeps/429)
-- [Hunting ThreadLocal Memory Leaks in Java](https://www.baeldung.com/java-memory-leaks)
-
-Happy coding! 🚀
+Follow that rule and ThreadLocal becomes a precise tool for elegant solutions.

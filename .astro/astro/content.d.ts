@@ -187,6 +187,13 @@ declare module 'astro:content' {
   collection: "articles";
   data: any
 } & { render(): Render[".md"] };
+"sql-select-queries-guide.md": {
+	id: "sql-select-queries-guide.md";
+  slug: "sql-select-queries-guide";
+  body: string;
+  collection: "articles";
+  data: any
+} & { render(): Render[".md"] };
 "threadlocal-spring-boot-guide.md": {
 	id: "threadlocal-spring-boot-guide.md";
   slug: "threadlocal-spring-boot-guide";

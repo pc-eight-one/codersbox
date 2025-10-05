@@ -57,11 +57,11 @@ When not to cache:
 
 ```mermaid
 flowchart LR
-  A[Caller] -->|get(key)| B{Cache};
-  B -- "hit" --> C[Return cached value];
-  B -- "miss" --> D[Load from source];
-  D -->|value| E[Put into cache];
-  E --> C;
+  A[Caller] -->|get key| B{Cache}
+  B -- hit --> C[Return cached value]
+  B -- miss --> D[Load from source]
+  D -->|value| E[Put into cache]
+  E --> C
 ```
 
 ## 3) A Minimal Cache Interface in Kotlin
