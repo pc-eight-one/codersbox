@@ -173,6 +173,13 @@ declare module 'astro:content' {
   collection: "articles";
   data: any
 } & { render(): Render[".md"] };
+"kotlin-api-testing-dsl-okhttp.md": {
+	id: "kotlin-api-testing-dsl-okhttp.md";
+  slug: "kotlin-api-testing-dsl-okhttp";
+  body: string;
+  collection: "articles";
+  data: any
+} & { render(): Render[".md"] };
 "kotlin-caching-from-scratch.md": {
 	id: "kotlin-caching-from-scratch.md";
   slug: "kotlin-caching-from-scratch";
@@ -254,6 +261,48 @@ declare module 'astro:content' {
 } & { render(): Render[".md"] };
 };
 "tutorials": {
+"antlr-kotlin/antlr-kotlin-part-1.md": {
+	id: "antlr-kotlin/antlr-kotlin-part-1.md";
+  slug: "antlr-kotlin/antlr-kotlin-part-1";
+  body: string;
+  collection: "tutorials";
+  data: any
+} & { render(): Render[".md"] };
+"antlr-kotlin/antlr-kotlin-part-2.md": {
+	id: "antlr-kotlin/antlr-kotlin-part-2.md";
+  slug: "antlr-kotlin/antlr-kotlin-part-2";
+  body: string;
+  collection: "tutorials";
+  data: any
+} & { render(): Render[".md"] };
+"antlr-kotlin/antlr-kotlin-part-3.md": {
+	id: "antlr-kotlin/antlr-kotlin-part-3.md";
+  slug: "antlr-kotlin/antlr-kotlin-part-3";
+  body: string;
+  collection: "tutorials";
+  data: any
+} & { render(): Render[".md"] };
+"antlr-kotlin/antlr-kotlin-part-4.md": {
+	id: "antlr-kotlin/antlr-kotlin-part-4.md";
+  slug: "antlr-kotlin/antlr-kotlin-part-4";
+  body: string;
+  collection: "tutorials";
+  data: any
+} & { render(): Render[".md"] };
+"antlr-kotlin/antlr-kotlin-part-5.md": {
+	id: "antlr-kotlin/antlr-kotlin-part-5.md";
+  slug: "antlr-kotlin/antlr-kotlin-part-5";
+  body: string;
+  collection: "tutorials";
+  data: any
+} & { render(): Render[".md"] };
+"antlr-kotlin/antlr-kotlin-part-6.md": {
+	id: "antlr-kotlin/antlr-kotlin-part-6.md";
+  slug: "antlr-kotlin/antlr-kotlin-part-6";
+  body: string;
+  collection: "tutorials";
+  data: any
+} & { render(): Render[".md"] };
 "java-complete/java-complete-part-1.md": {
 	id: "java-complete/java-complete-part-1.md";
   slug: "java-complete/java-complete-part-1";
