@@ -1,0 +1,21 @@
+sequenceDiagram
+    participant C as Client
+    participant B as Broker
+
+    Note over C,B: SSL Handshake
+    C->>B: ClientHello (supported ciphers)
+    B->>C: ServerHello (selected cipher)
+    B->>C: Server Certificate
+    B->>C: Certificate Request (for mTLS)
+
+    C->>B: Client Certificate
+    C->>B: Certificate Verify
+    C->>B: Change Cipher Spec
+    C->>B: Finished
+
+    B->>C: Change Cipher Spec
+    B->>C: Finished
+
+    Note over C,B: Secure Communication
+    C->>B: Encrypted Kafka Protocol
+    B->>C: Encrypted Response

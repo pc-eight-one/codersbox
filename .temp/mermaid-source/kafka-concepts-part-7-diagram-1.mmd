@@ -1,0 +1,29 @@
+flowchart TB
+    subgraph Inputs["Planning Inputs"]
+        TR[Throughput Requirements<br/>MB/sec]
+        RT[Retention Period<br/>Days]
+        MS[Message Size<br/>Bytes]
+        RF[Replication Factor]
+    end
+
+    subgraph Calculations["Calculations"]
+        DS[Daily Storage]
+        TS[Total Storage]
+        BR[Broker Count]
+        PC[Partition Count]
+    end
+
+    subgraph Output["Cluster Specs"]
+        BN[Number of Brokers]
+        DS2[Disk per Broker]
+        RAM[RAM per Broker]
+        CPU[CPU Cores]
+        NW[Network Bandwidth]
+    end
+
+    Inputs --> Calculations
+    Calculations --> Output
+
+    style Inputs fill:#e3f2fd
+    style Calculations fill:#e8f5e8
+    style Output fill:#fff3e0

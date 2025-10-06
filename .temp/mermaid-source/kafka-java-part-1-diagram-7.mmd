@@ -1,0 +1,19 @@
+flowchart TB
+    subgraph Before["Before: Broker 1 Fails"]
+        L1[Broker 1 - Leader ❌]
+        F11[Broker 2 - Follower ✓]
+        F12[Broker 3 - Follower ✓]
+    end
+
+    subgraph After["After: Election"]
+        F21[Broker 2 - New Leader ✓]
+        F22[Broker 3 - Follower ✓]
+    end
+
+    Before -->|automatic failover| After
+
+    style L1 fill:#f44336
+    style F11 fill:#2196f3
+    style F12 fill:#2196f3
+    style F21 fill:#4caf50
+    style F22 fill:#2196f3

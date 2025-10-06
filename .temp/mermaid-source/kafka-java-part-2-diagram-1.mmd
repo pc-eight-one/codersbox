@@ -1,0 +1,21 @@
+flowchart TB
+    subgraph Config["Key Producer Configurations"]
+        BS[bootstrap.servers<br/>Initial broker connections]
+        ACK[acks<br/>0, 1, or all]
+        RET[retries<br/>Retry attempts]
+        LING[linger.ms<br/>Batch wait time]
+        BATCH[batch.size<br/>Batch size bytes]
+        COMP[compression.type<br/>none, gzip, snappy, lz4]
+    end
+
+    subgraph Impact["Performance Impact"]
+        BS --> Reliability[High Availability]
+        ACK --> Durability[Data Durability]
+        RET --> Resilience[Fault Tolerance]
+        LING --> Throughput[Higher Throughput]
+        BATCH --> Efficiency[Network Efficiency]
+        COMP --> Bandwidth[Lower Bandwidth]
+    end
+
+    style Config fill:#e3f2fd
+    style Impact fill:#e8f5e8

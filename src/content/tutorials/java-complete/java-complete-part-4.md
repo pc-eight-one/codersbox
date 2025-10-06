@@ -16,16 +16,7 @@ featured: false
 
 **Why This Matters**: Operators are the building blocks of all computations. Mastering precedence rules prevents bugs, while understanding different operator types enables complex logic and calculations.
 
-```mermaid
-flowchart LR
-    EXPR[a + b * c] --> MUL[b * c first<br/>precedence]
-    MUL --> ADD[then + a<br/>left-to-right]
-    ADD --> RESULT[final result]
-    
-    style MUL fill:#e1f5fe
-    style ADD fill:#f3e5f5
-    style RESULT fill:#e8f5e8
-```
+![Diagram 1](/diagrams/java-complete-part-4-diagram-1.svg)
 
 Operators are the verbs of programming - they perform actions on data. Java provides a rich set of operators for arithmetic, comparison, logic, and assignment operations.
 
@@ -436,25 +427,7 @@ public class TernaryOperator {
 
 **Critical for Bug Prevention**: Java evaluates expressions in a specific order. Knowing precedence rules prevents logic errors and unexpected results.
 
-```mermaid
-graph TD
-    A[Highest Priority] --> B["Postfix: ++ --"]
-    B --> C["Unary: + - ! ~ ++ --"]
-    C --> D["Multiplicative: * / %"]  
-    D --> E["Additive: + -"]
-    E --> F["Relational: < <= > >="]
-    F --> G["Equality: == !="]
-    G --> H["Logical AND: &&"]
-    H --> I["Logical OR: double pipe"]
-    I --> J["Ternary: ? :"]
-    J --> K["Assignment: = += -= *="]
-    K --> L[Lowest Priority]
-    
-    style D fill:#e3f2fd
-    style E fill:#e3f2fd  
-    style F fill:#fff3e0
-    style G fill:#fff3e0
-```
+![Diagram 2](/diagrams/java-complete-part-4-diagram-2.svg)
 
 **Memory Aid**: **Math** (*, /, %) → **Add/Sub** (+, -) → **Compare** (<, >=, ==) → **Logic** (&&, ||) → **Assign** (=)
 

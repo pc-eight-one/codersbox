@@ -20,33 +20,7 @@ Kafka Streams is a powerful library for building real-time stream processing app
 
 **Kafka Streams** is a client library for building mission-critical real-time applications and microservices, where the input and output data are stored in Kafka.
 
-```mermaid
-flowchart LR
-    subgraph Input["Input Topics"]
-        T1[user-clicks]
-        T2[user-purchases]
-    end
-
-    subgraph Streams["Kafka Streams Application"]
-        P[Process & Transform]
-        S[State Store]
-        P <--> S
-    end
-
-    subgraph Output["Output Topics"]
-        T3[user-analytics]
-        T4[recommendations]
-    end
-
-    T1 --> Streams
-    T2 --> Streams
-    Streams --> T3
-    Streams --> T4
-
-    style Input fill:#e3f2fd
-    style Streams fill:#e8f5e8
-    style Output fill:#fff3e0
-```
+![Diagram 1](/diagrams/kafka-java-part-5-diagram-1.svg)
 
 **Key Features**:
 - **No separate cluster**: Runs within your Java application
@@ -139,19 +113,7 @@ public class WordCountStream {
 
 **How it works**:
 
-```mermaid
-flowchart LR
-    I[Input: 'hello world'] --> FM[flatMapValues<br/>split words]
-    FM --> G[groupBy word]
-    G --> C[count]
-    C --> O[Output:<br/>hello: 1<br/>world: 1]
-
-    style I fill:#e3f2fd
-    style FM fill:#fff3e0
-    style G fill:#e8f5e8
-    style C fill:#f3e5f5
-    style O fill:#ffe0b2
-```
+![Diagram 2](/diagrams/kafka-java-part-5-diagram-2.svg)
 
 ### Testing the Application
 
@@ -505,26 +467,7 @@ public class SalesAnalytics {
 
 **Windows** group records that arrive within a time frame.
 
-```mermaid
-flowchart TB
-    subgraph Windows["Windowing Types"]
-        TW[Tumbling Window<br/>Fixed, non-overlapping]
-        HW[Hopping Window<br/>Fixed, overlapping]
-        SW[Sliding Window<br/>Dynamic, per-record]
-        SE[Session Window<br/>Activity-based gaps]
-    end
-
-    subgraph Example["Tumbling Window (5 min)"]
-        W1[00:00-00:05]
-        W2[00:05-00:10]
-        W3[00:10-00:15]
-    end
-
-    style TW fill:#e3f2fd
-    style HW fill:#e8f5e8
-    style SW fill:#fff3e0
-    style SE fill:#f3e5f5
-```
+![Diagram 3](/diagrams/kafka-java-part-5-diagram-3.svg)
 
 ### Tumbling Windows
 

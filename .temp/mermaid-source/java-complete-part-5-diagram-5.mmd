@@ -1,0 +1,14 @@
+flowchart TD
+    A[Function Start] --> B{username null/empty?}
+    B -- yes --> C[return error]
+    B -- no --> D{password too short?}
+    D -- yes --> E[return error]
+    D -- no --> F{account inactive?}
+    F -- yes --> G[return error]
+    F -- no --> H[Main logic]
+    H --> I[return success]
+    
+    style C fill:#ffcdd2
+    style E fill:#ffcdd2
+    style G fill:#ffcdd2
+    style I fill:#c8e6c9

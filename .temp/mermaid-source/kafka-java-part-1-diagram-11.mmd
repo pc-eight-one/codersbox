@@ -1,0 +1,19 @@
+flowchart LR
+    subgraph Small["Small: 100K msg/sec"]
+        B1[3 Brokers<br/>6 Partitions]
+    end
+
+    subgraph Medium["Medium: 500K msg/sec"]
+        B2[6 Brokers<br/>12 Partitions]
+    end
+
+    subgraph Large["Large: 2M msg/sec"]
+        B3[12 Brokers<br/>24 Partitions]
+    end
+
+    Small -->|add brokers| Medium
+    Medium -->|add brokers| Large
+
+    style Small fill:#e3f2fd
+    style Medium fill:#e8f5e8
+    style Large fill:#fff3e0

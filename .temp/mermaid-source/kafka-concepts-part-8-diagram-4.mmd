@@ -1,0 +1,42 @@
+graph TB
+    subgraph "SASL Mechanisms"
+        S1[SASL/PLAIN]
+        S2[SASL/SCRAM-SHA-256]
+        S3[SASL/SCRAM-SHA-512]
+        S4[SASL/GSSAPI - Kerberos]
+        S5[OAUTHBEARER]
+    end
+
+    subgraph "SASL/PLAIN"
+        P1[Simple username/password]
+        P2[Credentials in JAAS]
+        P3[Not encrypted alone]
+        P4[Use with SSL/TLS]
+    end
+
+    subgraph "SASL/SCRAM"
+        SC1[Challenge-response]
+        SC2[Credentials in ZooKeeper/KRaft]
+        SC3[SHA-256 or SHA-512]
+        SC4[Password not sent plaintext]
+    end
+
+    subgraph "SASL/GSSAPI"
+        K1[Kerberos integration]
+        K2[Keytab files]
+        K3[Ticket-based auth]
+        K4[Enterprise SSO]
+    end
+
+    S1 --> P1
+    S1 --> P2
+    S1 --> P3
+    S1 --> P4
+    S2 --> SC1
+    S2 --> SC2
+    S2 --> SC3
+    S2 --> SC4
+    S4 --> K1
+    S4 --> K2
+    S4 --> K3
+    S4 --> K4

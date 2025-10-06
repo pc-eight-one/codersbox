@@ -1,0 +1,17 @@
+flowchart TB
+    OR[OR]
+    AND[AND]
+    C1[age > 18]
+    C2[status = 'active']
+    C3[role = 'admin']
+
+    OR --> AND
+    OR --> C3
+    AND --> C1
+    AND --> C2
+
+    style OR fill:#fff3e0
+    style AND fill:#e3f2fd
+    style C1 fill:#e8f5e8
+    style C2 fill:#e8f5e8
+    style C3 fill:#e8f5e8

@@ -1,0 +1,9 @@
+flowchart LR
+    A[Event Producers] -->|Publish Events| B[Kafka Cluster]
+    B -->|Store & Distribute| C[Event Consumers]
+    B -->|Real-time Stream| D[Stream Processors]
+
+    style A fill:#e3f2fd
+    style B fill:#fff3e0
+    style C fill:#e8f5e8
+    style D fill:#f3e5f5

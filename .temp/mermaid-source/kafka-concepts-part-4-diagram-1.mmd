@@ -1,0 +1,34 @@
+flowchart TB
+    subgraph App["Application Thread"]
+        Poll[poll() loop]
+        Process[Process Records]
+        Commit[Commit Offsets]
+    end
+
+    subgraph Consumer["Kafka Consumer"]
+        Fetcher[Fetcher<br/>Fetch records]
+        Coordinator[Consumer Coordinator<br/>Group management]
+        OffsetMgr[Offset Manager<br/>Commit/fetch offsets]
+        Metadata[Metadata Cache<br/>Topic/partition info]
+    end
+
+    subgraph Broker["Kafka Broker"]
+        GC[Group Coordinator<br/>Manage group state]
+        OffsetTopic[__consumer_offsets<br/>Store offsets]
+        DataPartitions[Data Partitions]
+    end
+
+    Poll --> Fetcher
+    Fetcher --> DataPartitions
+    DataPartitions -.->|Records| Fetcher
+    Fetcher -.->|Records| Process
+
+    Process --> Commit
+    Commit --> OffsetMgr
+    OffsetMgr --> OffsetTopic
+
+    Coordinator <--> GC
+
+    style App fill:#e3f2fd
+    style Consumer fill:#e8f5e8
+    style Broker fill:#fff3e0

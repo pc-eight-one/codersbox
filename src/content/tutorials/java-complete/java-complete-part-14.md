@@ -25,26 +25,7 @@ prerequisites: ["Java Complete Parts 1-13"]
 - **Buffered Streams**: Improve performance by reducing system calls
 - **Modern NIO**: Non-blocking, high-performance I/O for servers
 
-```mermaid
-flowchart TD
-    A[Data Sources] --> B[Files]
-    A --> C[Network]
-    A --> D[Memory]
-    
-    B --> E[Byte Streams<br/>FileInputStream/OutputStream]
-    B --> F[Character Streams<br/>FileReader/Writer]
-    
-    E --> G[Buffered<br/>Performance Boost]
-    F --> H[Buffered<br/>Performance Boost]
-    
-    G --> I[Your Application]
-    H --> I
-    
-    style E fill:#ffebee
-    style F fill:#e3f2fd
-    style G fill:#e8f5e8
-    style H fill:#fff3e0
-```
+![Diagram 1](/diagrams/java-complete-part-14-diagram-1.svg)
 
 I/O streams provide a unified way to handle data from any source with consistent APIs.
 

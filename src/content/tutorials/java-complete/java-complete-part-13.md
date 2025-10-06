@@ -21,30 +21,7 @@ prerequisites: ["Java Complete Parts 1-12"]
 
 **Core Concept**: When something goes wrong, Java throws an exception instead of crashing. Your code can catch and handle these exceptions appropriately.
 
-```mermaid
-classDiagram
-    Throwable <|-- Error
-    Throwable <|-- Exception
-    Exception <|-- RuntimeException
-    Exception <|-- IOException
-    RuntimeException <|-- NullPointerException
-    RuntimeException <|-- IllegalArgumentException
-    IOException <|-- FileNotFoundException
-    
-    class Throwable {
-        +getMessage()
-        +printStackTrace()
-    }
-    class RuntimeException {
-        <<Unchecked>>
-    }
-    class IOException {
-        <<Checked>>
-    }
-    
-    style RuntimeException fill:#ffebee
-    style IOException fill:#e3f2fd
-```
+![Diagram 1](/diagrams/java-complete-part-13-diagram-1.svg)
 
 Exception handling transforms unpredictable crashes into manageable, recoverable situations.
 

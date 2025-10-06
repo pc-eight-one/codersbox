@@ -1,0 +1,27 @@
+sequenceDiagram
+    participant P as Producer
+    participant TC as Transaction Coordinator
+    participant T1 as Topic A
+    participant T2 as Topic B
+    participant O as __consumer_offsets
+
+    Note over P: Begin Transaction
+    P->>TC: InitTransactions (transactional.id)
+    TC->>P: Return PID & Epoch
+
+    P->>TC: BeginTransaction
+    TC->>TC: Mark TX started
+
+    Note over P: Write Data
+    P->>T1: Write records (TX marker)
+    P->>T2: Write records (TX marker)
+    P->>O: Write offsets (TX marker)
+
+    Note over P: Commit
+    P->>TC: CommitTransaction
+    TC->>T1: Write COMMIT marker
+    TC->>T2: Write COMMIT marker
+    TC->>O: Write COMMIT marker
+    TC->>P: Success
+
+    Note over T1,O: All data now visible

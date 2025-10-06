@@ -1,0 +1,8 @@
+flowchart LR
+    EXPR[a + b * c] --> MUL[b * c first<br/>precedence]
+    MUL --> ADD[then + a<br/>left-to-right]
+    ADD --> RESULT[final result]
+    
+    style MUL fill:#e1f5fe
+    style ADD fill:#f3e5f5
+    style RESULT fill:#e8f5e8

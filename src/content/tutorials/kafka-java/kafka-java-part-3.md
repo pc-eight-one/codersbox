@@ -22,23 +22,7 @@ By default, Kafka uses the message key to determine partition assignment. But wh
 
 ### Understanding Default Partitioning
 
-```mermaid
-flowchart TB
-    subgraph Default["Default Partitioning Logic"]
-        K1[Key: user-123] -->|"hash % 3"| P0[Partition 0]
-        K2[Key: user-456] -->|"hash % 3"| P2[Partition 2]
-        K3[Key: user-789] -->|"hash % 3"| P1[Partition 1]
-        K4[Key: null] -->|round-robin| Any[Any Partition]
-    end
-
-    style K1 fill:#e3f2fd
-    style K2 fill:#e3f2fd
-    style K3 fill:#e3f2fd
-    style K4 fill:#ffebee
-    style P0 fill:#e8f5e8
-    style P1 fill:#e8f5e8
-    style P2 fill:#e8f5e8
-```
+![Diagram 1](/diagrams/kafka-java-part-3-diagram-1.svg)
 
 **Default Behavior**:
 - With key: `hash(key) % num_partitions`
@@ -202,17 +186,7 @@ producer.send(new ProducerRecord<>("user-events", "EU:user-456", "purchase"));
 
 **The Problem**: Network issues can cause duplicate messages
 
-```mermaid
-flowchart LR
-    P[Producer] -->|1. Send msg| K[Kafka]
-    K -->|2. Ack lost| P
-    P -->|3. Retry msg| K
-    K -->|Result| D[Duplicate!]
-
-    style P fill:#e3f2fd
-    style K fill:#fff3e0
-    style D fill:#ffebee
-```
+![Diagram 2](/diagrams/kafka-java-part-3-diagram-2.svg)
 
 **The Solution**: Idempotent producers ensure exactly-once delivery to a partition
 
@@ -262,27 +236,7 @@ public class IdempotentProducer {
 
 **How It Works**:
 
-```mermaid
-flowchart TB
-    subgraph Producer["Idempotent Producer"]
-        PID[Producer ID: 12345]
-        SEQ[Sequence Number: 0, 1, 2...]
-    end
-
-    subgraph Kafka["Kafka Broker"]
-        CHECK{Duplicate?}
-        STORE[Store Message]
-        IGNORE[Ignore Duplicate]
-    end
-
-    Producer -->|Msg + PID + Seq| CHECK
-    CHECK -->|New Seq| STORE
-    CHECK -->|Seen Seq| IGNORE
-
-    style Producer fill:#e3f2fd
-    style STORE fill:#e8f5e8
-    style IGNORE fill:#fff3e0
-```
+![Diagram 3](/diagrams/kafka-java-part-3-diagram-3.svg)
 
 **Key Concepts**:
 - **Producer ID**: Unique ID assigned by broker
@@ -454,48 +408,13 @@ public class TransactionalOrderProcessor {
 
 **Transaction Flow**:
 
-```mermaid
-sequenceDiagram
-    participant C as Consumer
-    participant P as Producer
-    participant K as Kafka
-
-    C->>K: Poll orders
-    K->>C: Return records
-    C->>P: Begin transaction
-    P->>K: Write to inventory topic
-    P->>K: Write to notifications topic
-    P->>K: Send consumer offsets
-    P->>K: Commit transaction
-    K->>K: Atomically commit all
-
-    Note over K: All writes visible together<br/>or none at all
-```
+![Diagram 4](/diagrams/kafka-java-part-3-diagram-4.svg)
 
 ## Batch Optimization and Performance Tuning
 
 ### Understanding Batching
 
-```mermaid
-flowchart TB
-    subgraph Without["Without Batching"]
-        M1[Msg 1] --> N1[Network Call 1]
-        M2[Msg 2] --> N2[Network Call 2]
-        M3[Msg 3] --> N3[Network Call 3]
-        Note1[High Overhead]
-    end
-
-    subgraph With["With Batching"]
-        B1[Msg 1] --> Batch[Batch Buffer]
-        B2[Msg 2] --> Batch
-        B3[Msg 3] --> Batch
-        Batch --> N4[Single Network Call]
-        Note2[Low Overhead]
-    end
-
-    style Without fill:#ffebee
-    style With fill:#e8f5e8
-```
+![Diagram 5](/diagrams/kafka-java-part-3-diagram-5.svg)
 
 ### Batch Configuration
 
@@ -920,29 +839,7 @@ public class MonitoredProducer {
 
 **Key Metrics to Monitor**:
 
-```mermaid
-flowchart TB
-    subgraph Performance["Performance Metrics"]
-        RSR[record-send-rate<br/>Messages/sec]
-        RLA[request-latency-avg<br/>Latency ms]
-        BSA[batch-size-avg<br/>Batch size]
-    end
-
-    subgraph Health["Health Metrics"]
-        RER[record-error-rate<br/>Errors/sec]
-        RRR[record-retry-rate<br/>Retries/sec]
-        BAB[buffer-available-bytes<br/>Memory available]
-    end
-
-    subgraph Efficiency["Efficiency Metrics"]
-        CRA[compression-rate-avg<br/>Compression ratio]
-        RPB[records-per-request-avg<br/>Batching efficiency]
-    end
-
-    style Performance fill:#e3f2fd
-    style Health fill:#ffebee
-    style Efficiency fill:#e8f5e8
-```
+![Diagram 6](/diagrams/kafka-java-part-3-diagram-6.svg)
 
 ## Key Takeaways
 

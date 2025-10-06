@@ -1,0 +1,15 @@
+sequenceDiagram
+    participant C as Consumer
+    participant P as Producer
+    participant K as Kafka
+
+    C->>K: Poll orders
+    K->>C: Return records
+    C->>P: Begin transaction
+    P->>K: Write to inventory topic
+    P->>K: Write to notifications topic
+    P->>K: Send consumer offsets
+    P->>K: Commit transaction
+    K->>K: Atomically commit all
+
+    Note over K: All writes visible together<br/>or none at all

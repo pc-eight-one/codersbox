@@ -789,27 +789,7 @@ public class KafkaBackupRestore {
 
 ### Multi-Datacenter Replication
 
-```mermaid
-flowchart TB
-    subgraph DC1["Primary Datacenter"]
-        K1[Kafka Cluster 1]
-        P1[Producers]
-        C1[Consumers]
-    end
-
-    subgraph DC2["DR Datacenter"]
-        K2[Kafka Cluster 2]
-        C2[Standby Consumers]
-    end
-
-    P1 --> K1
-    K1 --> C1
-    K1 -->|MirrorMaker 2| K2
-    K2 -.->|Failover| C2
-
-    style DC1 fill:#e3f2fd
-    style DC2 fill:#fff3e0
-```
+![Diagram 1](/diagrams/kafka-java-part-6-diagram-1.svg)
 
 **MirrorMaker 2 Configuration**:
 ```properties

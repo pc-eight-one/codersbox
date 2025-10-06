@@ -1,0 +1,17 @@
+flowchart TD
+    A[dayOfWeek = 3] --> B[switch dayOfWeek]
+    B --> C{case 1?}
+    B --> D{case 2?}
+    B --> E{case 3?}
+    B --> F{case 4?}
+    B --> G{case 5?}
+    B --> H{default}
+    
+    C --> I[Monday]
+    D --> J[Tuesday] 
+    E --> K[Wednesday]
+    F --> L[Thursday]
+    G --> M[Friday]
+    H --> N[Weekend]
+    
+    style K fill:#e3f2fd

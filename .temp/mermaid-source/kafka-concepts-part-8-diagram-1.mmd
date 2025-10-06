@@ -1,0 +1,46 @@
+graph TB
+    subgraph "Security Layers"
+        A[Network Security] --> B[Authentication]
+        B --> C[Authorization]
+        C --> D[Encryption]
+        D --> E[Audit Logging]
+    end
+
+    subgraph "Network Security"
+        N1[Firewall Rules]
+        N2[Network Segmentation]
+        N3[VPC/Private Network]
+    end
+
+    subgraph "Authentication"
+        AU1[SSL/TLS]
+        AU2[SASL/PLAIN]
+        AU3[SASL/SCRAM]
+        AU4[SASL/GSSAPI]
+        AU5[OAUTHBEARER]
+    end
+
+    subgraph "Authorization"
+        AZ1[ACLs]
+        AZ2[Resource Patterns]
+        AZ3[Operations]
+    end
+
+    subgraph "Encryption"
+        E1[In Transit - SSL/TLS]
+        E2[At Rest - Disk Encryption]
+    end
+
+    A --> N1
+    A --> N2
+    A --> N3
+    B --> AU1
+    B --> AU2
+    B --> AU3
+    B --> AU4
+    B --> AU5
+    C --> AZ1
+    C --> AZ2
+    C --> AZ3
+    D --> E1
+    D --> E2

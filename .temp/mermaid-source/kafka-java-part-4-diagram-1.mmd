@@ -1,0 +1,33 @@
+flowchart TB
+    subgraph Topic["Topic: orders (6 partitions)"]
+        P0[P0]
+        P1[P1]
+        P2[P2]
+        P3[P3]
+        P4[P4]
+        P5[P5]
+    end
+
+    subgraph CG["Consumer Group: order-processors"]
+        C1[Consumer 1]
+        C2[Consumer 2]
+        C3[Consumer 3]
+    end
+
+    P0 --> C1
+    P1 --> C1
+    P2 --> C2
+    P3 --> C2
+    P4 --> C3
+    P5 --> C3
+
+    GC[Group Coordinator<br/>Manages assignment]
+    GC -.->|coordinates| CG
+
+    style P0 fill:#e3f2fd
+    style P1 fill:#e3f2fd
+    style P2 fill:#e8f5e8
+    style P3 fill:#e8f5e8
+    style P4 fill:#fff3e0
+    style P5 fill:#fff3e0
+    style GC fill:#f3e5f5

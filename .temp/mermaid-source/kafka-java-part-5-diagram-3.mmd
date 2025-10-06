@@ -1,0 +1,18 @@
+flowchart TB
+    subgraph Windows["Windowing Types"]
+        TW[Tumbling Window<br/>Fixed, non-overlapping]
+        HW[Hopping Window<br/>Fixed, overlapping]
+        SW[Sliding Window<br/>Dynamic, per-record]
+        SE[Session Window<br/>Activity-based gaps]
+    end
+
+    subgraph Example["Tumbling Window (5 min)"]
+        W1[00:00-00:05]
+        W2[00:05-00:10]
+        W3[00:10-00:15]
+    end
+
+    style TW fill:#e3f2fd
+    style HW fill:#e8f5e8
+    style SW fill:#fff3e0
+    style SE fill:#f3e5f5

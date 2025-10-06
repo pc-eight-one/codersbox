@@ -1,0 +1,22 @@
+classDiagram
+    Throwable <|-- Error
+    Throwable <|-- Exception
+    Exception <|-- RuntimeException
+    Exception <|-- IOException
+    RuntimeException <|-- NullPointerException
+    RuntimeException <|-- IllegalArgumentException
+    IOException <|-- FileNotFoundException
+    
+    class Throwable {
+        +getMessage()
+        +printStackTrace()
+    }
+    class RuntimeException {
+        <<Unchecked>>
+    }
+    class IOException {
+        <<Checked>>
+    }
+    
+    style RuntimeException fill:#ffebee
+    style IOException fill:#e3f2fd

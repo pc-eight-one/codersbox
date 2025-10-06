@@ -1,0 +1,25 @@
+flowchart TB
+    Q[query]
+    Q --> SEL[SELECT]
+    Q --> COLS[columns]
+    Q --> FROM[FROM]
+    Q --> TS[tableSource]
+
+    COLS --> CL[columnList]
+    CL --> C1["column: u.name"]
+    CL --> C2["column: o.total"]
+
+    TS --> TR1["tableReference: users u"]
+    TS --> J[join]
+
+    J --> JT["joinType: INNER"]
+    J --> JOIN[JOIN]
+    J --> TR2["tableReference: orders o"]
+    J --> ON[ON]
+    J --> COND[condition]
+
+    COND --> COMP["comparison: u.id = o.user_id"]
+
+    style Q fill:#e8f5e8
+    style TS fill:#e3f2fd
+    style J fill:#fff3e0

@@ -1,0 +1,21 @@
+flowchart TB
+    subgraph Ecosystem["Kafka Ecosystem"]
+        KC[Kafka Core<br/>Message Broker]
+        KS[Kafka Streams<br/>Stream Processing]
+        KConnect[Kafka Connect<br/>Data Integration]
+        KSQL[ksqlDB<br/>Stream SQL]
+        SR[Schema Registry<br/>Schema Management]
+    end
+
+    Apps[Applications] --> KC
+    KC --> KS
+    DB[(Databases)] <--> KConnect
+    KConnect <--> KC
+    KS --> KSQL
+    KC --> SR
+
+    style KC fill:#4caf50
+    style KS fill:#2196f3
+    style KConnect fill:#ff9800
+    style KSQL fill:#9c27b0
+    style SR fill:#f44336

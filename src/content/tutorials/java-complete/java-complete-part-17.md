@@ -24,16 +24,7 @@ prerequisites: ["Java Complete Parts 1-16"]
 - **Streams**: Process collections with database-like operations (filter, map, reduce)
 - **Optional**: Handle null values safely and explicitly
 
-```mermaid
-flowchart LR
-    A[Data Source<br/>List, Array, etc.] --> B["stream()"]
-    B --> C[Intermediate Operations<br/>filter, map, sorted]
-    C --> D[Terminal Operation<br/>collect, forEach, reduce]
-    D --> E[Result<br/>Collection, Value, void]
-    
-    style C fill:#e3f2fd
-    style D fill:#e8f5e8
-```
+![Diagram 1](/diagrams/java-complete-part-17-diagram-1.svg)
 
 ## Lambda Expressions
 

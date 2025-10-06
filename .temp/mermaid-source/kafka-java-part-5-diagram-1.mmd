@@ -1,0 +1,25 @@
+flowchart LR
+    subgraph Input["Input Topics"]
+        T1[user-clicks]
+        T2[user-purchases]
+    end
+
+    subgraph Streams["Kafka Streams Application"]
+        P[Process & Transform]
+        S[State Store]
+        P <--> S
+    end
+
+    subgraph Output["Output Topics"]
+        T3[user-analytics]
+        T4[recommendations]
+    end
+
+    T1 --> Streams
+    T2 --> Streams
+    Streams --> T3
+    Streams --> T4
+
+    style Input fill:#e3f2fd
+    style Streams fill:#e8f5e8
+    style Output fill:#fff3e0

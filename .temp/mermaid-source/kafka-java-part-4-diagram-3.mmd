@@ -1,0 +1,22 @@
+sequenceDiagram
+    participant C1 as Consumer 1
+    participant C2 as Consumer 2
+    participant GC as Group Coordinator
+    participant K as Kafka
+
+    Note over C1,C2: Initial state: C1 has P0,P1
+
+    C2->>GC: Join Group
+    GC->>C1: Revoke partitions
+    C1->>C1: onPartitionsRevoked()
+    C1->>K: Commit offsets
+    C1->>GC: Revoke complete
+
+    GC->>GC: Rebalance algorithm
+    GC->>C1: Assign P0
+    GC->>C2: Assign P1
+
+    C1->>C1: onPartitionsAssigned(P0)
+    C2->>C2: onPartitionsAssigned(P1)
+
+    Note over C1,C2: Consuming resumed

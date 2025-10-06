@@ -1,0 +1,28 @@
+flowchart TB
+    subgraph Clients["Client Layer"]
+        P[Producers]
+        C[Consumers]
+        S[Streams Apps]
+        K[Connect]
+    end
+
+    subgraph Kafka["Kafka Cluster"]
+        B1[Broker 1<br/>Leader for P0,P3<br/>Follower for P1,P2]
+        B2[Broker 2<br/>Leader for P1,P4<br/>Follower for P0,P3]
+        B3[Broker 3<br/>Leader for P2,P5<br/>Follower for P4,P5]
+    end
+
+    subgraph Metadata["Metadata Management"]
+        ZK[ZooKeeper/KRaft<br/>Cluster Coordination<br/>Metadata Storage]
+    end
+
+    P --> Kafka
+    C --> Kafka
+    S --> Kafka
+    K --> Kafka
+
+    Kafka <-.-> ZK
+
+    style Clients fill:#e3f2fd
+    style Kafka fill:#e8f5e8
+    style Metadata fill:#fff3e0

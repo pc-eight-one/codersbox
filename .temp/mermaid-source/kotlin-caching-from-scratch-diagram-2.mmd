@@ -1,0 +1,21 @@
+sequenceDiagram
+  autonumber
+  participant C1 as Client 1
+  participant C2 as Client 2
+  participant Cache
+  participant Lock as Per-key Mutex
+  participant Src as Source
+
+  C1->>Cache: get(k)
+  Cache-->>C1: miss
+  C1->>Lock: acquire(k)
+  C2->>Cache: get(k)
+  Cache-->>C2: miss
+  C2->>Lock: wait(k)
+  C1->>Src: load(k)
+  Src-->>C1: value
+  C1->>Cache: put(k, value)
+  C1->>Lock: release(k)
+  Lock-->>C2: acquired
+  C2->>Cache: get(k)
+  Cache-->>C2: hit(value)

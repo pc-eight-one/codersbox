@@ -1,0 +1,24 @@
+flowchart TB
+    subgraph KRaft["KRaft Quorum (Metadata Cluster)"]
+        K1[Controller 1<br/>Leader]
+        K2[Controller 2<br/>Follower]
+        K3[Controller 3<br/>Follower]
+    end
+
+    subgraph Brokers["Data Brokers"]
+        B1[Broker 1]
+        B2[Broker 2]
+        B3[Broker 3]
+    end
+
+    K1 -->|Metadata Updates| Brokers
+    K1 <-->|Raft Replication| K2
+    K1 <-->|Raft Replication| K3
+    K2 <-->|Raft Replication| K3
+
+    B1 -->|Metadata Fetch| K1
+    B2 -->|Metadata Fetch| K1
+    B3 -->|Metadata Fetch| K1
+
+    style KRaft fill:#e8f5e8
+    style Brokers fill:#e3f2fd

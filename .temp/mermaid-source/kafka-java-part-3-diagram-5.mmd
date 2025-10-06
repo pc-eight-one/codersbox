@@ -1,0 +1,18 @@
+flowchart TB
+    subgraph Without["Without Batching"]
+        M1[Msg 1] --> N1[Network Call 1]
+        M2[Msg 2] --> N2[Network Call 2]
+        M3[Msg 3] --> N3[Network Call 3]
+        Note1[High Overhead]
+    end
+
+    subgraph With["With Batching"]
+        B1[Msg 1] --> Batch[Batch Buffer]
+        B2[Msg 2] --> Batch
+        B3[Msg 3] --> Batch
+        Batch --> N4[Single Network Call]
+        Note2[Low Overhead]
+    end
+
+    style Without fill:#ffebee
+    style With fill:#e8f5e8

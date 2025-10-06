@@ -1,0 +1,16 @@
+sequenceDiagram
+    participant C as Client
+    participant B as Broker
+
+    Note over C,B: Normal Operation
+    C->>B: Produce Request (within quota)
+    B->>C: Response (no throttle)
+
+    Note over C,B: Quota Exceeded
+    C->>B: Produce Request (exceeds quota)
+    B->>B: Calculate throttle time
+    B->>C: Response with throttle_time_ms
+
+    Note over C: Client waits throttle_time_ms
+    C->>B: Next request (delayed)
+    B->>C: Response

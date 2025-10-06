@@ -1,0 +1,26 @@
+flowchart TB
+    subgraph Cluster["3-Broker Cluster"]
+        subgraph B1["Broker 1"]
+            B1P0[Topic A: P0 Leader]
+            B1P1[Topic A: P3 Follower]
+            B1P2[Topic B: P1 Leader]
+        end
+
+        subgraph B2["Broker 2"]
+            B2P0[Topic A: P1 Leader]
+            B2P1[Topic A: P0 Follower]
+            B2P2[Topic B: P0 Follower]
+        end
+
+        subgraph B3["Broker 3"]
+            B3P0[Topic A: P2 Leader]
+            B3P1[Topic A: P1 Follower]
+            B3P2[Topic B: P0 Leader]
+        end
+    end
+
+    style B1P0 fill:#4caf50
+    style B2P0 fill:#4caf50
+    style B3P0 fill:#4caf50
+    style B1P2 fill:#4caf50
+    style B3P2 fill:#4caf50

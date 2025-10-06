@@ -1,0 +1,10 @@
+flowchart TD
+    A[Individual Classes<br/>Person.java, Account.java] --> B[Packages<br/>com.bank.model, com.bank.service]
+    B --> C[JAR Files<br/>bank-core.jar, bank-api.jar]
+    C --> D[Modules<br/>bank.core, bank.web]
+    D --> E[Applications<br/>Modular Java Apps]
+    
+    style A fill:#ffebee
+    style B fill:#e3f2fd
+    style C fill:#e8f5e8
+    style D fill:#fff3e0

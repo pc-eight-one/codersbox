@@ -1,0 +1,8 @@
+flowchart LR
+    A[Data Source<br/>List, Array, etc.] --> B["stream()"]
+    B --> C[Intermediate Operations<br/>filter, map, sorted]
+    C --> D[Terminal Operation<br/>collect, forEach, reduce]
+    D --> E[Result<br/>Collection, Value, void]
+    
+    style C fill:#e3f2fd
+    style D fill:#e8f5e8

@@ -192,46 +192,7 @@ fun Map<String, Any>.toProperties(): java.util.Properties {
 
 ### Group Coordination
 
-```mermaid
-flowchart TB
-    subgraph Topic["Topic: orders (6 partitions)"]
-        P0[Partition 0]
-        P1[Partition 1]
-        P2[Partition 2]
-        P3[Partition 3]
-        P4[Partition 4]
-        P5[Partition 5]
-    end
-
-    subgraph Group["Consumer Group: order-processors"]
-        C1[Consumer 1<br/>Assigned: P0, P1]
-        C2[Consumer 2<br/>Assigned: P2, P3]
-        C3[Consumer 3<br/>Assigned: P4, P5]
-    end
-
-    subgraph Coordinator["Group Coordinator"]
-        GC[Manages group state<br/>Assigns partitions<br/>Tracks consumer health]
-    end
-
-    P0 --> C1
-    P1 --> C1
-    P2 --> C2
-    P3 --> C2
-    P4 --> C3
-    P5 --> C3
-
-    C1 <-->|Heartbeats| GC
-    C2 <-->|Heartbeats| GC
-    C3 <-->|Heartbeats| GC
-
-    style P0 fill:#e3f2fd
-    style P1 fill:#e3f2fd
-    style P2 fill:#e8f5e8
-    style P3 fill:#e8f5e8
-    style P4 fill:#fff3e0
-    style P5 fill:#fff3e0
-    style GC fill:#f3e5f5
-```
+![Diagram 2](/diagrams/kafka-concepts-part-4-diagram-2.svg)
 
 ### Partition Assignment Strategies
 
@@ -398,47 +359,7 @@ fun configureAssignmentStrategy() {
 
 ### Rebalance Sequence
 
-```mermaid
-sequenceDiagram
-    participant C1 as Consumer 1
-    participant C2 as Consumer 2
-    participant C3 as Consumer 3 (new)
-    participant GC as Group Coordinator
-
-    Note over C1,C2: Consuming normally
-
-    C3->>GC: JoinGroup
-    Note over GC: Trigger rebalance
-
-    GC->>C1: PrepareRebalance
-    GC->>C2: PrepareRebalance
-
-    Note over C1: onPartitionsRevoked()
-    Note over C2: onPartitionsRevoked()
-
-    C1->>C1: Commit offsets
-    C2->>C2: Commit offsets
-
-    C1->>GC: JoinGroup
-    C2->>GC: JoinGroup
-
-    Note over GC: Leader election<br/>C1 becomes leader
-
-    GC->>C1: Assignment needed
-    Note over C1: Compute assignment
-
-    C1->>GC: Assignment result
-
-    GC->>C1: SyncGroup (P0, P1)
-    GC->>C2: SyncGroup (P2, P3)
-    GC->>C3: SyncGroup (P4, P5)
-
-    Note over C1: onPartitionsAssigned(P0,P1)
-    Note over C2: onPartitionsAssigned(P2,P3)
-    Note over C3: onPartitionsAssigned(P4,P5)
-
-    Note over C1,C3: Resume consuming
-```
+![Diagram 3](/diagrams/kafka-concepts-part-4-diagram-3.svg)
 
 ### Rebalance Callbacks
 
@@ -1095,21 +1016,7 @@ class OffsetSeeking {
 
 ## Consumer Lag Monitoring
 
-```mermaid
-flowchart LR
-    subgraph Partition["Partition 0"]
-        LEO[Log End Offset<br/>Latest: 10000]
-        CO[Consumer Offset<br/>Current: 9500]
-        Lag[Consumer Lag<br/>500 messages]
-    end
-
-    LEO -.->|Lag calculation| Lag
-    CO -.->|Lag calculation| Lag
-
-    style LEO fill:#4caf50
-    style CO fill:#2196f3
-    style Lag fill:#ff9800
-```
+![Diagram 5](/diagrams/kafka-concepts-part-4-diagram-5.svg)
 
 ```kotlin
 // Monitoring consumer lag

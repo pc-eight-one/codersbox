@@ -22,35 +22,7 @@ A **topic** is a category or feed name to which records are published. Topics ar
 
 ### Topic Anatomy
 
-```mermaid
-flowchart TB
-    subgraph Topic["Topic: user-events"]
-        subgraph P0["Partition 0"]
-            M00[Offset 0: user-1:login]
-            M01[Offset 1: user-3:click]
-            M02[Offset 2: user-5:purchase]
-        end
-
-        subgraph P1["Partition 1"]
-            M10[Offset 0: user-2:login]
-            M11[Offset 1: user-4:view]
-            M12[Offset 2: user-6:logout]
-        end
-
-        subgraph P2["Partition 2"]
-            M20[Offset 0: user-7:click]
-            M21[Offset 1: user-8:purchase]
-            M22[Offset 2: user-9:login]
-        end
-    end
-
-    Producer[Producers] -->|"hash(key) % 3"| Topic
-    Topic -->|Consumer Group| Consumers[Consumers]
-
-    style P0 fill:#e3f2fd
-    style P1 fill:#e8f5e8
-    style P2 fill:#fff3e0
-```
+![Diagram 1](/diagrams/kafka-concepts-part-2-diagram-1.svg)
 
 ### Topic Configuration Deep Dive
 
@@ -203,34 +175,7 @@ Partitions are the fundamental unit of parallelism and scalability in Kafka.
 
 ### Partition Distribution
 
-```mermaid
-flowchart TB
-    subgraph Cluster["3-Broker Cluster"]
-        subgraph B1["Broker 1"]
-            B1P0[Topic A: P0 Leader]
-            B1P1[Topic A: P3 Follower]
-            B1P2[Topic B: P1 Leader]
-        end
-
-        subgraph B2["Broker 2"]
-            B2P0[Topic A: P1 Leader]
-            B2P1[Topic A: P0 Follower]
-            B2P2[Topic B: P0 Follower]
-        end
-
-        subgraph B3["Broker 3"]
-            B3P0[Topic A: P2 Leader]
-            B3P1[Topic A: P1 Follower]
-            B3P2[Topic B: P0 Leader]
-        end
-    end
-
-    style B1P0 fill:#4caf50
-    style B2P0 fill:#4caf50
-    style B3P0 fill:#4caf50
-    style B1P2 fill:#4caf50
-    style B3P2 fill:#4caf50
-```
+![Diagram 2](/diagrams/kafka-concepts-part-2-diagram-2.svg)
 
 ### Partition Count: The Critical Decision
 
@@ -548,36 +493,7 @@ Replication is how Kafka ensures data durability and availability.
 
 ### Replication Architecture
 
-```mermaid
-flowchart TB
-    subgraph Leader["Leader Replica (Broker 1)"]
-        L[Partition 0]
-        LEO_L[LEO: 150]
-        HW_L[HW: 145]
-    end
-
-    subgraph Follower1["Follower Replica (Broker 2)"]
-        F1[Partition 0]
-        LEO_F1[LEO: 148]
-        HW_F1[HW: 145]
-    end
-
-    subgraph Follower2["Follower Replica (Broker 3)"]
-        F2[Partition 0]
-        LEO_F2[LEO: 145]
-        HW_F2[HW: 145]
-    end
-
-    Producer[Producer] -->|Write| Leader
-    Leader -->|Replicate| Follower1
-    Leader -->|Replicate| Follower2
-
-    Consumer[Consumer] -->|Read up to HW| Leader
-
-    style Leader fill:#4caf50
-    style Follower1 fill:#2196f3
-    style Follower2 fill:#2196f3
-```
+![Diagram 3](/diagrams/kafka-concepts-part-2-diagram-3.svg)
 
 **Key Concepts**:
 - **LEO (Log End Offset)**: The offset of the last message written to a replica
@@ -819,46 +735,7 @@ fun handleMinISRViolation(topic: String, partition: Int, currentISR: Int, minISR
 
 ### Replication Protocol Deep Dive
 
-```mermaid
-sequenceDiagram
-    participant P as Producer
-    participant L as Leader
-    participant F1 as Follower 1
-    participant F2 as Follower 2
-
-    Note over P,F2: acks=all, min.insync.replicas=2
-
-    P->>L: ProduceRequest (batch of records)
-
-    Note over L: 1. Validate
-    L->>L: Check CRC, quotas
-
-    Note over L: 2. Write locally
-    L->>L: Append to log (LEO: 99→105)
-
-    Note over F1,F2: 3. Followers fetch (pull model)
-    F1->>L: FetchRequest (offset 99)
-    F2->>L: FetchRequest (offset 99)
-
-    L->>F1: FetchResponse (records 99-105)
-    L->>F2: FetchResponse (records 99-105)
-
-    Note over F1: Write to local log
-    F1->>F1: Append (LEO: 99→105)
-
-    Note over F2: Write to local log
-    F2->>F2: Append (LEO: 99→105)
-
-    Note over F1,F2: 4. Next fetch confirms write
-    F1->>L: FetchRequest (offset 105)
-    F2->>L: FetchRequest (offset 105)
-
-    Note over L: 5. Update HW
-    L->>L: HW = min(105, 105, 105) = 105
-
-    Note over L: 6. Ack producer
-    L->>P: ProduceResponse (success)
-```
+![Diagram 4](/diagrams/kafka-concepts-part-2-diagram-4.svg)
 
 ```kotlin
 // Replication protocol insights
@@ -950,34 +827,7 @@ fun monitorReplicationLag(
 
 ## Partition Leadership and Preferred Leaders
 
-```mermaid
-flowchart TB
-    subgraph Initial["Initial State (Balanced)"]
-        B1_I[Broker 1<br/>Leader: P0, P3]
-        B2_I[Broker 2<br/>Leader: P1, P4]
-        B3_I[Broker 3<br/>Leader: P2, P5]
-    end
-
-    subgraph After["After Broker 1 Restart"]
-        B1_A[Broker 1<br/>Leader: none]
-        B2_A[Broker 2<br/>Leader: P1, P4, P0, P3]
-        B3_A[Broker 3<br/>Leader: P2, P5]
-    end
-
-    subgraph Rebalanced["After Preferred Leader Election"]
-        B1_R[Broker 1<br/>Leader: P0, P3]
-        B2_R[Broker 2<br/>Leader: P1, P4]
-        B3_R[Broker 3<br/>Leader: P2, P5]
-    end
-
-    Initial -->|Broker 1 restarts| After
-    After -->|Rebalance triggered| Rebalanced
-
-    style B2_A fill:#ff9800
-    style B1_R fill:#4caf50
-    style B2_R fill:#4caf50
-    style B3_R fill:#4caf50
-```
+![Diagram 5](/diagrams/kafka-concepts-part-2-diagram-5.svg)
 
 ```kotlin
 // Preferred Leader Election

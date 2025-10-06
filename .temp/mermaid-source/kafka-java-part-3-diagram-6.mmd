@@ -1,0 +1,21 @@
+flowchart TB
+    subgraph Performance["Performance Metrics"]
+        RSR[record-send-rate<br/>Messages/sec]
+        RLA[request-latency-avg<br/>Latency ms]
+        BSA[batch-size-avg<br/>Batch size]
+    end
+
+    subgraph Health["Health Metrics"]
+        RER[record-error-rate<br/>Errors/sec]
+        RRR[record-retry-rate<br/>Retries/sec]
+        BAB[buffer-available-bytes<br/>Memory available]
+    end
+
+    subgraph Efficiency["Efficiency Metrics"]
+        CRA[compression-rate-avg<br/>Compression ratio]
+        RPB[records-per-request-avg<br/>Batching efficiency]
+    end
+
+    style Performance fill:#e3f2fd
+    style Health fill:#ffebee
+    style Efficiency fill:#e8f5e8

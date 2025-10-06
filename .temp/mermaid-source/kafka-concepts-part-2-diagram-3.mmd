@@ -1,0 +1,28 @@
+flowchart TB
+    subgraph Leader["Leader Replica (Broker 1)"]
+        L[Partition 0]
+        LEO_L[LEO: 150]
+        HW_L[HW: 145]
+    end
+
+    subgraph Follower1["Follower Replica (Broker 2)"]
+        F1[Partition 0]
+        LEO_F1[LEO: 148]
+        HW_F1[HW: 145]
+    end
+
+    subgraph Follower2["Follower Replica (Broker 3)"]
+        F2[Partition 0]
+        LEO_F2[LEO: 145]
+        HW_F2[HW: 145]
+    end
+
+    Producer[Producer] -->|Write| Leader
+    Leader -->|Replicate| Follower1
+    Leader -->|Replicate| Follower2
+
+    Consumer[Consumer] -->|Read up to HW| Leader
+
+    style Leader fill:#4caf50
+    style Follower1 fill:#2196f3
+    style Follower2 fill:#2196f3

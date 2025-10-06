@@ -1,0 +1,29 @@
+sequenceDiagram
+    participant P as Producer
+    participant LB as Leader Broker
+    participant F1 as Follower 1
+    participant F2 as Follower 2
+
+    P->>LB: ProduceRequest (acks=all)
+
+    Note over LB: 1. Append to local log
+    LB->>LB: Write to page cache
+
+    Note over LB: 2. Replicate to followers
+    par Parallel Replication
+        LB->>F1: Replication Request
+        LB->>F2: Replication Request
+    end
+
+    F1->>F1: Write to local log
+    F2->>F2: Write to local log
+
+    par Acknowledgments
+        F1->>LB: Fetch Response (in-sync)
+        F2->>LB: Fetch Response (in-sync)
+    end
+
+    Note over LB: 3. Update High Water Mark
+    LB->>LB: Advance HW
+
+    LB->>P: ProduceResponse (success)

@@ -21,12 +21,7 @@ Arrays and strings are the backbone of data processing in Java - they appear in 
 ## Arrays: The Foundation
 
 Visualizing an array in memory:
-```mermaid
-flowchart LR
-    A0[0] --- A1[1] --- A2[2] --- A3[3] --- A4[4]
-    classDef idx fill:#eef,stroke:#99f,color:#000;
-    class A0,A1,A2,A3,A4 idx;
-```
+![Diagram 1](/diagrams/java-complete-part-7-diagram-1.svg)
 
 **Key Concept**: Array is a container holding multiple values of the same type, accessed by index (0-based).
 

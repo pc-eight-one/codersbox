@@ -1,0 +1,26 @@
+flowchart TB
+    subgraph Initial["Initial State (Balanced)"]
+        B1_I[Broker 1<br/>Leader: P0, P3]
+        B2_I[Broker 2<br/>Leader: P1, P4]
+        B3_I[Broker 3<br/>Leader: P2, P5]
+    end
+
+    subgraph After["After Broker 1 Restart"]
+        B1_A[Broker 1<br/>Leader: none]
+        B2_A[Broker 2<br/>Leader: P1, P4, P0, P3]
+        B3_A[Broker 3<br/>Leader: P2, P5]
+    end
+
+    subgraph Rebalanced["After Preferred Leader Election"]
+        B1_R[Broker 1<br/>Leader: P0, P3]
+        B2_R[Broker 2<br/>Leader: P1, P4]
+        B3_R[Broker 3<br/>Leader: P2, P5]
+    end
+
+    Initial -->|Broker 1 restarts| After
+    After -->|Rebalance triggered| Rebalanced
+
+    style B2_A fill:#ff9800
+    style B1_R fill:#4caf50
+    style B2_R fill:#4caf50
+    style B3_R fill:#4caf50

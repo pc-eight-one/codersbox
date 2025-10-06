@@ -55,14 +55,7 @@ When not to cache:
 
 ### Typical Cache-Aside Flow
 
-```mermaid
-flowchart LR
-  A[Caller] -->|get key| B{Cache}
-  B -- hit --> C[Return cached value]
-  B -- miss --> D[Load from source]
-  D -->|value| E[Put into cache]
-  E --> C
-```
+![Diagram 1](/diagrams/kotlin-caching-from-scratch-diagram-1.svg)
 
 ## 3) A Minimal Cache Interface in Kotlin
 
@@ -174,29 +167,7 @@ class LoadingCache<K, V>(
 
 ### Stampede Protection Illustration
 
-```mermaid
-sequenceDiagram
-  autonumber
-  participant C1 as Client 1
-  participant C2 as Client 2
-  participant Cache
-  participant Lock as Per-key Mutex
-  participant Src as Source
-
-  C1->>Cache: get(k)
-  Cache-->>C1: miss
-  C1->>Lock: acquire(k)
-  C2->>Cache: get(k)
-  Cache-->>C2: miss
-  C2->>Lock: wait(k)
-  C1->>Src: load(k)
-  Src-->>C1: value
-  C1->>Cache: put(k, value)
-  C1->>Lock: release(k)
-  Lock-->>C2: acquired
-  C2->>Cache: get(k)
-  Cache-->>C2: hit(value)
-```
+![Diagram 2](/diagrams/kotlin-caching-from-scratch-diagram-2.svg)
 
 ## 6) Cache Patterns You’ll Actually Use
 
@@ -207,21 +178,7 @@ sequenceDiagram
 
 ### Cache-Aside vs Read-Through
 
-```mermaid
-flowchart TB
-  subgraph CacheAside
-    A1[App] -->|get| CA[Cache]
-    CA --miss--> S1[Source]
-    S1 --> CA
-    CA --> A1
-  end
-  subgraph ReadThrough
-    A2[App] -->|get| RT[Cache+Loader]
-    RT --miss--> S2[Source]
-    S2 --> RT
-    RT --> A2
-  end
-```
+![Diagram 3](/diagrams/kotlin-caching-from-scratch-diagram-3.svg)
 
 Pick cache-aside as your default. It’s easier to reason about invalidation.
 
@@ -543,15 +500,7 @@ class LruCacheTest {
 
 Local first, then distributed fallback for warmup across instances.
 
-```mermaid
-flowchart TB
-  A[App] --> L[Local Caffeine Cache]
-  L -- miss --> R[Redis Cache]
-  R -- miss --> S[Source/DB]
-  S --> R
-  R --> L
-  L --> A
-```
+![Diagram 4](/diagrams/kotlin-caching-from-scratch-diagram-4.svg)
 
 Sketch:
 

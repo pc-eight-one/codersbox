@@ -1,0 +1,18 @@
+flowchart LR
+    subgraph Before["Without Batching"]
+        M1[Message 1] -->|Network Call 1| B1[Broker]
+        M2[Message 2] -->|Network Call 2| B1
+        M3[Message 3] -->|Network Call 3| B1
+        Note1[3 network calls<br/>High overhead]
+    end
+
+    subgraph After["With Batching"]
+        BM1[Message 1] --> Batch[Batch<br/>Accumulator]
+        BM2[Message 2] --> Batch
+        BM3[Message 3] --> Batch
+        Batch -->|Single Network Call| B2[Broker]
+        Note2[1 network call<br/>Low overhead]
+    end
+
+    style Before fill:#ffebee
+    style After fill:#e8f5e8

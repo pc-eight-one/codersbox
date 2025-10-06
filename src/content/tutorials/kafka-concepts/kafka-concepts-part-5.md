@@ -20,34 +20,7 @@ Kafka's storage layer is the foundation of its performance and durability. Under
 
 ### Partition as Commit Log
 
-```mermaid
-flowchart TB
-    subgraph Partition["Partition 0 on Disk"]
-        subgraph Seg1["Segment 1 (Oldest)"]
-            S1L[00000000000000000000.log<br/>Offsets 0-999]
-            S1I[00000000000000000000.index<br/>Offset index]
-            S1T[00000000000000000000.timeindex<br/>Timestamp index]
-        end
-
-        subgraph Seg2["Segment 2"]
-            S2L[00000000000000001000.log<br/>Offsets 1000-1999]
-            S2I[00000000000000001000.index]
-            S2T[00000000000000001000.timeindex]
-        end
-
-        subgraph Seg3["Segment 3 (Active)"]
-            S3L[00000000000000002000.log<br/>Offsets 2000-current]
-            S3I[00000000000000002000.index]
-            S3T[00000000000000002000.timeindex]
-        end
-    end
-
-    Producer[Producer] -->|Append| Seg3
-
-    style Seg1 fill:#e0e0e0
-    style Seg2 fill:#fff3e0
-    style Seg3 fill:#e8f5e8
-```
+![Diagram 1](/diagrams/kafka-concepts-part-5-diagram-1.svg)
 
 ### Segment Anatomy
 
@@ -250,29 +223,7 @@ fun warnAboutSegmentRetention() {
 
 ### Record Structure
 
-```mermaid
-flowchart LR
-    subgraph Record["Kafka Record (v2)"]
-        Header[Headers<br/>Key-Value pairs]
-        Key[Key<br/>Optional]
-        Value[Value<br/>Payload]
-        Offset[Offset]
-        Timestamp[Timestamp]
-        Attrs[Attributes<br/>Compression, etc]
-    end
-
-    subgraph Batch["Record Batch"]
-        R1[Record 1]
-        R2[Record 2]
-        R3[Record 3]
-        BatchHeader[Batch Metadata]
-    end
-
-    Record --> Batch
-
-    style Record fill:#e3f2fd
-    style Batch fill:#e8f5e8
-```
+![Diagram 2](/diagrams/kafka-concepts-part-5-diagram-2.svg)
 
 ```kotlin
 // Message format internals
@@ -391,29 +342,7 @@ fun calculateOverhead() {
 
 ### Offset Index
 
-```mermaid
-flowchart LR
-    subgraph Index["Offset Index (Sparse)"]
-        I1[Offset 0 → Position 0]
-        I2[Offset 4000 → Position 4MB]
-        I3[Offset 8000 → Position 8MB]
-        I4[Offset 12000 → Position 12MB]
-    end
-
-    subgraph Log["Log File"]
-        L1[Offset 0-3999]
-        L2[Offset 4000-7999]
-        L3[Offset 8000-11999]
-        L4[Offset 12000-15999]
-    end
-
-    Query[Find Offset 10000] -->|1. Binary search index| I3
-    I3 -->|2. Position 8MB| L3
-    L3 -->|3. Scan from 8MB| Result[Found at 10.5MB]
-
-    style Index fill:#e3f2fd
-    style Log fill:#e8f5e8
-```
+![Diagram 3](/diagrams/kafka-concepts-part-5-diagram-3.svg)
 
 ```kotlin
 // Index internals
@@ -545,29 +474,7 @@ fun tuneIndexConfiguration() {
 
 ### Compaction Concept
 
-```mermaid
-flowchart TB
-    subgraph Before["Before Compaction"]
-        B1[key=A, val=1, offset=0]
-        B2[key=B, val=1, offset=1]
-        B3[key=A, val=2, offset=2]
-        B4[key=C, val=1, offset=3]
-        B5[key=B, val=2, offset=4]
-        B6[key=A, val=3, offset=5]
-    end
-
-    subgraph After["After Compaction"]
-        A1[key=C, val=1, offset=3]
-        A2[key=B, val=2, offset=4]
-        A3[key=A, val=3, offset=5]
-    end
-
-    Before -->|Compact| After
-    Note1[Keeps only latest<br/>value per key]
-
-    style Before fill:#ffebee
-    style After fill:#e8f5e8
-```
+![Diagram 4](/diagrams/kafka-concepts-part-5-diagram-4.svg)
 
 ```kotlin
 // Log compaction explained

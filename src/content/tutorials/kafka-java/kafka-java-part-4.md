@@ -20,41 +20,7 @@ Building robust consumers requires understanding consumer groups, partition assi
 
 ### Understanding Consumer Group Dynamics
 
-```mermaid
-flowchart TB
-    subgraph Topic["Topic: orders (6 partitions)"]
-        P0[P0]
-        P1[P1]
-        P2[P2]
-        P3[P3]
-        P4[P4]
-        P5[P5]
-    end
-
-    subgraph CG["Consumer Group: order-processors"]
-        C1[Consumer 1]
-        C2[Consumer 2]
-        C3[Consumer 3]
-    end
-
-    P0 --> C1
-    P1 --> C1
-    P2 --> C2
-    P3 --> C2
-    P4 --> C3
-    P5 --> C3
-
-    GC[Group Coordinator<br/>Manages assignment]
-    GC -.->|coordinates| CG
-
-    style P0 fill:#e3f2fd
-    style P1 fill:#e3f2fd
-    style P2 fill:#e8f5e8
-    style P3 fill:#e8f5e8
-    style P4 fill:#fff3e0
-    style P5 fill:#fff3e0
-    style GC fill:#f3e5f5
-```
+![Diagram 1](/diagrams/kafka-java-part-4-diagram-1.svg)
 
 **Key Concepts**:
 - **Group Coordinator**: Broker that manages consumer group membership
@@ -247,28 +213,7 @@ public class DynamicAssignmentConsumer {
 
 ### Offset Storage Strategies
 
-```mermaid
-flowchart TB
-    subgraph Strategies["Offset Storage Strategies"]
-        Auto[Auto Commit<br/>Simple, may duplicate]
-        Manual[Manual Commit<br/>Full control]
-        External[External Store<br/>Exactly-once with DB]
-    end
-
-    subgraph Auto["Auto Commit Flow"]
-        A1[Poll records] --> A2[Process]
-        A2 --> A3[Auto commit every 5s]
-    end
-
-    subgraph Manual["Manual Commit Flow"]
-        M1[Poll records] --> M2[Process]
-        M2 --> M3[Explicit commit]
-    end
-
-    style Auto fill:#fff3e0
-    style Manual fill:#e8f5e8
-    style External fill:#e3f2fd
-```
+![Diagram 2](/diagrams/kafka-java-part-4-diagram-2.svg)
 
 ### Manual Commit Patterns
 
@@ -639,30 +584,7 @@ public class RebalanceAwareConsumer {
 
 ### Rebalancing Flow
 
-```mermaid
-sequenceDiagram
-    participant C1 as Consumer 1
-    participant C2 as Consumer 2
-    participant GC as Group Coordinator
-    participant K as Kafka
-
-    Note over C1,C2: Initial state: C1 has P0,P1
-
-    C2->>GC: Join Group
-    GC->>C1: Revoke partitions
-    C1->>C1: onPartitionsRevoked()
-    C1->>K: Commit offsets
-    C1->>GC: Revoke complete
-
-    GC->>GC: Rebalance algorithm
-    GC->>C1: Assign P0
-    GC->>C2: Assign P1
-
-    C1->>C1: onPartitionsAssigned(P0)
-    C2->>C2: onPartitionsAssigned(P1)
-
-    Note over C1,C2: Consuming resumed
-```
+![Diagram 3](/diagrams/kafka-java-part-4-diagram-3.svg)
 
 ## Parallel Processing Patterns
 

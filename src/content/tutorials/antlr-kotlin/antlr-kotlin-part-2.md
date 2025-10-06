@@ -157,25 +157,7 @@ condition
 
 ANTLR resolves this as: `(age > 18 AND status = 'active') OR (role = 'admin')`
 
-```mermaid
-flowchart TB
-    OR[OR]
-    AND[AND]
-    C1[age > 18]
-    C2[status = 'active']
-    C3[role = 'admin']
-
-    OR --> AND
-    OR --> C3
-    AND --> C1
-    AND --> C2
-
-    style OR fill:#fff3e0
-    style AND fill:#e3f2fd
-    style C1 fill:#e8f5e8
-    style C2 fill:#e8f5e8
-    style C3 fill:#e8f5e8
-```
+![Diagram 1](/diagrams/antlr-kotlin-part-2-diagram-1.svg)
 
 AND has higher precedence because it appears first in the alternation. To override, use parentheses:
 

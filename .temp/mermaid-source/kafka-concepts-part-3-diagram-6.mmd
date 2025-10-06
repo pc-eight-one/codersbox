@@ -1,0 +1,14 @@
+sequenceDiagram
+    participant P as Producer (PID: 12345, Seq: 0)
+    participant L as Leader Broker
+
+    P->>L: Send (PID=12345, Seq=0, data)
+    L->>L: Write offset 100
+    L--xP: ACK lost
+
+    P->>L: Retry (PID=12345, Seq=0, data)
+    Note over L: Duplicate detected!<br/>Same PID + Seq
+    L->>L: Ignore (already written)
+    L->>P: ACK (offset 100)
+
+    Note over L: No duplicate!<br/>Only offset 100

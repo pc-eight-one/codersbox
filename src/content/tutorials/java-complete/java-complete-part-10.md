@@ -27,31 +27,14 @@ prerequisites: ["Java Complete Parts 1-9"]
 
 **Key Principle**: Inheritance models **"is-a"** relationships in the real world.
 
-```mermaid
-graph TD
-    A["Animal: eat(), sleep(), makeSound()"] --> B["Dog: bark(), wagTail()"]
-    A --> C["Cat: meow(), scratch()"]
-    A --> D["Bird: fly(), chirp()"]
-    
-    E["Vehicle: start(), stop()"] --> F["Car: openTrunk()"]
-    E --> G["Motorcycle: popWheelie()"]
-    
-    style A fill:#e3f2fd
-    style E fill:#e3f2fd
-```
+![Diagram 1](/diagrams/java-complete-part-10-diagram-1.svg)
 
 **Benefits**: Code reuse, logical organization, easier maintenance, extensibility.
 
 ### Basic Inheritance Syntax
 
 A quick visual of the class relationships:
-```mermaid
-classDiagram
-    Animal <|-- Dog
-    Animal <|-- Cat
-    Vehicle <|-- Car
-    Vehicle <|-- Motorcycle
-```
+![Diagram 2](/diagrams/java-complete-part-10-diagram-2.svg)
 
 ```java
 // Base class (superclass/parent class)
@@ -685,17 +668,7 @@ public class CastingDemo {
 ## Practical Application: Shape Hierarchy
 
 A visual of the hierarchy we'll implement:
-```mermaid
-classDiagram
-    Shape <|-- Circle
-    Shape <|-- Rectangle
-    Rectangle <|-- Square
-    class Shape{
-      <<abstract>>
-      +calculateArea()
-      +calculatePerimeter()
-    }
-```
+![Diagram 3](/diagrams/java-complete-part-10-diagram-3.svg)
 
 ```java
 public abstract class Shape {

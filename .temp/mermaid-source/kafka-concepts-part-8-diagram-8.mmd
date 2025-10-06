@@ -1,0 +1,38 @@
+graph TB
+    subgraph "Encryption at Rest Options"
+        O1[Disk/Filesystem Encryption]
+        O2[Application-Level Encryption]
+        O3[Cloud Provider Encryption]
+    end
+
+    subgraph "Disk Encryption"
+        D1[LUKS - Linux]
+        D2[dm-crypt]
+        D3[BitLocker - Windows]
+        D4[Transparent - No Kafka changes]
+    end
+
+    subgraph "Application-Level"
+        A1[Encrypt before produce]
+        A2[Decrypt after consume]
+        A3[Custom serializer/deserializer]
+        A4[Key management required]
+    end
+
+    subgraph "Cloud Encryption"
+        C1[AWS EBS Encryption]
+        C2[GCP Persistent Disk Encryption]
+        C3[Azure Disk Encryption]
+    end
+
+    O1 --> D1
+    O1 --> D2
+    O1 --> D3
+    O1 --> D4
+    O2 --> A1
+    O2 --> A2
+    O2 --> A3
+    O2 --> A4
+    O3 --> C1
+    O3 --> C2
+    O3 --> C3

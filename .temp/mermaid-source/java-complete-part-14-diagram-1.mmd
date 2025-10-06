@@ -1,0 +1,18 @@
+flowchart TD
+    A[Data Sources] --> B[Files]
+    A --> C[Network]
+    A --> D[Memory]
+    
+    B --> E[Byte Streams<br/>FileInputStream/OutputStream]
+    B --> F[Character Streams<br/>FileReader/Writer]
+    
+    E --> G[Buffered<br/>Performance Boost]
+    F --> H[Buffered<br/>Performance Boost]
+    
+    G --> I[Your Application]
+    H --> I
+    
+    style E fill:#ffebee
+    style F fill:#e3f2fd
+    style G fill:#e8f5e8
+    style H fill:#fff3e0

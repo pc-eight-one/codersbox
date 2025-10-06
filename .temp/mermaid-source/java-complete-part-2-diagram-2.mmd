@@ -1,0 +1,10 @@
+graph TD
+    A[my-java-app/] --> B[pom.xml - Project config]
+    A --> C[src/main/java/ - Source code]
+    A --> D[src/test/java/ - Unit tests] 
+    A --> E[target/ - Generated files]
+    
+    C --> C1[dev/codersbox/Calculator.java]
+    D --> D1[dev/codersbox/CalculatorTest.java]
+    E --> E1[classes/ - Compiled bytecode]
+    E --> E2[calculator-1.0.jar - Final JAR]

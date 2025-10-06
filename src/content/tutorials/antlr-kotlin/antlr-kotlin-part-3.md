@@ -66,37 +66,7 @@ class TableListener : SimpleSqlBaseListener() {
 
 **Key difference:** Visitors let you control traversal order and accumulate return values. Listeners just react as ANTLR walks the tree.
 
-```mermaid
-flowchart TB
-    subgraph Visitor["Visitor Pattern"]
-        V1[Visit root]
-        V2[Manually visit child 1]
-        V3[Manually visit child 2]
-        V4[Return combined result]
-
-        V1 --> V2
-        V2 --> V3
-        V3 --> V4
-    end
-
-    subgraph Listener["Listener Pattern"]
-        L1[ANTLR enters root]
-        L2[ANTLR enters child 1]
-        L3[ANTLR exits child 1]
-        L4[ANTLR enters child 2]
-        L5[ANTLR exits child 2]
-        L6[ANTLR exits root]
-
-        L1 --> L2
-        L2 --> L3
-        L3 --> L4
-        L4 --> L5
-        L5 --> L6
-    end
-
-    style V1 fill:#e8f5e8
-    style L1 fill:#e3f2fd
-```
+![Diagram 1](/diagrams/antlr-kotlin-part-3-diagram-1.svg)
 
 ## Building a Metadata Visitor
 

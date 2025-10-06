@@ -1,0 +1,17 @@
+flowchart TB
+    subgraph Cluster["Partition 0 Replication (Factor=3)"]
+        L[Broker 1<br/>Leader<br/>Handles Reads/Writes]
+        F1[Broker 2<br/>Follower<br/>Replicates Data]
+        F2[Broker 3<br/>Follower<br/>Replicates Data]
+    end
+
+    P[Producer] -->|writes| L
+    L -.->|replicates| F1
+    L -.->|replicates| F2
+    C[Consumer] -->|reads| L
+
+    style L fill:#4caf50
+    style F1 fill:#2196f3
+    style F2 fill:#2196f3
+    style P fill:#ff9800
+    style C fill:#9c27b0

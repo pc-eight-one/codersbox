@@ -1,0 +1,20 @@
+sequenceDiagram
+    participant B as Broker
+    participant D as Disk
+    participant Z as ZooKeeper/KRaft
+    participant C as Controller
+
+    B->>D: Load partition data
+    D->>B: Return partition metadata
+
+    B->>Z: Register broker
+    Z->>B: Acknowledge registration
+
+    B->>Z: Request cluster metadata
+    Z->>B: Return topic/partition info
+
+    C->>B: Send partition assignments
+    B->>B: Initialize replica manager
+
+    B->>C: Notify ready
+    Note over B: Broker is ONLINE

@@ -1,0 +1,13 @@
+flowchart LR
+    subgraph Partition["Partition 0"]
+        LEO[Log End Offset<br/>Latest: 10000]
+        CO[Consumer Offset<br/>Current: 9500]
+        Lag[Consumer Lag<br/>500 messages]
+    end
+
+    LEO -.->|Lag calculation| Lag
+    CO -.->|Lag calculation| Lag
+
+    style LEO fill:#4caf50
+    style CO fill:#2196f3
+    style Lag fill:#ff9800

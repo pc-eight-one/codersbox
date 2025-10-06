@@ -1,0 +1,28 @@
+flowchart TB
+    subgraph Controller["Controller Broker"]
+        CE[Controller Election]
+        PM[Partition Management]
+        BM[Broker Management]
+        MM[Metadata Management]
+    end
+
+    subgraph Operations["Controller Operations"]
+        LE[Leader Election]
+        BR[Broker Registration]
+        TC[Topic Creation]
+        PC[Partition Changes]
+    end
+
+    Controller --> Operations
+
+    subgraph Brokers["Other Brokers"]
+        B1[Broker 1]
+        B2[Broker 2]
+        B3[Broker 3]
+    end
+
+    Operations -.->|Updates| Brokers
+
+    style Controller fill:#e8f5e8
+    style Operations fill:#e3f2fd
+    style Brokers fill:#fff3e0

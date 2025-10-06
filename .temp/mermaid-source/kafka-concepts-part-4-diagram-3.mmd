@@ -1,0 +1,39 @@
+sequenceDiagram
+    participant C1 as Consumer 1
+    participant C2 as Consumer 2
+    participant C3 as Consumer 3 (new)
+    participant GC as Group Coordinator
+
+    Note over C1,C2: Consuming normally
+
+    C3->>GC: JoinGroup
+    Note over GC: Trigger rebalance
+
+    GC->>C1: PrepareRebalance
+    GC->>C2: PrepareRebalance
+
+    Note over C1: onPartitionsRevoked()
+    Note over C2: onPartitionsRevoked()
+
+    C1->>C1: Commit offsets
+    C2->>C2: Commit offsets
+
+    C1->>GC: JoinGroup
+    C2->>GC: JoinGroup
+
+    Note over GC: Leader election<br/>C1 becomes leader
+
+    GC->>C1: Assignment needed
+    Note over C1: Compute assignment
+
+    C1->>GC: Assignment result
+
+    GC->>C1: SyncGroup (P0, P1)
+    GC->>C2: SyncGroup (P2, P3)
+    GC->>C3: SyncGroup (P4, P5)
+
+    Note over C1: onPartitionsAssigned(P0,P1)
+    Note over C2: onPartitionsAssigned(P2,P3)
+    Note over C3: onPartitionsAssigned(P4,P5)
+
+    Note over C1,C3: Resume consuming

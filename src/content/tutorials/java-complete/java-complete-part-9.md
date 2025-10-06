@@ -21,19 +21,7 @@ prerequisites: ["Java Complete Parts 1-8", "Level 1 Project"]
 
 **Core Concept**: Instead of separate functions and data, OOP bundles related data and behavior together into objects that model real-world entities.
 
-```mermaid
-graph TD
-    A[Real World: Car] --> B[OOP Object: Car]
-    B --> C[Data: color, speed, fuel]
-    B --> D["Behavior: start(), accelerate(), brake()"]
-    
-    E[Real World: Bank Account] --> F[OOP Object: BankAccount]
-    F --> G[Data: balance, accountNumber, owner]
-    F --> H["Behavior: deposit(), withdraw(), getBalance()"]
-    
-    style B fill:#e3f2fd
-    style F fill:#e3f2fd
-```
+![Diagram 1](/diagrams/java-complete-part-9-diagram-1.svg)
 
 ## The Paradigm Shift
 
@@ -77,24 +65,7 @@ public class Calculator {
 A **class** is a blueprint for creating objects. An **object** is an instance of a class.
 
 A quick visual of object relationships in this section:
-```mermaid
-classDiagram
-    class BankAccount {
-      -accountNumber
-      -accountHolder
-      -balance
-      -accountType
-      +deposit(amount)
-      +withdraw(amount)
-      +getBalance()
-    }
-    class Library {
-      -books: Book[]
-      +addBook(book)
-      +findBookByIsbn(isbn)
-    }
-    Book --> Library : contained in
-```
+![Diagram 2](/diagrams/java-complete-part-9-diagram-2.svg)
 
 ### Bank Account Example
 

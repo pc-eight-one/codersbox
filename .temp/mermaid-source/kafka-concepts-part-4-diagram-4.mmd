@@ -1,0 +1,24 @@
+flowchart TB
+    subgraph Consumer["Consumer"]
+        Poll[poll() records]
+        Process[Process records]
+        Commit[Commit offsets]
+    end
+
+    subgraph Broker["Kafka Broker"]
+        Topic[__consumer_offsets<br/>Internal topic<br/>50 partitions]
+    end
+
+    subgraph Storage["Offset Storage Format"]
+        Key[Key: group + topic + partition]
+        Value[Value: offset + metadata]
+    end
+
+    Poll --> Process
+    Process --> Commit
+    Commit --> Topic
+    Topic -.-> Storage
+
+    style Consumer fill:#e3f2fd
+    style Broker fill:#e8f5e8
+    style Storage fill:#fff3e0

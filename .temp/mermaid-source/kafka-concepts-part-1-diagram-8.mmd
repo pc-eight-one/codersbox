@@ -1,0 +1,36 @@
+flowchart LR
+    subgraph Network["Network Layer"]
+        NW[Acceptor Thread<br/>Accept connections]
+        NP[Processor Threads<br/>Read/Write requests]
+    end
+
+    subgraph Request["Request Queue"]
+        RQ[Request Queue<br/>FIFO]
+    end
+
+    subgraph API["API Layer"]
+        API1[Handler Thread 1]
+        API2[Handler Thread 2]
+        API3[Handler Thread 3]
+    end
+
+    subgraph Response["Response Queue"]
+        RSQ[Response Queue]
+    end
+
+    Client[Clients] --> NW
+    NW --> NP
+    NP --> RQ
+    RQ --> API1
+    RQ --> API2
+    RQ --> API3
+    API1 --> RSQ
+    API2 --> RSQ
+    API3 --> RSQ
+    RSQ --> NP
+    NP --> Client
+
+    style Network fill:#e3f2fd
+    style Request fill:#fff3e0
+    style API fill:#e8f5e8
+    style Response fill:#f3e5f5

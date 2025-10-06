@@ -24,17 +24,7 @@ Apache Kafka was originally developed at LinkedIn in 2011 to handle their massiv
 
 **The Fundamental Shift**: Traditional systems follow request-response patterns. Kafka introduces event-driven architecture where systems react to streams of events as they occur.
 
-```mermaid
-flowchart LR
-    A[Event Producers] -->|Publish Events| B[Kafka Cluster]
-    B -->|Store & Distribute| C[Event Consumers]
-    B -->|Real-time Stream| D[Stream Processors]
-
-    style A fill:#e3f2fd
-    style B fill:#fff3e0
-    style C fill:#e8f5e8
-    style D fill:#f3e5f5
-```
+![Diagram 1](/diagrams/kafka-java-part-1-diagram-1.svg)
 
 **Key Characteristics**:
 - **Distributed**: Runs as a cluster across multiple servers for scalability and fault tolerance
@@ -50,18 +40,7 @@ flowchart LR
 
 **Partitions** are ordered, immutable sequences of records within a topic. They enable parallelism and scalability.
 
-```mermaid
-flowchart TB
-    subgraph Topic["Topic: user-events"]
-        P0[Partition 0<br/>user-123: login<br/>user-456: logout<br/>user-789: click]
-        P1[Partition 1<br/>user-234: login<br/>user-567: purchase<br/>user-890: view]
-        P2[Partition 2<br/>user-345: signup<br/>user-678: login<br/>user-901: logout]
-    end
-
-    style P0 fill:#e3f2fd
-    style P1 fill:#e8f5e8
-    style P2 fill:#fff3e0
-```
+![Diagram 2](/diagrams/kafka-java-part-1-diagram-2.svg)
 
 **Why Partitions Matter**:
 - **Parallelism**: Multiple consumers can read different partitions simultaneously
@@ -110,31 +89,7 @@ while (true) {
 
 **Consumer Groups** enable parallel processing and load balancing. Each consumer in a group reads from different partitions.
 
-```mermaid
-flowchart TB
-    subgraph Kafka["Kafka Topic: orders"]
-        P0[Partition 0]
-        P1[Partition 1]
-        P2[Partition 2]
-    end
-
-    subgraph Group["Consumer Group: order-processors"]
-        C1[Consumer 1]
-        C2[Consumer 2]
-        C3[Consumer 3]
-    end
-
-    P0 -->|reads| C1
-    P1 -->|reads| C2
-    P2 -->|reads| C3
-
-    style P0 fill:#e3f2fd
-    style P1 fill:#e3f2fd
-    style P2 fill:#e3f2fd
-    style C1 fill:#e8f5e8
-    style C2 fill:#e8f5e8
-    style C3 fill:#e8f5e8
-```
+![Diagram 3](/diagrams/kafka-java-part-1-diagram-3.svg)
 
 **Key Rules**:
 - Each partition is consumed by exactly one consumer in a group
@@ -145,24 +100,7 @@ flowchart TB
 
 **Offsets** are sequential IDs assigned to each message within a partition. They enable consumers to track their progress.
 
-```mermaid
-flowchart LR
-    subgraph Partition["Partition 0"]
-        M0[Offset 0<br/>Message A]
-        M1[Offset 1<br/>Message B]
-        M2[Offset 2<br/>Message C]
-        M3[Offset 3<br/>Message D]
-    end
-
-    C[Consumer<br/>Current Offset: 2]
-    C -->|Next Read| M3
-
-    style M0 fill:#e0e0e0
-    style M1 fill:#e0e0e0
-    style M2 fill:#ffeb3b
-    style M3 fill:#4caf50
-    style C fill:#2196f3
-```
+![Diagram 4](/diagrams/kafka-java-part-1-diagram-4.svg)
 
 **Critical Points**:
 - **Within Partition**: Strict ordering guaranteed
@@ -175,24 +113,7 @@ flowchart LR
 
 **Brokers** are Kafka servers that store data and serve clients. A **Cluster** is a group of brokers working together.
 
-```mermaid
-flowchart TB
-    subgraph Cluster["Kafka Cluster"]
-        B1[Broker 1<br/>Topic A: P0, P1<br/>Topic B: P0]
-        B2[Broker 2<br/>Topic A: P2<br/>Topic B: P1, P2]
-        B3[Broker 3<br/>Topic A: P0, P2<br/>Topic B: P0, P1]
-    end
-
-    Z[ZooKeeper/KRaft<br/>Cluster Coordination]
-    Z -.->|manages| B1
-    Z -.->|manages| B2
-    Z -.->|manages| B3
-
-    style B1 fill:#e3f2fd
-    style B2 fill:#e8f5e8
-    style B3 fill:#fff3e0
-    style Z fill:#f3e5f5
-```
+![Diagram 5](/diagrams/kafka-java-part-1-diagram-5.svg)
 
 **Responsibilities**:
 - Store partition data
@@ -204,48 +125,10 @@ flowchart TB
 
 **Replication** ensures data durability. Each partition has one leader and multiple follower replicas.
 
-```mermaid
-flowchart TB
-    subgraph Cluster["Partition 0 Replication (Factor=3)"]
-        L[Broker 1<br/>Leader<br/>Handles Reads/Writes]
-        F1[Broker 2<br/>Follower<br/>Replicates Data]
-        F2[Broker 3<br/>Follower<br/>Replicates Data]
-    end
-
-    P[Producer] -->|writes| L
-    L -.->|replicates| F1
-    L -.->|replicates| F2
-    C[Consumer] -->|reads| L
-
-    style L fill:#4caf50
-    style F1 fill:#2196f3
-    style F2 fill:#2196f3
-    style P fill:#ff9800
-    style C fill:#9c27b0
-```
+![Diagram 6](/diagrams/kafka-java-part-1-diagram-6.svg)
 
 **Failure Scenario**:
-```mermaid
-flowchart TB
-    subgraph Before["Before: Broker 1 Fails"]
-        L1[Broker 1 - Leader ❌]
-        F11[Broker 2 - Follower ✓]
-        F12[Broker 3 - Follower ✓]
-    end
-
-    subgraph After["After: Election"]
-        F21[Broker 2 - New Leader ✓]
-        F22[Broker 3 - Follower ✓]
-    end
-
-    Before -->|automatic failover| After
-
-    style L1 fill:#f44336
-    style F11 fill:#2196f3
-    style F12 fill:#2196f3
-    style F21 fill:#4caf50
-    style F22 fill:#2196f3
-```
+![Diagram 7](/diagrams/kafka-java-part-1-diagram-7.svg)
 
 **Key Concepts**:
 - **ISR (In-Sync Replicas)**: Replicas that are fully caught up with the leader
@@ -303,20 +186,7 @@ public class InventoryService {
 ```
 
 **Event Flow**:
-```mermaid
-flowchart LR
-    OS[Order Service] -->|ORDER_CREATED| K1[orders topic]
-    K1 --> IS[Inventory Service]
-    IS -->|INVENTORY_RESERVED| K2[inventory topic]
-    K2 --> PS[Payment Service]
-    PS -->|PAYMENT_PROCESSED| K3[payments topic]
-    K3 --> NS[Notification Service]
-
-    style OS fill:#e3f2fd
-    style IS fill:#e8f5e8
-    style PS fill:#fff3e0
-    style NS fill:#f3e5f5
-```
+![Diagram 8](/diagrams/kafka-java-part-1-diagram-8.svg)
 
 ### 2. Real-Time Analytics Pipeline
 
@@ -443,29 +313,7 @@ public class LogAggregator {
 - Simple topic-based routing
 - Extremely high throughput
 
-```mermaid
-flowchart TB
-    subgraph RabbitMQ["RabbitMQ Pattern"]
-        P1[Producer] --> E[Exchange]
-        E --> Q1[Queue 1]
-        E --> Q2[Queue 2]
-        Q1 --> C1[Consumer 1]
-        Q2 --> C2[Consumer 2]
-        C1 -.->|ack| Q1
-        Note1[Message deleted<br/>after ack]
-    end
-
-    subgraph Kafka["Kafka Pattern"]
-        P2[Producer] --> T[Topic]
-        T --> Part[Partitions]
-        Part --> CG1[Consumer Group 1]
-        Part --> CG2[Consumer Group 2]
-        Note2[Messages retained<br/>for configured time]
-    end
-
-    style RabbitMQ fill:#ffe0b2
-    style Kafka fill:#e1f5fe
-```
+![Diagram 9](/diagrams/kafka-java-part-1-diagram-9.svg)
 
 ### When to Choose Kafka
 
@@ -486,29 +334,7 @@ flowchart TB
 
 ### Core Components
 
-```mermaid
-flowchart TB
-    subgraph Ecosystem["Kafka Ecosystem"]
-        KC[Kafka Core<br/>Message Broker]
-        KS[Kafka Streams<br/>Stream Processing]
-        KConnect[Kafka Connect<br/>Data Integration]
-        KSQL[ksqlDB<br/>Stream SQL]
-        SR[Schema Registry<br/>Schema Management]
-    end
-
-    Apps[Applications] --> KC
-    KC --> KS
-    DB[(Databases)] <--> KConnect
-    KConnect <--> KC
-    KS --> KSQL
-    KC --> SR
-
-    style KC fill:#4caf50
-    style KS fill:#2196f3
-    style KConnect fill:#ff9800
-    style KSQL fill:#9c27b0
-    style SR fill:#f44336
-```
+![Diagram 10](/diagrams/kafka-java-part-1-diagram-10.svg)
 
 **Kafka Streams**: Java library for building stream processing applications
 **Kafka Connect**: Framework for connecting Kafka with external systems
@@ -548,27 +374,7 @@ flowchart TB
 ### Scalability Model
 
 **Horizontal Scaling**:
-```mermaid
-flowchart LR
-    subgraph Small["Small: 100K msg/sec"]
-        B1[3 Brokers<br/>6 Partitions]
-    end
-
-    subgraph Medium["Medium: 500K msg/sec"]
-        B2[6 Brokers<br/>12 Partitions]
-    end
-
-    subgraph Large["Large: 2M msg/sec"]
-        B3[12 Brokers<br/>24 Partitions]
-    end
-
-    Small -->|add brokers| Medium
-    Medium -->|add brokers| Large
-
-    style Small fill:#e3f2fd
-    style Medium fill:#e8f5e8
-    style Large fill:#fff3e0
-```
+![Diagram 11](/diagrams/kafka-java-part-1-diagram-11.svg)
 
 **Scaling Strategy**:
 1. Add partitions to increase parallelism

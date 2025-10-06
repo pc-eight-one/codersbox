@@ -16,16 +16,7 @@ featured: false
 
 **Why This Matters**: Methods are essential for writing maintainable code. Without methods, you'd repeat the same code hundreds of times. Methods enable code reuse, easier debugging, team collaboration, and building complex systems from simple, testable parts.
 
-```mermaid
-sequenceDiagram
-    participant M as main()
-    participant C as calculateTotal()
-    participant V as validateInput()
-    M->>C: call calculateTotal(prices)
-    C->>V: call validateInput(price)
-    V-->>C: return true/false
-    C-->>M: return total
-```
+![Diagram 1](/diagrams/java-complete-part-8-diagram-1.svg)
 
 Methods are the building blocks of organized, professional code. They break complex problems into smaller, manageable pieces and eliminate code repetition.
 
@@ -33,16 +24,7 @@ Methods are the building blocks of organized, professional code. They break comp
 
 **Core Pattern**: `returnType methodName(parameters) { body }`
 
-```mermaid
-flowchart LR
-    A[Method Call] --> B[Parameters Passed]
-    B --> C[Method Executes]
-    C --> D[Return Value]
-    D --> E[Back to Caller]
-    
-    style B fill:#e3f2fd
-    style D fill:#e8f5e8
-```
+![Diagram 2](/diagrams/java-complete-part-8-diagram-2.svg)
 
 ### Essential Method Types
 

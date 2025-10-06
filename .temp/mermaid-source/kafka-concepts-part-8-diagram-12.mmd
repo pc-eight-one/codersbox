@@ -1,0 +1,36 @@
+graph TB
+    subgraph "Security Layers"
+        L1[Network Security]
+        L2[Authentication]
+        L3[Authorization]
+        L4[Encryption]
+        L5[Audit Logging]
+        L6[Monitoring & Alerting]
+    end
+
+    L1 --> L2
+    L2 --> L3
+    L3 --> L4
+    L4 --> L5
+    L5 --> L6
+
+    subgraph "Network Security"
+        N1[VPC/Private Network]
+        N2[Firewall Rules]
+        N3[Rate Limiting]
+    end
+
+    subgraph "Monitoring"
+        M1[Failed Authentication]
+        M2[Authorization Denials]
+        M3[Unusual Traffic Patterns]
+        M4[Quota Violations]
+    end
+
+    L1 -.-> N1
+    L1 -.-> N2
+    L1 -.-> N3
+    L6 -.-> M1
+    L6 -.-> M2
+    L6 -.-> M3
+    L6 -.-> M4

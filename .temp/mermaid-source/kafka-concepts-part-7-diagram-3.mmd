@@ -1,0 +1,23 @@
+flowchart TB
+    subgraph VScale["Vertical Scaling"]
+        VS1[Add CPU]
+        VS2[Add RAM]
+        VS3[Add Disk]
+        VS4[Faster Network]
+    end
+
+    subgraph HScale["Horizontal Scaling"]
+        HS1[Add Brokers]
+        HS2[Add Partitions]
+        HS3[Rebalance Load]
+    end
+
+    Current[Current Capacity] --> Decision{Bottleneck?}
+    Decision -->|Single Broker| VScale
+    Decision -->|Cluster Wide| HScale
+
+    VScale -.->|Limited| Limits[Hardware Limits]
+    HScale -.->|Unlimited| Growth[Linear Growth]
+
+    style VScale fill:#fff3e0
+    style HScale fill:#e8f5e8

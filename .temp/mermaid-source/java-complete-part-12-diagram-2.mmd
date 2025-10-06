@@ -1,0 +1,9 @@
+graph LR
+    A[banking.app module] -->|requires| B[banking.core module]
+    A -->|requires| C[banking.ui module]
+    B -->|exports| D[com.bank.model]
+    B -->|exports| E[com.bank.service]
+    
+    style A fill:#e3f2fd
+    style B fill:#e8f5e8
+    style C fill:#fff3e0

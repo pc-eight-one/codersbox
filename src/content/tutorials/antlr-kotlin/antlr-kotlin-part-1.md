@@ -263,14 +263,7 @@ fun main() {
 
 ### How It Works
 
-```mermaid
-flowchart LR
-    A[SQL String] --> B[CharStream]
-    B --> C[Lexer]
-    C --> D[Token Stream]
-    D --> E[Parser]
-    E --> F[Parse Tree]
-```
+![Diagram 1](/diagrams/antlr-kotlin-part-1-diagram-1.svg)
 
 1. **CharStream**: Wraps input string
 2. **Lexer**: Converts characters to tokens
@@ -285,22 +278,7 @@ Each step transforms data:
 
 ## Visualizing the Parse Tree
 
-```mermaid
-flowchart TB
-    Q[query]
-    Q --> S[SELECT]
-    Q --> C[columns]
-    Q --> F[FROM]
-    Q --> T[table]
-    Q --> E[EOF]
-
-    C --> STAR[*]
-    T --> ID[users]
-
-    style Q fill:#e8f5e8
-    style C fill:#e3f2fd
-    style T fill:#e3f2fd
-```
+![Diagram 2](/diagrams/antlr-kotlin-part-1-diagram-2.svg)
 
 The parser creates this tree automatically from the grammar rules.
 

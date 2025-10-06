@@ -1,0 +1,11 @@
+graph TD
+    A[Class Variables<br/>static fields] --> B[Instance Variables<br/>object fields]
+    B --> C[Method Parameters<br/>method scope]
+    C --> D[Local Variables<br/>block scope]
+    D --> E[Loop Variables<br/>loop scope]
+    
+    A1[Program lifetime] --> A
+    B1[Object lifetime] --> B
+    C1[Method call lifetime] --> C
+    D1[Block execution] --> D
+    E1[Loop iteration] --> E

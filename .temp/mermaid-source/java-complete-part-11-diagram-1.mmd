@@ -1,0 +1,26 @@
+classDiagram
+    class Shape {
+      <<abstract>>
+      +area()* 
+      +perimeter()*
+      +displayInfo()
+    }
+    Shape <|-- Circle
+    Shape <|-- Rectangle
+    
+    class Drawable {
+      <<interface>>
+      +draw()
+    }
+    Circle ..|> Drawable
+    Rectangle ..|> Drawable
+    
+    class Colorable {
+      <<interface>>
+      +setColor()
+    }
+    Circle ..|> Colorable
+    
+    style Shape fill:#ffebee
+    style Drawable fill:#e3f2fd
+    style Colorable fill:#e8f5e8

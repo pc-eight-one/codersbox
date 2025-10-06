@@ -1,0 +1,8 @@
+sequenceDiagram
+    participant M as main()
+    participant C as calculateTotal()
+    participant V as validateInput()
+    M->>C: call calculateTotal(prices)
+    C->>V: call validateInput(price)
+    V-->>C: return true/false
+    C-->>M: return total

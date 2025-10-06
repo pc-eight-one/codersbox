@@ -79,54 +79,7 @@ Kafka security is a critical aspect of production deployments, especially in mul
 
 ### Security Layers Overview
 
-```mermaid
-graph TB
-    subgraph "Security Layers"
-        A[Network Security] --> B[Authentication]
-        B --> C[Authorization]
-        C --> D[Encryption]
-        D --> E[Audit Logging]
-    end
-
-    subgraph "Network Security"
-        N1[Firewall Rules]
-        N2[Network Segmentation]
-        N3[VPC/Private Network]
-    end
-
-    subgraph "Authentication"
-        AU1[SSL/TLS]
-        AU2[SASL/PLAIN]
-        AU3[SASL/SCRAM]
-        AU4[SASL/GSSAPI]
-        AU5[OAUTHBEARER]
-    end
-
-    subgraph "Authorization"
-        AZ1[ACLs]
-        AZ2[Resource Patterns]
-        AZ3[Operations]
-    end
-
-    subgraph "Encryption"
-        E1[In Transit - SSL/TLS]
-        E2[At Rest - Disk Encryption]
-    end
-
-    A --> N1
-    A --> N2
-    A --> N3
-    B --> AU1
-    B --> AU2
-    B --> AU3
-    B --> AU4
-    B --> AU5
-    C --> AZ1
-    C --> AZ2
-    C --> AZ3
-    D --> E1
-    D --> E2
-```
+![Diagram 1](/diagrams/kafka-concepts-part-8-diagram-1.svg)
 
 ### Complete Security Model
 
@@ -168,33 +121,7 @@ enum class AuthMechanism {
 
 ### Threat Model
 
-```mermaid
-graph LR
-    subgraph "Attack Vectors"
-        T1[Network Eavesdropping]
-        T2[Unauthorized Access]
-        T3[Data Tampering]
-        T4[Denial of Service]
-        T5[Privilege Escalation]
-        T6[Data Exfiltration]
-    end
-
-    subgraph "Mitigations"
-        M1[SSL/TLS Encryption]
-        M2[Authentication]
-        M3[Message Integrity Checks]
-        M4[Quotas & Rate Limiting]
-        M5[ACLs & Least Privilege]
-        M6[Audit Logging]
-    end
-
-    T1 --> M1
-    T2 --> M2
-    T3 --> M3
-    T4 --> M4
-    T5 --> M5
-    T6 --> M6
-```
+![Diagram 2](/diagrams/kafka-concepts-part-8-diagram-2.svg)
 
 ⚠️ **PITFALL #1: Security as an Afterthought**
 
@@ -284,29 +211,7 @@ fun createSecurityMigrationPlan(): SecurityMigrationPlan {
 
 ### SSL/TLS Authentication
 
-```mermaid
-sequenceDiagram
-    participant C as Client
-    participant B as Broker
-
-    Note over C,B: SSL Handshake
-    C->>B: ClientHello (supported ciphers)
-    B->>C: ServerHello (selected cipher)
-    B->>C: Server Certificate
-    B->>C: Certificate Request (for mTLS)
-
-    C->>B: Client Certificate
-    C->>B: Certificate Verify
-    C->>B: Change Cipher Spec
-    C->>B: Finished
-
-    B->>C: Change Cipher Spec
-    B->>C: Finished
-
-    Note over C,B: Secure Communication
-    C->>B: Encrypted Kafka Protocol
-    B->>C: Encrypted Response
-```
+![Diagram 3](/diagrams/kafka-concepts-part-8-diagram-3.svg)
 
 #### Broker SSL Configuration
 
@@ -491,50 +396,7 @@ fun rotateCertificates(plan: CertRotationPlan) {
 
 ### SASL Authentication
 
-```mermaid
-graph TB
-    subgraph "SASL Mechanisms"
-        S1[SASL/PLAIN]
-        S2[SASL/SCRAM-SHA-256]
-        S3[SASL/SCRAM-SHA-512]
-        S4[SASL/GSSAPI - Kerberos]
-        S5[OAUTHBEARER]
-    end
-
-    subgraph "SASL/PLAIN"
-        P1[Simple username/password]
-        P2[Credentials in JAAS]
-        P3[Not encrypted alone]
-        P4[Use with SSL/TLS]
-    end
-
-    subgraph "SASL/SCRAM"
-        SC1[Challenge-response]
-        SC2[Credentials in ZooKeeper/KRaft]
-        SC3[SHA-256 or SHA-512]
-        SC4[Password not sent plaintext]
-    end
-
-    subgraph "SASL/GSSAPI"
-        K1[Kerberos integration]
-        K2[Keytab files]
-        K3[Ticket-based auth]
-        K4[Enterprise SSO]
-    end
-
-    S1 --> P1
-    S1 --> P2
-    S1 --> P3
-    S1 --> P4
-    S2 --> SC1
-    S2 --> SC2
-    S2 --> SC3
-    S2 --> SC4
-    S4 --> K1
-    S4 --> K2
-    S4 --> K3
-    S4 --> K4
-```
+![Diagram 4](/diagrams/kafka-concepts-part-8-diagram-4.svg)
 
 #### SASL/SCRAM Configuration
 
@@ -831,51 +693,7 @@ fun rotateScramCredentials(
 
 ### ACL Model
 
-```mermaid
-graph TB
-    subgraph "ACL Components"
-        P[Principal] --> R[Resource]
-        O[Operation] --> R
-        PT[Permission Type] --> R
-        H[Host] --> R
-    end
-
-    subgraph "Resources"
-        R1[Topic]
-        R2[Group]
-        R3[Cluster]
-        R4[TransactionalId]
-        R5[DelegationToken]
-    end
-
-    subgraph "Operations"
-        O1[Read]
-        O2[Write]
-        O3[Create]
-        O4[Delete]
-        O5[Alter]
-        O6[Describe]
-        O7[ClusterAction]
-        O8[DescribeConfigs]
-        O9[AlterConfigs]
-        O10[IdempotentWrite]
-        O11[All]
-    end
-
-    subgraph "Permission Types"
-        PT1[Allow]
-        PT2[Deny]
-    end
-
-    R --> R1
-    R --> R2
-    R --> R3
-    R --> R4
-    R --> R5
-    O --> O1
-    O --> O2
-    O --> O3
-```
+![Diagram 5](/diagrams/kafka-concepts-part-8-diagram-5.svg)
 
 ### ACL Data Model
 
@@ -1042,28 +860,7 @@ fun createTransactionalProducerAcls(username: String, topic: String, transaction
 
 ### ACL Pattern Matching
 
-```mermaid
-graph TB
-    subgraph "Pattern Types"
-        L[LITERAL - Exact Match]
-        P[PREFIXED - Prefix Match]
-    end
-
-    subgraph "LITERAL Examples"
-        L1["Topic: orders → Matches only 'orders'"]
-        L2["Group: app-consumers → Matches only 'app-consumers'"]
-    end
-
-    subgraph "PREFIXED Examples"
-        P1["Topic: prod- → Matches 'prod-orders', 'prod-users'"]
-        P2["Group: team-a- → Matches 'team-a-service1', 'team-a-service2'"]
-    end
-
-    L --> L1
-    L --> L2
-    P --> P1
-    P --> P2
-```
+![Diagram 6](/diagrams/kafka-concepts-part-8-diagram-6.svg)
 
 ```kotlin
 // Using prefixed ACLs for multi-tenancy
@@ -1374,34 +1171,7 @@ fun createTransactionalAppAcls(
 
 ### Encryption in Transit (SSL/TLS)
 
-```mermaid
-graph TB
-    subgraph "SSL/TLS Channels"
-        C1[Client → Broker]
-        C2[Broker → Broker]
-        C3[Broker → ZooKeeper]
-    end
-
-    subgraph "Encryption Settings"
-        E1[Protocol: TLSv1.3]
-        E2[Cipher Suites]
-        E3[Certificate Validation]
-        E4[Client Authentication]
-    end
-
-    subgraph "Performance Impact"
-        P1[CPU Overhead: 5-15%]
-        P2[Latency Increase: 1-3ms]
-        P3[Throughput Reduction: 10-20%]
-    end
-
-    C1 --> E1
-    C2 --> E1
-    C3 --> E1
-    E1 --> P1
-    E2 --> P2
-    E4 --> P3
-```
+![Diagram 7](/diagrams/kafka-concepts-part-8-diagram-7.svg)
 
 #### SSL Performance Tuning
 
@@ -1493,46 +1263,7 @@ fun benchmarkSslImpact(
 
 ### Encryption at Rest
 
-```mermaid
-graph TB
-    subgraph "Encryption at Rest Options"
-        O1[Disk/Filesystem Encryption]
-        O2[Application-Level Encryption]
-        O3[Cloud Provider Encryption]
-    end
-
-    subgraph "Disk Encryption"
-        D1[LUKS - Linux]
-        D2[dm-crypt]
-        D3[BitLocker - Windows]
-        D4[Transparent - No Kafka changes]
-    end
-
-    subgraph "Application-Level"
-        A1[Encrypt before produce]
-        A2[Decrypt after consume]
-        A3[Custom serializer/deserializer]
-        A4[Key management required]
-    end
-
-    subgraph "Cloud Encryption"
-        C1[AWS EBS Encryption]
-        C2[GCP Persistent Disk Encryption]
-        C3[Azure Disk Encryption]
-    end
-
-    O1 --> D1
-    O1 --> D2
-    O1 --> D3
-    O1 --> D4
-    O2 --> A1
-    O2 --> A2
-    O2 --> A3
-    O2 --> A4
-    O3 --> C1
-    O3 --> C2
-    O3 --> C3
-```
+![Diagram 8](/diagrams/kafka-concepts-part-8-diagram-8.svg)
 
 #### Application-Level Encryption
 
@@ -1827,50 +1558,7 @@ class EnvelopeEncryption(private val masterKeyProvider: KeyProvider) {
 
 ### Tenant Isolation Levels
 
-```mermaid
-graph TB
-    subgraph "Isolation Levels"
-        L1[Soft Isolation - Shared Cluster]
-        L2[Medium Isolation - Topic/ACL Separation]
-        L3[Hard Isolation - Dedicated Clusters]
-    end
-
-    subgraph "Soft Isolation"
-        S1[Topic naming convention]
-        S2[ACLs for authorization]
-        S3[Quotas for resource limits]
-        S4[Shared infrastructure]
-    end
-
-    subgraph "Medium Isolation"
-        M1[Dedicated topics per tenant]
-        M2[Strict ACLs]
-        M3[Quota enforcement]
-        M4[Separate consumer groups]
-        M5[Optional: Dedicated brokers via racks]
-    end
-
-    subgraph "Hard Isolation"
-        H1[Separate Kafka clusters]
-        H2[Complete resource isolation]
-        H3[Independent scaling]
-        H4[Higher operational cost]
-    end
-
-    L1 --> S1
-    L1 --> S2
-    L1 --> S3
-    L1 --> S4
-    L2 --> M1
-    L2 --> M2
-    L2 --> M3
-    L2 --> M4
-    L2 --> M5
-    L3 --> H1
-    L3 --> H2
-    L3 --> H3
-    L3 --> H4
-```
+![Diagram 9](/diagrams/kafka-concepts-part-8-diagram-9.svg)
 
 ### Topic Naming Conventions
 
@@ -2164,42 +1852,7 @@ data class KafkaPrincipal(
 
 ### Quota Types
 
-```mermaid
-graph TB
-    subgraph "Quota Types"
-        Q1[Producer Quota]
-        Q2[Consumer Quota]
-        Q3[Request Quota]
-    end
-
-    subgraph "Producer Quota"
-        P1[Produce byte rate]
-        P2[Per user or client-id]
-        P3[Throttling on exceed]
-    end
-
-    subgraph "Consumer Quota"
-        C1[Fetch byte rate]
-        C2[Per user or client-id]
-        C3[Throttling on exceed]
-    end
-
-    subgraph "Request Quota"
-        R1[Request percentage]
-        R2[CPU time limit]
-        R3[Network thread time]
-    end
-
-    Q1 --> P1
-    Q1 --> P2
-    Q1 --> P3
-    Q2 --> C1
-    Q2 --> C2
-    Q2 --> C3
-    Q3 --> R1
-    Q3 --> R2
-    Q3 --> R3
-```
+![Diagram 10](/diagrams/kafka-concepts-part-8-diagram-10.svg)
 
 ### Quota Configuration
 
@@ -2394,24 +2047,7 @@ fun manageQuotasViaCli() {
 
 ### Quota Enforcement and Throttling
 
-```mermaid
-sequenceDiagram
-    participant C as Client
-    participant B as Broker
-
-    Note over C,B: Normal Operation
-    C->>B: Produce Request (within quota)
-    B->>C: Response (no throttle)
-
-    Note over C,B: Quota Exceeded
-    C->>B: Produce Request (exceeds quota)
-    B->>B: Calculate throttle time
-    B->>C: Response with throttle_time_ms
-
-    Note over C: Client waits throttle_time_ms
-    C->>B: Next request (delayed)
-    B->>C: Response
-```
+![Diagram 11](/diagrams/kafka-concepts-part-8-diagram-11.svg)
 
 ⚠️ **PITFALL #6: Quota Granularity and Precedence**
 
@@ -2535,44 +2171,7 @@ class QuotaMonitor {
 
 ### Defense in Depth
 
-```mermaid
-graph TB
-    subgraph "Security Layers"
-        L1[Network Security]
-        L2[Authentication]
-        L3[Authorization]
-        L4[Encryption]
-        L5[Audit Logging]
-        L6[Monitoring & Alerting]
-    end
-
-    L1 --> L2
-    L2 --> L3
-    L3 --> L4
-    L4 --> L5
-    L5 --> L6
-
-    subgraph "Network Security"
-        N1[VPC/Private Network]
-        N2[Firewall Rules]
-        N3[Rate Limiting]
-    end
-
-    subgraph "Monitoring"
-        M1[Failed Authentication]
-        M2[Authorization Denials]
-        M3[Unusual Traffic Patterns]
-        M4[Quota Violations]
-    end
-
-    L1 -.-> N1
-    L1 -.-> N2
-    L1 -.-> N3
-    L6 -.-> M1
-    L6 -.-> M2
-    L6 -.-> M3
-    L6 -.-> M4
-```
+![Diagram 12](/diagrams/kafka-concepts-part-8-diagram-12.svg)
 
 ### Security Checklist
 

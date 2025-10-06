@@ -1,0 +1,16 @@
+sequenceDiagram
+    participant P as Producer
+    participant L as Leader Broker
+
+    P->>L: Send Message (offset 100)
+    L->>L: Write to log
+    L--xP: ACK lost (network issue)
+
+    Note over P: Timeout, assume failed
+    P->>L: Retry same message
+
+    Note over L: DUPLICATE!<br/>Message written twice
+    L->>L: Write to log (offset 101)
+    L->>P: ACK received
+
+    Note over L: Offset 100 and 101<br/>same message!

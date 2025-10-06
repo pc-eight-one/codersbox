@@ -1,0 +1,28 @@
+flowchart TB
+    subgraph GC["Group Coordinator"]
+        GS[Group State Machine]
+        HB[Heartbeat Handler]
+        RB[Rebalance Coordinator]
+        OS[Offset Storage]
+    end
+
+    subgraph Consumers["Consumer Group"]
+        C1[Consumer 1]
+        C2[Consumer 2]
+        C3[Consumer 3]
+    end
+
+    subgraph Storage["__consumer_offsets"]
+        P0[Partition 0]
+        P1[Partition 1]
+        P2[Partition 2]
+    end
+
+    Consumers <-->|Heartbeats| HB
+    Consumers <-->|Join/Sync| RB
+    Consumers -->|Commit Offsets| OS
+    OS --> Storage
+
+    style GC fill:#e8f5e8
+    style Consumers fill:#e3f2fd
+    style Storage fill:#fff3e0

@@ -309,29 +309,7 @@ public class SimpleProducer {
 
 ### Understanding Producer Configurations
 
-```mermaid
-flowchart TB
-    subgraph Config["Key Producer Configurations"]
-        BS[bootstrap.servers<br/>Initial broker connections]
-        ACK[acks<br/>0, 1, or all]
-        RET[retries<br/>Retry attempts]
-        LING[linger.ms<br/>Batch wait time]
-        BATCH[batch.size<br/>Batch size bytes]
-        COMP[compression.type<br/>none, gzip, snappy, lz4]
-    end
-
-    subgraph Impact["Performance Impact"]
-        BS --> Reliability[High Availability]
-        ACK --> Durability[Data Durability]
-        RET --> Resilience[Fault Tolerance]
-        LING --> Throughput[Higher Throughput]
-        BATCH --> Efficiency[Network Efficiency]
-        COMP --> Bandwidth[Lower Bandwidth]
-    end
-
-    style Config fill:#e3f2fd
-    style Impact fill:#e8f5e8
-```
+![Diagram 1](/diagrams/kafka-java-part-2-diagram-1.svg)
 
 **Critical Configurations**:
 
@@ -738,42 +716,7 @@ public class OrderConsumer {
 
 ## Consumer Groups and Partition Assignment
 
-```mermaid
-flowchart TB
-    subgraph Topic["Topic: orders (3 partitions)"]
-        P0[Partition 0<br/>Orders 0,3,6,9...]
-        P1[Partition 1<br/>Orders 1,4,7,10...]
-        P2[Partition 2<br/>Orders 2,5,8,11...]
-    end
-
-    subgraph Group1["Consumer Group: inventory-service"]
-        C1[Consumer 1]
-        C2[Consumer 2]
-    end
-
-    subgraph Group2["Consumer Group: analytics-service"]
-        C3[Consumer A]
-        C4[Consumer B]
-        C5[Consumer C]
-    end
-
-    P0 --> C1
-    P1 --> C1
-    P2 --> C2
-
-    P0 --> C3
-    P1 --> C4
-    P2 --> C5
-
-    style P0 fill:#e3f2fd
-    style P1 fill:#e3f2fd
-    style P2 fill:#e3f2fd
-    style C1 fill:#fff3e0
-    style C2 fill:#fff3e0
-    style C3 fill:#e8f5e8
-    style C4 fill:#e8f5e8
-    style C5 fill:#e8f5e8
-```
+![Diagram 2](/diagrams/kafka-java-part-2-diagram-2.svg)
 
 **Key Insights**:
 - Group 1 has 2 consumers, 3 partitions: uneven distribution
@@ -973,30 +916,7 @@ public class ActivityAnalytics {
 
 ## Message Delivery Guarantees
 
-```mermaid
-flowchart TB
-    subgraph AL["At-Least-Once"]
-        AL1[May deliver duplicates]
-        AL2[Never loses messages]
-        AL3[Consumer commits after processing]
-    end
-
-    subgraph AMO["At-Most-Once"]
-        AMO1[May lose messages]
-        AMO2[Never duplicates]
-        AMO3[Consumer commits before processing]
-    end
-
-    subgraph EO["Exactly-Once"]
-        EO1[No duplicates, no losses]
-        EO2[Requires idempotent producer]
-        EO3[Transactional writes]
-    end
-
-    style AL fill:#fff3e0
-    style AMO fill:#ffebee
-    style EO fill:#e8f5e8
-```
+![Diagram 3](/diagrams/kafka-java-part-2-diagram-3.svg)
 
 **Implementation Examples**:
 

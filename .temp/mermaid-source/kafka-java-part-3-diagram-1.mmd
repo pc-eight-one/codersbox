@@ -1,0 +1,15 @@
+flowchart TB
+    subgraph Default["Default Partitioning Logic"]
+        K1[Key: user-123] -->|"hash % 3"| P0[Partition 0]
+        K2[Key: user-456] -->|"hash % 3"| P2[Partition 2]
+        K3[Key: user-789] -->|"hash % 3"| P1[Partition 1]
+        K4[Key: null] -->|round-robin| Any[Any Partition]
+    end
+
+    style K1 fill:#e3f2fd
+    style K2 fill:#e3f2fd
+    style K3 fill:#e3f2fd
+    style K4 fill:#ffebee
+    style P0 fill:#e8f5e8
+    style P1 fill:#e8f5e8
+    style P2 fill:#e8f5e8

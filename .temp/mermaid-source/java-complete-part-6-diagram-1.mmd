@@ -1,0 +1,9 @@
+flowchart TD
+    A[Start] --> B{condition?}
+    B -- true --> C[execute body]
+    C --> D[update variables]
+    D --> B
+    B -- false --> E[End]
+    
+    style B fill:#fff3e0
+    style C fill:#e3f2fd

@@ -1,0 +1,26 @@
+flowchart TB
+    subgraph Partition["Partition 0 on Disk"]
+        subgraph Seg1["Segment 1 (Oldest)"]
+            S1L[00000000000000000000.log<br/>Offsets 0-999]
+            S1I[00000000000000000000.index<br/>Offset index]
+            S1T[00000000000000000000.timeindex<br/>Timestamp index]
+        end
+
+        subgraph Seg2["Segment 2"]
+            S2L[00000000000000001000.log<br/>Offsets 1000-1999]
+            S2I[00000000000000001000.index]
+            S2T[00000000000000001000.timeindex]
+        end
+
+        subgraph Seg3["Segment 3 (Active)"]
+            S3L[00000000000000002000.log<br/>Offsets 2000-current]
+            S3I[00000000000000002000.index]
+            S3T[00000000000000002000.timeindex]
+        end
+    end
+
+    Producer[Producer] -->|Append| Seg3
+
+    style Seg1 fill:#e0e0e0
+    style Seg2 fill:#fff3e0
+    style Seg3 fill:#e8f5e8

@@ -1,0 +1,21 @@
+flowchart TB
+    subgraph RabbitMQ["RabbitMQ Pattern"]
+        P1[Producer] --> E[Exchange]
+        E --> Q1[Queue 1]
+        E --> Q2[Queue 2]
+        Q1 --> C1[Consumer 1]
+        Q2 --> C2[Consumer 2]
+        C1 -.->|ack| Q1
+        Note1[Message deleted<br/>after ack]
+    end
+
+    subgraph Kafka["Kafka Pattern"]
+        P2[Producer] --> T[Topic]
+        T --> Part[Partitions]
+        Part --> CG1[Consumer Group 1]
+        Part --> CG2[Consumer Group 2]
+        Note2[Messages retained<br/>for configured time]
+    end
+
+    style RabbitMQ fill:#ffe0b2
+    style Kafka fill:#e1f5fe

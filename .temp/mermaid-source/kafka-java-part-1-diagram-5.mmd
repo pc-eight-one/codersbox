@@ -1,0 +1,16 @@
+flowchart TB
+    subgraph Cluster["Kafka Cluster"]
+        B1[Broker 1<br/>Topic A: P0, P1<br/>Topic B: P0]
+        B2[Broker 2<br/>Topic A: P2<br/>Topic B: P1, P2]
+        B3[Broker 3<br/>Topic A: P0, P2<br/>Topic B: P0, P1]
+    end
+
+    Z[ZooKeeper/KRaft<br/>Cluster Coordination]
+    Z -.->|manages| B1
+    Z -.->|manages| B2
+    Z -.->|manages| B3
+
+    style B1 fill:#e3f2fd
+    style B2 fill:#e8f5e8
+    style B3 fill:#fff3e0
+    style Z fill:#f3e5f5

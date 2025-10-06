@@ -1,0 +1,42 @@
+graph TB
+    subgraph "Isolation Levels"
+        L1[Soft Isolation - Shared Cluster]
+        L2[Medium Isolation - Topic/ACL Separation]
+        L3[Hard Isolation - Dedicated Clusters]
+    end
+
+    subgraph "Soft Isolation"
+        S1[Topic naming convention]
+        S2[ACLs for authorization]
+        S3[Quotas for resource limits]
+        S4[Shared infrastructure]
+    end
+
+    subgraph "Medium Isolation"
+        M1[Dedicated topics per tenant]
+        M2[Strict ACLs]
+        M3[Quota enforcement]
+        M4[Separate consumer groups]
+        M5[Optional: Dedicated brokers via racks]
+    end
+
+    subgraph "Hard Isolation"
+        H1[Separate Kafka clusters]
+        H2[Complete resource isolation]
+        H3[Independent scaling]
+        H4[Higher operational cost]
+    end
+
+    L1 --> S1
+    L1 --> S2
+    L1 --> S3
+    L1 --> S4
+    L2 --> M1
+    L2 --> M2
+    L2 --> M3
+    L2 --> M4
+    L2 --> M5
+    L3 --> H1
+    L3 --> H2
+    L3 --> H3
+    L3 --> H4

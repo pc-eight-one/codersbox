@@ -1,0 +1,19 @@
+flowchart TB
+    subgraph ISR["ISR Lifecycle"]
+        Start[Replica Created] -->|Sync from leader| Catch[Catching Up]
+        Catch -->|Caught up| InISR[In ISR Set]
+        InISR -->|Falls behind| OutISR[Removed from ISR]
+        OutISR -->|Catches up again| InISR
+    end
+
+    subgraph Criteria["ISR Criteria"]
+        C1[replica.lag.time.max.ms<br/>Default: 10s]
+        C2[Replica must be alive<br/>Heartbeat received]
+    end
+
+    InISR -.->|Checked against| C1
+    InISR -.->|Checked against| C2
+
+    style InISR fill:#4caf50
+    style OutISR fill:#ff9800
+    style Start fill:#e3f2fd

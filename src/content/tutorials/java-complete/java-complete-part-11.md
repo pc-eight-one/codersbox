@@ -24,34 +24,7 @@ prerequisites: ["Java Complete Parts 1-10"]
 - **Interfaces**: Pure contracts defining what classes must implement
 - **Abstraction**: Hide complexity, expose only what's necessary
 
-```mermaid
-classDiagram
-    class Shape {
-      <<abstract>>
-      +area()* 
-      +perimeter()*
-      +displayInfo()
-    }
-    Shape <|-- Circle
-    Shape <|-- Rectangle
-    
-    class Drawable {
-      <<interface>>
-      +draw()
-    }
-    Circle ..|> Drawable
-    Rectangle ..|> Drawable
-    
-    class Colorable {
-      <<interface>>
-      +setColor()
-    }
-    Circle ..|> Colorable
-    
-    style Shape fill:#ffebee
-    style Drawable fill:#e3f2fd
-    style Colorable fill:#e8f5e8
-```
+![Diagram 1](/diagrams/java-complete-part-11-diagram-1.svg)
 
 Abstraction creates flexible hierarchies where shared behavior is defined once and specific implementations vary.
 

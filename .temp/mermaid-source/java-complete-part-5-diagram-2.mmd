@@ -1,0 +1,13 @@
+flowchart TD
+    A[grade = 87] --> B{grade >= 90?}
+    B -- true --> C[A grade]
+    B -- false --> D{grade >= 80?}
+    D -- true --> E[B grade]
+    D -- false --> F{grade >= 70?}
+    F -- true --> G[C grade]
+    F -- false --> H[D or F grade]
+    
+    style C fill:#4caf50
+    style E fill:#8bc34a
+    style G fill:#ffc107
+    style H fill:#f44336

@@ -1,0 +1,21 @@
+flowchart LR
+    subgraph Index["Offset Index (Sparse)"]
+        I1[Offset 0 → Position 0]
+        I2[Offset 4000 → Position 4MB]
+        I3[Offset 8000 → Position 8MB]
+        I4[Offset 12000 → Position 12MB]
+    end
+
+    subgraph Log["Log File"]
+        L1[Offset 0-3999]
+        L2[Offset 4000-7999]
+        L3[Offset 8000-11999]
+        L4[Offset 12000-15999]
+    end
+
+    Query[Find Offset 10000] -->|1. Binary search index| I3
+    I3 -->|2. Position 8MB| L3
+    L3 -->|3. Scan from 8MB| Result[Found at 10.5MB]
+
+    style Index fill:#e3f2fd
+    style Log fill:#e8f5e8

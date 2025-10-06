@@ -1,0 +1,9 @@
+flowchart LR
+    P[Producer] -->|1. Send msg| K[Kafka]
+    K -->|2. Ack lost| P
+    P -->|3. Retry msg| K
+    K -->|Result| D[Duplicate!]
+
+    style P fill:#e3f2fd
+    style K fill:#fff3e0
+    style D fill:#ffebee

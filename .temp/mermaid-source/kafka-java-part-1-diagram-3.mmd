@@ -1,0 +1,23 @@
+flowchart TB
+    subgraph Kafka["Kafka Topic: orders"]
+        P0[Partition 0]
+        P1[Partition 1]
+        P2[Partition 2]
+    end
+
+    subgraph Group["Consumer Group: order-processors"]
+        C1[Consumer 1]
+        C2[Consumer 2]
+        C3[Consumer 3]
+    end
+
+    P0 -->|reads| C1
+    P1 -->|reads| C2
+    P2 -->|reads| C3
+
+    style P0 fill:#e3f2fd
+    style P1 fill:#e3f2fd
+    style P2 fill:#e3f2fd
+    style C1 fill:#e8f5e8
+    style C2 fill:#e8f5e8
+    style C3 fill:#e8f5e8

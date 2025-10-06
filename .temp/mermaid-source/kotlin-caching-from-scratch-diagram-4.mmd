@@ -1,0 +1,7 @@
+flowchart TB
+  A[App] --> L[Local Caffeine Cache]
+  L -- miss --> R[Redis Cache]
+  R -- miss --> S[Source/DB]
+  S --> R
+  R --> L
+  L --> A

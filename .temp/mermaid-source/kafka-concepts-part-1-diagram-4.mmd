@@ -1,0 +1,24 @@
+flowchart TB
+    subgraph ZK["ZooKeeper Ensemble"]
+        ZK1[ZK Node 1<br/>Leader]
+        ZK2[ZK Node 2<br/>Follower]
+        ZK3[ZK Node 3<br/>Follower]
+    end
+
+    subgraph Kafka["Kafka Cluster"]
+        B1[Broker 1]
+        B2[Broker 2]
+        B3[Broker 3]
+    end
+
+    Controller[Controller Broker] -.->|Watches| ZK1
+    B1 <-->|Read/Write Metadata| ZK
+    B2 <-->|Read/Write Metadata| ZK
+    B3 <-->|Read/Write Metadata| ZK
+
+    ZK1 <-->|Replication| ZK2
+    ZK1 <-->|Replication| ZK3
+    ZK2 <-->|Replication| ZK3
+
+    style ZK fill:#fff3e0
+    style Kafka fill:#e8f5e8

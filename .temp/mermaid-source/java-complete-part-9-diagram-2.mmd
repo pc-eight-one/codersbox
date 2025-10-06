@@ -1,0 +1,16 @@
+classDiagram
+    class BankAccount {
+      -accountNumber
+      -accountHolder
+      -balance
+      -accountType
+      +deposit(amount)
+      +withdraw(amount)
+      +getBalance()
+    }
+    class Library {
+      -books: Book[]
+      +addBook(book)
+      +findBookByIsbn(isbn)
+    }
+    Book --> Library : contained in

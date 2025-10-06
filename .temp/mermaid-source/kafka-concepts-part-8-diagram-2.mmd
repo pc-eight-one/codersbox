@@ -1,0 +1,25 @@
+graph LR
+    subgraph "Attack Vectors"
+        T1[Network Eavesdropping]
+        T2[Unauthorized Access]
+        T3[Data Tampering]
+        T4[Denial of Service]
+        T5[Privilege Escalation]
+        T6[Data Exfiltration]
+    end
+
+    subgraph "Mitigations"
+        M1[SSL/TLS Encryption]
+        M2[Authentication]
+        M3[Message Integrity Checks]
+        M4[Quotas & Rate Limiting]
+        M5[ACLs & Least Privilege]
+        M6[Audit Logging]
+    end
+
+    T1 --> M1
+    T2 --> M2
+    T3 --> M3
+    T4 --> M4
+    T5 --> M5
+    T6 --> M6

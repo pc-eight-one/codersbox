@@ -138,27 +138,7 @@ java -jar app.jar
 
 ### IDE Comparison
 
-```mermaid
-graph TD
-    subgraph "IntelliJ IDEA"
-        A1[✓ Best Java support]
-        A2[✓ Intelligent completion] 
-        A3[✓ Powerful refactoring]
-        A4[× Learning curve]
-    end
-    subgraph "Eclipse"
-        B1[✓ Enterprise standard]
-        B2[✓ Large plugin ecosystem]
-        B3[✓ Free and mature]
-        B4[× Complex interface]
-    end
-    subgraph "VS Code"
-        C1[✓ Lightweight]
-        C2[✓ Multi-language]
-        C3[✓ Great extensions]
-        C4[× Less Java-specific]
-    end
-```
+![Diagram 1](/diagrams/java-complete-part-2-diagram-1.svg)
 
 ### Recommended: IntelliJ IDEA Community
 
@@ -240,18 +220,7 @@ result = Infinity
 
 ### Maven Project Structure (Industry Standard)
 
-```mermaid
-graph TD
-    A[my-java-app/] --> B[pom.xml - Project config]
-    A --> C[src/main/java/ - Source code]
-    A --> D[src/test/java/ - Unit tests] 
-    A --> E[target/ - Generated files]
-    
-    C --> C1[dev/codersbox/Calculator.java]
-    D --> D1[dev/codersbox/CalculatorTest.java]
-    E --> E1[classes/ - Compiled bytecode]
-    E --> E2[calculator-1.0.jar - Final JAR]
-```
+![Diagram 2](/diagrams/java-complete-part-2-diagram-2.svg)
 
 ### Essential Maven Commands
 ```bash

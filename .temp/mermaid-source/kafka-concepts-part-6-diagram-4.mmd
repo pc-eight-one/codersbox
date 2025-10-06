@@ -1,0 +1,26 @@
+flowchart TB
+    subgraph TC["Transaction Coordinator"]
+        TS[Transaction State Machine]
+        TL[Transaction Log]
+    end
+
+    subgraph Producer["Transactional Producer"]
+        P[Producer<br/>transactional.id]
+    end
+
+    subgraph Topics["Topics"]
+        T1[Topic A]
+        T2[Topic B]
+    end
+
+    P -->|InitTransactions| TC
+    P -->|BeginTransaction| TC
+    P -->|Send Records| T1
+    P -->|Send Records| T2
+    P -->|CommitTransaction| TC
+    TC -->|Write Markers| T1
+    TC -->|Write Markers| T2
+
+    style TC fill:#e8f5e8
+    style Producer fill:#e3f2fd
+    style Topics fill:#fff3e0

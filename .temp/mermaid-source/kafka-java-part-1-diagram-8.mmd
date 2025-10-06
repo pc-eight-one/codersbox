@@ -1,0 +1,12 @@
+flowchart LR
+    OS[Order Service] -->|ORDER_CREATED| K1[orders topic]
+    K1 --> IS[Inventory Service]
+    IS -->|INVENTORY_RESERVED| K2[inventory topic]
+    K2 --> PS[Payment Service]
+    PS -->|PAYMENT_PROCESSED| K3[payments topic]
+    K3 --> NS[Notification Service]
+
+    style OS fill:#e3f2fd
+    style IS fill:#e8f5e8
+    style PS fill:#fff3e0
+    style NS fill:#f3e5f5

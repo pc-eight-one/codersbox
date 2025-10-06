@@ -1,0 +1,14 @@
+flowchart TB
+    Q[query]
+    Q --> S[SELECT]
+    Q --> C[columns]
+    Q --> F[FROM]
+    Q --> T[table]
+    Q --> E[EOF]
+
+    C --> STAR[*]
+    T --> ID[users]
+
+    style Q fill:#e8f5e8
+    style C fill:#e3f2fd
+    style T fill:#e3f2fd

@@ -1,0 +1,9 @@
+classDiagram
+    Shape <|-- Circle
+    Shape <|-- Rectangle
+    Rectangle <|-- Square
+    class Shape{
+      <<abstract>>
+      +calculateArea()
+      +calculatePerimeter()
+    }

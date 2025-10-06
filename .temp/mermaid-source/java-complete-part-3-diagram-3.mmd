@@ -1,0 +1,15 @@
+graph TB
+    subgraph "Integer Types"
+        A[byte: 8 bits<br/>-128 to 127]
+        B[short: 16 bits<br/>-32,768 to 32,767]  
+        C[int: 32 bits<br/>-2³¹ to 2³¹-1]
+        D[long: 64 bits<br/>-2⁶³ to 2⁶³-1]
+    end
+    subgraph "Floating-Point"
+        E[float: 32 bits<br/>IEEE 754]
+        F[double: 64 bits<br/>IEEE 754]
+    end
+    subgraph "Other"
+        G[char: 16 bits<br/>Unicode 0-65535]
+        H[boolean<br/>true/false]
+    end

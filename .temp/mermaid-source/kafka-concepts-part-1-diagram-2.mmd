@@ -1,0 +1,18 @@
+flowchart TB
+    subgraph Broker["Kafka Broker"]
+        NW[Network Layer<br/>Handles client connections]
+        RM[Request Manager<br/>Processes produce/fetch]
+        RP[Replication Protocol<br/>Sync with followers]
+        LOG[Log Manager<br/>Writes to disk]
+        META[Metadata Cache<br/>Topic/partition info]
+    end
+
+    Client[Clients] --> NW
+    NW --> RM
+    RM --> RP
+    RM --> LOG
+    RM --> META
+    LOG --> Disk[(Local Disk<br/>Partition Segments)]
+
+    style Broker fill:#e8f5e8
+    style Disk fill:#fff3e0

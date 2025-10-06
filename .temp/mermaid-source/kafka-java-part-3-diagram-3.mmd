@@ -1,0 +1,19 @@
+flowchart TB
+    subgraph Producer["Idempotent Producer"]
+        PID[Producer ID: 12345]
+        SEQ[Sequence Number: 0, 1, 2...]
+    end
+
+    subgraph Kafka["Kafka Broker"]
+        CHECK{Duplicate?}
+        STORE[Store Message]
+        IGNORE[Ignore Duplicate]
+    end
+
+    Producer -->|Msg + PID + Seq| CHECK
+    CHECK -->|New Seq| STORE
+    CHECK -->|Seen Seq| IGNORE
+
+    style Producer fill:#e3f2fd
+    style STORE fill:#e8f5e8
+    style IGNORE fill:#fff3e0

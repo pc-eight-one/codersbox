@@ -1,0 +1,43 @@
+graph TB
+    subgraph "ACL Components"
+        P[Principal] --> R[Resource]
+        O[Operation] --> R
+        PT[Permission Type] --> R
+        H[Host] --> R
+    end
+
+    subgraph "Resources"
+        R1[Topic]
+        R2[Group]
+        R3[Cluster]
+        R4[TransactionalId]
+        R5[DelegationToken]
+    end
+
+    subgraph "Operations"
+        O1[Read]
+        O2[Write]
+        O3[Create]
+        O4[Delete]
+        O5[Alter]
+        O6[Describe]
+        O7[ClusterAction]
+        O8[DescribeConfigs]
+        O9[AlterConfigs]
+        O10[IdempotentWrite]
+        O11[All]
+    end
+
+    subgraph "Permission Types"
+        PT1[Allow]
+        PT2[Deny]
+    end
+
+    R --> R1
+    R --> R2
+    R --> R3
+    R --> R4
+    R --> R5
+    O --> O1
+    O --> O2
+    O --> O3

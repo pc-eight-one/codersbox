@@ -1,0 +1,13 @@
+flowchart TB
+  subgraph CacheAside
+    A1[App] -->|get| CA[Cache]
+    CA --miss--> S1[Source]
+    S1 --> CA
+    CA --> A1
+  end
+  subgraph ReadThrough
+    A2[App] -->|get| RT[Cache+Loader]
+    RT --miss--> S2[Source]
+    S2 --> RT
+    RT --> A2
+  end

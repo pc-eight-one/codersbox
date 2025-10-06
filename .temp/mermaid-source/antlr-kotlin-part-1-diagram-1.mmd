@@ -1,0 +1,6 @@
+flowchart LR
+    A[SQL String] --> B[CharStream]
+    B --> C[Lexer]
+    C --> D[Token Stream]
+    D --> E[Parser]
+    E --> F[Parse Tree]

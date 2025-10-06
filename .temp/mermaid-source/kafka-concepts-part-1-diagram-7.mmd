@@ -1,0 +1,26 @@
+sequenceDiagram
+    participant C as Consumer
+    participant LB as Leader Broker
+    participant PC as Page Cache
+    participant D as Disk
+
+    C->>LB: FetchRequest (offset=100)
+
+    Note over LB: Check offset validity
+    LB->>LB: Validate offset ≤ HW
+
+    alt Data in Page Cache
+        LB->>PC: Read from cache
+        PC->>LB: Return data
+    else Data not cached
+        LB->>D: Read from disk
+        D->>LB: Return data
+        LB->>PC: Cache data
+    end
+
+    Note over LB: Apply filters (if any)
+    LB->>C: FetchResponse (records)
+
+    C->>C: Process records
+    C->>LB: CommitRequest (offset=150)
+    LB->>LB: Store offset in __consumer_offsets

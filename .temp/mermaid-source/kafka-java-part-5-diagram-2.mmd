@@ -1,0 +1,11 @@
+flowchart LR
+    I[Input: 'hello world'] --> FM[flatMapValues<br/>split words]
+    FM --> G[groupBy word]
+    G --> C[count]
+    C --> O[Output:<br/>hello: 1<br/>world: 1]
+
+    style I fill:#e3f2fd
+    style FM fill:#fff3e0
+    style G fill:#e8f5e8
+    style C fill:#f3e5f5
+    style O fill:#ffe0b2

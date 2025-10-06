@@ -1,0 +1,10 @@
+flowchart TB
+    subgraph Topic["Topic: user-events"]
+        P0[Partition 0<br/>user-123: login<br/>user-456: logout<br/>user-789: click]
+        P1[Partition 1<br/>user-234: login<br/>user-567: purchase<br/>user-890: view]
+        P2[Partition 2<br/>user-345: signup<br/>user-678: login<br/>user-901: logout]
+    end
+
+    style P0 fill:#e3f2fd
+    style P1 fill:#e8f5e8
+    style P2 fill:#fff3e0

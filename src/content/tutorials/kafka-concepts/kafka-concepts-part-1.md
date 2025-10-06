@@ -22,36 +22,7 @@ At its core, Kafka is a **distributed commit log** that provides a unified, high
 
 ### High-Level Architecture
 
-```mermaid
-flowchart TB
-    subgraph Clients["Client Layer"]
-        P[Producers]
-        C[Consumers]
-        S[Streams Apps]
-        K[Connect]
-    end
-
-    subgraph Kafka["Kafka Cluster"]
-        B1[Broker 1<br/>Leader for P0,P3<br/>Follower for P1,P2]
-        B2[Broker 2<br/>Leader for P1,P4<br/>Follower for P0,P3]
-        B3[Broker 3<br/>Leader for P2,P5<br/>Follower for P4,P5]
-    end
-
-    subgraph Metadata["Metadata Management"]
-        ZK[ZooKeeper/KRaft<br/>Cluster Coordination<br/>Metadata Storage]
-    end
-
-    P --> Kafka
-    C --> Kafka
-    S --> Kafka
-    K --> Kafka
-
-    Kafka <-.-> ZK
-
-    style Clients fill:#e3f2fd
-    style Kafka fill:#e8f5e8
-    style Metadata fill:#fff3e0
-```
+![Diagram 1](/diagrams/kafka-concepts-part-1-diagram-1.svg)
 
 ### Core Components
 
@@ -75,26 +46,7 @@ flowchart TB
 
 ### Broker Responsibilities
 
-```mermaid
-flowchart TB
-    subgraph Broker["Kafka Broker"]
-        NW[Network Layer<br/>Handles client connections]
-        RM[Request Manager<br/>Processes produce/fetch]
-        RP[Replication Protocol<br/>Sync with followers]
-        LOG[Log Manager<br/>Writes to disk]
-        META[Metadata Cache<br/>Topic/partition info]
-    end
-
-    Client[Clients] --> NW
-    NW --> RM
-    RM --> RP
-    RM --> LOG
-    RM --> META
-    LOG --> Disk[(Local Disk<br/>Partition Segments)]
-
-    style Broker fill:#e8f5e8
-    style Disk fill:#fff3e0
-```
+![Diagram 2](/diagrams/kafka-concepts-part-1-diagram-2.svg)
 
 ### Broker Configuration Anatomy
 
@@ -154,28 +106,7 @@ val brokerConfig = mapOf(
 
 ### Broker Startup Sequence
 
-```mermaid
-sequenceDiagram
-    participant B as Broker
-    participant D as Disk
-    participant Z as ZooKeeper/KRaft
-    participant C as Controller
-
-    B->>D: Load partition data
-    D->>B: Return partition metadata
-
-    B->>Z: Register broker
-    Z->>B: Acknowledge registration
-
-    B->>Z: Request cluster metadata
-    Z->>B: Return topic/partition info
-
-    C->>B: Send partition assignments
-    B->>B: Initialize replica manager
-
-    B->>C: Notify ready
-    Note over B: Broker is ONLINE
-```
+![Diagram 3](/diagrams/kafka-concepts-part-1-diagram-3.svg)
 
 **Pitfall: Broker Startup Failures**
 
@@ -215,32 +146,7 @@ fun checkDiskSpace(minFreeGB: Int) {
 
 ### ZooKeeper Architecture (Legacy)
 
-```mermaid
-flowchart TB
-    subgraph ZK["ZooKeeper Ensemble"]
-        ZK1[ZK Node 1<br/>Leader]
-        ZK2[ZK Node 2<br/>Follower]
-        ZK3[ZK Node 3<br/>Follower]
-    end
-
-    subgraph Kafka["Kafka Cluster"]
-        B1[Broker 1]
-        B2[Broker 2]
-        B3[Broker 3]
-    end
-
-    Controller[Controller Broker] -.->|Watches| ZK1
-    B1 <-->|Read/Write Metadata| ZK
-    B2 <-->|Read/Write Metadata| ZK
-    B3 <-->|Read/Write Metadata| ZK
-
-    ZK1 <-->|Replication| ZK2
-    ZK1 <-->|Replication| ZK3
-    ZK2 <-->|Replication| ZK3
-
-    style ZK fill:#fff3e0
-    style Kafka fill:#e8f5e8
-```
+![Diagram 4](/diagrams/kafka-concepts-part-1-diagram-4.svg)
 
 **ZooKeeper Stores**:
 - Broker registration and liveness
@@ -293,32 +199,7 @@ fun monitorZooKeeperHealth() {
 
 KRaft (Kafka Raft) replaces ZooKeeper with a Kafka-native metadata quorum.
 
-```mermaid
-flowchart TB
-    subgraph KRaft["KRaft Quorum (Metadata Cluster)"]
-        K1[Controller 1<br/>Leader]
-        K2[Controller 2<br/>Follower]
-        K3[Controller 3<br/>Follower]
-    end
-
-    subgraph Brokers["Data Brokers"]
-        B1[Broker 1]
-        B2[Broker 2]
-        B3[Broker 3]
-    end
-
-    K1 -->|Metadata Updates| Brokers
-    K1 <-->|Raft Replication| K2
-    K1 <-->|Raft Replication| K3
-    K2 <-->|Raft Replication| K3
-
-    B1 -->|Metadata Fetch| K1
-    B2 -->|Metadata Fetch| K1
-    B3 -->|Metadata Fetch| K1
-
-    style KRaft fill:#e8f5e8
-    style Brokers fill:#e3f2fd
-```
+![Diagram 5](/diagrams/kafka-concepts-part-1-diagram-5.svg)
 
 **KRaft Advantages**:
 
@@ -394,37 +275,7 @@ fun planZkToKraftMigration() {
 
 ### Write Path (Producer → Broker)
 
-```mermaid
-sequenceDiagram
-    participant P as Producer
-    participant LB as Leader Broker
-    participant F1 as Follower 1
-    participant F2 as Follower 2
-
-    P->>LB: ProduceRequest (acks=all)
-
-    Note over LB: 1. Append to local log
-    LB->>LB: Write to page cache
-
-    Note over LB: 2. Replicate to followers
-    par Parallel Replication
-        LB->>F1: Replication Request
-        LB->>F2: Replication Request
-    end
-
-    F1->>F1: Write to local log
-    F2->>F2: Write to local log
-
-    par Acknowledgments
-        F1->>LB: Fetch Response (in-sync)
-        F2->>LB: Fetch Response (in-sync)
-    end
-
-    Note over LB: 3. Update High Water Mark
-    LB->>LB: Advance HW
-
-    LB->>P: ProduceResponse (success)
-```
+![Diagram 6](/diagrams/kafka-concepts-part-1-diagram-6.svg)
 
 **Key Concepts**:
 
@@ -487,34 +338,7 @@ fun produceOrder(order: Order) {
 
 ### Read Path (Consumer ← Broker)
 
-```mermaid
-sequenceDiagram
-    participant C as Consumer
-    participant LB as Leader Broker
-    participant PC as Page Cache
-    participant D as Disk
-
-    C->>LB: FetchRequest (offset=100)
-
-    Note over LB: Check offset validity
-    LB->>LB: Validate offset ≤ HW
-
-    alt Data in Page Cache
-        LB->>PC: Read from cache
-        PC->>LB: Return data
-    else Data not cached
-        LB->>D: Read from disk
-        D->>LB: Return data
-        LB->>PC: Cache data
-    end
-
-    Note over LB: Apply filters (if any)
-    LB->>C: FetchResponse (records)
-
-    C->>C: Process records
-    C->>LB: CommitRequest (offset=150)
-    LB->>LB: Store offset in __consumer_offsets
-```
+![Diagram 7](/diagrams/kafka-concepts-part-1-diagram-7.svg)
 
 **Zero-Copy Optimization**:
 
@@ -575,44 +399,7 @@ fun consumeClickstream() {
 
 ### Request Lifecycle
 
-```mermaid
-flowchart LR
-    subgraph Network["Network Layer"]
-        NW[Acceptor Thread<br/>Accept connections]
-        NP[Processor Threads<br/>Read/Write requests]
-    end
-
-    subgraph Request["Request Queue"]
-        RQ[Request Queue<br/>FIFO]
-    end
-
-    subgraph API["API Layer"]
-        API1[Handler Thread 1]
-        API2[Handler Thread 2]
-        API3[Handler Thread 3]
-    end
-
-    subgraph Response["Response Queue"]
-        RSQ[Response Queue]
-    end
-
-    Client[Clients] --> NW
-    NW --> NP
-    NP --> RQ
-    RQ --> API1
-    RQ --> API2
-    RQ --> API3
-    API1 --> RSQ
-    API2 --> RSQ
-    API3 --> RSQ
-    RSQ --> NP
-    NP --> Client
-
-    style Network fill:#e3f2fd
-    style Request fill:#fff3e0
-    style API fill:#e8f5e8
-    style Response fill:#f3e5f5
-```
+![Diagram 8](/diagrams/kafka-concepts-part-1-diagram-8.svg)
 
 **Request Types and Priorities**:
 
@@ -671,34 +458,7 @@ fun configureRequestTimeouts() {
 
 ### Leader Election
 
-```mermaid
-flowchart TB
-    subgraph Before["Before Leader Failure"]
-        L1[Broker 1 - Leader] -->|replicates| F1[Broker 2 - Follower]
-        L1 -->|replicates| F2[Broker 3 - Follower]
-    end
-
-    Failure[Broker 1 FAILS ❌]
-
-    subgraph Election["Controller Detects & Elects"]
-        C[Controller] -->|1. Detect failure| ISR[Check ISR list]
-        ISR -->|2. Select leader| NEW[Broker 2 in ISR]
-        NEW -->|3. Notify| ALL[All brokers]
-    end
-
-    subgraph After["After Election"]
-        L2[Broker 2 - New Leader] -->|replicates| F3[Broker 3 - Follower]
-        Note1[Broker 1 offline]
-    end
-
-    Before --> Failure
-    Failure --> Election
-    Election --> After
-
-    style L1 fill:#4caf50
-    style L2 fill:#4caf50
-    style Failure fill:#f44336
-```
+![Diagram 9](/diagrams/kafka-concepts-part-1-diagram-9.svg)
 
 **Election Process Deep Dive**:
 
@@ -775,27 +535,7 @@ fun handleUncleanElection(replicas: List<Replica>) {
 
 ### ISR (In-Sync Replicas) Management
 
-```mermaid
-flowchart TB
-    subgraph ISR["ISR Lifecycle"]
-        Start[Replica Created] -->|Sync from leader| Catch[Catching Up]
-        Catch -->|Caught up| InISR[In ISR Set]
-        InISR -->|Falls behind| OutISR[Removed from ISR]
-        OutISR -->|Catches up again| InISR
-    end
-
-    subgraph Criteria["ISR Criteria"]
-        C1[replica.lag.time.max.ms<br/>Default: 10s]
-        C2[Replica must be alive<br/>Heartbeat received]
-    end
-
-    InISR -.->|Checked against| C1
-    InISR -.->|Checked against| C2
-
-    style InISR fill:#4caf50
-    style OutISR fill:#ff9800
-    style Start fill:#e3f2fd
-```
+![Diagram 10](/diagrams/kafka-concepts-part-1-diagram-10.svg)
 
 **ISR Management Code**:
 

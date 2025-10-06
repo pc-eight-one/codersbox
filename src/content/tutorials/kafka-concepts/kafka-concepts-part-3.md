@@ -158,26 +158,7 @@ fun Map<String, Any>.toProperties(): java.util.Properties {
 
 ### Batching Mechanics
 
-```mermaid
-flowchart LR
-    subgraph Before["Without Batching"]
-        M1[Message 1] -->|Network Call 1| B1[Broker]
-        M2[Message 2] -->|Network Call 2| B1
-        M3[Message 3] -->|Network Call 3| B1
-        Note1[3 network calls<br/>High overhead]
-    end
-
-    subgraph After["With Batching"]
-        BM1[Message 1] --> Batch[Batch<br/>Accumulator]
-        BM2[Message 2] --> Batch
-        BM3[Message 3] --> Batch
-        Batch -->|Single Network Call| B2[Broker]
-        Note2[1 network call<br/>Low overhead]
-    end
-
-    style Before fill:#ffebee
-    style After fill:#e8f5e8
-```
+![Diagram 2](/diagrams/kafka-concepts-part-3-diagram-2.svg)
 
 ### Batch Configuration Deep Dive
 
@@ -353,29 +334,7 @@ fun detectBufferExhaustion(
 
 ### Sticky Partitioning (Kafka 2.4+)
 
-```mermaid
-flowchart TB
-    subgraph Old["Round-Robin (Pre-2.4)"]
-        M1[Msg 1] -->|P0| B1[Batch 1]
-        M2[Msg 2] -->|P1| B2[Batch 2]
-        M3[Msg 3] -->|P2| B3[Batch 3]
-        M4[Msg 4] -->|P0| B1
-        Note1[Poor batching<br/>Multiple small batches]
-    end
-
-    subgraph New["Sticky Partitioning (2.4+)"]
-        N1[Msg 1] --> SB1[Batch 1]
-        N2[Msg 2] --> SB1
-        N3[Msg 3] --> SB1
-        N4[Msg 4] --> SB1
-        SB1 -->|P0 full| Send1[Send to P0]
-        N5[Msg 5] --> SB2[Batch 2]
-        Note2[Better batching<br/>Fewer larger batches]
-    end
-
-    style Old fill:#ffebee
-    style New fill:#e8f5e8
-```
+![Diagram 3](/diagrams/kafka-concepts-part-3-diagram-3.svg)
 
 ```kotlin
 // Sticky partitioning behavior
@@ -433,31 +392,7 @@ fun explainStickyPartitioning() {
 
 ### Compression Algorithms
 
-```mermaid
-flowchart LR
-    subgraph Input["Uncompressed Batch"]
-        R1[Record 1: 1KB]
-        R2[Record 2: 1KB]
-        R3[Record 3: 1KB]
-        Total1[Total: 3KB]
-    end
-
-    subgraph Compressed["Compressed Batch"]
-        C1[Compressed: 600B]
-        Ratio[Ratio: 5:1]
-    end
-
-    subgraph Network["Network Transfer"]
-        N1[600B sent<br/>5x less bandwidth]
-    end
-
-    Input --> Compressed
-    Compressed --> Network
-
-    style Input fill:#ffebee
-    style Compressed fill:#e8f5e8
-    style Network fill:#e3f2fd
-```
+![Diagram 4](/diagrams/kafka-concepts-part-3-diagram-4.svg)
 
 ```kotlin
 // Compression algorithm comparison
@@ -624,43 +559,11 @@ fun chooseCompression(
 
 ### The Duplicate Problem
 
-```mermaid
-sequenceDiagram
-    participant P as Producer
-    participant L as Leader Broker
-
-    P->>L: Send Message (offset 100)
-    L->>L: Write to log
-    L--xP: ACK lost (network issue)
-
-    Note over P: Timeout, assume failed
-    P->>L: Retry same message
-
-    Note over L: DUPLICATE!<br/>Message written twice
-    L->>L: Write to log (offset 101)
-    L->>P: ACK received
-
-    Note over L: Offset 100 and 101<br/>same message!
-```
+![Diagram 5](/diagrams/kafka-concepts-part-3-diagram-5.svg)
 
 ### Idempotence Solution
 
-```mermaid
-sequenceDiagram
-    participant P as Producer (PID: 12345, Seq: 0)
-    participant L as Leader Broker
-
-    P->>L: Send (PID=12345, Seq=0, data)
-    L->>L: Write offset 100
-    L--xP: ACK lost
-
-    P->>L: Retry (PID=12345, Seq=0, data)
-    Note over L: Duplicate detected!<br/>Same PID + Seq
-    L->>L: Ignore (already written)
-    L->>P: ACK (offset 100)
-
-    Note over L: No duplicate!<br/>Only offset 100
-```
+![Diagram 6](/diagrams/kafka-concepts-part-3-diagram-6.svg)
 
 ```kotlin
 // Idempotent producer configuration
@@ -809,35 +712,7 @@ fun monitorIdempotence(metrics: Map<String, Double>) {
 
 ### Transaction Lifecycle
 
-```mermaid
-sequenceDiagram
-    participant P as Producer
-    participant TC as Transaction Coordinator
-    participant T1 as Topic A
-    participant T2 as Topic B
-    participant O as __consumer_offsets
-
-    Note over P: Begin Transaction
-    P->>TC: InitTransactions (transactional.id)
-    TC->>P: Return PID & Epoch
-
-    P->>TC: BeginTransaction
-    TC->>TC: Mark TX started
-
-    Note over P: Write Data
-    P->>T1: Write records (TX marker)
-    P->>T2: Write records (TX marker)
-    P->>O: Write offsets (TX marker)
-
-    Note over P: Commit
-    P->>TC: CommitTransaction
-    TC->>T1: Write COMMIT marker
-    TC->>T2: Write COMMIT marker
-    TC->>O: Write COMMIT marker
-    TC->>P: Success
-
-    Note over T1,O: All data now visible
-```
+![Diagram 7](/diagrams/kafka-concepts-part-3-diagram-7.svg)
 
 ```kotlin
 // Transactional producer implementation

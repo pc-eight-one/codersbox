@@ -1,0 +1,23 @@
+flowchart LR
+    subgraph Input["Uncompressed Batch"]
+        R1[Record 1: 1KB]
+        R2[Record 2: 1KB]
+        R3[Record 3: 1KB]
+        Total1[Total: 3KB]
+    end
+
+    subgraph Compressed["Compressed Batch"]
+        C1[Compressed: 600B]
+        Ratio[Ratio: 5:1]
+    end
+
+    subgraph Network["Network Transfer"]
+        N1[600B sent<br/>5x less bandwidth]
+    end
+
+    Input --> Compressed
+    Compressed --> Network
+
+    style Input fill:#ffebee
+    style Compressed fill:#e8f5e8
+    style Network fill:#e3f2fd

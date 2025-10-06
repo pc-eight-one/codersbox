@@ -16,17 +16,7 @@ featured: false
 
 **Why This Matters**: Loops are the foundation of data processing and automation. Without loops, you'd need to write thousands of lines of repetitive code. Mastering different loop types enables efficient data processing, user input validation, and algorithm implementation.
 
-```mermaid
-flowchart TD
-    A[Start] --> B{condition?}
-    B -- true --> C[execute body]
-    C --> D[update variables]
-    D --> B
-    B -- false --> E[End]
-    
-    style B fill:#fff3e0
-    style C fill:#e3f2fd
-```
+![Diagram 1](/diagrams/java-complete-part-6-diagram-1.svg)
 
 Loops let you repeat operations efficiently, process collections of data, and implement algorithms. Java provides several loop types optimized for different scenarios.
 
@@ -203,17 +193,7 @@ public class DoWhileLoops {
 
 **Pattern**: `for (init; condition; update) { body }`
 
-```mermaid
-flowchart TD
-    A[init: int i = 0] --> B{condition: i < 10?}
-    B -- true --> C[body: process i]
-    C --> D[update: i++]
-    D --> B
-    B -- false --> E[End]
-    
-    style A fill:#e3f2fd
-    style D fill:#e8f5e8
-```
+![Diagram 2](/diagrams/java-complete-part-6-diagram-2.svg)
 
 ```java
 public class ForLoops {

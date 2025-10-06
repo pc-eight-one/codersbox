@@ -1,0 +1,17 @@
+graph TD
+    A[Highest Priority] --> B["Postfix: ++ --"]
+    B --> C["Unary: + - ! ~ ++ --"]
+    C --> D["Multiplicative: * / %"]  
+    D --> E["Additive: + -"]
+    E --> F["Relational: < <= > >="]
+    F --> G["Equality: == !="]
+    G --> H["Logical AND: &&"]
+    H --> I["Logical OR: double pipe"]
+    I --> J["Ternary: ? :"]
+    J --> K["Assignment: = += -= *="]
+    K --> L[Lowest Priority]
+    
+    style D fill:#e3f2fd
+    style E fill:#e3f2fd  
+    style F fill:#fff3e0
+    style G fill:#fff3e0

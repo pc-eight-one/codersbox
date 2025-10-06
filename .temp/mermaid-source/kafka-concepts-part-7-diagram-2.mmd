@@ -1,0 +1,19 @@
+flowchart LR
+    subgraph Throughput["High Throughput Config"]
+        T1[Large batches<br/>batch.size=64KB]
+        T2[Wait for batching<br/>linger.ms=20]
+        T3[Compression<br/>compression=lz4]
+        T4[Multiple in-flight<br/>max.in.flight=5]
+    end
+
+    subgraph Latency["Low Latency Config"]
+        L1[Small batches<br/>batch.size=16KB]
+        L2[No waiting<br/>linger.ms=0]
+        L3[No compression<br/>compression=none]
+        L4[Sequential requests<br/>max.in.flight=1]
+    end
+
+    Throughput -.->|Trade-off| Latency
+
+    style Throughput fill:#e8f5e8
+    style Latency fill:#e3f2fd

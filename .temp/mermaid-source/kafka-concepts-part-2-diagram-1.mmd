@@ -1,0 +1,27 @@
+flowchart TB
+    subgraph Topic["Topic: user-events"]
+        subgraph P0["Partition 0"]
+            M00[Offset 0: user-1:login]
+            M01[Offset 1: user-3:click]
+            M02[Offset 2: user-5:purchase]
+        end
+
+        subgraph P1["Partition 1"]
+            M10[Offset 0: user-2:login]
+            M11[Offset 1: user-4:view]
+            M12[Offset 2: user-6:logout]
+        end
+
+        subgraph P2["Partition 2"]
+            M20[Offset 0: user-7:click]
+            M21[Offset 1: user-8:purchase]
+            M22[Offset 2: user-9:login]
+        end
+    end
+
+    Producer[Producers] -->|"hash(key) % 3"| Topic
+    Topic -->|Consumer Group| Consumers[Consumers]
+
+    style P0 fill:#e3f2fd
+    style P1 fill:#e8f5e8
+    style P2 fill:#fff3e0

@@ -21,30 +21,7 @@ prerequisites: ["Java Complete Parts 1-14"]
 
 **Core Concept**: Collections framework provides ready-made data structures so you don't reinvent the wheel. Choose the right collection for the job.
 
-```mermaid
-graph TD
-    A[Collection Framework] --> B[List: Ordered, Duplicates OK]
-    A --> C[Set: No Duplicates, Unique Elements]  
-    A --> D[Map: Key-Value Pairs]
-    A --> E[Queue: Processing Order]
-    
-    B --> B1[ArrayList: Fast Access]
-    B --> B2[LinkedList: Fast Insert/Delete]
-    
-    C --> C1[HashSet: Fast Lookup] 
-    C --> C2[TreeSet: Sorted Order]
-    
-    D --> D1[HashMap: Fast Key Lookup]
-    D --> D2[TreeMap: Sorted Keys]
-    
-    E --> E1[LinkedList: FIFO Queue]
-    E --> E2[PriorityQueue: Priority Order]
-    
-    style B fill:#e3f2fd
-    style C fill:#e8f5e8
-    style D fill:#fff3e0
-    style E fill:#fce4ec
-```
+![Diagram 1](/diagrams/java-complete-part-15-diagram-1.svg)
 
 Collections framework provides proven, optimized data structures for every common use case.
 

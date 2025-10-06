@@ -25,24 +25,7 @@ prerequisites: ["Java Complete Parts 1-15"]
 - **Enable Polymorphism**: Write code that works with multiple types safely
 - **Better Documentation**: Types are self-documenting in the code
 
-```mermaid
-graph TD
-    A[Before Generics<br/>List list = new ArrayList] --> B[Runtime Errors<br/>ClassCastException]
-    C[With Generics<br/>List&lt;String&gt; list = new ArrayList&lt;&gt;] --> D[Compile-Time Safety<br/>Type Guaranteed]
-    
-    E[Generic Classes] --> F[Box&lt;T&gt;]
-    E --> G[Pair&lt;T, U&gt;] 
-    E --> H[Stack&lt;E&gt;]
-    
-    I[Wildcards] --> J[? extends Number]
-    I --> K[? super Integer]
-    I --> L[? unbounded]
-    
-    style A fill:#ffebee
-    style C fill:#e8f5e8
-    style B fill:#ffcdd2
-    style D fill:#c8e6c9
-```
+![Diagram 1](/diagrams/java-complete-part-16-diagram-1.svg)
 
 Generics transform Java from a weakly-typed to a strongly-typed language for collections and APIs.
 

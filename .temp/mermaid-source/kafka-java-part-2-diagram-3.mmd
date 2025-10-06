@@ -1,0 +1,22 @@
+flowchart TB
+    subgraph AL["At-Least-Once"]
+        AL1[May deliver duplicates]
+        AL2[Never loses messages]
+        AL3[Consumer commits after processing]
+    end
+
+    subgraph AMO["At-Most-Once"]
+        AMO1[May lose messages]
+        AMO2[Never duplicates]
+        AMO3[Consumer commits before processing]
+    end
+
+    subgraph EO["Exactly-Once"]
+        EO1[No duplicates, no losses]
+        EO2[Requires idempotent producer]
+        EO3[Transactional writes]
+    end
+
+    style AL fill:#fff3e0
+    style AMO fill:#ffebee
+    style EO fill:#e8f5e8

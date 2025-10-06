@@ -54,14 +54,7 @@ Understanding Java means understanding its three core components:
 - Handles platform-specific operations
 
 A quick visual map:
-```mermaid
-flowchart TB
-    JDK[Developer installs JDK] -->|includes| JRE
-    JDK -->|includes| Tools[javac, jar, javadoc]
-    JRE[End user installs JRE] --> JVM
-    JVM -->|executes| Bytecode[.class bytecode]
-    Source[.java source] -->|compiled by javac| Bytecode
-```
+![Diagram 1](/diagrams/java-complete-part-1-diagram-1.svg)
 
 ## Java's Key Characteristics
 
@@ -236,17 +229,7 @@ Note several things:
 
 **Why Two Steps?** Java's compilation process enables both platform independence and security through bytecode verification.
 
-```mermaid
-flowchart LR
-    A[Hello.java<br/>Source Code] -->|javac| B[Hello.class<br/>Bytecode]
-    B -->|java| C[JVM<br/>Execution]
-    C --> D[Machine Code<br/>Platform-specific]
-    
-    style A fill:#e3f2fd
-    style B fill:#fff3e0
-    style C fill:#e8f5e8
-    style D fill:#fce4ec
-```
+![Diagram 2](/diagrams/java-complete-part-1-diagram-2.svg)
 
 **Compile Time** (`javac`): Syntax checking, type verification, bytecode generation  
 **Runtime** (`java`): Bytecode verification, JIT compilation, execution

@@ -1,0 +1,30 @@
+flowchart TB
+    subgraph App["Application Thread"]
+        Send[send() call]
+        Callback[Callback Handler]
+    end
+
+    subgraph Producer["Kafka Producer"]
+        Serializer[Key/Value Serializers]
+        Partitioner[Partitioner Logic]
+        Accumulator[Record Accumulator<br/>In-Memory Buffers]
+        Sender[Sender Thread<br/>I/O Thread]
+    end
+
+    subgraph Network["Network Layer"]
+        Selector[Selector<br/>NIO]
+        Connections[TCP Connections<br/>to Brokers]
+    end
+
+    Send --> Serializer
+    Serializer --> Partitioner
+    Partitioner --> Accumulator
+    Accumulator --> Sender
+    Sender --> Selector
+    Selector --> Connections
+    Connections -.->|Response| Sender
+    Sender -.->|Success/Error| Callback
+
+    style App fill:#e3f2fd
+    style Producer fill:#e8f5e8
+    style Network fill:#fff3e0

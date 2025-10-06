@@ -90,17 +90,7 @@ Calculated at: 2025-01-29T10:30:45.123
 
 Java programs follow a strict hierarchical structure that promotes organization and clarity:
 
-```mermaid
-flowchart TD
-    A[Java Source File .java] --> B[Package Declaration]
-    A --> C[Import Statements]
-    A --> D[Class Declaration]
-    D --> E[Class Variables]
-    D --> F[Constructors]
-    D --> G[Methods]
-    G --> H[Local Variables]
-    G --> I[Method Logic]
-```
+![Diagram 1](/diagrams/java-complete-part-3-diagram-1.svg)
 
 ### Package Declaration
 ```java
@@ -141,13 +131,7 @@ final double PI = 3.14159;       // Cannot be reassigned
 ```
 
 ### Variable Lifecycle
-```mermaid
-graph LR
-    A[Declare] --> B[Initialize]
-    B --> C[Use/Modify]
-    C --> D[Out of Scope]
-    D --> E[Garbage Collected]
-```
+![Diagram 2](/diagrams/java-complete-part-3-diagram-2.svg)
 
 ### Identifier Rules
 Valid identifiers must:
@@ -180,23 +164,7 @@ Java follows consistent naming patterns:
 
 Java provides 8 primitive types that store data efficiently in memory. Understanding their ranges prevents overflow errors:
 
-```mermaid
-graph TB
-    subgraph "Integer Types"
-        A[byte: 8 bits<br/>-128 to 127]
-        B[short: 16 bits<br/>-32,768 to 32,767]  
-        C[int: 32 bits<br/>-2³¹ to 2³¹-1]
-        D[long: 64 bits<br/>-2⁶³ to 2⁶³-1]
-    end
-    subgraph "Floating-Point"
-        E[float: 32 bits<br/>IEEE 754]
-        F[double: 64 bits<br/>IEEE 754]
-    end
-    subgraph "Other"
-        G[char: 16 bits<br/>Unicode 0-65535]
-        H[boolean<br/>true/false]
-    end
-```
+![Diagram 3](/diagrams/java-complete-part-3-diagram-3.svg)
 
 ### Integer Types - Essential Patterns
 
@@ -262,19 +230,7 @@ boolean result = isActive && !isComplete;  // true
 
 Java's type system enforces safety through automatic widening and explicit narrowing:
 
-```mermaid
-graph LR
-    A[byte] --> B[short]
-    B --> C[int] 
-    C --> D[long]
-    C --> E[float]
-    D --> E
-    E --> F[double]
-    G[char] --> C
-    
-    style A fill:#e1f5fe
-    style F fill:#fff3e0
-```
+![Diagram 4](/diagrams/java-complete-part-3-diagram-4.svg)
 
 ### Automatic Widening (Safe)
 ```java
@@ -424,19 +380,7 @@ public class Constants {
 
 Java variables have different lifetimes based on where they're declared:
 
-```mermaid
-graph TD
-    A[Class Variables<br/>static fields] --> B[Instance Variables<br/>object fields]
-    B --> C[Method Parameters<br/>method scope]
-    C --> D[Local Variables<br/>block scope]
-    D --> E[Loop Variables<br/>loop scope]
-    
-    A1[Program lifetime] --> A
-    B1[Object lifetime] --> B
-    C1[Method call lifetime] --> C
-    D1[Block execution] --> D
-    E1[Loop iteration] --> E
-```
+![Diagram 5](/diagrams/java-complete-part-3-diagram-5.svg)
 
 ### Scope Rules in Action
 

@@ -1,0 +1,16 @@
+flowchart LR
+    subgraph Partition["Partition 0"]
+        M0[Offset 0<br/>Message A]
+        M1[Offset 1<br/>Message B]
+        M2[Offset 2<br/>Message C]
+        M3[Offset 3<br/>Message D]
+    end
+
+    C[Consumer<br/>Current Offset: 2]
+    C -->|Next Read| M3
+
+    style M0 fill:#e0e0e0
+    style M1 fill:#e0e0e0
+    style M2 fill:#ffeb3b
+    style M3 fill:#4caf50
+    style C fill:#2196f3

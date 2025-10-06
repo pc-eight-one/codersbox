@@ -20,36 +20,7 @@ Kafka's reliability depends on sophisticated coordination systems. This tutorial
 
 ### Controller Responsibilities
 
-```mermaid
-flowchart TB
-    subgraph Controller["Controller Broker"]
-        CE[Controller Election]
-        PM[Partition Management]
-        BM[Broker Management]
-        MM[Metadata Management]
-    end
-
-    subgraph Operations["Controller Operations"]
-        LE[Leader Election]
-        BR[Broker Registration]
-        TC[Topic Creation]
-        PC[Partition Changes]
-    end
-
-    Controller --> Operations
-
-    subgraph Brokers["Other Brokers"]
-        B1[Broker 1]
-        B2[Broker 2]
-        B3[Broker 3]
-    end
-
-    Operations -.->|Updates| Brokers
-
-    style Controller fill:#e8f5e8
-    style Operations fill:#e3f2fd
-    style Brokers fill:#fff3e0
-```
+![Diagram 1](/diagrams/kafka-concepts-part-6-diagram-1.svg)
 
 ### Controller Election
 
@@ -210,36 +181,7 @@ fun demonstrateControllerStateMachine() {
 
 ### Controller Operations
 
-```mermaid
-sequenceDiagram
-    participant C as Controller
-    participant Z as ZooKeeper/KRaft
-    participant B1 as Broker 1 (Fails)
-    participant B2 as Broker 2
-    participant B3 as Broker 3
-
-    Note over B1: Broker 1 Crashes
-
-    Z->>C: Broker 1 session expired
-    Note over C: Detect failure
-
-    C->>C: Find affected partitions
-    Note over C: P0 leader was B1<br/>P0 ISR: [B1, B2, B3]
-
-    C->>C: Elect new leader<br/>Choose B2 from ISR
-
-    C->>Z: Update metadata<br/>P0 leader: B2
-
-    par Notify all brokers
-        C->>B2: LeaderAndIsrRequest<br/>You are leader for P0
-        C->>B3: LeaderAndIsrRequest<br/>P0 leader is B2
-    end
-
-    B2->>B2: Become leader for P0
-    B3->>B3: Update metadata
-
-    Note over B2,B3: Resume operations
-```
+![Diagram 2](/diagrams/kafka-concepts-part-6-diagram-2.svg)
 
 ```kotlin
 // Controller operations explained
@@ -423,36 +365,7 @@ fun monitorController() {
 
 ### Consumer Group Coordination
 
-```mermaid
-flowchart TB
-    subgraph GC["Group Coordinator"]
-        GS[Group State Machine]
-        HB[Heartbeat Handler]
-        RB[Rebalance Coordinator]
-        OS[Offset Storage]
-    end
-
-    subgraph Consumers["Consumer Group"]
-        C1[Consumer 1]
-        C2[Consumer 2]
-        C3[Consumer 3]
-    end
-
-    subgraph Storage["__consumer_offsets"]
-        P0[Partition 0]
-        P1[Partition 1]
-        P2[Partition 2]
-    end
-
-    Consumers <-->|Heartbeats| HB
-    Consumers <-->|Join/Sync| RB
-    Consumers -->|Commit Offsets| OS
-    OS --> Storage
-
-    style GC fill:#e8f5e8
-    style Consumers fill:#e3f2fd
-    style Storage fill:#fff3e0
-```
+![Diagram 3](/diagrams/kafka-concepts-part-6-diagram-3.svg)
 
 ```kotlin
 // Group Coordinator internals
@@ -673,34 +586,7 @@ fun explainOffsetStorage() {
 
 ## Transaction Coordinator
 
-```mermaid
-flowchart TB
-    subgraph TC["Transaction Coordinator"]
-        TS[Transaction State Machine]
-        TL[Transaction Log]
-    end
-
-    subgraph Producer["Transactional Producer"]
-        P[Producer<br/>transactional.id]
-    end
-
-    subgraph Topics["Topics"]
-        T1[Topic A]
-        T2[Topic B]
-    end
-
-    P -->|InitTransactions| TC
-    P -->|BeginTransaction| TC
-    P -->|Send Records| T1
-    P -->|Send Records| T2
-    P -->|CommitTransaction| TC
-    TC -->|Write Markers| T1
-    TC -->|Write Markers| T2
-
-    style TC fill:#e8f5e8
-    style Producer fill:#e3f2fd
-    style Topics fill:#fff3e0
-```
+![Diagram 4](/diagrams/kafka-concepts-part-6-diagram-4.svg)
 
 ```kotlin
 // Transaction Coordinator explained
@@ -859,37 +745,7 @@ fun explainTransactionCoordinator() {
 
 ## Replication Protocol Details
 
-```mermaid
-sequenceDiagram
-    participant P as Producer
-    participant L as Leader
-    participant F1 as Follower 1
-    participant F2 as Follower 2
-
-    Note over P,F2: Replication Flow
-
-    P->>L: Produce (offset 100)
-    L->>L: Append to log<br/>LEO: 100→101
-
-    loop Follower Fetch
-        F1->>L: Fetch(offset 99)
-        F2->>L: Fetch(offset 99)
-        L->>F1: Records(100)
-        L->>F2: Records(100)
-    end
-
-    F1->>F1: Append<br/>LEO: 100→101
-    F2->>F2: Append<br/>LEO: 100→101
-
-    loop Acknowledge
-        F1->>L: Fetch(offset 101)
-        F2->>L: Fetch(offset 101)
-    end
-
-    Note over L: Update HW<br/>HW: 100→101
-
-    L->>P: Ack(offset 100)
-```
+![Diagram 5](/diagrams/kafka-concepts-part-6-diagram-5.svg)
 
 ```kotlin
 // Replication protocol internals

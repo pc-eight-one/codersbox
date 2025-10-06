@@ -1,0 +1,20 @@
+graph TB
+    subgraph "Pattern Types"
+        L[LITERAL - Exact Match]
+        P[PREFIXED - Prefix Match]
+    end
+
+    subgraph "LITERAL Examples"
+        L1["Topic: orders → Matches only 'orders'"]
+        L2["Group: app-consumers → Matches only 'app-consumers'"]
+    end
+
+    subgraph "PREFIXED Examples"
+        P1["Topic: prod- → Matches 'prod-orders', 'prod-users'"]
+        P2["Group: team-a- → Matches 'team-a-service1', 'team-a-service2'"]
+    end
+
+    L --> L1
+    L --> L2
+    P --> P1
+    P --> P2

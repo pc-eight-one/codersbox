@@ -1,0 +1,28 @@
+sequenceDiagram
+    participant C as Controller
+    participant Z as ZooKeeper/KRaft
+    participant B1 as Broker 1 (Fails)
+    participant B2 as Broker 2
+    participant B3 as Broker 3
+
+    Note over B1: Broker 1 Crashes
+
+    Z->>C: Broker 1 session expired
+    Note over C: Detect failure
+
+    C->>C: Find affected partitions
+    Note over C: P0 leader was B1<br/>P0 ISR: [B1, B2, B3]
+
+    C->>C: Elect new leader<br/>Choose B2 from ISR
+
+    C->>Z: Update metadata<br/>P0 leader: B2
+
+    par Notify all brokers
+        C->>B2: LeaderAndIsrRequest<br/>You are leader for P0
+        C->>B3: LeaderAndIsrRequest<br/>P0 leader is B2
+    end
+
+    B2->>B2: Become leader for P0
+    B3->>B3: Update metadata
+
+    Note over B2,B3: Resume operations

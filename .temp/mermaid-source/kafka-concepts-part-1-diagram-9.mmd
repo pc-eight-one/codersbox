@@ -1,0 +1,26 @@
+flowchart TB
+    subgraph Before["Before Leader Failure"]
+        L1[Broker 1 - Leader] -->|replicates| F1[Broker 2 - Follower]
+        L1 -->|replicates| F2[Broker 3 - Follower]
+    end
+
+    Failure[Broker 1 FAILS ❌]
+
+    subgraph Election["Controller Detects & Elects"]
+        C[Controller] -->|1. Detect failure| ISR[Check ISR list]
+        ISR -->|2. Select leader| NEW[Broker 2 in ISR]
+        NEW -->|3. Notify| ALL[All brokers]
+    end
+
+    subgraph After["After Election"]
+        L2[Broker 2 - New Leader] -->|replicates| F3[Broker 3 - Follower]
+        Note1[Broker 1 offline]
+    end
+
+    Before --> Failure
+    Failure --> Election
+    Election --> After
+
+    style L1 fill:#4caf50
+    style L2 fill:#4caf50
+    style Failure fill:#f44336

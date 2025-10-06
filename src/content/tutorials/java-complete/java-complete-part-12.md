@@ -24,30 +24,9 @@ prerequisites: ["Java Complete Parts 1-11"]
 - **Modules**: Group packages, declare dependencies explicitly, improve security
 - **Encapsulation**: Hide internal implementation, expose only public APIs
 
-```mermaid
-flowchart TD
-    A[Individual Classes<br/>Person.java, Account.java] --> B[Packages<br/>com.bank.model, com.bank.service]
-    B --> C[JAR Files<br/>bank-core.jar, bank-api.jar]
-    C --> D[Modules<br/>bank.core, bank.web]
-    D --> E[Applications<br/>Modular Java Apps]
-    
-    style A fill:#ffebee
-    style B fill:#e3f2fd
-    style C fill:#e8f5e8
-    style D fill:#fff3e0
-```
+![Diagram 1](/diagrams/java-complete-part-12-diagram-1.svg)
 
-```mermaid
-graph LR
-    A[banking.app module] -->|requires| B[banking.core module]
-    A -->|requires| C[banking.ui module]
-    B -->|exports| D[com.bank.model]
-    B -->|exports| E[com.bank.service]
-    
-    style A fill:#e3f2fd
-    style B fill:#e8f5e8
-    style C fill:#fff3e0
-```
+![Diagram 2](/diagrams/java-complete-part-12-diagram-2.svg)
 
 Packages and modules create clean architectural boundaries and explicit dependency management.
 

@@ -1,0 +1,21 @@
+flowchart LR
+    subgraph Record["Kafka Record (v2)"]
+        Header[Headers<br/>Key-Value pairs]
+        Key[Key<br/>Optional]
+        Value[Value<br/>Payload]
+        Offset[Offset]
+        Timestamp[Timestamp]
+        Attrs[Attributes<br/>Compression, etc]
+    end
+
+    subgraph Batch["Record Batch"]
+        R1[Record 1]
+        R2[Record 2]
+        R3[Record 3]
+        BatchHeader[Batch Metadata]
+    end
+
+    Record --> Batch
+
+    style Record fill:#e3f2fd
+    style Batch fill:#e8f5e8

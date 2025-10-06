@@ -21,14 +21,7 @@ Programs become powerful when they can make decisions based on data, user input,
 ## The if Statement
 
 A quick mental model of branching:
-```mermaid
-flowchart TD
-    A[Input] --> B{condition?}
-    B -- true --> C[execute code]
-    B -- false --> D[skip code]
-    C --> E[continue]
-    D --> E[continue]
-```
+![Diagram 1](/diagrams/java-complete-part-5-diagram-1.svg)
 
 **Basic Pattern**: `if (condition) { code }` - executes code only when condition is true.
 
@@ -58,21 +51,7 @@ if (age >= 18 || (hasLicense && hasParentPermission)) {
 
 The `if-else` chain handles multiple decision paths:
 
-```mermaid
-flowchart TD
-    A[grade = 87] --> B{grade >= 90?}
-    B -- true --> C[A grade]
-    B -- false --> D{grade >= 80?}
-    D -- true --> E[B grade]
-    D -- false --> F{grade >= 70?}
-    F -- true --> G[C grade]
-    F -- false --> H[D or F grade]
-    
-    style C fill:#4caf50
-    style E fill:#8bc34a
-    style G fill:#ffc107
-    style H fill:#f44336
-```
+![Diagram 2](/diagrams/java-complete-part-5-diagram-2.svg)
 
 **Pattern**: Chain conditions from most specific to most general.
 
@@ -99,25 +78,7 @@ System.out.println("Grade " + grade + ": " + result);
 
 The `switch` statement efficiently handles multiple value-based choices:
 
-```mermaid
-flowchart TD
-    A[dayOfWeek = 3] --> B[switch dayOfWeek]
-    B --> C{case 1?}
-    B --> D{case 2?}
-    B --> E{case 3?}
-    B --> F{case 4?}
-    B --> G{case 5?}
-    B --> H{default}
-    
-    C --> I[Monday]
-    D --> J[Tuesday] 
-    E --> K[Wednesday]
-    F --> L[Thursday]
-    G --> M[Friday]
-    H --> N[Weekend]
-    
-    style K fill:#e3f2fd
-```
+![Diagram 3](/diagrams/java-complete-part-5-diagram-3.svg)
 
 ### Traditional Switch (Before Java 14)
 
@@ -173,24 +134,7 @@ String workload = switch (day) {
 
 Understanding how conditions nest and combine:
 
-```mermaid
-flowchart TD
-    A[User Input] --> B{Valid format?}
-    B -- no --> C[Error message]
-    B -- yes --> D{In range?}
-    D -- no --> E[Range error]
-    D -- yes --> F{Premium user?}
-    F -- yes --> G[Full access]
-    F -- no --> H{Trial active?}
-    H -- yes --> I[Limited access]
-    H -- no --> J[No access]
-    
-    style C fill:#ffcdd2
-    style E fill:#ffcdd2
-    style G fill:#c8e6c9
-    style I fill:#fff3e0
-    style J fill:#ffcdd2
-```
+![Diagram 4](/diagrams/java-complete-part-5-diagram-4.svg)
 
 ### Input Validation Pattern
 
@@ -236,22 +180,7 @@ public class ValidationExample {
 
 Instead of deep nesting, use early returns for cleaner code:
 
-```mermaid
-flowchart TD
-    A[Function Start] --> B{username null/empty?}
-    B -- yes --> C[return error]
-    B -- no --> D{password too short?}
-    D -- yes --> E[return error]
-    D -- no --> F{account inactive?}
-    F -- yes --> G[return error]
-    F -- no --> H[Main logic]
-    H --> I[return success]
-    
-    style C fill:#ffcdd2
-    style E fill:#ffcdd2
-    style G fill:#ffcdd2
-    style I fill:#c8e6c9
-```
+![Diagram 5](/diagrams/java-complete-part-5-diagram-5.svg)
 
 ```java
 public class AuthenticationSystem {

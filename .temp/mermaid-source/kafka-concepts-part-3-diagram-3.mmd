@@ -1,0 +1,21 @@
+flowchart TB
+    subgraph Old["Round-Robin (Pre-2.4)"]
+        M1[Msg 1] -->|P0| B1[Batch 1]
+        M2[Msg 2] -->|P1| B2[Batch 2]
+        M3[Msg 3] -->|P2| B3[Batch 3]
+        M4[Msg 4] -->|P0| B1
+        Note1[Poor batching<br/>Multiple small batches]
+    end
+
+    subgraph New["Sticky Partitioning (2.4+)"]
+        N1[Msg 1] --> SB1[Batch 1]
+        N2[Msg 2] --> SB1
+        N3[Msg 3] --> SB1
+        N4[Msg 4] --> SB1
+        SB1 -->|P0 full| Send1[Send to P0]
+        N5[Msg 5] --> SB2[Batch 2]
+        Note2[Better batching<br/>Fewer larger batches]
+    end
+
+    style Old fill:#ffebee
+    style New fill:#e8f5e8

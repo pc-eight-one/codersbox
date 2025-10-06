@@ -20,37 +20,7 @@ Optimizing Kafka for performance and planning capacity correctly is crucial for 
 
 ### Sizing Methodology
 
-```mermaid
-flowchart TB
-    subgraph Inputs["Planning Inputs"]
-        TR[Throughput Requirements<br/>MB/sec]
-        RT[Retention Period<br/>Days]
-        MS[Message Size<br/>Bytes]
-        RF[Replication Factor]
-    end
-
-    subgraph Calculations["Calculations"]
-        DS[Daily Storage]
-        TS[Total Storage]
-        BR[Broker Count]
-        PC[Partition Count]
-    end
-
-    subgraph Output["Cluster Specs"]
-        BN[Number of Brokers]
-        DS2[Disk per Broker]
-        RAM[RAM per Broker]
-        CPU[CPU Cores]
-        NW[Network Bandwidth]
-    end
-
-    Inputs --> Calculations
-    Calculations --> Output
-
-    style Inputs fill:#e3f2fd
-    style Calculations fill:#e8f5e8
-    style Output fill:#fff3e0
-```
+![Diagram 1](/diagrams/kafka-concepts-part-7-diagram-1.svg)
 
 ```kotlin
 // Comprehensive capacity planning
@@ -246,27 +216,7 @@ fun warnAboutSizingPitfalls() {
 
 ### Throughput vs Latency Trade-offs
 
-```mermaid
-flowchart LR
-    subgraph Throughput["High Throughput Config"]
-        T1[Large batches<br/>batch.size=64KB]
-        T2[Wait for batching<br/>linger.ms=20]
-        T3[Compression<br/>compression=lz4]
-        T4[Multiple in-flight<br/>max.in.flight=5]
-    end
-
-    subgraph Latency["Low Latency Config"]
-        L1[Small batches<br/>batch.size=16KB]
-        L2[No waiting<br/>linger.ms=0]
-        L3[No compression<br/>compression=none]
-        L4[Sequential requests<br/>max.in.flight=1]
-    end
-
-    Throughput -.->|Trade-off| Latency
-
-    style Throughput fill:#e8f5e8
-    style Latency fill:#e3f2fd
-```
+![Diagram 2](/diagrams/kafka-concepts-part-7-diagram-2.svg)
 
 ```kotlin
 // Performance tuning profiles
@@ -882,31 +832,7 @@ object KafkaMonitoring {
 
 ## Scaling Strategies
 
-```mermaid
-flowchart TB
-    subgraph VScale["Vertical Scaling"]
-        VS1[Add CPU]
-        VS2[Add RAM]
-        VS3[Add Disk]
-        VS4[Faster Network]
-    end
-
-    subgraph HScale["Horizontal Scaling"]
-        HS1[Add Brokers]
-        HS2[Add Partitions]
-        HS3[Rebalance Load]
-    end
-
-    Current[Current Capacity] --> Decision{Bottleneck?}
-    Decision -->|Single Broker| VScale
-    Decision -->|Cluster Wide| HScale
-
-    VScale -.->|Limited| Limits[Hardware Limits]
-    HScale -.->|Unlimited| Growth[Linear Growth]
-
-    style VScale fill:#fff3e0
-    style HScale fill:#e8f5e8
-```
+![Diagram 3](/diagrams/kafka-concepts-part-7-diagram-3.svg)
 
 ```kotlin
 // Scaling strategies
