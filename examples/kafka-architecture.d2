@@ -1,0 +1,43 @@
+# Kafka High-Level Architecture
+# Converted from Mermaid to D2
+
+direction: down
+
+# Client Layer
+clients: {
+  label: "Client Layer"
+  style.fill: "#e3f2fd"
+
+  producers: Producers
+  consumers: Consumers
+  streams: Streams Apps
+  connect: Connect
+}
+
+# Kafka Cluster
+kafka: {
+  label: "Kafka Cluster"
+  style.fill: "#e8f5e8"
+
+  broker1: "Broker 1\nLeader for P0,P3\nFollower for P1,P2"
+  broker2: "Broker 2\nLeader for P1,P4\nFollower for P0,P3"
+  broker3: "Broker 3\nLeader for P2,P5\nFollower for P4,P5"
+}
+
+# Metadata Management
+metadata: {
+  label: "Metadata Management"
+  style.fill: "#fff3e0"
+
+  zk: "ZooKeeper/KRaft\nCluster Coordination\nMetadata Storage"
+}
+
+# Connections
+clients.producers -> kafka
+clients.consumers -> kafka
+clients.streams -> kafka
+clients.connect -> kafka
+
+kafka <-> metadata.zk: {
+  style.stroke-dash: 3
+}

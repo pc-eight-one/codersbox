@@ -1,0 +1,32 @@
+# Kafka Broker Internal Components
+# Converted from Mermaid to D2
+
+direction: down
+
+client: Clients
+
+# Kafka Broker
+broker: {
+  label: "Kafka Broker"
+  style.fill: "#e8f5e8"
+
+  network: "Network Layer\nHandles client connections"
+  request_mgr: "Request Manager\nProcesses produce/fetch"
+  replication: "Replication Protocol\nSync with followers"
+  log_mgr: "Log Manager\nWrites to disk"
+  meta_cache: "Metadata Cache\nTopic/partition info"
+
+  network -> request_mgr
+  request_mgr -> replication
+  request_mgr -> log_mgr
+  request_mgr -> meta_cache
+}
+
+disk: {
+  label: "Local Disk\nPartition Segments"
+  shape: cylinder
+  style.fill: "#fff3e0"
+}
+
+client -> broker.network
+broker.log_mgr -> disk
