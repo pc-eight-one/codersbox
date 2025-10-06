@@ -1,0 +1,73 @@
+{
+  "$ref": "#/definitions/projects",
+  "definitions": {
+    "projects": {
+      "type": "object",
+      "properties": {
+        "title": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "publishDate": {
+          "anyOf": [
+            {
+              "type": "string",
+              "format": "date-time"
+            },
+            {
+              "type": "string",
+              "format": "date"
+            },
+            {
+              "type": "integer",
+              "format": "unix-time"
+            }
+          ]
+        },
+        "tech": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "github": {
+          "type": "string",
+          "format": "uri"
+        },
+        "demo": {
+          "type": "string",
+          "format": "uri"
+        },
+        "image": {
+          "type": "string"
+        },
+        "featured": {
+          "type": "boolean",
+          "default": false
+        },
+        "status": {
+          "type": "string",
+          "enum": [
+            "completed",
+            "in-progress",
+            "archived"
+          ],
+          "default": "completed"
+        },
+        "$schema": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "title",
+        "description",
+        "publishDate",
+        "tech"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "$schema": "http://json-schema.org/draft-07/schema#"
+}

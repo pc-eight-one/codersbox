@@ -2,6 +2,22 @@ import { defineConfig } from 'astro/config';
 import tailwind from '@astrojs/tailwind';
 import icon from 'astro-icon';
 import mdx from '@astrojs/mdx';
+import rehypeMermaid from 'rehype-mermaid';
+
+// Configure rehype-mermaid with custom options
+const rehypeMermaidConfig = {
+  // Run mermaid in dark mode
+  dark: false,
+  // Use inline-svg strategy for better compatibility
+  strategy: 'inline-svg',
+  // Mermaid configuration
+  mermaidConfig: {
+    theme: 'default',
+    themeVariables: {
+      fontFamily: 'Inter, system-ui, sans-serif'
+    }
+  }
+};
 
 // https://astro.build/config
 export default defineConfig({
@@ -21,7 +37,7 @@ export default defineConfig({
       // Optimize MDX processing
       optimize: true,
       remarkPlugins: [],
-      rehypePlugins: [],
+      rehypePlugins: [[rehypeMermaid, rehypeMermaidConfig]],
     }),
   ],
   site: 'https://codersbox.dev',
@@ -66,15 +82,13 @@ export default defineConfig({
   
   // Markdown optimizations
   markdown: {
-    // Optimize markdown processing
-    shikiConfig: {
-      // Use a lightweight theme
-      theme: 'github-dark',
-      // Only load needed languages
-      langs: ['javascript', 'typescript', 'html', 'css', 'bash', 'json', 'markdown', 'java'],
-    },
-    // Enable syntax highlighting optimization
-    syntaxHighlight: 'shiki',
+    // IMPORTANT: Syntax highlighting is disabled to allow rehype-mermaid to work.
+    // rehype-mermaid requires code blocks with class="language-mermaid", but Shiki
+    // transforms them into a different structure that rehype-mermaid can't recognize.
+    // Alternative: Use client-side syntax highlighting library like Prism.js or highlight.js
+    syntaxHighlight: false,
+    // Add Mermaid support via rehype plugin
+    rehypePlugins: [[rehypeMermaid, rehypeMermaidConfig]],
   },
   
   // Server optimizations for development
