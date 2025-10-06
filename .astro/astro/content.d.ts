@@ -166,6 +166,20 @@ declare module 'astro:content' {
   collection: "articles";
   data: any
 } & { render(): Render[".md"] };
+"java-spliterators-guide.md": {
+	id: "java-spliterators-guide.md";
+  slug: "java-spliterators-guide";
+  body: string;
+  collection: "articles";
+  data: any
+} & { render(): Render[".md"] };
+"java-streams-advanced-guide.md": {
+	id: "java-streams-advanced-guide.md";
+  slug: "java-streams-advanced-guide";
+  body: string;
+  collection: "articles";
+  data: any
+} & { render(): Render[".md"] };
 "kitty-terminal-productivity-setup.md": {
 	id: "kitty-terminal-productivity-setup.md";
   slug: "kitty-terminal-productivity-setup";
