@@ -161,5 +161,8 @@ const fullImageUrl = image.startsWith('http') ? image : `${siteUrl}${image}`;
   <slot />
   <Footer />
   <Analytics />
+
+  <!-- Mermaid diagram client-side rendering -->
+  <script is:inline src="/scripts/mermaid-init.js"></script>
 </body>
 </html>
