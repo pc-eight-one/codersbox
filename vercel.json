@@ -1,0 +1,7 @@
+{
+  "buildCommand": "npx playwright install --with-deps chromium && npm run build",
+  "devCommand": "npm run dev",
+  "installCommand": "npm install --legacy-peer-deps",
+  "framework": "astro",
+  "outputDirectory": "dist"
+}
