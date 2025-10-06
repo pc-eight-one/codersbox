@@ -157,77 +157,77 @@ declare module 'astro:content' {
   slug: "bash-aliases-productivity-guide";
   body: string;
   collection: "articles";
-  data: any
+  data: InferEntrySchema<"articles">
 } & { render(): Render[".md"] };
 "functional-programming-in-java-functional-data-structures-best-practices.md": {
 	id: "functional-programming-in-java-functional-data-structures-best-practices.md";
   slug: "functional-programming-in-java-functional-data-structures-best-practices";
   body: string;
   collection: "articles";
-  data: any
+  data: InferEntrySchema<"articles">
 } & { render(): Render[".md"] };
 "java-spliterators-guide.md": {
 	id: "java-spliterators-guide.md";
   slug: "java-spliterators-guide";
   body: string;
   collection: "articles";
-  data: any
+  data: InferEntrySchema<"articles">
 } & { render(): Render[".md"] };
 "java-streams-advanced-guide.md": {
 	id: "java-streams-advanced-guide.md";
   slug: "java-streams-advanced-guide";
   body: string;
   collection: "articles";
-  data: any
+  data: InferEntrySchema<"articles">
 } & { render(): Render[".md"] };
 "kitty-terminal-productivity-setup.md": {
 	id: "kitty-terminal-productivity-setup.md";
   slug: "kitty-terminal-productivity-setup";
   body: string;
   collection: "articles";
-  data: any
+  data: InferEntrySchema<"articles">
 } & { render(): Render[".md"] };
 "kotlin-api-testing-dsl-okhttp.md": {
 	id: "kotlin-api-testing-dsl-okhttp.md";
   slug: "kotlin-api-testing-dsl-okhttp";
   body: string;
   collection: "articles";
-  data: any
+  data: InferEntrySchema<"articles">
 } & { render(): Render[".md"] };
 "kotlin-caching-from-scratch.md": {
 	id: "kotlin-caching-from-scratch.md";
   slug: "kotlin-caching-from-scratch";
   body: string;
   collection: "articles";
-  data: any
+  data: InferEntrySchema<"articles">
 } & { render(): Render[".md"] };
 "maven-build-tool-guide.md": {
 	id: "maven-build-tool-guide.md";
   slug: "maven-build-tool-guide";
   body: string;
   collection: "articles";
-  data: any
+  data: InferEntrySchema<"articles">
 } & { render(): Render[".md"] };
 "neovim-intellij-keymaps-setup.md": {
 	id: "neovim-intellij-keymaps-setup.md";
   slug: "neovim-intellij-keymaps-setup";
   body: string;
   collection: "articles";
-  data: any
+  data: InferEntrySchema<"articles">
 } & { render(): Render[".md"] };
 "sql-select-queries-guide.md": {
 	id: "sql-select-queries-guide.md";
   slug: "sql-select-queries-guide";
   body: string;
   collection: "articles";
-  data: any
+  data: InferEntrySchema<"articles">
 } & { render(): Render[".md"] };
 "threadlocal-spring-boot-guide.md": {
 	id: "threadlocal-spring-boot-guide.md";
   slug: "threadlocal-spring-boot-guide";
   body: string;
   collection: "articles";
-  data: any
+  data: InferEntrySchema<"articles">
 } & { render(): Render[".md"] };
 };
 "projects": {
@@ -236,49 +236,49 @@ declare module 'astro:content' {
   slug: "ecommerce-platform";
   body: string;
   collection: "projects";
-  data: any
+  data: InferEntrySchema<"projects">
 } & { render(): Render[".md"] };
 "express-api-starter.md": {
 	id: "express-api-starter.md";
   slug: "express-api-starter";
   body: string;
   collection: "projects";
-  data: any
+  data: InferEntrySchema<"projects">
 } & { render(): Render[".md"] };
 "nextjs-blog-starter.md": {
 	id: "nextjs-blog-starter.md";
   slug: "nextjs-blog-starter";
   body: string;
   collection: "projects";
-  data: any
+  data: InferEntrySchema<"projects">
 } & { render(): Render[".md"] };
 "portfolio-website.md": {
 	id: "portfolio-website.md";
   slug: "portfolio-website";
   body: string;
   collection: "projects";
-  data: any
+  data: InferEntrySchema<"projects">
 } & { render(): Render[".md"] };
 "react-todo-app.md": {
 	id: "react-todo-app.md";
   slug: "react-todo-app";
   body: string;
   collection: "projects";
-  data: any
+  data: InferEntrySchema<"projects">
 } & { render(): Render[".md"] };
 "task-management-app.md": {
 	id: "task-management-app.md";
   slug: "task-management-app";
   body: string;
   collection: "projects";
-  data: any
+  data: InferEntrySchema<"projects">
 } & { render(): Render[".md"] };
 "weather-dashboard.md": {
 	id: "weather-dashboard.md";
   slug: "weather-dashboard";
   body: string;
   collection: "projects";
-  data: any
+  data: InferEntrySchema<"projects">
 } & { render(): Render[".md"] };
 };
 "tutorials": {
@@ -287,259 +287,259 @@ declare module 'astro:content' {
   slug: "antlr-kotlin/antlr-kotlin-part-1";
   body: string;
   collection: "tutorials";
-  data: any
+  data: InferEntrySchema<"tutorials">
 } & { render(): Render[".md"] };
 "antlr-kotlin/antlr-kotlin-part-2.md": {
 	id: "antlr-kotlin/antlr-kotlin-part-2.md";
   slug: "antlr-kotlin/antlr-kotlin-part-2";
   body: string;
   collection: "tutorials";
-  data: any
+  data: InferEntrySchema<"tutorials">
 } & { render(): Render[".md"] };
 "antlr-kotlin/antlr-kotlin-part-3.md": {
 	id: "antlr-kotlin/antlr-kotlin-part-3.md";
   slug: "antlr-kotlin/antlr-kotlin-part-3";
   body: string;
   collection: "tutorials";
-  data: any
+  data: InferEntrySchema<"tutorials">
 } & { render(): Render[".md"] };
 "antlr-kotlin/antlr-kotlin-part-4.md": {
 	id: "antlr-kotlin/antlr-kotlin-part-4.md";
   slug: "antlr-kotlin/antlr-kotlin-part-4";
   body: string;
   collection: "tutorials";
-  data: any
+  data: InferEntrySchema<"tutorials">
 } & { render(): Render[".md"] };
 "antlr-kotlin/antlr-kotlin-part-5.md": {
 	id: "antlr-kotlin/antlr-kotlin-part-5.md";
   slug: "antlr-kotlin/antlr-kotlin-part-5";
   body: string;
   collection: "tutorials";
-  data: any
+  data: InferEntrySchema<"tutorials">
 } & { render(): Render[".md"] };
 "antlr-kotlin/antlr-kotlin-part-6.md": {
 	id: "antlr-kotlin/antlr-kotlin-part-6.md";
   slug: "antlr-kotlin/antlr-kotlin-part-6";
   body: string;
   collection: "tutorials";
-  data: any
+  data: InferEntrySchema<"tutorials">
 } & { render(): Render[".md"] };
 "java-complete/java-complete-part-1.md": {
 	id: "java-complete/java-complete-part-1.md";
   slug: "java-complete/java-complete-part-1";
   body: string;
   collection: "tutorials";
-  data: any
+  data: InferEntrySchema<"tutorials">
 } & { render(): Render[".md"] };
 "java-complete/java-complete-part-10.md": {
 	id: "java-complete/java-complete-part-10.md";
   slug: "java-complete-part-10";
   body: string;
   collection: "tutorials";
-  data: any
+  data: InferEntrySchema<"tutorials">
 } & { render(): Render[".md"] };
 "java-complete/java-complete-part-11.md": {
 	id: "java-complete/java-complete-part-11.md";
   slug: "java-complete-part-11";
   body: string;
   collection: "tutorials";
-  data: any
+  data: InferEntrySchema<"tutorials">
 } & { render(): Render[".md"] };
 "java-complete/java-complete-part-12.md": {
 	id: "java-complete/java-complete-part-12.md";
   slug: "java-complete-part-12";
   body: string;
   collection: "tutorials";
-  data: any
+  data: InferEntrySchema<"tutorials">
 } & { render(): Render[".md"] };
 "java-complete/java-complete-part-13.md": {
 	id: "java-complete/java-complete-part-13.md";
   slug: "java-complete-part-13";
   body: string;
   collection: "tutorials";
-  data: any
+  data: InferEntrySchema<"tutorials">
 } & { render(): Render[".md"] };
 "java-complete/java-complete-part-14.md": {
 	id: "java-complete/java-complete-part-14.md";
   slug: "java-complete-part-14";
   body: string;
   collection: "tutorials";
-  data: any
+  data: InferEntrySchema<"tutorials">
 } & { render(): Render[".md"] };
 "java-complete/java-complete-part-15.md": {
 	id: "java-complete/java-complete-part-15.md";
   slug: "java-complete-part-15";
   body: string;
   collection: "tutorials";
-  data: any
+  data: InferEntrySchema<"tutorials">
 } & { render(): Render[".md"] };
 "java-complete/java-complete-part-16.md": {
 	id: "java-complete/java-complete-part-16.md";
   slug: "java-complete-part-16";
   body: string;
   collection: "tutorials";
-  data: any
+  data: InferEntrySchema<"tutorials">
 } & { render(): Render[".md"] };
 "java-complete/java-complete-part-17.md": {
 	id: "java-complete/java-complete-part-17.md";
   slug: "java-complete-part-17";
   body: string;
   collection: "tutorials";
-  data: any
+  data: InferEntrySchema<"tutorials">
 } & { render(): Render[".md"] };
 "java-complete/java-complete-part-2.md": {
 	id: "java-complete/java-complete-part-2.md";
   slug: "java-complete/java-complete-part-2";
   body: string;
   collection: "tutorials";
-  data: any
+  data: InferEntrySchema<"tutorials">
 } & { render(): Render[".md"] };
 "java-complete/java-complete-part-3.md": {
 	id: "java-complete/java-complete-part-3.md";
   slug: "java-complete/java-complete-part-3";
   body: string;
   collection: "tutorials";
-  data: any
+  data: InferEntrySchema<"tutorials">
 } & { render(): Render[".md"] };
 "java-complete/java-complete-part-4.md": {
 	id: "java-complete/java-complete-part-4.md";
   slug: "java-complete/java-complete-part-4";
   body: string;
   collection: "tutorials";
-  data: any
+  data: InferEntrySchema<"tutorials">
 } & { render(): Render[".md"] };
 "java-complete/java-complete-part-5.md": {
 	id: "java-complete/java-complete-part-5.md";
   slug: "java-complete/java-complete-part-5";
   body: string;
   collection: "tutorials";
-  data: any
+  data: InferEntrySchema<"tutorials">
 } & { render(): Render[".md"] };
 "java-complete/java-complete-part-6.md": {
 	id: "java-complete/java-complete-part-6.md";
   slug: "java-complete/java-complete-part-6";
   body: string;
   collection: "tutorials";
-  data: any
+  data: InferEntrySchema<"tutorials">
 } & { render(): Render[".md"] };
 "java-complete/java-complete-part-7.md": {
 	id: "java-complete/java-complete-part-7.md";
   slug: "java-complete/java-complete-part-7";
   body: string;
   collection: "tutorials";
-  data: any
+  data: InferEntrySchema<"tutorials">
 } & { render(): Render[".md"] };
 "java-complete/java-complete-part-8.md": {
 	id: "java-complete/java-complete-part-8.md";
   slug: "java-complete/java-complete-part-8";
   body: string;
   collection: "tutorials";
-  data: any
+  data: InferEntrySchema<"tutorials">
 } & { render(): Render[".md"] };
 "java-complete/java-complete-part-9.md": {
 	id: "java-complete/java-complete-part-9.md";
   slug: "java-complete-part-9";
   body: string;
   collection: "tutorials";
-  data: any
+  data: InferEntrySchema<"tutorials">
 } & { render(): Render[".md"] };
 "kafka-concepts/kafka-concepts-part-1.md": {
 	id: "kafka-concepts/kafka-concepts-part-1.md";
   slug: "kafka-concepts/kafka-concepts-part-1";
   body: string;
   collection: "tutorials";
-  data: any
+  data: InferEntrySchema<"tutorials">
 } & { render(): Render[".md"] };
 "kafka-concepts/kafka-concepts-part-2.md": {
 	id: "kafka-concepts/kafka-concepts-part-2.md";
   slug: "kafka-concepts/kafka-concepts-part-2";
   body: string;
   collection: "tutorials";
-  data: any
+  data: InferEntrySchema<"tutorials">
 } & { render(): Render[".md"] };
 "kafka-concepts/kafka-concepts-part-3.md": {
 	id: "kafka-concepts/kafka-concepts-part-3.md";
   slug: "kafka-concepts/kafka-concepts-part-3";
   body: string;
   collection: "tutorials";
-  data: any
+  data: InferEntrySchema<"tutorials">
 } & { render(): Render[".md"] };
 "kafka-concepts/kafka-concepts-part-4.md": {
 	id: "kafka-concepts/kafka-concepts-part-4.md";
   slug: "kafka-concepts/kafka-concepts-part-4";
   body: string;
   collection: "tutorials";
-  data: any
+  data: InferEntrySchema<"tutorials">
 } & { render(): Render[".md"] };
 "kafka-concepts/kafka-concepts-part-5.md": {
 	id: "kafka-concepts/kafka-concepts-part-5.md";
   slug: "kafka-concepts/kafka-concepts-part-5";
   body: string;
   collection: "tutorials";
-  data: any
+  data: InferEntrySchema<"tutorials">
 } & { render(): Render[".md"] };
 "kafka-concepts/kafka-concepts-part-6.md": {
 	id: "kafka-concepts/kafka-concepts-part-6.md";
   slug: "kafka-concepts/kafka-concepts-part-6";
   body: string;
   collection: "tutorials";
-  data: any
+  data: InferEntrySchema<"tutorials">
 } & { render(): Render[".md"] };
 "kafka-concepts/kafka-concepts-part-7.md": {
 	id: "kafka-concepts/kafka-concepts-part-7.md";
   slug: "kafka-concepts/kafka-concepts-part-7";
   body: string;
   collection: "tutorials";
-  data: any
+  data: InferEntrySchema<"tutorials">
 } & { render(): Render[".md"] };
 "kafka-concepts/kafka-concepts-part-8.md": {
 	id: "kafka-concepts/kafka-concepts-part-8.md";
   slug: "kafka-concepts/kafka-concepts-part-8";
   body: string;
   collection: "tutorials";
-  data: any
+  data: InferEntrySchema<"tutorials">
 } & { render(): Render[".md"] };
 "kafka-java/kafka-java-part-1.md": {
 	id: "kafka-java/kafka-java-part-1.md";
   slug: "kafka-java/kafka-java-part-1";
   body: string;
   collection: "tutorials";
-  data: any
+  data: InferEntrySchema<"tutorials">
 } & { render(): Render[".md"] };
 "kafka-java/kafka-java-part-2.md": {
 	id: "kafka-java/kafka-java-part-2.md";
   slug: "kafka-java/kafka-java-part-2";
   body: string;
   collection: "tutorials";
-  data: any
+  data: InferEntrySchema<"tutorials">
 } & { render(): Render[".md"] };
 "kafka-java/kafka-java-part-3.md": {
 	id: "kafka-java/kafka-java-part-3.md";
   slug: "kafka-java/kafka-java-part-3";
   body: string;
   collection: "tutorials";
-  data: any
+  data: InferEntrySchema<"tutorials">
 } & { render(): Render[".md"] };
 "kafka-java/kafka-java-part-4.md": {
 	id: "kafka-java/kafka-java-part-4.md";
   slug: "kafka-java/kafka-java-part-4";
   body: string;
   collection: "tutorials";
-  data: any
+  data: InferEntrySchema<"tutorials">
 } & { render(): Render[".md"] };
 "kafka-java/kafka-java-part-5.md": {
 	id: "kafka-java/kafka-java-part-5.md";
   slug: "kafka-java/kafka-java-part-5";
   body: string;
   collection: "tutorials";
-  data: any
+  data: InferEntrySchema<"tutorials">
 } & { render(): Render[".md"] };
 "kafka-java/kafka-java-part-6.md": {
 	id: "kafka-java/kafka-java-part-6.md";
   slug: "kafka-java/kafka-java-part-6";
   body: string;
   collection: "tutorials";
-  data: any
+  data: InferEntrySchema<"tutorials">
 } & { render(): Render[".md"] };
 };
 
@@ -551,5 +551,5 @@ declare module 'astro:content' {
 
 	type AnyEntryMap = ContentEntryMap & DataEntryMap;
 
-	export type ContentConfig = never;
+	export type ContentConfig = typeof import("../../src/content/config.js");
 }
