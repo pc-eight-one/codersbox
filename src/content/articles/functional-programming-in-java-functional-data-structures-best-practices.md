@@ -4,7 +4,6 @@ description: "A comprehensive, practical deep dive into functional programming i
 publishDate: 2025-08-30
 tags: ["Java", "Functional Programming", "Data Structures", "Streams", "Immutability", "Best Practices"]
 readTime: "25–35 min read"
-featured: true
 author: "Prashant Chaturvedi"
 ---
 

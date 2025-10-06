@@ -9,7 +9,6 @@ series: "ANTLR with Kotlin"
 part: 6
 estimatedTime: "30 minutes"
 totalParts: 6
-featured: true
 ---
 
 # ANTLR with Kotlin - Part 6: Advanced Features and Optimization

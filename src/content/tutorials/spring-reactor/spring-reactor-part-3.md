@@ -9,7 +9,6 @@ series: "Spring Boot Reactive Programming"
 part: 3
 estimatedTime: "80 minutes"
 totalParts: 8
-featured: true
 ---
 
 # Spring Boot Reactive Programming - Part 3: Schedulers and Threading

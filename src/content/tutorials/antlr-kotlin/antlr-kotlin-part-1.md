@@ -9,7 +9,6 @@ series: "ANTLR with Kotlin"
 part: 1
 estimatedTime: "20 minutes"
 totalParts: 6
-featured: true
 ---
 
 # ANTLR with Kotlin - Part 1: Basics and Project Setup

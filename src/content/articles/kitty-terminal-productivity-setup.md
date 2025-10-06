@@ -7,7 +7,6 @@ tags: ["Kitty", "Terminal", "Productivity", "Linux", "DevOps", "Workflow", "Conf
 readTime: "8 min read"
 difficulty: "beginner"
 estimatedTime: "15 minutes"
-featured: true
 ---
 
 # Kitty Terminal Configuration for Developers

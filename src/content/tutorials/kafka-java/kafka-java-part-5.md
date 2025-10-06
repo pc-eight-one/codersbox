@@ -9,7 +9,6 @@ series: "Kafka for Java Developers"
 part: 5
 estimatedTime: "120 minutes"
 totalParts: 6
-featured: true
 ---
 
 # Kafka for Java Developers - Part 5: Kafka Streams for Real-Time Processing

@@ -9,7 +9,6 @@ series: "ANTLR with Kotlin"
 part: 3
 estimatedTime: "25 minutes"
 totalParts: 6
-featured: true
 ---
 
 # ANTLR with Kotlin - Part 3: Visitors and Listeners

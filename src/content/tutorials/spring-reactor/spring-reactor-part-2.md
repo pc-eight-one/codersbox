@@ -9,7 +9,6 @@ series: "Spring Boot Reactive Programming"
 part: 2
 estimatedTime: "75 minutes"
 totalParts: 8
-featured: true
 ---
 
 # Spring Boot Reactive Programming - Part 2: Operators and Transformations

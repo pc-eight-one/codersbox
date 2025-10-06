@@ -9,7 +9,6 @@ series: "Spring Boot Reactive Programming"
 part: 1
 estimatedTime: "60 minutes"
 totalParts: 8
-featured: true
 ---
 
 # Spring Boot Reactive Programming - Part 1: Introduction to Project Reactor

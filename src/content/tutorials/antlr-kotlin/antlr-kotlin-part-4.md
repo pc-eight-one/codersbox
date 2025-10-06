@@ -9,7 +9,6 @@ series: "ANTLR with Kotlin"
 part: 4
 estimatedTime: "30 minutes"
 totalParts: 6
-featured: true
 ---
 
 # ANTLR with Kotlin - Part 4: JOINs and Table Aliases

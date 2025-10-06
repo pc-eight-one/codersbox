@@ -7,7 +7,6 @@ tags: ["Maven", "Java", "Build Tool", "Dependency Management", "CI/CD", "DevOps"
 readTime: "25 min read"
 difficulty: "intermediate"
 estimatedTime: "50 minutes"
-featured: true
 ---
 
 # Maven Build Tool: From Basics to Production

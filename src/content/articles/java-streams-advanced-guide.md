@@ -7,7 +7,6 @@ tags: ["Java", "Streams", "Performance", "Functional Programming", "Concurrency"
 readTime: "30 min read"
 difficulty: "advanced"
 estimatedTime: "60 minutes"
-featured: true
 ---
 
 # Advanced Java Streams: Beyond the Basics

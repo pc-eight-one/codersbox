@@ -9,7 +9,6 @@ series: "Spring Boot Reactive Programming"
 part: 4
 estimatedTime: "70 minutes"
 totalParts: 8
-featured: true
 ---
 
 # Spring Boot Reactive Programming - Part 4: Backpressure and Flow Control

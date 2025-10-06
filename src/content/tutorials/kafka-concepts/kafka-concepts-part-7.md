@@ -9,7 +9,6 @@ series: "Kafka Deep Dive"
 part: 7
 estimatedTime: "120 minutes"
 totalParts: 8
-featured: true
 ---
 
 # Kafka Deep Dive - Part 7: Performance, Scalability, and Capacity Planning

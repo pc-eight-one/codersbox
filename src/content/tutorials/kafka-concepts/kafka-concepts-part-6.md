@@ -9,7 +9,6 @@ series: "Kafka Deep Dive"
 part: 6
 estimatedTime: "120 minutes"
 totalParts: 8
-featured: true
 ---
 
 # Kafka Deep Dive - Part 6: Controller, Coordinators, and Internal Protocols

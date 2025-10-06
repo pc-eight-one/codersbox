@@ -9,7 +9,6 @@ series: "Spring Boot Reactive Programming"
 part: 7
 estimatedTime: "85 minutes"
 totalParts: 8
-featured: true
 ---
 
 # Spring Boot Reactive Programming - Part 7: Reactive Data Access

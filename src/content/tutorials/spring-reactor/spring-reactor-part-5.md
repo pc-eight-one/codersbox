@@ -9,7 +9,6 @@ series: "Spring Boot Reactive Programming"
 part: 5
 estimatedTime: "90 minutes"
 totalParts: 8
-featured: true
 ---
 
 # Spring Boot Reactive Programming - Part 5: Advanced Error Handling and Resilience

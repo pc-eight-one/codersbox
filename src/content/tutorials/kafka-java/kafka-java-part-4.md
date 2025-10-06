@@ -9,7 +9,6 @@ series: "Kafka for Java Developers"
 part: 4
 estimatedTime: "90 minutes"
 totalParts: 6
-featured: true
 ---
 
 # Kafka for Java Developers - Part 4: Advanced Consumer Patterns

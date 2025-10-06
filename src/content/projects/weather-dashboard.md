@@ -6,7 +6,6 @@ tech: ["Vue.js", "API", "Responsive Design", "JavaScript"]
 github: "https://github.com/johndoe/weather-dashboard"
 demo: "https://weather-dashboard-demo.netlify.app"
 image: "/images/projects/weather-dashboard.jpg"
-featured: true
 status: "completed"
 ---
 

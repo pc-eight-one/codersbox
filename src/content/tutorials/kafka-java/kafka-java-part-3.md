@@ -9,7 +9,6 @@ series: "Kafka for Java Developers"
 part: 3
 estimatedTime: "90 minutes"
 totalParts: 6
-featured: true
 ---
 
 # Kafka for Java Developers - Part 3: Advanced Producer Patterns

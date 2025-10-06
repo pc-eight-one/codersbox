@@ -9,7 +9,6 @@ series: "Kafka for Java Developers"
 part: 2
 estimatedTime: "75 minutes"
 totalParts: 6
-featured: true
 ---
 
 # Kafka for Java Developers - Part 2: Setup and First Producer/Consumer

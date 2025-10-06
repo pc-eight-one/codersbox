@@ -9,7 +9,6 @@ series: "Spring Boot Reactive Programming"
 part: 8
 estimatedTime: "95 minutes"
 totalParts: 8
-featured: true
 ---
 
 # Spring Boot Reactive Programming - Part 8: Testing, Debugging, and Production

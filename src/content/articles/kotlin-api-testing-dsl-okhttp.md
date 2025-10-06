@@ -7,7 +7,6 @@ tags: ["Kotlin", "Testing", "API", "OkHttp", "DSL", "Maven", "REST", "Automation
 readTime: "20 min read"
 difficulty: "intermediate"
 estimatedTime: "45 minutes"
-featured: true
 ---
 
 # Building an API Testing Library with Kotlin DSL and OkHttp

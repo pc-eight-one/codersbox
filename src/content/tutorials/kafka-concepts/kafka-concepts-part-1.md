@@ -9,7 +9,6 @@ series: "Kafka Deep Dive"
 part: 1
 estimatedTime: "90 minutes"
 totalParts: 8
-featured: true
 ---
 
 # Kafka Deep Dive - Part 1: Architecture and Fundamental Concepts

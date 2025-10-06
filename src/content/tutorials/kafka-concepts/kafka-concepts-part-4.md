@@ -9,7 +9,6 @@ series: "Kafka Deep Dive"
 part: 4
 estimatedTime: "120 minutes"
 totalParts: 8
-featured: true
 ---
 
 # Kafka Deep Dive - Part 4: Consumer Groups and Offset Management

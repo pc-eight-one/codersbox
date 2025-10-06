@@ -9,7 +9,6 @@ series: "Kafka for Java Developers"
 part: 6
 estimatedTime: "120 minutes"
 totalParts: 6
-featured: true
 ---
 
 # Kafka for Java Developers - Part 6: Production Best Practices

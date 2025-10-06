@@ -7,7 +7,6 @@ tags: ["Java", "Spliterator", "Streams", "Parallel Processing", "Performance", "
 readTime: "25 min read"
 difficulty: "advanced"
 estimatedTime: "50 minutes"
-featured: true
 ---
 
 # Java Spliterators: Stream Sources and Parallel Processing

@@ -7,7 +7,6 @@ tags: ["SQL", "Database", "SELECT", "Queries", "Tutorial", "MySQL", "PostgreSQL"
 readTime: "12 min read"
 difficulty: "beginner"
 estimatedTime: "30 minutes"
-featured: true
 ---
 
 # SQL SELECT Queries: From Basic to Advanced

@@ -9,7 +9,6 @@ series: "ANTLR with Kotlin"
 part: 5
 estimatedTime: "25 minutes"
 totalParts: 6
-featured: true
 ---
 
 # ANTLR with Kotlin - Part 5: Error Handling and Recovery

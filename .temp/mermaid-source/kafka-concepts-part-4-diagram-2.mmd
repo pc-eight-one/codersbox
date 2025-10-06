@@ -1,38 +1,24 @@
 flowchart TB
-    subgraph Topic["Topic: orders (6 partitions)"]
-        P0[Partition 0]
-        P1[Partition 1]
-        P2[Partition 2]
-        P3[Partition 3]
-        P4[Partition 4]
-        P5[Partition 5]
+    subgraph Consumer["Consumer"]
+        Poll[poll() records]
+        Process[Process records]
+        Commit[Commit offsets]
     end
 
-    subgraph Group["Consumer Group: order-processors"]
-        C1[Consumer 1<br/>Assigned: P0, P1]
-        C2[Consumer 2<br/>Assigned: P2, P3]
-        C3[Consumer 3<br/>Assigned: P4, P5]
+    subgraph Broker["Kafka Broker"]
+        Topic[__consumer_offsets<br/>Internal topic<br/>50 partitions]
     end
 
-    subgraph Coordinator["Group Coordinator"]
-        GC[Manages group state<br/>Assigns partitions<br/>Tracks consumer health]
+    subgraph Storage["Offset Storage Format"]
+        Key[Key: group + topic + partition]
+        Value[Value: offset + metadata]
     end
 
-    P0 --> C1
-    P1 --> C1
-    P2 --> C2
-    P3 --> C2
-    P4 --> C3
-    P5 --> C3
+    Poll --> Process
+    Process --> Commit
+    Commit --> Topic
+    Topic -.-> Storage
 
-    C1 <-->|Heartbeats| GC
-    C2 <-->|Heartbeats| GC
-    C3 <-->|Heartbeats| GC
-
-    style P0 fill:#e3f2fd
-    style P1 fill:#e3f2fd
-    style P2 fill:#e8f5e8
-    style P3 fill:#e8f5e8
-    style P4 fill:#fff3e0
-    style P5 fill:#fff3e0
-    style GC fill:#f3e5f5
+    style Consumer fill:#e3f2fd
+    style Broker fill:#e8f5e8
+    style Storage fill:#fff3e0

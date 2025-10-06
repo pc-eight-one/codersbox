@@ -7,7 +7,6 @@ tags: ["Kotlin", "Caching", "Performance", "Coroutines", "Caffeine", "Redis", "S
 readTime: "25 min read"
 difficulty: "advanced"
 estimatedTime: "120 minutes"
-featured: true
 ---
 
 # Kotlin Caching From Scratch: A Complete, Practical Guide

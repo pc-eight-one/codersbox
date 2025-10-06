@@ -7,7 +7,6 @@ tags: ["Neovim", "IntelliJ IDEA", "IDE", "Vim", "Development", "Java", "Kotlin",
 readTime: "15 min read"
 difficulty: "intermediate"
 estimatedTime: "45 minutes"
-featured: true
 ---
 
 # Neovim with IntelliJ Keymaps

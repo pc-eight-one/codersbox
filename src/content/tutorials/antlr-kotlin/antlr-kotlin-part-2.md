@@ -9,7 +9,6 @@ series: "ANTLR with Kotlin"
 part: 2
 estimatedTime: "25 minutes"
 totalParts: 6
-featured: true
 ---
 
 # ANTLR with Kotlin - Part 2: Grammar Design for WHERE Clauses

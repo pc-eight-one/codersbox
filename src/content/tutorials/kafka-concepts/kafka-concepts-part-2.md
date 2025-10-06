@@ -9,7 +9,6 @@ series: "Kafka Deep Dive"
 part: 2
 estimatedTime: "120 minutes"
 totalParts: 8
-featured: true
 ---
 
 # Kafka Deep Dive - Part 2: Topics, Partitions, and Replication

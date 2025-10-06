@@ -6,7 +6,6 @@ tech: ["React", "Node.js", "PostgreSQL", "Stripe", "Full-Stack"]
 github: "https://github.com/johndoe/ecommerce-platform"
 demo: "https://ecommerce-demo-app.vercel.app"
 image: "/images/projects/ecommerce-platform.jpg"
-featured: true
 status: "completed"
 ---
 

@@ -7,7 +7,6 @@ tags: ["Java", "Spring Boot", "ThreadLocal", "Concurrency", "Multi-threading", "
 readTime: "25 min read"
 difficulty: "intermediate"
 estimatedTime: "60 minutes"
-featured: true
 ---
 
 # ThreadLocal in Spring Boot: Solving Real-World Problems

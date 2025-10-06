@@ -7,7 +7,6 @@ tags: ["Bash", "Linux", "Productivity", "Terminal", "DevOps", "Workflow", "Alias
 readTime: "10 min read"
 difficulty: "beginner"
 estimatedTime: "20 minutes"
-featured: true
 ---
 
 # Bash Aliases for Developers

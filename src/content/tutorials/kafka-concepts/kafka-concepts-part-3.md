@@ -9,7 +9,6 @@ series: "Kafka Deep Dive"
 part: 3
 estimatedTime: "120 minutes"
 totalParts: 8
-featured: true
 ---
 
 # Kafka Deep Dive - Part 3: Producer Internals and Optimization

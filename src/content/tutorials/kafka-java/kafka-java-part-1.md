@@ -9,7 +9,6 @@ series: "Kafka for Java Developers"
 part: 1
 estimatedTime: "60 minutes"
 totalParts: 6
-featured: true
 ---
 
 # Kafka for Java Developers - Part 1: Introduction to Apache Kafka

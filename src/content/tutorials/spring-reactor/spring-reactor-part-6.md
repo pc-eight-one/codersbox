@@ -9,7 +9,6 @@ series: "Spring Boot Reactive Programming"
 part: 6
 estimatedTime: "100 minutes"
 totalParts: 8
-featured: true
 ---
 
 # Spring Boot Reactive Programming - Part 6: Spring WebFlux Deep Dive

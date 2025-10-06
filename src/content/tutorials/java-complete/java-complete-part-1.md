@@ -9,7 +9,6 @@ series: "Java Complete"
 part: 1
 estimatedTime: "45 minutes"
 totalParts: 17
-featured: true
 ---
 
 # Java Complete - Part 1: Introduction to Java
