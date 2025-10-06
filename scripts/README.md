@@ -20,9 +20,35 @@ Verify installation:
 d2 --version
 ```
 
-## Available Scripts
+## ⚡ Automatic Conversion (RECOMMENDED)
 
-### 1. Test Script (Run First)
+### Auto Mermaid to SVG Converter ⭐ **NEW!**
+
+**Fully automated** - Just run and go!
+
+```bash
+# Python (recommended)
+python3 scripts/auto-mermaid-to-svg.py
+
+# OR Bash
+./scripts/auto-mermaid-to-svg.sh
+```
+
+**Features:**
+- ✅ **Automatically installs Mermaid CLI** if needed
+- ✅ **Detects all Mermaid diagrams** automatically (122 diagrams!)
+- ✅ **Generates perfect SVGs** using official Mermaid renderer
+- ✅ **Updates markdown files** with image references
+- ✅ **Creates backups** for safety
+- ✅ **No manual conversion** needed!
+
+**See [AUTO_CONVERT_README.md](../AUTO_CONVERT_README.md) for details**
+
+---
+
+## Manual Conversion Scripts
+
+### 1. Test Script
 
 ```bash
 ./scripts/test-conversion.sh
@@ -37,9 +63,7 @@ d2 --version
 - ✅ Counts your Mermaid diagrams
 - ✅ Verifies system is ready
 
-**Run this first!**
-
-### 2. Conversion Scripts
+### 2. D2 Conversion Scripts (Manual)
 
 #### Option A: Bash Script (Simpler)
 
