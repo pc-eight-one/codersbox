@@ -14,6 +14,7 @@ export async function getStaticPaths() {
 
   tutorials.forEach(tutorial => {
     const seriesName = tutorial.data.series;
+    if (!seriesName) return; // Skip tutorials without series
     if (!seriesMap.has(seriesName)) {
       seriesMap.set(seriesName, {
         name: seriesName,
@@ -75,6 +76,7 @@ const seriesMap = new Map();
 
 tutorials.forEach(tutorial => {
   const seriesName = tutorial.data.series;
+  if (!seriesName) return; // Skip tutorials without series
   if (!seriesMap.has(seriesName)) {
     seriesMap.set(seriesName, {
       name: seriesName,
