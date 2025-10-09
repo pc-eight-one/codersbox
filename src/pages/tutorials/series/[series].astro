@@ -6,7 +6,7 @@ import HeroBackground from '@/components/HeroBackground.astro';
 
 export async function getStaticPaths() {
   const tutorials = await getCollection('tutorials', ({ data }) => {
-    return data.draft !== true && typeof data.series === 'string' && data.series.trim().length > 0;
+    return data.draft !== true && data.published !== false && typeof data.series === 'string' && data.series.trim().length > 0;
   });
 
   // Group tutorials by series (ignore undefined/null)

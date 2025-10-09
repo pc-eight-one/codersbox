@@ -7,7 +7,7 @@ import PagePagination from '@/components/PagePagination.astro';
 export async function getStaticPaths() {
   // Get all projects for pagination calculation
   const projects = await getCollection('projects', ({ data }) => {
-    return data.draft !== true;
+    return data.draft !== true && data.published !== false;
   });
 
   const projectsPerPage = 6;
@@ -30,7 +30,7 @@ const currentPage = parseInt(page || '2');
 
 // Get all projects, sorted by publish date
 const projects = await getCollection('projects', ({ data }) => {
-  return data.draft !== true;
+  return data.draft !== true && data.published !== false;
 });
 
 // Sort projects by publish date (newest first)

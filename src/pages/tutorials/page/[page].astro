@@ -6,7 +6,7 @@ import PagePagination from '@/components/PagePagination.astro';
 export async function getStaticPaths() {
   // Get all tutorials for pagination calculation
   const tutorials = await getCollection('tutorials', ({ data }) => {
-    return data.draft !== true;
+    return data.draft !== true && data.published !== false;
   });
 
   // Group tutorials by series
@@ -68,7 +68,7 @@ const currentPage = parseInt(page || '2');
 
 // Get all tutorials, sorted by series and order
 const tutorials = await getCollection('tutorials', ({ data }) => {
-  return data.draft !== true;
+  return data.draft !== true && data.published !== false;
 });
 
 // Group tutorials by series

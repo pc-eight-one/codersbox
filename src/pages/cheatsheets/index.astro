@@ -1,0 +1,476 @@
+---
+import { getCollection } from 'astro:content';
+import ArticlesLayout from '@/layouts/ArticlesLayout.astro';
+import ArticleCard from '@/components/ArticleCard.astro';
+import PagePagination from '@/components/PagePagination.astro';
+
+// Get all cheatsheets, sorted by publish date
+const cheatsheets = await getCollection('cheatsheets', ({ data }) => {
+  return data.draft !== true && data.published !== false;
+});
+
+// Sort cheatsheets by publish date (newest first)
+cheatsheets.sort((a, b) => new Date(b.data.publishDate).getTime() - new Date(a.data.publishDate).getTime());
+
+// Calculate tag popularity (top 3 most used tags)
+const tagCounts = new Map();
+cheatsheets.forEach(cheatsheet => {
+  cheatsheet.data.tags?.forEach(tag => {
+    tagCounts.set(tag, (tagCounts.get(tag) || 0) + 1);
+  });
+});
+
+// Get top 3 most popular tags
+const popularTags = Array.from(tagCounts.entries())
+  .sort((a, b) => b[1] - a[1])
+  .slice(0, 3)
+  .map(([tag, count]) => ({ tag, count }));
+
+// Get all unique tags for filtering
+const allTags = Array.from(tagCounts.keys()).sort();
+
+// Pagination logic
+const cheatsheetsPerPage = 9;
+const totalPages = Math.ceil(cheatsheets.length / cheatsheetsPerPage);
+const currentPage = 1;
+const startIndex = (currentPage - 1) * cheatsheetsPerPage;
+const paginatedCheatsheets = cheatsheets.slice(startIndex, startIndex + cheatsheetsPerPage);
+
+// Generate pagination URLs
+const prevUrl = null; // First page, no previous
+const nextUrl = totalPages > 1 ? '/cheatsheets/page/2' : null;
+---
+
+<ArticlesLayout
+  title="Cheatsheets - codersbox"
+  description="Quick reference guides and cheatsheets for developers. Essential commands, syntax, and information at your fingertips."
+  heroTitle="Cheatsheets"
+  heroDescription="Quick reference guides and cheatsheets for developers. Find commands, syntax, and essential information at a glance."
+  searchPlaceholder="Search cheatsheets..."
+  popularTags={popularTags}
+  allTags={allTags}
+>
+  <!-- Main Content -->
+  <main class="py-12 bg-gray-50">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <!-- Cheatsheets Grid -->
+      <div id="cheatsheets-container">
+        <div id="cheatsheets-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
+          {paginatedCheatsheets.map((cheatsheet) => (
+            <div
+              class="cheatsheet-item"
+              data-title={cheatsheet.data.title.toLowerCase()}
+              data-description={cheatsheet.data.description.toLowerCase()}
+              data-tags={JSON.stringify(cheatsheet.data.tags || [])}
+              data-category={(cheatsheet.data.category || '').toLowerCase()}
+              data-date={cheatsheet.data.publishDate.getTime()}
+              data-read-time={cheatsheet.data.readTime ? parseInt(cheatsheet.data.readTime.match(/\d+/)?.[0] || '0') : 0}
+            >
+              <ArticleCard
+                title={cheatsheet.data.title}
+                description={cheatsheet.data.description}
+                date={cheatsheet.data.publishDate.toLocaleDateString('en-US', {
+                  year: 'numeric',
+                  month: 'long',
+                  day: 'numeric'
+                })}
+                readTime={cheatsheet.data.readTime}
+                tags={cheatsheet.data.tags}
+                slug={`cheatsheets/${cheatsheet.slug}`}
+                featured={cheatsheet.data.featured}
+                linkText="Show Cheatsheet"
+              />
+            </div>
+          ))}
+        </div>
+
+        <!-- No Results Message -->
+        <div id="no-results" class="text-center py-12 hidden">
+          <div class="text-gray-400 mb-4">
+            <svg class="w-16 h-16 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+            </svg>
+          </div>
+          <h3 class="text-xl font-semibold text-gray-900 mb-2">No cheatsheets found</h3>
+          <p class="text-gray-600 mb-4">Try adjusting your search or filters to find what you're looking for.</p>
+          <button id="clear-all-filters" class="text-indigo-600 hover:text-indigo-700 font-medium">
+            Clear all filters
+          </button>
+        </div>
+      </div>
+
+      {paginatedCheatsheets.length > 0 ? (
+        <!-- Pagination -->
+        <div id="pagination-container">
+          {totalPages > 1 && (
+            <PagePagination
+              currentPage={currentPage}
+              totalPages={totalPages}
+              prevUrl={prevUrl}
+              nextUrl={nextUrl}
+            />
+          )}
+        </div>
+      ) : null}
+    </div>
+  </main>
+</ArticlesLayout>
+
+<script is:inline>
+  // Enhanced search functionality for cheatsheets
+  document.addEventListener('DOMContentLoaded', function() {
+    const cheatsheets = Array.from(document.querySelectorAll('.cheatsheet-item'));
+    const noResults = document.getElementById('no-results');
+    const cheatsheetsGrid = document.getElementById('cheatsheets-grid');
+    const popularTags = document.querySelectorAll('.popular-tag');
+    const categoryFilters = document.querySelectorAll('.category-filter');
+    const clearAllFilters = document.getElementById('clear-all-filters');
+    const heroSearch = document.getElementById('hero-search');
+    const searchSuggestions = document.getElementById('search-suggestions');
+    const suggestionsList = document.getElementById('suggestions-list');
+
+    // Build search index for type-ahead
+    const searchIndex = new Set();
+    let cheatsheetTitles = [];
+    let cheatsheetTags = new Set();
+    let cheatsheetCategories = new Set();
+
+    function buildSearchIndex() {
+      cheatsheets.forEach(cheatsheet => {
+        const title = cheatsheet.dataset.title || '';
+        const description = cheatsheet.dataset.description || '';
+        const tags = JSON.parse(cheatsheet.dataset.tags || '[]');
+        const category = cheatsheet.dataset.category || '';
+
+        // Add title to cheatsheets list
+        if (title) {
+          cheatsheetTitles.push({
+            title: title.split(' ').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' '),
+            search: title.toLowerCase()
+          });
+        }
+
+        // Add tags and categories to sets
+        tags.forEach(tag => cheatsheetTags.add(tag));
+        if (category) cheatsheetCategories.add(category);
+
+        // Add individual words to search index
+        const words = (title + ' ' + description + ' ' + tags.join(' ') + ' ' + category).toLowerCase().split(/\s+/);
+        words.forEach(word => {
+          if (word.length > 2) {
+            searchIndex.add(word);
+          }
+        });
+      });
+    }
+
+    buildSearchIndex();
+
+    let selectedSuggestionIndex = -1;
+    let currentSuggestions = [];
+
+    function generateSuggestions(query) {
+      if (!query || query.length < 2) return [];
+
+      const queryLower = query.toLowerCase();
+      const suggestions = [];
+
+      // Add matching cheatsheet titles
+      const matchingTitles = cheatsheetTitles
+        .filter(item => item.search.includes(queryLower))
+        .slice(0, 3);
+
+      suggestions.push(...matchingTitles.map(item => ({
+        text: item.title,
+        type: 'cheatsheet',
+        query: item.search
+      })));
+
+      // Add matching categories
+      const matchingCategories = Array.from(cheatsheetCategories)
+        .filter(cat => cat.toLowerCase().includes(queryLower))
+        .slice(0, 2);
+
+      suggestions.push(...matchingCategories.map(cat => ({
+        text: cat.charAt(0).toUpperCase() + cat.slice(1),
+        type: 'category',
+        query: cat.toLowerCase()
+      })));
+
+      // Add matching tags
+      const matchingTags = Array.from(cheatsheetTags)
+        .filter(tag => tag.toLowerCase().includes(queryLower))
+        .slice(0, 3);
+
+      suggestions.push(...matchingTags.map(tag => ({
+        text: tag,
+        type: 'tag',
+        query: tag.toLowerCase()
+      })));
+
+      return suggestions.slice(0, 8);
+    }
+
+    function showSuggestions(suggestions) {
+      if (suggestions.length === 0) {
+        hideSuggestions();
+        return;
+      }
+
+      currentSuggestions = suggestions;
+      selectedSuggestionIndex = -1;
+
+      const html = suggestions.map((suggestion, index) => {
+        const typeIcon = suggestion.type === 'cheatsheet' ? '📋' :
+                        suggestion.type === 'category' ? '📁' : '🏷️';
+
+        return `
+          <div class="suggestion-item flex items-center px-4 py-3 hover:bg-gray-100 cursor-pointer border-b border-gray-100 last:border-b-0" data-index="${index}">
+            <span class="mr-3 text-sm">${typeIcon}</span>
+            <div class="flex-grow">
+              <div class="text-sm font-medium text-gray-900">${suggestion.text}</div>
+              <div class="text-xs text-gray-500 capitalize">${suggestion.type}</div>
+            </div>
+          </div>
+        `;
+      }).join('');
+
+      suggestionsList.innerHTML = html;
+      searchSuggestions.classList.remove('hidden');
+
+      // Add click handlers
+      document.querySelectorAll('.suggestion-item').forEach((item, index) => {
+        item.addEventListener('click', () => selectSuggestion(index));
+      });
+    }
+
+    function hideSuggestions() {
+      searchSuggestions.classList.add('hidden');
+      selectedSuggestionIndex = -1;
+      currentSuggestions = [];
+    }
+
+    function selectSuggestion(index) {
+      if (index >= 0 && index < currentSuggestions.length) {
+        const suggestion = currentSuggestions[index];
+        heroSearch.value = suggestion.query;
+        hideSuggestions();
+        searchCheatsheets();
+        heroSearch.focus();
+      }
+    }
+
+    function highlightSuggestion(index) {
+      document.querySelectorAll('.suggestion-item').forEach((item, i) => {
+        if (i === index) {
+          item.classList.add('bg-gray-100');
+        } else {
+          item.classList.remove('bg-gray-100');
+        }
+      });
+    }
+
+    // Debounce function
+    function debounce(func, delay) {
+      let timeoutId;
+      return function(...args) {
+        clearTimeout(timeoutId);
+        timeoutId = setTimeout(() => func.apply(this, args), delay);
+      };
+    }
+
+    function searchCheatsheets() {
+      const searchTerm = heroSearch ? heroSearch.value.toLowerCase().trim() : '';
+
+      if (!searchTerm) {
+        cheatsheets.forEach(function(cheatsheet) {
+          cheatsheet.style.display = 'block';
+        });
+        noResults.classList.add('hidden');
+        cheatsheetsGrid.classList.remove('hidden');
+        return;
+      }
+
+      // Search with scoring
+      let searchResults = cheatsheets.map(function(cheatsheet) {
+        const title = (cheatsheet.dataset.title || '').toLowerCase();
+        const description = (cheatsheet.dataset.description || '').toLowerCase();
+        const tags = JSON.parse(cheatsheet.dataset.tags || '[]');
+        const tagsString = tags.map(tag => tag.toLowerCase()).join(' ');
+        const category = (cheatsheet.dataset.category || '').toLowerCase();
+
+        let score = 0;
+
+        if (title.includes(searchTerm)) {
+          score += title.indexOf(searchTerm) === 0 ? 10 : 5;
+        }
+
+        if (description.includes(searchTerm)) {
+          score += 3;
+        }
+
+        if (tagsString.includes(searchTerm)) {
+          score += 2;
+        }
+
+        if (category.includes(searchTerm)) {
+          score += 4;
+        }
+
+        const searchWords = searchTerm.split(' ').filter(word => word.length > 0);
+        searchWords.forEach(function(word) {
+          if (title.includes(word)) score += 1;
+          if (description.includes(word)) score += 0.5;
+          if (category.includes(word)) score += 1.5;
+        });
+
+        return { cheatsheet: cheatsheet, score: score };
+      });
+
+      const filteredCheatsheets = searchResults
+        .filter(result => result.score > 0)
+        .sort((a, b) => b.score - a.score)
+        .map(result => result.cheatsheet);
+
+      cheatsheets.forEach(function(cheatsheet) {
+        cheatsheet.style.display = 'none';
+      });
+
+      if (filteredCheatsheets.length > 0) {
+        filteredCheatsheets.forEach(function(cheatsheet) {
+          cheatsheet.style.display = 'block';
+        });
+        noResults.classList.add('hidden');
+        cheatsheetsGrid.classList.remove('hidden');
+      } else {
+        cheatsheetsGrid.classList.add('hidden');
+        noResults.classList.remove('hidden');
+      }
+    }
+
+    function clearSearch() {
+      if (heroSearch) {
+        heroSearch.value = '';
+        heroSearch.focus();
+      }
+      hideSuggestions();
+      searchCheatsheets();
+    }
+
+    function handleFilterClick(filterValue) {
+      if (heroSearch) {
+        heroSearch.value = filterValue;
+        heroSearch.focus();
+        hideSuggestions();
+        searchCheatsheets();
+      }
+    }
+
+    const debouncedSearch = debounce(searchCheatsheets, 300);
+    const debouncedTypeAhead = debounce(function(query) {
+      const suggestions = generateSuggestions(query);
+      showSuggestions(suggestions);
+    }, 150);
+
+    // Event listeners
+    if (heroSearch) {
+      heroSearch.addEventListener('input', function(e) {
+        const query = e.target.value;
+
+        if (query.length >= 2) {
+          debouncedTypeAhead(query);
+        } else {
+          hideSuggestions();
+        }
+
+        debouncedSearch();
+      });
+
+      heroSearch.addEventListener('keydown', function(e) {
+        if (e.key === 'ArrowDown') {
+          e.preventDefault();
+          if (currentSuggestions.length > 0) {
+            selectedSuggestionIndex = Math.min(selectedSuggestionIndex + 1, currentSuggestions.length - 1);
+            highlightSuggestion(selectedSuggestionIndex);
+          }
+        } else if (e.key === 'ArrowUp') {
+          e.preventDefault();
+          if (currentSuggestions.length > 0) {
+            selectedSuggestionIndex = Math.max(selectedSuggestionIndex - 1, -1);
+            highlightSuggestion(selectedSuggestionIndex);
+          }
+        } else if (e.key === 'Enter') {
+          e.preventDefault();
+          if (selectedSuggestionIndex >= 0) {
+            selectSuggestion(selectedSuggestionIndex);
+          } else {
+            hideSuggestions();
+            searchCheatsheets();
+          }
+        } else if (e.key === 'Escape') {
+          if (searchSuggestions.classList.contains('hidden')) {
+            clearSearch();
+          } else {
+            hideSuggestions();
+          }
+        } else if (e.key === 'Tab') {
+          hideSuggestions();
+        }
+      });
+
+      heroSearch.addEventListener('blur', function() {
+        setTimeout(() => {
+          if (!searchSuggestions.contains(document.activeElement)) {
+            hideSuggestions();
+          }
+        }, 150);
+      });
+
+      heroSearch.addEventListener('focus', function() {
+        if (heroSearch.value.length >= 2) {
+          const suggestions = generateSuggestions(heroSearch.value);
+          showSuggestions(suggestions);
+        }
+      });
+    }
+
+    if (clearAllFilters) {
+      clearAllFilters.addEventListener('click', clearSearch);
+    }
+
+    popularTags.forEach(function(tag) {
+      tag.addEventListener('click', function() {
+        const tagName = tag.dataset.tag;
+        if (tagName) {
+          handleFilterClick(tagName);
+        }
+      });
+    });
+
+    categoryFilters.forEach(function(filter) {
+      filter.addEventListener('click', function() {
+        const categoryName = filter.dataset.category;
+        if (categoryName) {
+          handleFilterClick(categoryName);
+        }
+      });
+    });
+
+    searchCheatsheets();
+
+    if (heroSearch && window.innerWidth > 768) {
+      setTimeout(() => heroSearch.focus(), 100);
+    }
+  });
+</script>
+
+<style>
+  .cheatsheet-item {
+    transition: opacity 0.3s ease;
+  }
+
+  .popular-tag:hover,
+  .category-filter:hover {
+    transform: translateY(-1px);
+  }
+</style>

@@ -56,6 +56,10 @@
           ],
           "default": "completed"
         },
+        "published": {
+          "type": "boolean",
+          "default": true
+        },
         "$schema": {
           "type": "string"
         }
