@@ -9,16 +9,18 @@ interface Props {
   tags?: string[];
   slug?: string;
   featured?: boolean;
+  linkText?: string;
 }
 
-const { 
+const {
   title = 'Understanding JavaScript Promises and Async/Await',
   description = 'A deep dive into asynchronous programming in JavaScript, covering promises, async/await, and best practices for error handling.',
   date = 'April 25, 2025',
   readTime = '12 min read',
   tags = ['JavaScript', 'WebDev'],
   slug = '#',
-  featured = false
+  featured = false,
+  linkText = 'Read Article'
 } = Astro.props;
 ---
 
@@ -51,17 +53,17 @@ const {
     </div>
     
     <div class="mt-auto flex items-center justify-between">
-      <a href={`/articles/${slug}`} class="text-blue-600 hover:text-blue-700 text-sm font-medium inline-flex items-center">
-        Read Article
+      <a href={slug.startsWith('/') || slug.startsWith('articles/') || slug.startsWith('cheatsheets/') ? `/${slug}` : `/articles/${slug}`} class="text-blue-600 hover:text-blue-700 text-sm font-medium inline-flex items-center">
+        {linkText}
         <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
         </svg>
       </a>
-      
-      <ShareButton 
+
+      <ShareButton
         title={title}
         description={description}
-        url={`${Astro.site?.toString() || 'https://codersbox.dev'}/articles/${slug}`}
+        url={`${Astro.site?.toString() || 'https://codersbox.dev'}/${slug.startsWith('/') || slug.startsWith('articles/') || slug.startsWith('cheatsheets/') ? slug : `articles/${slug}`}`}
         variant="minimal"
         showLabel={false}
       />

@@ -6,7 +6,7 @@ import PagePagination from '@/components/PagePagination.astro';
 
 // Get all projects, sorted by publish date
 const projects = await getCollection('projects', ({ data }) => {
-  return data.draft !== true;
+  return data.draft !== true && data.published !== false;
 });
 
 // Sort projects by publish date (newest first)

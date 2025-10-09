@@ -1,0 +1,263 @@
+---
+import { getCollection } from 'astro:content';
+import ArticlesLayout from '@/layouts/ArticlesLayout.astro';
+import ArticleCard from '@/components/ArticleCard.astro';
+import PagePagination from '@/components/PagePagination.astro';
+
+export async function getStaticPaths() {
+  // Get all cheatsheets for pagination calculation
+  const cheatsheets = await getCollection('cheatsheets', ({ data }) => {
+    return data.draft !== true && data.published !== false;
+  });
+
+  const cheatsheetsPerPage = 9;
+  const totalPages = Math.ceil(cheatsheets.length / cheatsheetsPerPage);
+
+  // Generate static paths for pages 2 and above
+  const paths = [];
+  for (let i = 2; i <= totalPages; i++) {
+    paths.push({
+      params: { page: i.toString() }
+    });
+  }
+
+  return paths;
+}
+
+// Get page number from URL params
+const { page } = Astro.params;
+const currentPage = parseInt(page || '2');
+
+// Get all cheatsheets, sorted by publish date
+const cheatsheets = await getCollection('cheatsheets', ({ data }) => {
+  return data.draft !== true && data.published !== false;
+});
+
+// Sort cheatsheets by publish date (newest first)
+cheatsheets.sort((a, b) => new Date(b.data.publishDate).getTime() - new Date(a.data.publishDate).getTime());
+
+// Calculate tag popularity (top 3 most used tags)
+const tagCounts = new Map();
+cheatsheets.forEach(cheatsheet => {
+  cheatsheet.data.tags?.forEach(tag => {
+    tagCounts.set(tag, (tagCounts.get(tag) || 0) + 1);
+  });
+});
+
+// Get top 3 most popular tags
+const popularTags = Array.from(tagCounts.entries())
+  .sort((a, b) => b[1] - a[1])
+  .slice(0, 3)
+  .map(([tag, count]) => ({ tag, count }));
+
+// Get all unique tags for filtering
+const allTags = Array.from(tagCounts.keys()).sort();
+
+// Pagination logic
+const cheatsheetsPerPage = 9;
+const totalPages = Math.ceil(cheatsheets.length / cheatsheetsPerPage);
+const startIndex = (currentPage - 1) * cheatsheetsPerPage;
+const paginatedCheatsheets = cheatsheets.slice(startIndex, startIndex + cheatsheetsPerPage);
+
+// Generate pagination URLs
+const prevUrl = currentPage > 1 ?
+  (currentPage === 2 ? '/cheatsheets' : `/cheatsheets/page/${currentPage - 1}`) :
+  null;
+const nextUrl = currentPage < totalPages ? `/cheatsheets/page/${currentPage + 1}` : null;
+---
+
+<ArticlesLayout
+  title={`Cheatsheets - Page ${currentPage} - codersbox`}
+  description="Quick reference guides and cheatsheets for developers. Essential commands, syntax, and information at your fingertips."
+  heroTitle="Cheatsheets"
+  heroDescription="Quick reference guides and cheatsheets for developers. Find commands, syntax, and essential information at a glance."
+  searchPlaceholder="Search cheatsheets..."
+  popularTags={popularTags}
+  allTags={allTags}
+>
+  <!-- Main Content -->
+  <main class="py-12 bg-gray-50">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <!-- Cheatsheets Grid -->
+      <div id="cheatsheets-container">
+        <div id="cheatsheets-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
+          {paginatedCheatsheets.map((cheatsheet) => (
+            <div
+              class="cheatsheet-item"
+              data-title={cheatsheet.data.title.toLowerCase()}
+              data-description={cheatsheet.data.description.toLowerCase()}
+              data-tags={JSON.stringify(cheatsheet.data.tags || [])}
+              data-category={(cheatsheet.data.category || '').toLowerCase()}
+              data-date={cheatsheet.data.publishDate.getTime()}
+              data-read-time={cheatsheet.data.readTime ? parseInt(cheatsheet.data.readTime.match(/\d+/)?.[0] || '0') : 0}
+            >
+              <ArticleCard
+                title={cheatsheet.data.title}
+                description={cheatsheet.data.description}
+                date={cheatsheet.data.publishDate.toLocaleDateString('en-US', {
+                  year: 'numeric',
+                  month: 'long',
+                  day: 'numeric'
+                })}
+                readTime={cheatsheet.data.readTime}
+                tags={cheatsheet.data.tags}
+                slug={`cheatsheets/${cheatsheet.slug}`}
+                featured={cheatsheet.data.featured}
+                linkText="Show Cheatsheet"
+              />
+            </div>
+          ))}
+        </div>
+
+        <!-- No Results Message -->
+        <div id="no-results" class="text-center py-12 hidden">
+          <div class="text-gray-400 mb-4">
+            <svg class="w-16 h-16 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+            </svg>
+          </div>
+          <h3 class="text-xl font-semibold text-gray-900 mb-2">No cheatsheets found</h3>
+          <p class="text-gray-600 mb-4">Try adjusting your search or filters to find what you're looking for.</p>
+          <button id="clear-all-filters" class="text-indigo-600 hover:text-indigo-700 font-medium">
+            Clear all filters
+          </button>
+        </div>
+      </div>
+
+      <!-- Pagination -->
+      <div id="pagination-container">
+        {totalPages > 1 && (
+          <PagePagination
+            currentPage={currentPage}
+            totalPages={totalPages}
+            prevUrl={prevUrl}
+            nextUrl={nextUrl}
+          />
+        )}
+      </div>
+    </div>
+  </main>
+</ArticlesLayout>
+
+<script is:inline>
+  // Search functionality (same as index page)
+  document.addEventListener('DOMContentLoaded', function() {
+    const cheatsheets = Array.from(document.querySelectorAll('.cheatsheet-item'));
+    const noResults = document.getElementById('no-results');
+    const cheatsheetsGrid = document.getElementById('cheatsheets-grid');
+    const popularTags = document.querySelectorAll('.popular-tag');
+    const categoryFilters = document.querySelectorAll('.category-filter');
+    const clearAllFilters = document.getElementById('clear-all-filters');
+    const heroSearch = document.getElementById('hero-search');
+
+    function debounce(func, delay) {
+      let timeoutId;
+      return function(...args) {
+        clearTimeout(timeoutId);
+        timeoutId = setTimeout(() => func.apply(this, args), delay);
+      };
+    }
+
+    function searchCheatsheets() {
+      const searchTerm = heroSearch ? heroSearch.value.toLowerCase().trim() : '';
+
+      if (!searchTerm) {
+        cheatsheets.forEach(function(cheatsheet) {
+          cheatsheet.style.display = 'block';
+        });
+        noResults.classList.add('hidden');
+        cheatsheetsGrid.classList.remove('hidden');
+        return;
+      }
+
+      let searchResults = cheatsheets.map(function(cheatsheet) {
+        const title = (cheatsheet.dataset.title || '').toLowerCase();
+        const description = (cheatsheet.dataset.description || '').toLowerCase();
+        const tags = JSON.parse(cheatsheet.dataset.tags || '[]');
+        const tagsString = tags.map(tag => tag.toLowerCase()).join(' ');
+        const category = (cheatsheet.dataset.category || '').toLowerCase();
+
+        let score = 0;
+        if (title.includes(searchTerm)) score += title.indexOf(searchTerm) === 0 ? 10 : 5;
+        if (description.includes(searchTerm)) score += 3;
+        if (tagsString.includes(searchTerm)) score += 2;
+        if (category.includes(searchTerm)) score += 4;
+
+        return { cheatsheet: cheatsheet, score: score };
+      });
+
+      const filteredCheatsheets = searchResults
+        .filter(result => result.score > 0)
+        .sort((a, b) => b.score - a.score)
+        .map(result => result.cheatsheet);
+
+      cheatsheets.forEach(function(cheatsheet) {
+        cheatsheet.style.display = 'none';
+      });
+
+      if (filteredCheatsheets.length > 0) {
+        filteredCheatsheets.forEach(function(cheatsheet) {
+          cheatsheet.style.display = 'block';
+        });
+        noResults.classList.add('hidden');
+        cheatsheetsGrid.classList.remove('hidden');
+      } else {
+        cheatsheetsGrid.classList.add('hidden');
+        noResults.classList.remove('hidden');
+      }
+    }
+
+    function clearSearch() {
+      if (heroSearch) {
+        heroSearch.value = '';
+        heroSearch.focus();
+      }
+      searchCheatsheets();
+    }
+
+    function handleFilterClick(filterValue) {
+      if (heroSearch) {
+        heroSearch.value = filterValue;
+        heroSearch.focus();
+        searchCheatsheets();
+      }
+    }
+
+    const debouncedSearch = debounce(searchCheatsheets, 300);
+
+    if (heroSearch) {
+      heroSearch.addEventListener('input', debouncedSearch);
+    }
+
+    if (clearAllFilters) {
+      clearAllFilters.addEventListener('click', clearSearch);
+    }
+
+    popularTags.forEach(function(tag) {
+      tag.addEventListener('click', function() {
+        const tagName = tag.dataset.tag;
+        if (tagName) handleFilterClick(tagName);
+      });
+    });
+
+    categoryFilters.forEach(function(filter) {
+      filter.addEventListener('click', function() {
+        const categoryName = filter.dataset.category;
+        if (categoryName) handleFilterClick(categoryName);
+      });
+    });
+
+    searchCheatsheets();
+  });
+</script>
+
+<style>
+  .cheatsheet-item {
+    transition: opacity 0.3s ease;
+  }
+
+  .popular-tag:hover,
+  .category-filter:hover {
+    transform: translateY(-1px);
+  }
+</style>

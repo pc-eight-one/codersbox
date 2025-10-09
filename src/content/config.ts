@@ -11,6 +11,7 @@ const articles = defineCollection({
     readTime: z.string(),
     featured: z.boolean().default(false),
     draft: z.boolean().default(false),
+    published: z.boolean().default(true),
   }),
 });
 
@@ -31,6 +32,7 @@ const tutorials = defineCollection({
     estimatedTime: z.string(),
     featured: z.boolean().default(false),
     draft: z.boolean().default(false),
+    published: z.boolean().default(true),
   }),
 });
 
@@ -46,6 +48,29 @@ const projects = defineCollection({
     image: z.string().optional(),
     featured: z.boolean().default(false),
     status: z.enum(['completed', 'in-progress', 'archived']).default('completed'),
+    published: z.boolean().default(true),
+  }),
+});
+
+const cheatsheets = defineCollection({
+  type: 'content',
+  schema: z.object({
+    title: z.string(),
+    description: z.string(),
+    publishDate: z.date(),
+    author: z.string().default('Prashant Chaturvedi'),
+    tags: z.array(z.string()),
+    category: z.string().optional(),
+    readTime: z.string(),
+    featured: z.boolean().default(false),
+    draft: z.boolean().default(false),
+    published: z.boolean().default(true),
+    downloads: z.array(z.object({
+      title: z.string(),
+      format: z.string(),
+      size: z.string().optional(),
+      url: z.string(),
+    })).optional(),
   }),
 });
 
@@ -53,4 +78,5 @@ export const collections = {
   articles,
   tutorials,
   projects,
+  cheatsheets,
 };

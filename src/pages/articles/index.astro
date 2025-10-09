@@ -6,7 +6,7 @@ import PagePagination from '@/components/PagePagination.astro';
 
 // Get all articles, sorted by publish date
 const articles = await getCollection('articles', ({ data }) => {
-  return data.draft !== true;
+  return data.draft !== true && data.published !== false;
 });
 
 // Sort articles by publish date (newest first)

@@ -47,6 +47,10 @@
           "type": "boolean",
           "default": false
         },
+        "published": {
+          "type": "boolean",
+          "default": true
+        },
         "$schema": {
           "type": "string"
         }

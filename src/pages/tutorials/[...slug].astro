@@ -4,7 +4,9 @@ import BaseLayout from '@/layouts/BaseLayout.astro';
 import TutorialSidebar from '@/components/TutorialSidebar.astro';
 
 export async function getStaticPaths() {
-  const tutorials = await getCollection('tutorials');
+  const tutorials = await getCollection('tutorials', ({ data }) => {
+    return data.draft !== true && data.published !== false;
+  });
   return tutorials.map((tutorial) => ({
     params: { slug: tutorial.slug },
     props: { tutorial },
@@ -18,7 +20,7 @@ const { Content, headings } = await tutorial.render();
 let seriesTutorials = [];
 if (tutorial.data.series) {
   const allTutorials = await getCollection('tutorials', ({ data }) => {
-    return data.draft !== true && data.series === tutorial.data.series;
+    return data.draft !== true && data.published !== false && data.series === tutorial.data.series;
   });
   seriesTutorials = allTutorials.map(t => ({
     data: {
