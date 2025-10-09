@@ -1,7 +1,7 @@
 ---
 title: "Kafka for Java Developers - Part 5: Kafka Streams for Real-Time Processing"
 description: "Master Kafka Streams for building real-time stream processing applications. Learn transformations, aggregations, windowing, joins, state stores, and exactly-once processing."
-publishDate: 2025-10-03
+publishDate: 2025-05-19
 publishedAt: 2025-10-03
 tags: ["Kafka", "Java", "Kafka Streams", "Stream Processing", "Windowing", "Aggregations"]
 difficulty: "advanced"

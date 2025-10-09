@@ -1,7 +1,7 @@
 ---
 title: "Java Complete - Part 3: Basic Syntax and Data Types"
 description: "Master Java's fundamental building blocks. Learn variables, primitive types, type conversion, and the structure of Java programs through practical examples."
-publishDate: 2025-08-29
+publishDate: 2024-08-20
 publishedAt: 2025-08-29
 tags: ["Java", "Variables", "Data Types", "Syntax", "Programming"]
 difficulty: "beginner"

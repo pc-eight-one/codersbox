@@ -2,7 +2,7 @@
 title: "Java Complete Part 12: Packages and Modularity"
 slug: java-complete-part-12
 description: "Master Java packages, import statements, access control, JAR files, and the modern module system for building scalable, maintainable applications"
-publishDate: 2025-08-29
+publishDate: 2024-11-13
 publishedAt: 2025-08-29
 tags: ["java", "tutorial", "intermediate", "packages", "modules", "jar", "classpath", "modularity"]
 category: Tutorial

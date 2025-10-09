@@ -1,7 +1,7 @@
 ---
 title: "ByteBuddy with Java - Part 5: Java Agents and Runtime Instrumentation"
 description: "Build production Java agents with ByteBuddy: instrument classes at JVM startup, redefine loaded classes, and create APM tools for distributed tracing and monitoring."
-publishDate: 2025-10-07
+publishDate: 2025-08-27
 tags: ["ByteBuddy", "Java", "Agents", "Instrumentation", "APM", "Monitoring", "JVM"]
 difficulty: "advanced"
 series: "ByteBuddy with Java"

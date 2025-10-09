@@ -2,7 +2,7 @@
 title: "Java Complete Part 16: Generics"
 slug: java-complete-part-16
 description: "Master Java Generics with type parameters, bounded types, wildcards, generic methods, type erasure, and best practices for type-safe programming"
-publishDate: 2025-08-29
+publishDate: 2024-12-21
 publishedAt: 2025-08-29
 tags: ["java", "tutorial", "intermediate", "generics", "type-safety", "wildcards", "bounded-types"]
 category: Tutorial

@@ -1,7 +1,7 @@
 ---
 title: "ANTLR with Kotlin - Part 1: Basics and Project Setup"
 description: "Build a SQL parser from scratch using ANTLR and Kotlin. Learn lexer vs parser, grammar design, and project setup by parsing simple SELECT queries."
-publishDate: 2025-10-05
+publishDate: 2024-11-30
 publishedAt: 2025-10-05
 tags: ["ANTLR", "Kotlin", "Parser", "Compiler", "SQL", "Grammar"]
 difficulty: "intermediate"

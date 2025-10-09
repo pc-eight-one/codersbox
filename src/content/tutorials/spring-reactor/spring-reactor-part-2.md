@@ -1,7 +1,7 @@
 ---
 title: "Spring Boot Reactive Programming - Part 2: Operators and Transformations"
 description: "Master advanced Reactor operators including merge, zip, concat, flatMap variants, reduce, collect, and build complex data transformation pipelines for real-world reactive applications."
-publishDate: 2025-10-06
+publishDate: 2025-03-06
 publishedAt: 2025-10-06
 tags: ["Spring Boot", "Reactor", "Operators", "WebFlux", "Transformations"]
 difficulty: "intermediate"

@@ -1,7 +1,7 @@
 ---
 title: "Maven Build Tool: From Basics to Production"
 description: "Master Maven for Java projects. Learn dependency management, build lifecycle, plugins, multi-module projects, and production best practices."
-publishDate: 2025-10-06
+publishDate: 2025-04-14
 author: "Prashant Chaturvedi"
 tags: ["Maven", "Java", "Build Tool", "Dependency Management", "CI/CD", "DevOps"]
 readTime: "25 min read"

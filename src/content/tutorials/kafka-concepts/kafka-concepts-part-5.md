@@ -1,7 +1,7 @@
 ---
 title: "Kafka Deep Dive - Part 5: Storage Internals and Log Management"
 description: "Master Kafka's storage layer. Understand log segments, indexes, compaction, retention policies, and how Kafka achieves high performance through efficient disk usage."
-publishDate: 2025-10-03
+publishDate: 2025-08-11
 publishedAt: 2025-10-03
 tags: ["Kafka", "Storage", "Log Segments", "Compaction", "Indexes", "Retention"]
 difficulty: "advanced"

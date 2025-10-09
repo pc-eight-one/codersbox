@@ -1,7 +1,7 @@
 ---
 title: "Java Complete - Part 8: Methods and Functions"
 description: "Learn to organize code with methods. Master parameters, return values, method overloading, recursion, and variable arguments for modular programming."
-publishDate: 2025-08-29
+publishDate: 2024-10-07
 publishedAt: 2025-08-29
 tags: ["Java", "Methods", "Functions", "Parameters", "Recursion", "Programming"]
 difficulty: "beginner"

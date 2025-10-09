@@ -1,7 +1,7 @@
 ---
 title: "Kafka Deep Dive - Part 6: Controller, Coordinators, and Internal Protocols"
 description: "Master Kafka's internal coordination systems. Understand the Controller, Group Coordinator, Transaction Coordinator, and the protocols that make Kafka reliable."
-publishDate: 2025-10-03
+publishDate: 2025-08-23
 publishedAt: 2025-10-03
 tags: ["Kafka", "Controller", "Coordinator", "Protocols", "Internals", "Replication"]
 difficulty: "advanced"

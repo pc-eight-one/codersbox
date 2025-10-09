@@ -2,7 +2,7 @@
 title: "Java Complete Part 9: Object-Oriented Programming (OOP) Basics"
 slug: java-complete-part-9
 description: "Master the fundamentals of object-oriented programming in Java: classes, objects, constructors, encapsulation, and access modifiers"
-publishDate: 2025-08-29
+publishDate: 2024-10-15
 publishedAt: 2025-08-29
 tags: ["java", "tutorial", "intermediate", "oop", "classes", "objects", "encapsulation"]
 category: Tutorial

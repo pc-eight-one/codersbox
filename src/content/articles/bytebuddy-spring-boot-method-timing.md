@@ -1,7 +1,7 @@
 ---
 title: "Building a Production-Ready Method Timing Library with ByteBuddy and Spring Boot"
 description: "Solve slow API response times by building a zero-overhead method timing library using ByteBuddy's Advice API. Learn runtime instrumentation, Spring Boot integration, and performance monitoring."
-publishDate: 2025-10-07
+publishDate: 2024-09-20
 author: "Prashant Chaturvedi"
 tags: ["ByteBuddy", "Spring Boot", "Performance", "Monitoring", "AOP", "Java"]
 readTime: "35 min read"

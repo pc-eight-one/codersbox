@@ -1,7 +1,7 @@
 ---
 title: "Spring Boot Reactive Programming - Part 6: Spring WebFlux Deep Dive"
 description: "Master Spring WebFlux for building reactive REST APIs. Learn annotated controllers, functional endpoints, WebClient, Server-Sent Events, WebSocket, and create production-ready microservices."
-publishDate: 2025-10-06
+publishDate: 2025-04-10
 publishedAt: 2025-10-06
 tags: ["Spring Boot", "WebFlux", "REST API", "WebClient", "SSE", "WebSocket"]
 difficulty: "advanced"

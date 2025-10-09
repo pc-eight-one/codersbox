@@ -1,7 +1,7 @@
 ---
 title: "Kafka Deep Dive - Part 4: Consumer Groups and Offset Management"
 description: "Master Kafka consumer internals. Understand consumer groups, rebalancing protocols, offset management strategies, lag monitoring, and building scalable consumer applications."
-publishDate: 2025-10-03
+publishDate: 2025-07-30
 publishedAt: 2025-10-03
 tags: ["Kafka", "Consumer", "Consumer Groups", "Rebalancing", "Offset Management", "Lag"]
 difficulty: "advanced"

@@ -1,7 +1,7 @@
 ---
 title: "Java Complete - Part 1: Introduction to Java"
 description: "Begin your Java journey. Learn what Java is, its key features, and why it remains one of the most important programming languages in software development."
-publishDate: 2025-08-29
+publishDate: 2024-07-29
 publishedAt: 2025-08-29
 tags: ["Java", "Programming", "JVM", "Development"]
 difficulty: "beginner"

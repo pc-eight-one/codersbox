@@ -1,7 +1,7 @@
 ---
 title: "Spring Boot Reactive Programming - Part 7: Reactive Data Access with R2DBC"
 description: "Master reactive database access with R2DBC, Spring Data R2DBC, transactions, query methods, and integrate MongoDB and Redis reactively for production-ready data layers."
-publishDate: 2025-10-06
+publishDate: 2025-04-22
 publishedAt: 2025-10-06
 tags: ["Spring Boot", "R2DBC", "Spring Data", "PostgreSQL", "MongoDB", "Redis"]
 difficulty: "advanced"

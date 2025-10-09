@@ -1,7 +1,7 @@
 ---
 title: "ANTLR with Kotlin - Part 4: JOINs and Table Aliases"
 description: "Parse complex SQL queries with INNER/LEFT JOINs, table aliases, and qualified column names. Build a query object model that tracks table relationships."
-publishDate: 2025-10-05
+publishDate: 2025-01-09
 publishedAt: 2025-10-05
 tags: ["ANTLR", "Kotlin", "Parser", "SQL", "JOIN", "Grammar Design"]
 difficulty: "intermediate"

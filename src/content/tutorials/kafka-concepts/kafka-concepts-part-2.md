@@ -1,7 +1,7 @@
 ---
 title: "Kafka Deep Dive - Part 2: Topics, Partitions, and Replication"
 description: "Master Kafka's data organization. Understand partition design, replication protocols, min.insync.replicas, partition assignment strategies, and how to avoid common pitfalls."
-publishDate: 2025-10-03
+publishDate: 2025-07-11
 publishedAt: 2025-10-03
 tags: ["Kafka", "Topics", "Partitions", "Replication", "ISR", "Data Modeling"]
 difficulty: "advanced"

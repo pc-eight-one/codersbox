@@ -1,7 +1,7 @@
 ---
 title: "Kafka for Java Developers - Part 4: Advanced Consumer Patterns"
 description: "Master advanced Kafka consumer techniques. Learn consumer groups, manual partition assignment, offset management, rebalancing strategies, and parallel processing for scalable applications."
-publishDate: 2025-10-03
+publishDate: 2025-05-03
 publishedAt: 2025-10-03
 tags: ["Kafka", "Java", "Consumer", "Consumer Groups", "Offset Management", "Rebalancing"]
 difficulty: "advanced"

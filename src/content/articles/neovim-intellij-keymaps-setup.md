@@ -1,7 +1,7 @@
 ---
 title: "Neovim with IntelliJ Keymaps"
 description: "Configure Neovim with IntelliJ IDEA keybindings for Java/Kotlin development: LSP, refactoring, and familiar shortcuts."
-publishDate: 2025-01-05
+publishDate: 2025-06-20
 author: "Prashant Chaturvedi"
 tags: ["Neovim", "IntelliJ IDEA", "IDE", "Vim", "Development", "Java", "Kotlin", "LSP", "Keymaps"]
 readTime: "15 min read"

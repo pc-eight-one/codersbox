@@ -1,7 +1,7 @@
 ---
 title: "Spring Boot Reactive Programming - Part 8: Testing, Debugging, and Production"
 description: "Master testing reactive code with StepVerifier and WebTestClient, debug reactive applications, implement monitoring and observability, and deploy production-ready reactive microservices."
-publishDate: 2025-10-06
+publishDate: 2025-04-30
 publishedAt: 2025-10-06
 tags: ["Spring Boot", "Testing", "StepVerifier", "WebTestClient", "Debugging", "Production", "Monitoring"]
 difficulty: "advanced"

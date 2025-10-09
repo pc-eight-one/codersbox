@@ -1,7 +1,7 @@
 ---
 title: "Spring State Machine: Complete Guide to Building Stateful Applications"
 description: "Master Spring State Machine for managing complex workflows and state transitions. Learn states, events, transitions, actions, guards, hierarchical states, and build production-ready stateful applications."
-publishDate: 2025-10-06
+publishDate: 2025-08-18
 tags: ["Spring Boot", "State Machine", "Workflow", "Java", "FSM", "Design Patterns"]
 readTime: "25 min read"
 ---

@@ -1,7 +1,7 @@
 ---
 title: "Kafka Deep Dive - Part 7: Performance, Scalability, and Capacity Planning"
 description: "Master Kafka performance optimization and capacity planning. Learn to size clusters, tune for throughput vs latency, scale to handle massive workloads, and monitor effectively."
-publishDate: 2025-10-03
+publishDate: 2025-08-29
 publishedAt: 2025-10-03
 tags: ["Kafka", "Performance", "Scalability", "Capacity Planning", "Tuning", "Monitoring"]
 difficulty: "advanced"

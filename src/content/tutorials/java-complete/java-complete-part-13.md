@@ -2,7 +2,7 @@
 title: "Java Complete Part 13: Exception Handling"
 slug: java-complete-part-13
 description: "Master Java exception handling with try-catch-finally blocks, custom exceptions, checked vs unchecked exceptions, and best practices for robust error management"
-publishDate: 2025-08-29
+publishDate: 2024-11-25
 publishedAt: 2025-08-29
 tags: ["java", "tutorial", "intermediate", "exceptions", "error-handling", "try-catch", "finally"]
 category: Tutorial

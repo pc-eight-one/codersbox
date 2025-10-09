@@ -1,7 +1,7 @@
 ---
 title: "Kotlin Caching From Scratch: A Complete, Practical Guide"
 description: "Build robust caches in Kotlin from first principles. Learn cache-aside, read-through/write-through, eviction policies, coroutines integration, Caffeine, Redis, Spring Boot annotations, stampede protection, metrics, and testing."
-publishDate: 2025-10-03
+publishDate: 2025-04-04
 author: "Prashant Chaturvedi"
 tags: ["Kotlin", "Caching", "Performance", "Coroutines", "Caffeine", "Redis", "Spring Boot", "Concurrency"]
 readTime: "25 min read"

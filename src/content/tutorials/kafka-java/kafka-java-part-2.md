@@ -1,7 +1,7 @@
 ---
 title: "Kafka for Java Developers - Part 2: Setup and First Producer/Consumer"
 description: "Get hands-on with Apache Kafka. Learn to install Kafka, create topics, build your first producer and consumer in Java, and understand message delivery guarantees."
-publishDate: 2025-10-03
+publishDate: 2025-04-12
 publishedAt: 2025-10-03
 tags: ["Kafka", "Java", "Maven", "Gradle", "Producer", "Consumer"]
 difficulty: "intermediate"

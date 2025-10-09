@@ -2,7 +2,7 @@
 title: "Java Complete Part 10: Inheritance and Polymorphism"
 slug: java-complete-part-10
 description: "Master inheritance, method overriding, polymorphism, and the super keyword to create flexible and reusable object hierarchies in Java"
-publishDate: 2025-08-29
+publishDate: 2024-10-24
 publishedAt: 2025-08-29
 tags: ["java", "tutorial", "intermediate", "inheritance", "polymorphism", "super", "overriding"]
 category: Tutorial

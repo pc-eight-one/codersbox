@@ -1,7 +1,7 @@
 ---
 title: "ByteBuddy with Java - Part 1: Introduction and Dynamic Class Creation"
 description: "Master ByteBuddy fundamentals: create classes at runtime, understand bytecode manipulation, and build your first dynamic proxy. Learn why ByteBuddy beats reflection."
-publishDate: 2025-10-07
+publishDate: 2025-06-28
 tags: ["ByteBuddy", "Java", "Bytecode", "Runtime", "Proxies", "Dynamic Programming"]
 difficulty: "intermediate"
 series: "ByteBuddy with Java"

@@ -1,7 +1,7 @@
 ---
 title: "Kafka Deep Dive - Part 1: Architecture and Fundamental Concepts"
 description: "Master Kafka's architecture from the ground up. Understand brokers, clusters, ZooKeeper vs KRaft, data flow, and how all components work together in production systems."
-publishDate: 2025-10-03
+publishDate: 2025-06-29
 publishedAt: 2025-10-03
 tags: ["Kafka", "Architecture", "Distributed Systems", "Brokers", "ZooKeeper", "KRaft"]
 difficulty: "advanced"

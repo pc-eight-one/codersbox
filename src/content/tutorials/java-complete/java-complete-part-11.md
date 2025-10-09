@@ -2,7 +2,7 @@
 title: "Java Complete Part 11: Abstraction and Interfaces"
 slug: java-complete-part-11
 description: "Master abstract classes, interfaces, default methods, functional interfaces, and lambda expressions for flexible and maintainable Java code design"
-publishDate: 2025-08-29
+publishDate: 2024-11-05
 publishedAt: 2025-08-29
 tags: ["java", "tutorial", "intermediate", "abstraction", "interfaces", "lambda", "functional"]
 category: Tutorial

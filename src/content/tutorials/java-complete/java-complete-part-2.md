@@ -1,7 +1,7 @@
 ---
 title: "Java Complete - Part 2: Setting Up Development Environment"
 description: "Learn to configure a professional Java development environment. Master command-line tools, choose the right IDE, and establish efficient debugging practices."
-publishDate: 2025-08-29
+publishDate: 2024-08-10
 publishedAt: 2025-08-29
 tags: ["Java", "IDE", "Development", "Debugging", "Tools"]
 difficulty: "beginner"

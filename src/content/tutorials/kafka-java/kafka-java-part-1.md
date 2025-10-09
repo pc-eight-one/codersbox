@@ -1,7 +1,7 @@
 ---
 title: "Kafka for Java Developers - Part 1: Introduction to Apache Kafka"
 description: "Master Apache Kafka fundamentals. Learn what Kafka is, its core architecture, messaging patterns, and why it's essential for modern distributed systems and event-driven architectures."
-publishDate: 2025-10-03
+publishDate: 2025-03-29
 publishedAt: 2025-10-03
 tags: ["Kafka", "Java", "Distributed Systems", "Event Streaming", "Messaging"]
 difficulty: "intermediate"

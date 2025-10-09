@@ -1,7 +1,7 @@
 ---
 title: "Kafka for Java Developers - Part 3: Advanced Producer Patterns"
 description: "Master advanced Kafka producer techniques. Learn custom partitioning, idempotent producers, transactional writes, performance tuning, and error handling strategies for production systems."
-publishDate: 2025-10-03
+publishDate: 2025-04-25
 publishedAt: 2025-10-03
 tags: ["Kafka", "Java", "Producer", "Performance", "Transactions", "Partitioning"]
 difficulty: "advanced"

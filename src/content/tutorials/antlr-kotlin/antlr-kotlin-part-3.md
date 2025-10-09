@@ -1,7 +1,7 @@
 ---
 title: "ANTLR with Kotlin - Part 3: Visitors and Listeners"
 description: "Master ANTLR's visitor and listener patterns. Extract query metadata, validate syntax semantically, and build reusable tree traversal logic in Kotlin."
-publishDate: 2025-10-05
+publishDate: 2024-12-22
 publishedAt: 2025-10-05
 tags: ["ANTLR", "Kotlin", "Parser", "Visitor Pattern", "AST", "Tree Traversal"]
 difficulty: "intermediate"

@@ -1,7 +1,7 @@
 ---
 title: "Java Complete - Part 6: Loops"
 description: "Master Java's looping constructs. Learn while, do-while, for, and enhanced for loops. Understand when to use each type and avoid common pitfalls."
-publishDate: 2025-08-29
+publishDate: 2024-09-16
 publishedAt: 2025-08-29
 tags: ["Java", "Loops", "Iteration", "For Loop", "While Loop"]
 difficulty: "beginner"

@@ -1,7 +1,7 @@
 ---
 title: "Advanced Java Streams: Beyond the Basics"
 description: "Master advanced Stream operations: parallel processing, custom collectors, performance optimization, stateful operations, and real-world patterns for production code."
-publishDate: 2025-10-06
+publishDate: 2025-01-25
 author: "Prashant Chaturvedi"
 tags: ["Java", "Streams", "Performance", "Functional Programming", "Concurrency", "Collections"]
 readTime: "30 min read"

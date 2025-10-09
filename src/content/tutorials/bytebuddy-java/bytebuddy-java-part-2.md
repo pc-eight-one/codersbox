@@ -1,7 +1,7 @@
 ---
 title: "ByteBuddy with Java - Part 2: Advanced Method Interception and Field Access"
 description: "Master ByteBuddy method interception: access fields, modify arguments, handle exceptions, and create custom annotations. Build annotation-driven behavior."
-publishDate: 2025-10-07
+publishDate: 2025-07-18
 tags: ["ByteBuddy", "Java", "Bytecode", "Annotations", "AOP", "Interception"]
 difficulty: "intermediate"
 series: "ByteBuddy with Java"

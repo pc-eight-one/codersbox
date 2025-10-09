@@ -1,7 +1,7 @@
 ---
 title: "Java Complete - Part 7: Arrays and Strings"
 description: "Master Java's fundamental data structures. Learn array manipulation, multi-dimensional arrays, string processing, and efficient text handling techniques."
-publishDate: 2025-08-29
+publishDate: 2024-09-26
 publishedAt: 2025-08-29
 tags: ["Java", "Arrays", "Strings", "Data Structures", "Text Processing"]
 difficulty: "beginner"

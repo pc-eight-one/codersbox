@@ -1,7 +1,7 @@
 ---
 title: "ByteBuddy with Java - Part 4: Dynamic Class Definition and Interface Implementation"
 description: "Build complete classes with ByteBuddy: define fields, constructors, implement interfaces, and create a mini-ORM framework with automatic getters/setters."
-publishDate: 2025-10-07
+publishDate: 2025-08-16
 tags: ["ByteBuddy", "Java", "Bytecode", "ORM", "Interfaces", "Class Generation"]
 difficulty: "advanced"
 series: "ByteBuddy with Java"

@@ -1,7 +1,7 @@
 ---
 title: "Java Complete - Part 4: Operators and Expressions"
 description: "Master Java's operators and learn to build complex expressions. Understand precedence, associativity, and common pitfalls in arithmetic and logical operations."
-publishDate: 2025-08-29
+publishDate: 2024-09-01
 publishedAt: 2025-08-29
 tags: ["Java", "Operators", "Expressions", "Arithmetic", "Logic"]
 difficulty: "beginner"

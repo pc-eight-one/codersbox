@@ -1,7 +1,7 @@
 ---
 title: "ANTLR with Kotlin - Part 5: Error Handling and Recovery"
 description: "Build production-ready error messages for your SQL parser. Learn custom error listeners, error recovery strategies, and helpful syntax suggestions."
-publishDate: 2025-10-05
+publishDate: 2025-01-17
 publishedAt: 2025-10-05
 tags: ["ANTLR", "Kotlin", "Parser", "Error Handling", "Developer Experience"]
 difficulty: "intermediate"

@@ -1,7 +1,7 @@
 ---
 title: "Spring Boot Reactive Programming - Part 3: Schedulers and Threading"
 description: "Master Reactor schedulers and threading model. Learn publishOn vs subscribeOn, handle blocking code properly, optimize thread pools, and avoid common threading pitfalls in reactive applications."
-publishDate: 2025-10-06
+publishDate: 2025-03-15
 publishedAt: 2025-10-06
 tags: ["Spring Boot", "Reactor", "Schedulers", "Threading", "Performance", "WebFlux"]
 difficulty: "advanced"

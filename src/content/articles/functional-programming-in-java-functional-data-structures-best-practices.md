@@ -1,7 +1,7 @@
 ---
 title: "Functional Programming in Java: Functional Data Structures and Best Practices"
 description: "A comprehensive, practical deep dive into functional programming in Java with immutable, persistent data structures, higher-order functions, composition, and production-ready best practices."
-publishDate: 2025-08-30
+publishDate: 2024-10-14
 tags: ["Java", "Functional Programming", "Data Structures", "Streams", "Immutability", "Best Practices"]
 readTime: "25–35 min read"
 author: "Prashant Chaturvedi"

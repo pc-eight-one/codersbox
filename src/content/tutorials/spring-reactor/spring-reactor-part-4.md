@@ -1,7 +1,7 @@
 ---
 title: "Spring Boot Reactive Programming - Part 4: Backpressure and Flow Control"
 description: "Master backpressure strategies in Project Reactor. Learn how to handle fast producers and slow consumers, implement flow control, and build robust streaming applications that scale."
-publishDate: 2025-10-06
+publishDate: 2025-03-24
 publishedAt: 2025-10-06
 tags: ["Spring Boot", "Reactor", "Backpressure", "Flow Control", "Streaming", "WebFlux"]
 difficulty: "advanced"

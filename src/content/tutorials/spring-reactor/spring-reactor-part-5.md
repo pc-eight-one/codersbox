@@ -1,7 +1,7 @@
 ---
 title: "Spring Boot Reactive Programming - Part 5: Advanced Error Handling and Resilience"
 description: "Build resilient reactive microservices with advanced error handling, retry policies, circuit breakers, fallback strategies, and timeouts. Learn production-ready patterns for handling failures gracefully."
-publishDate: 2025-10-06
+publishDate: 2025-04-04
 publishedAt: 2025-10-06
 tags: ["Spring Boot", "Reactor", "Error Handling", "Resilience4j", "Circuit Breaker", "Retry"]
 difficulty: "advanced"

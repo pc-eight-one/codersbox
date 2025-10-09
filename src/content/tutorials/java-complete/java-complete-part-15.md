@@ -2,7 +2,7 @@
 title: "Java Complete Part 15: Collections Framework"
 slug: java-complete-part-15
 description: "Master Java Collections Framework with List, Set, Map interfaces, ArrayList, HashMap, TreeSet, and advanced collection operations for efficient data management"
-publishDate: 2025-08-29
+publishDate: 2024-12-13
 publishedAt: 2025-08-29
 tags: ["java", "tutorial", "intermediate", "collections", "list", "set", "map", "arraylist", "hashmap"]
 category: Tutorial

@@ -1,7 +1,7 @@
 ---
 title: "ANTLR with Kotlin - Part 2: Grammar Design for WHERE Clauses"
 description: "Extend your SQL parser to handle WHERE clauses with comparison operators, AND/OR logic, and proper operator precedence using ANTLR's left recursion."
-publishDate: 2025-10-05
+publishDate: 2024-12-12
 publishedAt: 2025-10-05
 tags: ["ANTLR", "Kotlin", "Parser", "Grammar", "SQL", "Expressions"]
 difficulty: "intermediate"

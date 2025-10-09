@@ -1,7 +1,7 @@
 ---
 title: "Kafka for Java Developers - Part 6: Production Best Practices"
 description: "Master Kafka production deployment. Learn error handling, monitoring, security, performance tuning, disaster recovery, and operational best practices for mission-critical systems."
-publishDate: 2025-10-03
+publishDate: 2025-06-01
 publishedAt: 2025-10-03
 tags: ["Kafka", "Java", "Production", "Monitoring", "Security", "Performance", "DevOps"]
 difficulty: "advanced"

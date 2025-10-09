@@ -1,7 +1,7 @@
 ---
 title: "ANTLR with Kotlin - Part 6: Advanced Features and Optimization"
 description: "Complete your SQL parser with subqueries, aggregates, GROUP BY, and HAVING. Learn parser performance optimization and package as a reusable library."
-publishDate: 2025-10-05
+publishDate: 2025-02-02
 publishedAt: 2025-10-05
 tags: ["ANTLR", "Kotlin", "Parser", "Optimization", "Performance", "SQL"]
 difficulty: "advanced"

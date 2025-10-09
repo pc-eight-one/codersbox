@@ -1,7 +1,7 @@
 ---
 title: "SQL SELECT Queries: From Basic to Advanced"
 description: "Master SQL SELECT queries with practical examples using an Indian e-commerce dataset. Learn filtering, joins, aggregations, and window functions."
-publishDate: 2025-01-10
+publishDate: 2025-09-03
 author: "Prashant Chaturvedi"
 tags: ["SQL", "Database", "SELECT", "Queries", "Tutorial", "MySQL", "PostgreSQL"]
 readTime: "12 min read"

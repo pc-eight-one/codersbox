@@ -1,7 +1,7 @@
 ---
 title: "Kafka Deep Dive - Part 3: Producer Internals and Optimization"
 description: "Master Kafka producer internals. Understand batching, compression, idempotence, transactions, exactly-once semantics, partitioner logic, and performance optimization strategies."
-publishDate: 2025-10-03
+publishDate: 2025-07-19
 publishedAt: 2025-10-03
 tags: ["Kafka", "Producer", "Batching", "Compression", "Idempotence", "Transactions", "Performance"]
 difficulty: "advanced"

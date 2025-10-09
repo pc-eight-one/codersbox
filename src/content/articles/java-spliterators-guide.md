@@ -1,7 +1,7 @@
 ---
 title: "Java Spliterators: Stream Sources and Parallel Processing"
 description: "Master Spliterators to create custom stream sources, control parallel processing, and optimize data traversal. Build efficient iterators for complex data structures."
-publishDate: 2025-10-06
+publishDate: 2024-10-20
 author: "Prashant Chaturvedi"
 tags: ["Java", "Spliterator", "Streams", "Parallel Processing", "Performance", "Collections"]
 readTime: "25 min read"

@@ -2,7 +2,7 @@
 title: "Java Complete Part 17: Lambda Expressions, Streams, and Optional"
 slug: java-complete-part-17
 description: "Master Java 8+ functional programming with lambda expressions, Stream API operations, method references, and Optional for null-safe programming"
-publishDate: 2025-08-29
+publishDate: 2024-12-28
 publishedAt: 2025-01-30
 tags: ["java", "tutorial", "intermediate", "lambda", "streams", "optional", "functional-programming"]
 category: Tutorial

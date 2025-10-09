@@ -1,7 +1,7 @@
 ---
 title: "ByteBuddy with Java - Part 3: Advice API and Code Injection"
 description: "Master ByteBuddy's Advice API for surgical code injection. Learn @OnMethodEnter, @OnMethodExit, inline bytecode insertion, and building aspect-oriented programming."
-publishDate: 2025-10-07
+publishDate: 2025-07-29
 tags: ["ByteBuddy", "Java", "Bytecode", "AOP", "Advice", "Code Injection"]
 difficulty: "advanced"
 series: "ByteBuddy with Java"
