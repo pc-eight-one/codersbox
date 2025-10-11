@@ -39,6 +39,10 @@
         "readTime": {
           "type": "string"
         },
+        "github": {
+          "type": "string",
+          "format": "uri"
+        },
         "featured": {
           "type": "boolean",
           "default": false
