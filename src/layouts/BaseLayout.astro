@@ -32,8 +32,8 @@ const navItems: NavItem[] = [
   {name: 'Home', link: '/'},
   {name: 'Articles', link: '/articles'},
   {name: 'Tutorials', link: '/tutorials'},
-  {name: 'Cheatsheets', link: '/cheatsheets'},
-  {name: 'About', link: '/about'},
+  {name: 'Cheatsheets', link: '/cheatsheets', visible: false},
+  {name: 'About', link: '/about', visible: false},
 ];
 
 const currentUrl = canonical || Astro.url.href;
