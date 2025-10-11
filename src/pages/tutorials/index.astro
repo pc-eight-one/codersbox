@@ -103,15 +103,15 @@ const nextUrl = totalPages > 1 ? '/tutorials/page/2' : null;
           <div id="tutorials-container">
             <div id="tutorials-grid" class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-12">
             {paginatedSeries.map((series) => (
-              <article 
-                class="tutorial-item bg-white rounded-lg border border-gray-200 overflow-hidden shadow-sm hover:shadow-md transition-all duration-300 h-full flex"
+              <article
+                class="tutorial-item bg-white rounded-lg border border-gray-200 overflow-hidden shadow-sm hover:shadow-md transition-all duration-300 h-full flex flex-col"
                 data-title={series.name.toLowerCase()}
                 data-description={series.description.toLowerCase()}
                 data-tags={JSON.stringify(series.tags || [])}
                 data-difficulty={series.difficulty}
                 data-date={series.latestPublishDate.getTime()}
               >
-                <div class="w-2 bg-gray-900"></div>
+                <div class="h-2 bg-gray-900"></div>
                 <div class="p-6 flex-grow flex flex-col">
                   <div class="flex items-center justify-between mb-4">
                     <div class="flex items-center gap-3">

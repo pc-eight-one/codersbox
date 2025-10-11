@@ -30,7 +30,7 @@ const popularTags = Array.from(tagCounts.entries())
 const allTags = Array.from(tagCounts.keys()).sort();
 
 // Pagination logic
-const articlesPerPage = 9;
+const articlesPerPage = 6;
 const totalPages = Math.ceil(articles.length / articlesPerPage);
 const currentPage = 1;
 const startIndex = (currentPage - 1) * articlesPerPage;
@@ -54,7 +54,7 @@ const nextUrl = totalPages > 1 ? '/articles/page/2' : null;
 
       <!-- Articles Grid -->
       <div id="articles-container">
-        <div id="articles-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
+        <div id="articles-grid" class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-12">
           {paginatedArticles.map((article) => (
             <div 
               class="article-item"

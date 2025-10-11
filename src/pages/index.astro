@@ -20,11 +20,11 @@ const featuredProjects = await getCollection('projects', ({ data }) => {
   return data.featured === true && data.draft !== true && data.published !== false;
 });
 
-// Get recent content (3 articles, 4 tutorial series)
+// Get recent content (4 articles, 4 tutorial series)
 const recentArticles = await getCollection('articles', ({ data }) => {
   return data.draft !== true && data.published !== false;
 }).then(articles =>
-  articles.sort((a, b) => new Date(b.data.publishDate).getTime() - new Date(a.data.publishDate).getTime()).slice(0, 3)
+  articles.sort((a, b) => new Date(b.data.publishDate).getTime() - new Date(a.data.publishDate).getTime()).slice(0, 4)
 );
 
 const recentTutorials = await getCollection('tutorials', ({ data }) => {
@@ -64,7 +64,7 @@ const recentProjects = await getCollection('projects', ({ data }) => {
         <!-- Articles Results -->
         <div id="search-articles-section" class="mb-8 hidden">
           <h4 class="text-lg font-medium text-gray-900 dark:text-gray-100 mb-4">Articles</h4>
-          <div id="search-articles-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"></div>
+          <div id="search-articles-grid" class="grid grid-cols-1 md:grid-cols-2 gap-6"></div>
         </div>
         
         <!-- Tutorials Results -->
@@ -101,7 +101,7 @@ const recentProjects = await getCollection('projects', ({ data }) => {
               <h3 class="text-2xl font-bold text-gray-900">Latest Articles</h3>
               <a href="/articles" class="text-blue-600 hover:text-blue-700 font-medium">View all →</a>
             </div>
-            <div id="articles-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div id="articles-grid" class="grid grid-cols-1 md:grid-cols-2 gap-6">
               {recentArticles.map((article) => (
                 <div 
                   class="article-item"

@@ -10,7 +10,7 @@ export async function getStaticPaths() {
     return data.draft !== true && data.published !== false;
   });
 
-  const articlesPerPage = 9;
+  const articlesPerPage = 6;
   const totalPages = Math.ceil(articles.length / articlesPerPage);
 
   // Generate static paths for pages 2 and above
@@ -54,7 +54,7 @@ const popularTags = Array.from(tagCounts.entries())
 const allTags = Array.from(tagCounts.keys()).sort();
 
 // Pagination logic
-const articlesPerPage = 9;
+const articlesPerPage = 6;
 const totalPages = Math.ceil(articles.length / articlesPerPage);
 const startIndex = (currentPage - 1) * articlesPerPage;
 const paginatedArticles = articles.slice(startIndex, startIndex + articlesPerPage);
@@ -77,7 +77,7 @@ const nextUrl = currentPage < totalPages ? `/articles/page/${currentPage + 1}` :
     <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
       <!-- Articles Grid -->
       <div id="articles-container">
-        <div id="articles-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
+        <div id="articles-grid" class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-12">
           {paginatedArticles.map((article) => (
             <div 
               class="article-item"
