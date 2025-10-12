@@ -1,0 +1,16 @@
+flowchart TD
+    Start([Start]) --> ReceiveOrder[Receive Order]
+    ReceiveOrder --> ValidCheck{Valid?}
+    ValidCheck -->|No| RejectOrder[Reject Order]
+    ValidCheck -->|Yes| CheckStock[Check Stock]
+    CheckStock --> StockCheck{Available?}
+    StockCheck -->|No| Backorder[Backorder]
+    StockCheck -->|Yes| ProcessPayment[Process Payment]
+    ProcessPayment --> ShipOrder[Ship Order]
+    ShipOrder --> Merge[ ]
+    Backorder --> Merge
+    RejectOrder --> SendNotif[Send Notification]
+    Merge --> SendNotif
+    SendNotif --> End([End])
+
+    style Merge fill:none,stroke:none

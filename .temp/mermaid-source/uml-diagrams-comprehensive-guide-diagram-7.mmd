@@ -1,0 +1,15 @@
+sequenceDiagram
+    actor Customer
+    participant Cart
+    participant OrderService
+    participant PaymentService
+    participant EmailService
+
+    Customer->>Cart: checkout()
+    Cart->>OrderService: getItems()
+    OrderService-->>Cart: items
+    Cart->>OrderService: createOrder(items)
+    OrderService->>PaymentService: processPayment()
+    PaymentService-->>OrderService: success
+    OrderService->>EmailService: sendConfirmation(order)
+    OrderService-->>Customer: Order

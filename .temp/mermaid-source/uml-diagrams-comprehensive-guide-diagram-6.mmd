@@ -1,0 +1,7 @@
+sequenceDiagram
+    participant OrderService
+    participant EmailService
+
+    loop for each customer
+        OrderService->>EmailService: sendEmail()
+    end

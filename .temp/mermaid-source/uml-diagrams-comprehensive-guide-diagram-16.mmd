@@ -1,0 +1,18 @@
+sequenceDiagram
+    actor User
+    participant Frontend
+    participant Gateway
+    participant OrderSvc
+    participant ProductSvc
+    participant PaymentSvc
+
+    User->>Frontend: checkout
+    Frontend->>Gateway: POST /orders
+    Gateway->>OrderSvc: create
+    OrderSvc->>ProductSvc: validate
+    ProductSvc-->>OrderSvc: OK
+    OrderSvc->>PaymentSvc: charge
+    PaymentSvc-->>OrderSvc: success
+    OrderSvc-->>Gateway: Order
+    Gateway-->>Frontend: Order
+    Frontend-->>User: Order Confirmation

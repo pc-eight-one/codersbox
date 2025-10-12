@@ -1,0 +1,13 @@
+sequenceDiagram
+    actor User
+    participant WebApp
+    participant AuthService
+    participant Database
+
+    User->>WebApp: login(email, pwd)
+    WebApp->>AuthService: authenticate()
+    AuthService->>Database: findUser(email)
+    Database-->>AuthService: User data
+    AuthService->>AuthService: verifyPassword()
+    AuthService-->>WebApp: Token
+    WebApp-->>User: Success

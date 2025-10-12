@@ -1,0 +1,14 @@
+flowchart TD
+    Start([Start]) --> PlaceOrder[Place Order]
+    PlaceOrder --> Fork{ }
+    Fork -.->|parallel| Pay[Pay]
+    Fork -.->|parallel| Pack[Pack]
+    Fork -.->|parallel| Email[Email]
+    Pay --> Join{ }
+    Pack --> Join
+    Email --> Join
+    Join --> Dispatch[Dispatch]
+    Dispatch --> End([End])
+
+    style Fork fill:black
+    style Join fill:black

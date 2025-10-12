@@ -1,0 +1,24 @@
+classDiagram
+    class User {
+        -Long userId
+        -String email
+        -String passwordHash
+        -Date registeredAt
+        +login(email, pwd) boolean
+        +logout() void
+        +updateProfile(data) void
+    }
+
+    class Customer {
+        -String address
+        -String phone
+        +placeOrder()
+    }
+
+    class Admin {
+        -String role
+        +deleteUser()
+    }
+
+    User <|-- Customer
+    User <|-- Admin

@@ -1,0 +1,7 @@
+stateDiagram-v2
+    [*] --> Active
+    Active --> Suspended: suspend
+    Suspended --> Active: reactivate
+    Suspended --> Inactive: after 90 days
+    Inactive --> Deleted: delete
+    Deleted --> [*]

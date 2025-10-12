@@ -1,0 +1,33 @@
+graph TD
+    subgraph Frontend["Frontend Layer"]
+        React[React SPA]
+        Mobile[Mobile App]
+    end
+
+    Gateway[API Gateway - Kong]
+
+    subgraph Services["Microservices"]
+        Product[Product Service]
+        User[User Service]
+        Order[Order Service]
+        Payment[Payment Service]
+    end
+
+    subgraph Data["Data Stores"]
+        Mongo[(MongoDB)]
+        PG1[(PostgreSQL)]
+        PG2[(PostgreSQL)]
+        Stripe[Stripe API]
+    end
+
+    React --> Gateway
+    Mobile --> Gateway
+    Gateway --> Product
+    Gateway --> User
+    Gateway --> Order
+    Gateway --> Payment
+
+    Product --> Mongo
+    User --> PG1
+    Order --> PG2
+    Payment --> Stripe

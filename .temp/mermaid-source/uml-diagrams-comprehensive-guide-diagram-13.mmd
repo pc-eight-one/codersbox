@@ -1,0 +1,29 @@
+graph TD
+    subgraph "Web Layer"
+        UI[React UI]
+        Mobile[Mobile App]
+    end
+
+    Gateway[API Gateway]
+
+    subgraph "Services"
+        OrderSvc[Order Service]
+        UserSvc[User Service]
+        PaymentSvc[Payment Service]
+    end
+
+    subgraph "Data Layer"
+        PG[(PostgreSQL)]
+        Redis[(Redis)]
+    end
+
+    UI -->|HTTPS/REST| Gateway
+    Mobile -->|HTTPS/REST| Gateway
+    Gateway --> OrderSvc
+    Gateway --> UserSvc
+    Gateway --> PaymentSvc
+    OrderSvc --> PG
+    UserSvc --> PG
+    PaymentSvc --> PG
+    OrderSvc --> Redis
+    UserSvc --> Redis

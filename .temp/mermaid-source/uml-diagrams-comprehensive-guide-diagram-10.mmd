@@ -1,0 +1,10 @@
+stateDiagram-v2
+    [*] --> Draft
+    Draft --> Pending: submit
+    Pending --> Approved: approve
+    Approved --> Pending: modify
+    Approved --> Paid: pay
+    Paid --> Shipped: ship
+    Shipped --> Delivered: deliver
+    Delivered --> Completed: after 7 days
+    Completed --> [*]

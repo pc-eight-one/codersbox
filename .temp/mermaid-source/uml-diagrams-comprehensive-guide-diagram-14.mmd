@@ -1,0 +1,19 @@
+graph TB
+    subgraph AWS["AWS Cloud"]
+        LB[Load Balancer ELB]
+
+        subgraph AppServers["Application Servers"]
+            EC2_1["EC2 Instance 1<br/>«artifact» app.jar"]
+            EC2_2["EC2 Instance 2<br/>«artifact» app.jar"]
+        end
+
+        RDS["RDS PostgreSQL<br/>«database»"]
+        S3["S3 Storage<br/>«storage»"]
+
+        LB --> EC2_1
+        LB --> EC2_2
+        EC2_1 --> RDS
+        EC2_2 --> RDS
+        EC2_1 -.-> S3
+        EC2_2 -.-> S3
+    end

@@ -1,0 +1,36 @@
+classDiagram
+    class Customer {
+        -Long customerId
+        -String name
+        -String email
+        +placeOrder()
+        +viewOrders()
+    }
+
+    class Order {
+        -Long orderId
+        -Date orderDate
+        -String status
+        -Double totalAmount
+        +calculateTotal()
+        +cancel()
+    }
+
+    class OrderItem {
+        -int quantity
+        -Double price
+        +getSubtotal()
+    }
+
+    class Product {
+        -Long productId
+        -String name
+        -Double price
+        -int stockQuantity
+        +updateStock()
+        +getDetails()
+    }
+
+    Customer "1" --> "*" Order : places
+    Order "1" *-- "*" OrderItem : contains
+    OrderItem "*" --> "1" Product : refers

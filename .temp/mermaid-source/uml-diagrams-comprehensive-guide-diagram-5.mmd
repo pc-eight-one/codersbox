@@ -1,0 +1,13 @@
+sequenceDiagram
+    actor User
+    participant PaymentService
+    participant Gateway
+
+    User->>PaymentService: processPayment()
+
+    alt valid card
+        PaymentService->>Gateway: charge()
+        Gateway-->>PaymentService: success
+    else invalid card
+        PaymentService-->>User: error
+    end
