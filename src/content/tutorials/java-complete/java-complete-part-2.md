@@ -109,11 +109,24 @@ $ java com.codersbox.app.Main      # Run with full package name
 42
 ```
 
-```mermaid  
-flowchart LR
-    A[Source Files<br/>dev/codersbox/...] -->|javac| B[Bytecode Files<br/>same structure]
-    B -->|java com.package.Class| C[JVM Execution]
-    B -->|jar cf app.jar com/| D[JAR Distribution]
+```plantuml
+@startuml
+!theme plain
+skinparam backgroundColor transparent
+skinparam handwritten false
+
+title Java Compilation and Execution Flow
+
+rectangle "Source Files\ndev/codersbox/..." as Source
+rectangle "Bytecode Files\nsame structure" as Bytecode
+rectangle "JVM Execution" as JVM
+rectangle "JAR Distribution" as JAR
+
+Source --> Bytecode : javac
+Bytecode --> JVM : java com.package.Class
+Bytecode --> JAR : jar cf app.jar com/
+
+@enduml
 ```
 
 ## Creating JAR Files

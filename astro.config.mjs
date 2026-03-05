@@ -2,6 +2,7 @@ import { defineConfig } from 'astro/config';
 import tailwind from '@astrojs/tailwind';
 import icon from 'astro-icon';
 import mdx from '@astrojs/mdx';
+import remarkPlantuml from './plugins/remark-plantuml.js';
 
 // https://astro.build/config
 export default defineConfig({
@@ -71,10 +72,17 @@ export default defineConfig({
       // Use a lightweight theme
       theme: 'github-dark',
       // Load needed languages
-      langs: ['javascript', 'typescript', 'html', 'css', 'bash', 'json', 'markdown', 'java', 'kotlin', 'mermaid'],
+      langs: ['javascript', 'typescript', 'html', 'css', 'bash', 'json', 'markdown', 'java', 'kotlin'],
     },
     // Enable syntax highlighting
     syntaxHighlight: 'shiki',
+    // PlantUML diagram generation
+    remarkPlugins: [
+      [remarkPlantuml, {
+        baseUrl: 'https://www.plantuml.com/plantuml',
+        format: 'svg',
+      }]
+    ],
   },
   
   // Server optimizations for development

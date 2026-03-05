@@ -19,37 +19,41 @@ Understanding producer internals is crucial for building high-performance, relia
 
 ### Producer Component Breakdown
 
-```mermaid
-flowchart TB
-    subgraph App["Application Thread"]
-        Send[send() call]
-        Callback[Callback Handler]
-    end
+```plantuml
+@startuml
+!theme plain
+skinparam backgroundColor transparent
+skinparam handwritten false
 
-    subgraph Producer["Kafka Producer"]
-        Serializer[Key/Value Serializers]
-        Partitioner[Partitioner Logic]
-        Accumulator[Record Accumulator<br/>In-Memory Buffers]
-        Sender[Sender Thread<br/>I/O Thread]
-    end
+title Kafka Producer Architecture
 
-    subgraph Network["Network Layer"]
-        Selector[Selector<br/>NIO]
-        Connections[TCP Connections<br/>to Brokers]
-    end
+package "Application Thread" as App #e3f2fd {
+  component "send() call" as Send
+  component "Callback Handler" as Callback
+}
 
-    Send --> Serializer
-    Serializer --> Partitioner
-    Partitioner --> Accumulator
-    Accumulator --> Sender
-    Sender --> Selector
-    Selector --> Connections
-    Connections -.->|Response| Sender
-    Sender -.->|Success/Error| Callback
+package "Kafka Producer" as Producer #e8f5e8 {
+  component "Key/Value Serializers" as Serializer
+  component "Partitioner Logic" as Partitioner
+  component "Record Accumulator\nIn-Memory Buffers" as Accumulator
+  component "Sender Thread\nI/O Thread" as Sender
+}
 
-    style App fill:#e3f2fd
-    style Producer fill:#e8f5e8
-    style Network fill:#fff3e0
+package "Network Layer" as Network #fff3e0 {
+  component "Selector\nNIO" as Selector
+  component "TCP Connections\nto Brokers" as Connections
+}
+
+Send --> Serializer
+Serializer --> Partitioner
+Partitioner --> Accumulator
+Accumulator --> Sender
+Sender --> Selector
+Selector --> Connections
+Connections ..-> Sender : Response
+Sender ..-> Callback : Success/Error
+
+@enduml
 ```
 
 ### Producer Lifecycle

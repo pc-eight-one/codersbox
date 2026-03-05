@@ -19,41 +19,45 @@ Consumer groups are the foundation of Kafka's scalability and fault tolerance. T
 
 ### Consumer Component Breakdown
 
-```mermaid
-flowchart TB
-    subgraph App["Application Thread"]
-        Poll[poll() loop]
-        Process[Process Records]
-        Commit[Commit Offsets]
-    end
+```plantuml
+@startuml
+!theme plain
+skinparam backgroundColor transparent
+skinparam handwritten false
 
-    subgraph Consumer["Kafka Consumer"]
-        Fetcher[Fetcher<br/>Fetch records]
-        Coordinator[Consumer Coordinator<br/>Group management]
-        OffsetMgr[Offset Manager<br/>Commit/fetch offsets]
-        Metadata[Metadata Cache<br/>Topic/partition info]
-    end
+title Kafka Consumer Architecture
 
-    subgraph Broker["Kafka Broker"]
-        GC[Group Coordinator<br/>Manage group state]
-        OffsetTopic[__consumer_offsets<br/>Store offsets]
-        DataPartitions[Data Partitions]
-    end
+package "Application Thread" as App #e3f2fd {
+  component "poll() loop" as Poll
+  component "Process Records" as Process
+  component "Commit Offsets" as Commit
+}
 
-    Poll --> Fetcher
-    Fetcher --> DataPartitions
-    DataPartitions -.->|Records| Fetcher
-    Fetcher -.->|Records| Process
+package "Kafka Consumer" as Consumer #e8f5e8 {
+  component "Fetcher\nFetch records" as Fetcher
+  component "Consumer Coordinator\nGroup management" as Coordinator
+  component "Offset Manager\nCommit/fetch offsets" as OffsetMgr
+  component "Metadata Cache\nTopic/partition info" as Metadata
+}
 
-    Process --> Commit
-    Commit --> OffsetMgr
-    OffsetMgr --> OffsetTopic
+package "Kafka Broker" as Broker #fff3e0 {
+  component "Group Coordinator\nManage group state" as GC
+  component "__consumer_offsets\nStore offsets" as OffsetTopic
+  component "Data Partitions" as DataPartitions
+}
 
-    Coordinator <--> GC
+Poll --> Fetcher
+Fetcher --> DataPartitions
+DataPartitions ..-> Fetcher : Records
+Fetcher ..-> Process : Records
 
-    style App fill:#e3f2fd
-    style Consumer fill:#e8f5e8
-    style Broker fill:#fff3e0
+Process --> Commit
+Commit --> OffsetMgr
+OffsetMgr --> OffsetTopic
+
+Coordinator <-> GC
+
+@enduml
 ```
 
 ### Consumer Lifecycle
@@ -593,31 +597,35 @@ fun explainRebalanceStorms() {
 
 ### Offset Storage
 
-```mermaid
-flowchart TB
-    subgraph Consumer["Consumer"]
-        Poll[poll() records]
-        Process[Process records]
-        Commit[Commit offsets]
-    end
+```plantuml
+@startuml
+!theme plain
+skinparam backgroundColor transparent
+skinparam handwritten false
 
-    subgraph Broker["Kafka Broker"]
-        Topic[__consumer_offsets<br/>Internal topic<br/>50 partitions]
-    end
+title Offset Management
 
-    subgraph Storage["Offset Storage Format"]
-        Key[Key: group + topic + partition]
-        Value[Value: offset + metadata]
-    end
+package "Consumer" as Consumer #e3f2fd {
+  component "poll() records" as Poll
+  component "Process records" as Process
+  component "Commit offsets" as Commit
+}
 
-    Poll --> Process
-    Process --> Commit
-    Commit --> Topic
-    Topic -.-> Storage
+package "Kafka Broker" as Broker #e8f5e8 {
+  component "__consumer_offsets\nInternal topic\n50 partitions" as Topic
+}
 
-    style Consumer fill:#e3f2fd
-    style Broker fill:#e8f5e8
-    style Storage fill:#fff3e0
+package "Offset Storage Format" as Storage #fff3e0 {
+  component "Key: group + topic + partition" as Key
+  component "Value: offset + metadata" as Value
+}
+
+Poll --> Process
+Process --> Commit
+Commit --> Topic
+Topic ..-> Storage
+
+@enduml
 ```
 
 ### Commit Strategies

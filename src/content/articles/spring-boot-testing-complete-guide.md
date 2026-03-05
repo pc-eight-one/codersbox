@@ -491,20 +491,41 @@ He refactored systematically.
 
 First, the test pyramid:
 
-```mermaid
-graph TD
-    A[Test Pyramid] --> B[Unit Tests 70%]
-    A --> C[Integration Tests 20%]
-    A --> D[E2E Tests 10%]
-    
-    B --> B1[Plain Mockito<br/>No Spring Context<br/>Fast, Isolated]
-    
-    C --> C1[@DataJpaTest<br/>Repository Slice]
-    C --> C2[@WebMvcTest/@WebFluxTest<br/>Controller Slice]
-    C --> C3[@SpringBootTest<br/>Full Context]
-    
-    D --> D1[Testcontainers<br/>Real Database]
-    D --> D2[HTTP Tests<br/>Full Stack]
+```plantuml
+@startuml
+!theme plain
+skinparam backgroundColor transparent
+skinparam handwritten false
+
+title Test Pyramid
+
+rectangle "Test Pyramid" as Pyramid {
+  rectangle "Unit Tests 70%" as Unit {
+    card "Plain Mockito\nNo Spring Context\nFast, Isolated" as UnitDetail
+  }
+  
+  rectangle "Integration Tests 20%" as Integration {
+    card "@DataJpaTest\nRepository Slice" as DataJpa
+    card "@WebMvcTest/@WebFluxTest\nController Slice" as WebTest
+    card "@SpringBootTest\nFull Context" as FullContext
+  }
+  
+  rectangle "E2E Tests 10%" as E2E {
+    card "Testcontainers\nReal Database" as TestContainers
+    card "HTTP Tests\nFull Stack" as HttpTests
+  }
+}
+
+Pyramid --> Unit
+Pyramid --> Integration
+Pyramid --> E2E
+Integration --> DataJpa
+Integration --> WebTest
+Integration --> FullContext
+E2E --> TestContainers
+E2E --> HttpTests
+
+@enduml
 ```
 
 Seventy percent unit tests with plain `Mockito.mock()`. Constructor injection mandatory. No Spring. Sub-millisecond execution.
